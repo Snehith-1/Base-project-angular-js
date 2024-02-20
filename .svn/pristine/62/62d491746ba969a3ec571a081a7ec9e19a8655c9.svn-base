@@ -1,0 +1,165 @@
+<h3>
+    Credit Risk Approval
+</h3>
+<style>
+    .picColor:hover {
+       background-color: transparent;
+       box-shadow: none;
+       color: #144A6E;
+       border: 1px solid #A59F9D;
+       transform: translateY(-3px);
+       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+       text-decoration: underline;
+       text-decoration-color: #141478;
+   }
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height:48px;  
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: rgb(226, 221, 221);       
+        text-decoration: underline;
+        height:56px;
+    }  
+
+    /* Style the tab content */
+    .tabcontent {
+       display: none;
+       padding: 6px 12px;
+       border: 1px solid #fff;
+       border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%,  rgb(171 225 166) 74%);
+    }
+
+
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    
+</script>
+<div ng-controller="AgrTrnSuprCreditCCSkippedSummaryController">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            <div class="tab">               
+                <button class="tablinks" ng-click="inprogress_appl()" style="color:#141478;font-size:13px"> 
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 15px;"></em> &nbsp; In Progress 
+                    &nbsp; <div class="pull-right label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{newcreditapplication_count}}</div>
+                </button>
+                <button class="tablinks" ng-click="approved_application()" style="color:#00796b;font-size:13px"> 
+                    <em class="fa fa-check-square-o" style="color:#00796b;font-size: 15px;"></em> &nbsp; Approved 
+                    &nbsp; <div class="pull-right label" style="background-color:#00796b;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{approvedapplication_count}}</div>
+                </button>
+                <button class="tablinks"ng-click="submittedto_cc()" style="color:#871490;font-size:13px"> 
+                    <em class="fa fa-file-text" style="color:#871490;font-size: 15px;"></em> &nbsp; Submitted to AC
+                    &nbsp; <div class="pull-right label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{submitted2ccapp_count}}</div> 
+                </button>
+                <button class="tablinks" onclick="openApplication(event, 'CC Skipped Application')" id="defaultOpen" ng-click="ccskipped_appl()" style="color:#706710;font-size:13px">
+                    <em class="fa fa-forward" style="color:#706710;font-size: 15px;"></em> &nbsp; AC Skipped 
+                    &nbsp; <div class="pull-right label" style="background-color:#706710;padding-top:4px;font-size:8px;padding-bottom:4px;">0</div>
+                </button>
+                <button class="tablinks" ng-click="rejected_holdappl()" style="color:#FF0000;font-size:13px">
+                    <em class="fa icon-close fa-x" style="color:#FF0000;font-size: 15px;"></em> &nbsp; Rejected & Hold
+                    &nbsp; <div class="pull-right label" style="background-color:#FF0000;padding-top:4px;font-size:8px;padding-bottom:4px;">{{rejectholdapplication_count}}</div>
+                </button>        
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:50px;">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:4px;">
+                            <div class="pull-right label" style="background-color:#C10B68;padding-top:6px;padding-bottom:4px;font-size:8px;">{{lstotalcount}}</div>
+                            <div style="font-size:14px;color:#C10B68;"><b> Total Applications </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel" id="CC Skipped Application">  
+        <br/>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">   
+                                    <th class="text-center"> S.No</th> 
+                                    <th> Reference Number</th>
+                                    <!--<th> Applicant Name </th>
+                                    <th> Vertical</th>-->
+                                    <th> Customer/Supplier Name </th>
+                                    <th> Vertical </th>
+                                    <!--<th> Customer/Supplier Type </th>-->
+                                    <th> Region</th>
+                                    <th> Overall Limit </th>
+                                    <th> Status</th>                                  
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in appassignment_list">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Reference Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical'"> {{data.vertical_name}} </td>
+                                    <td data-title="'Region'"> {{data.region}} </td>
+                                    <td data-title="'Overall Limit'"> {{data.overalllimit_amount}} </td>
+                                    <td data-title="'Status'"> {{data.approval_status}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="applcreation_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Approval" class="btn btn-success" ng-click="credit_approval(data.application_gid, data.createdby, data.applicationapproval_gid, data.initiate_flag)">
+                                            <em class="fa fa-check-square-o"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

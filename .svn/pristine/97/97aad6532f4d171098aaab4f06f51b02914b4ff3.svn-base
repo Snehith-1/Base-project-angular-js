@@ -1,0 +1,436 @@
+<style type="text/css">
+    .picColor:hover {
+        box-shadow: none;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+    }
+</style>
+<h3>
+    Employee Summary
+</h3>
+<style>
+
+</style>
+<div ng-controller="SysMstEmployeeactiveController as dp">
+    <div>
+        <button type="button" title="Add Employee" class="btn btn-info bt-sm" ng-click="employee_add()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>  Add Employee
+        </button>
+        <!--<button type="button" class="btn btn-success btn-md pull-right" title="Sample Import Excel" ng-click="importhrmigrationexcel()">
+            <i class="fa fa-file-excel-o">&nbsp;HR Migration</i>
+        </button>&emsp;-->
+        <button type="button" class="btn btn-success pull-right" ng-click="exportemployee()" title="Export Excel">
+            <i class="fa fa-file-excel-o"></i><a download="" href="" id="btnpdf" style="display:none;"></a>
+        </button>&nbsp;
+    </div>
+    <div class="" style="text-align:right;">
+
+    </div>
+    <br />
+    <div id="panelDemo13" class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <p style="color:#09385f;font-size: 17px;"><b>Active Users</b></p>
+                        <hr />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled a1" ng-click="pendingSummary()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <b style="font-size: 16px;">Pending-Onboarding</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="ActiveSummary()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                            <b style="font-size: 16px;">Active Users</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-sm-3">
+                        <button type="button" class="btn btn-labeled" ng-click="RelieveingSummary()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <b style="font-size: 16px;">Relieving Users</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="InactiveSummary()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <b style="font-size: 16px;">Inactive Users</b>
+                        </button>
+                        <br />
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="table-responsive">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th class="nowrap">S.No</th>
+                                        <th class="nowrap">One API Code</th>
+                                        <th class="nowrap">Entity</th>
+                                        <th class="nowrap">Employee Code</th>
+                                        <th class="nowrap">Employee Name</th>
+                                        <th class="nowrap">Base Location</th>
+                                        <th class="nowrap">Department / Function</th>
+                                        <th class="nowrap">Reporting To</th>
+                                        <th class="nowrap">Employee Mailid</th>
+                                        <th class="nowrap">Created Date</th>
+                                        <th class="nowrap">Created By</th>
+                                        <th class="nowrap">ERP ID</th>
+                                        <th style="text-align: center;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in employeeactive_list" ng-hide="data.employee_status =='Reliving'">
+                                        <td data-title="'S.No'" class="text-center"> {{$index+1}}</td>
+                                        <td data-title="'One API Code'"> {{data.api_code}} </td>
+                                        <td data-title="'Entity'"> {{data.company_name}} </td>
+                                        <td data-title="'Employee Code'"> {{data.user_code}} </td>
+                                        <td data-title="'Employee Name'"> {{data.employee_name}} </td>
+                                        <td data-title="'Base Location'"> {{data.baselocation_name}} </td>
+                                        <td data-title="'Department / Function'"> {{data.department_name}} </td>
+                                        <td data-title="'Reporting To'"> {{data.employeereporting_to}} </td>
+                                        <td data-title="'Employee Mailid'"> {{data.employee_emailid}} </td>
+                                        <td data-title="'Created Date'"> {{data.created_date}} </td>
+                                        <td data-title="'Created By'"> {{data.created_by}} </td>
+                                        <td data-title="'ERP ID'"> {{data.erp_id}} </td>
+                                        <td class="nowrap">
+                                            <button type="button" class="btn btn-info" ng-click="employee_view(data.employee_gid)" title="View">
+                                                <em class="fa fa-eye"></em>
+                                            </button>
+                                            <button type="button" class="btn btn-green" ng-click="employee_edit(data.employee_gid)" title="Edit">
+                                                <em class="icon-pencil"></em>
+                                            </button>
+                                            <button type="button" class="btn btn-pink" ng-click="employee_resetpwd(data.employee_gid)" title="Update Password">
+                                                <em class="fa fa-lock"></em>
+                                            </button>
+                                            <button type="button" class="btn btn-primary" ng-click="employee_updatecode(data.employee_gid)" title="Update User Code">
+                                                <em class="fa fa-user"></em>
+                                            </button>
+
+                                            <button type="button" class="btn btn-warning" ng-click="employee_deactive(data.employee_gid)" title="Deactive">
+                                                <em class="fa fa-thumbs-down"></em>
+                                            </button>
+                                            <button type="button" class="btn bg-success"
+                                                    ng-click="assigntask(data.employee_gid)" title="Task Initiate">
+                                                <em class="fa fa-check"></em>
+                                            </button>
+                                            <button type="button" class="btn" style="background-color: #871490; color: white;"
+                                                    ng-click="relive(data.employee_gid)" title="Initiate Relieving">
+                                                <em class="fa fa-arrow-circle-right"></em>
+                                            </button>
+                                            <button type="button" class="btn bg-primaryHR Docuemnt" style="background-color:blue; color: white;"
+                                                    ng-click="hrdoc(data.employee_gid)" title="HR Document">
+                                                <em class="fa fa-file"></em>
+                                            </button>
+                                            <!-- <button title="Post To ERP" ng-click="posttoerp(data.employee_externalid)" class="btn btn-pink" ng-disabled="data.erp_id != '' && data.employee_entitychange_flag == 'Y'">
+                                                <em class="fa fa-arrow-circle-right"></em>
+                                            </button> -->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--reset password popup-->
+    <script type="text/ng-template" id="/empresetpassowrd.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-lock "></i>
+                </span>RESET PASSWORD
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_code" maxlength="20" name="productgroupcode" tabindex="0" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Name</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_name" maxlength="30" name="productgroupname" tabindex="1" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Password</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="password" name="Password" required="" minlength="8" maxlength="20" placeholder="Enter Password"
+                                       ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W])/" ng-model="Password" class="form-control" />
+                                <span ng-show="userform.Password.$dirty &amp;&amp; userform.Password.$error.required" class="text-danger">This field is required</span>
+                                <span ng-show="userform.Password.$dirty &amp;&amp; userform.Password.$error.pattern" class="text-danger">Password should contain: "Atleast one upper case letter, one lower case letter, one special character, one number and minimum eight characters."</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Confirm Password</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="password" name="retypepassword" required="" minlength="8" maxlength="20" placeholder="Confirm Password"
+                                       ui-validate="'$value==Password'" ui-validate-watch="'Password'" ng-model="retypepassword" class="form-control" />
+                                <span ng-show="userform.retypepassword.$dirty &amp;&amp; userform.retypepassword.$error.validator" class="text-danger">Password does Not match</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="passwordSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </script>
+
+    <!--reset password popup-->
+    <script type="text/ng-template" id="/empcodeupdate.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-user "></i>
+                </span>UPDATE ENTITY AND EMPLOYEE CODE
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Entity</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <select name="entity" chosen="" ng-options="m.entity_gid as m.entity_name for m in entityList"
+                                                ng-model="txtentity" class="chosen-select form-control" required="">
+                                <option value="">----- Select Entity ----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Name</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_name" maxlength="30" name="productgroupname" tabindex="1" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Current Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_code" maxlength="20" name="productgroupcode" tabindex="0" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">New Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="newemp_code" maxlength="20" name="newemp_code" placeholder="New Employee Code" tabindex="0"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Confirm Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="text" name="confirmemp_code"  maxlength="225" placeholder="Confirm Employee Code" ng-pattern="/^[a-zA-Z0-9]*$/"
+                                       ui-validate="'$value==newemp_code'" ui-validate-watch="'newemp_code'" ng-model="confirmemp_code" class="form-control" />
+                                <span ng-show="userform.confirmemp_code.$dirty &amp;&amp; userform.confirmemp_code.$error.validator" class="text-danger">Employee Code does Not match</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="passwordSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <!--Reliving Popup-->
+    <script type="text/ng-template" id="/relivingdetails.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="icon icon-logout "></i>
+                </span>RELIEVING DETAILS
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Relieving Date</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <p class="input-group">
+                                    <input type="text" id="relive_date" name="relive_date" ng-model="txtrelive_date" datepicker-popup="{{format}}"
+                                           style="height:36px;" is-open="open03" min-date="minDate" datepicker-options="dateOptions"
+                                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="calender03($event)" style="height:36px;" class="btn btn-default">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Reason <span style="color:red;"> *</span> </label>
+                                <div class="mda-form-group">
+                                    <textarea ng-model="txtrelivereason" style="resize:vertical;" required rows="3"
+                                              aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control" placeholder="Enter Reason">
+                                </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="reliveSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/importexcel.html">
+        <div class="modal-header bg-blue-600 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-blue-600">
+                    <em class="fa fa-plus"></em>
+                    Sample Import Excel
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label> Upload Excel : </label>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4">
+                                    <input type="file" id="fileimport" ng-model="test_document"
+                                           onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-2 col-lg-2 col-sm-2">
+                                    <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                        <em class="icon-cloud-upload"></em>
+                                    </button>
+                                    <span>
+                                        <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                            <i class="fa icon-close"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="class">
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

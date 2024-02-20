@@ -1,0 +1,2377 @@
+﻿<a href="#/app/lsaManagement">
+    <button type="button" title="Back" class="pull-right btn btn-sm ">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a>
+<h3>
+    LSA
+</h3>
+<style>
+    h4,
+    .h4 {
+        font-size: 16px;
+    }
+
+
+</style>
+
+<div ng-controller="lsaManagementaddController as dp">
+    <div id="panelDemo8" class="panel panel-primary">
+        <div class="panel-heading ">
+            <span class="btn-label">
+                <b>  {{customername}}</b>
+            </span>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-wizard wizard-horizontal">
+                    <!-- START wizard steps indicator-->
+                    <ol class="row text-center dd-handle ng-scope text-muted">
+                        <li ng-click="clickstep1()" class="col-md-3 col-lg-2 col-sm-3 btn-primary ">
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                A.	Limit Information
+                            </label>
+                            <small class="text-muted">Limit Information for setting in system:</small>
+                            <br />
+                        </li>
+                        <li ng-click="clickstep2()" class="col-md-3 col-lg-2 col-sm-3  btn-primary">
+
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                B.	Repayment Details
+                                
+                            </label>
+                            <small class="text-muted">Repayment Details</small>
+                            <br />
+                        </li>
+                        <li ng-click="clickstep3()" class="col-md-3 col-lg-2 col-sm-3  btn-primary">
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                C.	Customer Bank A/c. Details
+                            </label>
+                            <small class="text-muted">Customer Bank A/c. Details</small>
+                            <br />
+                        </li>
+                        <li ng-click="clickstep4()" class="col-md-3 col-lg-2 col-sm-3 btn-primary">
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                D.	Processing Fee / Commission
+                            </label>
+                            <small class="text-muted">Processing Fee / Commission</small>
+                            <br />
+                        </li>
+                        <li ng-click="clickstep5()" class="col-md-3 col-lg-2 col-sm-3 btn-primary ">
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                E.	Documentation / Client Visit Charges
+                            </label>
+                            <small class="text-muted">Documentation / Client Visit Charges</small>
+                        </li>
+                        <li ng-click="clickstep6()" class="col-md-3 col-lg-2 col-sm-3 btn-primary">
+                            <label class="text-muted" style="font-size:16px;font:bold">
+                                CAD Internal Usage <br />&nbsp;
+                            </label>
+                            <small class="text-muted">CAD Internal Usage</small>
+                            <br />
+                        </li>
+                    </ol>
+                    <!-- END wizard steps indicator-->
+                    <!-- START Wizard Step inputs -->
+                    <div ng-hide="stepone">
+                        <fieldset>
+                            <legend>Limit Information for setting in system</legend>
+                            <!-- START row -->
+                            <div class="panel-body">
+                                <div ng-hide="approval_status=='Approved'">
+                                    <button type="button" title="Add Limit Info" class="btn btn-default bg-grey-400 btn-sm" ng-click="addlimitinfo(data.lsacreate_gid)">
+
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span><b>Add</b>
+                                    </button>
+                                </div>
+                                <br />
+                                <table id="statictable" class="row-border hover">
+                                    <thead>
+                                        <tr class="bg-success text-white">
+                                            <th width="05%">Limit Ref No</th>
+                                            <th width="05%">ODLIM</th>
+                                            <th width="05%">Interchangeability </th>
+                                            <th width="05%">Report Structure</th>
+                                            <th width="10%">Nature of Facility</th>
+                                            <th width="5%">Margin in %</th>
+                                            <th width="10%">Documented Limit to be set in System </th>
+                                            <th width="12%">Limit To be Released to be set in System </th>
+                                            <th width="5%">Tenure </th>
+                                            <th width="10%">Revolving/ Non Revolving</th>
+                                            <th width="07%">ROI in % P.A</th>
+                                            <th width="05%">Penal Interest in % P.A</th>
+                                            <th width="07%">Date of Expiry</th>
+                                            <th width="05%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="limit in limitinfo_limit">
+                                            <td data-title="Limit Ref No" style="text-align:center;">{{limit.lslimitref_no}}</td>
+                                            <td data-title="ODLIM" style="text-align:right;">{{limit.odlim}}</td>
+                                            <td data-title="Interchangeability" style="text-align:center;">{{limit.interchangeability}}</td>
+                                            <td data-title="Report Structure" style="text-align:center;">{{limit.report_structure}}</td>
+                                            <td data-title="Facility Type">{{limit.facility_type}}</td>
+                                            <td data-title="Margin" style="text-align:center;">{{limit.margin}}</td>
+                                            <td data-title="Document Limit" style="text-align:right;">{{limit.document_limit}}</td>
+                                            <td data-title="Limit Released" style="text-align:right;">{{limit.limit_released}}</td>
+                                            <td data-title="Tenure" style="text-align:center;">{{limit.tenure}}</td>
+                                            <td data-title="Revolving Type" style="text-align:center;">{{limit.revolving_type}}</td>
+                                            <td data-title="ROI in %">{{limit.rate_interest}}</td>
+                                            <td data-title="PenalInterest" style="text-align:center;">{{limit.penal_interest}}</td>
+                                            <td data-title="Expiry Date" style="text-align:center;">{{limit.expiry_date}}</td>
+                                            <td data-title="Action" style="text-align:center;">
+                                                <button title="Edit" ng-click="edit_limitinfo(limit.limitinfodtl_gid)" class="btn bg-green"  ng-hide="approval_status=='Approved'">
+                                                    <em class="fa fa-edit"></em>
+                                                </button>
+                                                <button title="Edit" ng-disabled="true" class="btn bg-green" ng-show="approval_status=='Approved'">
+                                                    <em class="fa fa-edit"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="color:darkred" class="text-bold">Total</td>
+                                            <td></td>
+                                            <td> </td>
+
+                                            <td></td>
+
+                                            <td> </td>
+                                            <td></td>
+                                            <td style="color:darkred;text-align:right;" class="text-bold">{{total_document_limit}}</td>
+                                            <td style="color:darkred;text-align:right;" class="text-bold">{{totol_limit_released}}</td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                              
+                                <br />
+                                <label> &nbsp;&nbsp;&nbsp;Note:</label>
+                                <div ng-repeat="limit in limitinfo_limit">
+                                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  {{limit.limitinfo_remarks}}
+                                </div>
+                                <br />                                
+                        </fieldset>
+
+                    </div>
+                    <!-- END Wizard Step inputs -->
+                    <!-- START Wizard Step inputs -->
+                    <div ng-hide="steptwo">
+                        <fieldset>
+                            <legend>Repayment Details</legend>
+                            <!-- START row -->
+                            <div class="panel-body">
+                                <div class="table-responsive table-bordered">
+                                    <table class="table" style="padding: 0px 0px">
+                                        <thead class="bg-indigo-400">
+                                            <tr class="bg-primary-light text-white">
+
+                                                <th>Terms of Repayment Facility</th>
+                                                <th>Principal</th>
+                                                <th>Interest</th>
+                                                <th>Moratorium (if Applicable)</th>
+                                                <th>Call/ Put Option</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in limitinfo_limit">
+
+                                                <td data-title="Facility Type">{{data.facility_type}}</td>
+                                                <td data-title="Principal">
+                                                    {{data.principal}}
+                                                </td>
+                                                <td data-title="Interest">{{data.interest}}</td>
+                                                <td data-title="Moratorium">{{data.moratorium}}</td>
+                                                <td data-title="Call/ Put Option">{{data.calloption}}</td>
+                                                <td data-title="Action">
+                                                    <button title="Edit" ng-click="edit(data.limitinfodtl_gid)" class="btn bg-green"  ng-hide="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                    <button title="Edit" ng-disabled="true" class="btn bg-green" ng-show="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- END row -->
+                        </fieldset>
+
+                    </div>
+                    <!-- END Wizard Step inputs -->
+                    <!-- START Wizard Step inputs -->
+                    <div ng-hide="stepthree">
+                        <fieldset>
+                            <legend>Customer Bank A/c. Details for Loan Disbursement:</legend>
+                            <!-- START row -->
+                            <div class="panel-body">
+
+
+                                <div  ng-hide="approval_status=='Approved'">
+                                    <button type="button" title="Add Bank Info" class="btn btn-default bg-grey-400 btn-sm" ng-click="addbankinfo(lsacreate_gid)">
+
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+
+                                        </span><b>Add</b>
+
+                                    </button>
+                                </div>
+                                <br />
+                                <div class="table-responsive table-bordered">
+                                    <table class="table" style="padding: 0px 0px">
+                                        <thead class="bg-indigo-400">
+                                            <tr class="bg-primary-light text-white">
+
+                                                <th>Name of the Bank</th>
+                                                <th>Account No</th>
+                                                <th>IFSC Code</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in bankinfo_list">
+
+                                                <td data-title="LSA Ref No">{{data.bank_name}}</td>
+                                                <td data-title="LSA Created Date">{{data.account_no}}</td>
+                                                <td data-title="Customer Name">{{data.ifsc_code}}</td>
+                                                <td data-title="Action">
+                                                    <button title="Edit" ng-click="editbankinfo(data.lsacustomer2bankinfo)" class="btn bg-green"  ng-hide="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                    <button title="Edit" ng-disabled="true" class="btn bg-green" ng-show="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                  </fieldset>
+                    </div>
+                    <!-- END Wizard Step inputs -->
+                    <div ng-hide="stepfour">
+                        <fieldset>
+                            <legend>Processing Fee / Commission</legend>
+                            <!-- Processing Fee / Commission row -->
+                            <div class="panel-body dd-handle ng-scope">
+                                <div ng-switch="recover_flag">
+                                    <div ng-switch-default>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong>Recovered Status </strong><span style="color:red">*</span></label>
+                                                    <div class="radio c-radio">
+                                                        <label>
+                                                            <input type="radio" name="rdbrecovered_type" value="Already Recovered" ng-model="$parent.rdbrecovered_type" required ng-click="recoveredstatus()" />
+                                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Already Recovered
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="rdbrecovered_type" value="To be Recovered" ng-model="$parent.rdbrecovered_type" required ng-click="recoveredstatus1()" />
+                                                            <span class="fa fa-circle"></span>To be Recovered
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="already_recovered">
+                                            <br />
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>
+                                                        <strong>
+                                                            Recovered
+                                                            Amount in Rs.
+                                                        </strong><span style="color:red">*</span>
+                                                    </label>
+                                                    <input id="txtInput3" type="text" ng-model="$parent.txtrecovered_amount" ng-change="amountschange3()"
+                                                           style="text-align:right;" class="form-control" required />
+                                                    <span style="font-style:italic;">Number in words:</span>
+                                                    <span id="recoveredamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>
+                                                        <strong>
+                                                            Cheque No.
+                                                            RTGS / NEFT Details
+                                                        </strong><span style="color:red">*</span>
+                                                    </label>
+                                                    <input type="text" ng-model="$parent.txtcheque_no" class="form-control" required />
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>
+                                                        <strong>
+                                                            Cheque Date
+                                                            RTGS/NEFT Date
+                                                        </strong><span style="color:red">*</span>
+                                                    </label>
+                                                    <p class="input-group">
+                                                        <input type="text" id="mortage" name="date" ng-model="$parent.txtcheque_date" datepicker-popup="{{dp.format}}"
+                                                               style="height:30px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" required />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender2($event)" style="height:30px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row" ng-show="already_recovered">
+                                            <br />
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong>Name of the Bank </strong><span style="color:red">*</span></label>
+                                                    <input type="text" ng-model="$parent.txtrecoveredbank_name" class="form-control" required />
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                                    <input type="text" ng-model="$parent.txtrecoveredaccount_no" class="form-control"
+                                                           required />
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    <label><strong>Remarks </strong><span style="color:red">*</span></label>
+                                                    <textarea rows="3" type="text" ng-model="$parent.txtrecovered_remarks" class="form-control" placeholder="Enter Here..." required />
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row" ng-show="tobe_recovered">
+                                            <br />
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>
+                                                    <strong>
+                                                        Recovered
+                                                        Amount in Rs.
+                                                    </strong><span style="color:red">*</span>
+                                                </label>
+                                                <input id="txtInput5" type="text" ng-model="$parent.txtto_be_recoveredamount" ng-change="amountschange5()"
+                                                       style="text-align:right;" class="form-control" required />
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="toberecoveredamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+                                            <div class="col-sm-8 col-md-8 col-lg-8">
+
+                                                <label><strong>Remarks </strong><span style="color:red">*</span></label>
+                                                <textarea rows="3" type="text" ng-model="$parent.txtrecovered_remarks" class="form-control" placeholder="Enter Here..." required />
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <br />
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-success btn-md" ng-disabled="sdf.$invalid" ng-click="recoveredsubmit()">
+                                                    <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                                                </button>&nbsp;&nbsp;
+                                                <button ng-click="processingfee_clear()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Clear</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-switch-when="Y">
+                                        <div ng-show="recovered_type=='Already Recovered'">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label><strong>Recovered Type</strong></label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p>{{recovered_type}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                Recovered Amount
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p> {{recovered_amount}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                Cheque No.
+                                                                RTGS / NEFT Details
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p> {{chequeno_details}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                Cheque Date
+                                                                RTGS/NEFT Date
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p>{{chequedate_details}}</p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                Name of the Bank / Account No
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p> {{processingfeebank_name}} / {{processingfeaccount_name}}</p>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                Remarks
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <p>
+                                                            {{recover_remarks}} &nbsp;&nbsp;
+                                                            <button title="Edit" ng-click="editprocessing_fee(lsacreate_gid)" class="btn bg-green pull-right" ng-hide="approval_status=='Approved'">
+                                                                <em class="fa fa-edit"></em>
+                                                            </button>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" ng-show="recovered_type=='To be Recovered'">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>
+                                                        <strong>
+                                                            Recovered Type
+                                                        </strong>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <p>{{recovered_type}}</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>
+                                                        <strong>
+                                                            Recovered Amount
+                                                        </strong>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <p>{{to_be_recoveredamount}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <br />
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>
+                                                        <strong>
+                                                            Remarks
+                                                        </strong>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <p> {{recover_remarks}}</p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <button title="Edit" ng-click="editprocessing_fee(lsacreate_gid)" class="btn bg-green" ng-hide="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- END row -->
+                        </fieldset>
+
+                    </div>
+                    <!-- START Wizard Step inputs -->
+                    <div ng-hide="stepfive">
+                        <fieldset>
+                            <legend>  Documentation / Client Visit Charges</legend>
+                            <!-- START row -->
+                            <div ng-switch="document_charge_flag">
+                                <div ng-switch-default>
+                                    <div class="panel-body dd-handle ng-scope">
+                                        <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>Document Charge (If Applicable) </label>
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <input type="radio" id="rdbdocumentcharge" name="rdbdocumentcharge" value="Yes" ng-model="$parent.rdbdocumentcharge" ng-click="documentchargestatus_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" id="rdbdocumentcharge" name="rdbdocumentcharge" value="No" ng-model="$parent.rdbdocumentcharge" ng-click="documentchargestatus_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div ng-show="rdbdocumentcharge=='Yes'">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    Document Charges
+                                                                </strong><span style="color:red">*</span>
+                                                            </label>
+                                                            <input id="txtInput04" type="text" ng-model="$parent.txtdocument_charges" ng-change="amountschange04()"
+                                                                   style="text-align:right;" class="form-control" required />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="documentcharge_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    GST in %
+                                                                </strong><span style="color:red">*</span>
+                                                            </label>
+                                                            <input id="txtInput4" type="text" ng-model="$parent.txtgst" ng-change="amountschange10()"
+                                                                   style="text-align:right;" class="form-control" required />
+
+                                                            <div>
+                                                                <label style="color:#ff001882;"> [in %]</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    Recovered
+                                                                    Amount in Rs.
+                                                                </strong><span style="color:red">*</span>
+                                                            </label>
+                                                            <input id="txtInput4" type="text" ng-model="$parent.txtdoc_recovered_amount" ng-change="amountschange4()"
+                                                                   style="text-align:right;" class="form-control" required />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="documentchargerecoverd_words" style="color:#003c96fc;" class="text-bold"></span>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    Cheque No.
+                                                                    RTGS / NEFT Details
+                                                                </strong><span style="color:red">*</span>
+                                                            </label>
+                                                            <input type="text" ng-model="$parent.txtdoc_cheque_no" class="form-control" required />
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    Cheque Date
+                                                                    RTGS/NEFT Date
+                                                                </strong><span style="color:red">*</span>
+                                                            </label>
+                                                            <p class="input-group">
+                                                                <input type="text" id="mortage" name="date" ng-model="$parent.txtdoc_cheque_date" datepicker-popup="{{dp.format}}"
+                                                                       style="height:30px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                       close-text="Close" class="form-control" required />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="dp.calender3($event)" style="height:30px;" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Name of the Bank </strong><span style="color:red">*</span></label>
+                                                            <input type="text" ng-model="$parent.txtdoc_bank_name" class="form-control" required />
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                                            <input type="text" ng-model="$parent.txtdoc_account_no" class="form-control" ng-change="accountno_validation()" required />
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3" ng-show="panel1">
+                                                            <div class="mda-form-group float-label">
+                                                                <div ng-show="hidephotodiv">
+                                                                    <strong>Upload Approval mail Document</strong>
+                                                                    <input type="file" id="addupload" ng-model="upload_doc" onchange="angular.element(this).scope().doc_charge(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                                </div>
+                                                                <div ng-show="showphotodiv">
+                                                                    <strong>Upload Approval mail Document</strong><br />
+                                                                    Document Uploaded
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-sm-9 col-md-9 col-lg-9">
+                                                            <label><strong>Remarks </strong></label>
+                                                            <textarea rows="3" type="text" ng-model="$parent.txtdocumentcharge_remarks" class="form-control" placeholder="Enter Remarks..." />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center" ng-hide="panel2">
+                                                    <br />
+                                                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="doc_charges_submit()">
+                                                        <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                                                    </button>&nbsp;&nbsp;
+                                                    <button ng-click="documentcharge_clear()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Clear</button>
+                                                </div>
+                                                <div class="text-center" ng-show="panel3">
+                                                    <br />
+                                                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="doc_charges_with_doc()">
+                                                        <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                                                    </button>&nbsp;&nbsp;
+                                                    <button ng-click="documentcharge_clear()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Clear</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div ng-show="rdbdocumentcharge=='No'">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                                    <label><strong>Remarks </strong></label>
+                                                    <textarea rows="3" type="text" ng-model="$parent.txtdocumentcharge_remarks" class="form-control" placeholder="Enter Remarks..." />
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <br />
+                                                <button type="button" class="btn btn-success btn-md" ng-click="documentchargestatus()">
+                                                    <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                                                </button>&nbsp;&nbsp;
+                                                <button ng-click="" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Clear</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div ng-switch-when="Y">
+                                    <div ng-show="lbldocumentcharge_applicable=='Yes'">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Document Charges(If Applicable) </strong></label><br />
+                                                    <p>{{lbldocumentcharge_applicable}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Document Charges</strong></label><br />
+                                                    <p>{{document_charge}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> GST in %</strong></label><br />
+                                                    <p>{{document_charge_gst}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Recovered Amount in Rs </strong></label><br />
+                                                    <p>{{doc_recovered_amount}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Cheque No. RTGS / NEFT Details</strong></label><br />
+                                                    <p>{{doc_chequeno_details}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong>  Cheque Date RTGS/NEFT Date</strong></label><br />
+                                                    <p>{{doc_chequedate_details}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Name of the Bank </strong></label><br />
+                                                    <p>{{doc_feebank_name}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label><strong> Account No</strong></label><br />
+                                                    <p>{{doc_feaccount_name}}</p>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    <div ng-show="document">
+                                                        <label><strong> Uploaded Document </strong></label><br />
+                                                        {{document_name}} &nbsp;<a class="btn" download="" href="" id="btnpdf"  ng-click="downloads(document_path,document_name)">
+                                                            <span class="fa fa-download"></span>
+                                                        </a>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <label><strong>Remarks </strong></label><br />
+                                                    <p>{{lbldocumentcharge_remarks}}</p>
+                                                    <button title="Edit" ng-click="editdocumentcharges(lsacreate_gid)" class="btn bg-green pull-right" ng-hide="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </div>
+                                             
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div ng-show="lbldocumentcharge_applicable=='No'">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label><strong> Document Charge (If Applicable) </strong></label><br />
+                                                    <p>{{lbldocumentcharge_applicable}}</p>
+                                                </div>
+                                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                                    <label><strong>Remarks</strong></label><br />
+                                                    <p>{{lbldocumentcharge_remarks}}</p>
+                                                    <button title="Edit" ng-click="editdocumentcharges(lsacreate_gid)" class="btn bg-green pull-right" ng-hide="approval_status=='Approved'">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                    <h4 class="text-primary">
+                                        Upload General Documents
+                                    </h4>
+
+                                </div>
+                            </div>
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="mda-form-group float-label">
+                                                <input ng-model="document_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                <label>Document Type </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="mda-form-group float-label">
+                                                <strong>Upload Documents</strong>
+                                                <input type="file" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Document Type</th>
+                                                            <th scope="col">Document Name</th>
+                                                            <th scope="col">Uploaded Details</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in filename_list" width="100%">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Document Type">{{data.document_type}}</td>
+                                                            <td title="Document Name">{{data.document_name}}</td>
+                                                            <td title="Uploaded Details">{{data.uploaded_by}} - {{data.updated_date}}</td>
+                                                            <td data-title="Action">
+                                                                <a class="btn btn-xs btn-danger" ng-click="document_cancelclick(data.document_gid)"><span class="fa fa-close"></span>Cancel</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><h4 class="text-primary"> F. We Certify that:- </h4>
+                            <div>
+                                <div class="panel-body">
+                                    <div class="row " ng-show="clarify_flag=='N'">
+
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="row bb  l12">
+
+                                            </div>
+                                            <br />
+                                            <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                                                <div class="row bb  l12">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                                                        <div class="col-sm-9 col-md-9 col-lg-9 text-justify">
+                                                            <label>
+                                                                a)	All the pre disbursement terms and conditions stipulated and documentation required for the above advance have been complied with as per prescribed guidelines issued from time to time.  <br />
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                            <div class="radio c-radio">
+                                                                <div class="radio c-radio">
+
+                                                                    <label>
+                                                                        <input type="radio" name="rdbterms_conditions" value="Yes" ng-model="$parent.rdbterms_conditions" required />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" name="rdbterms_conditions" value="No" ng-model="$parent.rdbterms_conditions" required />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <br />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                                                        <div class="col-sm-9 col-md-9 col-lg-9  text-justify">
+                                                            <label>
+                                                                b)	In DTS Deferrals / Covenants are captured (wherever applicable)
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                            <div class="radio c-radio">
+                                                                <div class="radio c-radio">
+
+                                                                    <label>
+                                                                        <input type="radio" name="rdbdeferral_captured" value="Yes" ng-model="$parent.rdbdeferral_captured" required />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" name="rdbdeferral_captured" value="No" ng-model="$parent.rdbdeferral_captured" required />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <br />
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                            <div class="col-lg-6 col-sm-6 col-md-6 form-group">
+                                                                <label>Head, Credit Admin </label><br />
+                                                                <p> &nbsp;&nbsp;&nbsp; Head Credit Admin</p>
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 col-md-6 form-group">
+                                                                <label>Maker's Signature </label>
+                                                                <br />
+                                                                <p> &nbsp;&nbsp;&nbsp; -----</p>
+                                                                <!--<select name="makersignature" chosen="" multiple="multiple" ng-options="d.employee_name for d in employee_dropdown"
+                                                            ng-model="$parent.cbomake_signature" class="chosen-select form-control" required></select>-->
+
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <br />
+                                                        </div>
+                                                        <div>
+                                                            <br />
+                                                            <div class="text-center">
+                                                                <button type="button" ng-disabled="userform1.$invalid" class="btn btn-success btn-md" ng-click="final(data.lsacreate_gid)">
+                                                                    <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                                                                </button>&nbsp;&nbsp;
+
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="clarify_flag=='Y'">
+                                <div class="panel-body ">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9 text-justify">
+                                                <label>
+                                                    a)	All the pre disbursement terms and conditions stipulated and documentation required for the above advance have been complied with as per prescribed guidelines issued from time to time.  <br />
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                {{terms_conditions}}
+
+                                            </div>
+
+                                            <br />
+                                        </div>
+                                        <br />
+                                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                                            <div class="col-sm-9 col-md-9 col-lg-9  text-justify">
+                                                <label>
+                                                    b)	In DTS Deferrals / Covenants are captured (wherever applicable)
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                {{deferral_captured}}
+                                            </div>
+
+                                            <br />
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                            <br />
+                                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                                <div class="form-group">
+                                                    <label>Head, Credit Admin</label>
+                                                    <br />
+                                                    <p> &nbsp;&nbsp;&nbsp; Head Credit Admin</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-md-4 form-group">
+                                                <label>Maker's Signature </label>
+                                                <br />
+                                                <p>{{maker_signature}}</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" ng-show="approval_status=='-'">
+                                <div class="jumbotron" ng-show="final_flag=='Y'&& proceed_flag=='N'">
+                                    <p>All details are captured, click the below button to proceed for Approval.</p>
+                                    <p>
+                                        <input type="submit" value="Proceed To Approval" class="btn btn-info btn-lg" ng-click="proceed_approval(data.lsacreate_gid)" />
+                                    </p>
+                                </div>
+                                <div class="jumbotron" ng-show="final_flag=='N'">
+
+                                    <p>Kindly Fill all the details. </p>
+                                    <p>
+                                        <input type="submit" value="Proceed To Approval" class="btn btn-info btn-lg" ng-disabled="true" />
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text-center" ng-if="approval_status=='Pending'">
+                                <div class="jumbotron">
+                                    <h3>Approval Pending</h3>
+                                   
+                                </div>
+                              
+                    </div>
+                            <div class="text-center" ng-if="approval_status=='Approved'">
+                                <div class="jumbotron">
+                                    <h3>Approved! PDF Generated</h3>
+
+                                </div>
+
+                               
+                            </div>
+                            <div class="text-center" ng-if="approval_status=='Rejected'">
+                                <div class="jumbotron">
+                                    <h3>Rejected</h3>
+
+                                </div>
+
+
+                            </div>
+               
+                    </fieldset>
+
+                </div>
+                    <div ng-hide="stepsix">
+                        <fieldset>
+                            <legend> CAD Internal Usage</legend>
+                           
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <strong class="ng-binding w3-text-indigo">
+                                            <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                            Collateral Security
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dd-handle ng-scope">
+                                <div>
+                                    <button type="button" title="Add Limit Info" class="btn btn-default bg-grey-400 btn-sm" ng-click="addsecurityinfo(lsacreate_gid)">
+
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span><b>Add</b>
+                                    </button>
+                                </div>
+                                <br />
+                                <div class="panel-body">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table" style="padding: 0px 0px">
+                                            <thead class="bg-indigo-400">
+                                                <tr class="bg-primary-light text-white">
+                                                    <th class="text-nowrap">Security Code</th>
+                                                    <th class="text-nowrap">Type of Security</th>
+                                                    <th class="text-nowrap">Security Details</th>
+                                                    <th class="text-nowrap">Colleteral Code</th>
+                                                    <th class="text-nowrap">Security Status</th>
+                                                    <th class="text-nowrap">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="list in customer2security_list">
+                                                    <td data-title="Node" class="text-nowrap">{{list.security_code}}</td>
+                                                    <td data-title="Facility Type" class="text-nowrap">{{list.security_type}}</td>
+                                                    <td data-title="Margin" class="text-nowrap">{{list.security_description}}</td>
+                                                    <td data-title="Document Limit" class="text-nowrap">{{list.collateralref_no}}</td>
+                                                    <td data-title="Limit Released" class="text-nowrap">{{list.account_status}}</td>
+
+                                                    <td data-title="Action" class="text-nowrap">
+                                                        <a class="btn btn-sm btn-green" ng-click="edit_security(list.collateral_gid)">
+                                                            <span class="fa fa-edit"></span>
+                                                        </a>
+                                                        <a class="btn btn-sm btn-danger" ng-click="delete_securityinfo(list.collateral_gid)">
+                                                        <span class="icon icon-trash"></span></a>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="panel-body " ng-show="compliance_flag=='N'">
+                                <div class="row ">
+
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <form novalidate="" name="userform2" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                                           
+                                          
+                                            <br />
+                                            <div class="row text-white" style="background-color:teal;" >
+                                                <div class="col-sm-12 col-md-12 col-lg-12 " >
+                                                    <br />
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label><strong>S.No</strong></label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            <strong>   COMPLIANCE CHECK<br /></strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                        <label>
+                                                            <strong>
+                                                                &nbsp; &nbsp;  &nbsp;STATUS (YES/NO)<br />
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>
+                                                            <strong>
+                                                                REMARKS IF ANY<br />
+                                                            </strong>
+                                                        </label>
+                                                    </div>
+
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="row bb  l12">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>1</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            A) NACH Mandate form is held ( if applicable): <br />
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                        <div class="radio c-radio">
+                                                            <div class="radio c-radio">
+                                                                <label><strong>A) </strong></label>
+
+                                                                <label>
+                                                                    <input type="radio" name="rdbnach" value="Yes" ng-model="rdbnach" required ng-click="nachform_yes()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" name="rdbnach" value="No" ng-model="rdbnach" required ng-click="nachform_no()" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="nach_no">
+                                                        <br />
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtnach_remarks" class="form-control"></textarea>
+
+                                                    </div>
+                                                    <br />
+                                                </div>
+
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label></label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+
+                                                            B) Sign is matching in the NACH form:
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+
+                                                        <div class="radio c-radio">
+
+
+                                                            <div class="radio c-radio">
+                                                                <label><strong>B) </strong></label>
+                                                                <label>
+                                                                    <input type="radio" name="rdbsign" value="Yes" ng-model="rdbsign" required ng-click="signmatch_yes()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" name="rdbsign" value="No" ng-model="rdbsign" required ng-click="signmatch_no()" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="signmatching">
+                                                        <br />
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtsign_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <div class="row bb">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <br />
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>2</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            Name and Signature of the borrower, guarantors are matching as per the KYC provided. <br />
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3  text-justify">
+
+                                                        <div class="radio c-radio">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input type="radio" name="rdbkyc_provided" value="Yes" ng-model="rdbkyc_provided" required ng-click="signmatch_kyc_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rdbkyc_provided" value="no" ng-model="rdbkyc_provided" required ng-click="signmatch_kyc_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                            <br />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="signmatch_kycprovide">
+
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtsign_kyc_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row bb">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>3</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            ESCROW Account is opened, and Buyer Acknowledgement letter is issued <br />
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3  text-justify">
+
+                                                        <div class="radio c-radio">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input type="radio" name="rdbescrow" value="Yes" ng-model="rdbescrow" required ng-click="escrowac_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rdbescrow" value="no" ng-model="rdbescrow" required ng-click="escrowac_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                            <br />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="escrow_no">
+
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtescrow_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row bb">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>4</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            Appropriate Stamping is done In documents as per the applicable stamp duty act of the state. <br />
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3  text-justify">
+
+                                                        <div class="radio c-radio">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input type="radio" name="rdbstamp" value="Yes" ng-model="rdbstamp" required ng-click="stamping_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rdbstamp" value="no" ng-model="rdbstamp" required ng-click="stamping_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="stamp_no">
+
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtstamp_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row bb">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>5</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                            ROC Filing is initiated: <br />
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3  text-justify">
+
+                                                        <div class="radio c-radio">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input type="radio" name="rdbroc" value="Yes" ng-model="rdbroc" required ng-click="roc_filling_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rdbroc" value="no" ng-model="rdbroc" required ng-click="roc_filling_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                            <br />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="roc_no">
+
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtroc_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <div class="row bb">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="col-sm-1 col-md-1 col-lg-1"><label>6</label></div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                        <label>
+                                                           Cersai is being initiated: <br />
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3  text-justify">
+
+                                                        <div class="radio c-radio">
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <label>
+                                                                <input type="radio" name="rdbcersai" value="Yes" ng-model="rdbcersai" required ng-click="rdbcersai_yes()" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rdbcersai" value="no" ng-model="rdbcersai" required ng-click="rdbcersai_no()" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                            <br />
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="cersai_no">
+
+                                                        <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                  ng-model="txtcersai_remarks" class="form-control"></textarea>
+                                                        <br />
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                            <br /><br /><br />
+                                            <div class="text-center">
+                                                <a class="btn btn-success" ng-disabled="userform2.$invalid" ng-click="compliance_submit(data.lsacreate_gid)" >
+                                                    <em class="fa fa-check"></em>
+                                                    <span>Submit</span>
+                                                </a>
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="panel-body " ng-show="compliance_flag=='Y'">
+                                <div class="row ">
+
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="row bb  l12">
+
+                                        </div>
+                                        <br />
+                                        <div class="row bb  l12" style="color:darkblue;">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1 "><label><strong>S.NO</strong></label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+                                                        <strong>   COMPLIANCE CHECK<br /></strong>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3  text-center">
+
+                                                    <label>
+                                                        <strong>
+                                                            &nbsp; &nbsp;  &nbsp;STATUS (YES/NO)<br />
+                                                        </strong>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3  text-center">
+                                                    <label>
+                                                        <strong>
+                                                            REMARKS IF ANY<br />
+                                                        </strong>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <div class="row bb  l12">
+                                            <br />
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                               
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>1</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+                                                        A) NACH Mandate form is held ( if applicable): <br />
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 text-center">
+
+                                                    {{nach_mandate}}
+
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4 ">
+                                                    <br />
+                                                    {{nach_mandate_remarks}}
+                                                </div>
+                                                <br />
+                                            </div>
+
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label></label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+
+                                                        B) Sign is matching in the NACH form:
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3 text-center">
+
+                                                    {{sign_match}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4 ">
+
+                                                    {{sign_match_remarks}}
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                        <div class="row bb">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <br />
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>2</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+                                                        Name and Signature of the borrower, guarantors are matching as per the KYC provided. <br />
+
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3   text-center">
+
+                                                    {{sign_match_kyc}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    {{sign_match_kyc_remarks}} <br />
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row bb">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>3</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+                                                        ESCROW Account is opened, and Buyer Acknowledgement letter is issued <br />
+
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3  text-center">
+
+                                                    {{escrow_opened}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    {{escrow_opened_remarks}}<br />
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row bb">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>4</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4  text-justify">
+                                                    <label>
+                                                        Appropriate Stamping is done In documents as per the applicable stamp duty act of the state. <br />
+
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3   text-center">
+
+                                                    {{appropriate_stamp}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    {{appropriate_stamp_remarks}}  <br />
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row bb">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>5</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4   text-justify">
+                                                    <label>
+                                                        ROC Filing is initiated: <br />
+
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3   text-center">
+
+                                                    {{roc_filling}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    {{roc_filling_remarks}}  <br />
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row bb">
+                                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="col-sm-1 col-md-1 col-lg-1"><label>6</label></div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4   text-justify">
+                                                    <label>
+                                                       Cersai is being initiated: <br />
+
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3   text-center">
+
+                                                    {{cersai}}
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                    {{cersai_remarks}}  <br />
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                    </div>
+
+                                </div>
+                               
+                            </div>
+                            <!--<div class="text-center">
+                                <div class="jumbotron" ng-show="final_flag=='Y'&& proceed_flag=='N'">
+                                    <h3>Done!</h3>
+                                    <p>All the details were captured. Now you can able to move further steps.</p>
+                                    <p>
+                                        <input type="submit" value="Generate PDF" class="btn btn-info btn-lg" ng-click="proceed(data.lsacreate_gid)" />
+                                    </p>
+                                </div>
+                                <div class="jumbotron" ng-show="final_flag=='N'">
+
+                                    <p>Kindly Fill all the details. </p>
+                                    <p>
+                                        <input type="submit" value="Generate PDF" class="btn btn-info btn-lg" ng-disabled="true" />
+
+                                    </p>
+                                </div>
+                                <div class="jumbotron" ng-show="proceed_flag=='Y'">
+                                    <h3>Done! Completed</h3>
+
+                                </div>
+                            </div>-->
+                           
+                        </fieldset>
+                        <!--<p>
+                            <button type="button" class="btn btn-info btn-lg" ng-click="proceed()">You can Proceed Now</button>
+                        </p>-->
+                    </div>
+                </div>
+                <!-- END Wizard Step inputs -->
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button ng-click="lsaback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+    </div>
+    <script type="text/ng-template" id="/editrepayment.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Edit Repayment Details
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="limitinfodtl_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>Vertical Code</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                       
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group ">
+                                        <input ng-model="txtprincipal" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required>
+                                        <label>Principal<span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group ">
+                                        <input ng-model="txtinterest" required name="txtlimit" class="mda-form-control ng-pristine ng-valid ng-touched">
+                                        <label>Interest<span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group ">
+                                        <input ng-model="txtmoratorium" class="mda-form-control ng-pristine ng-valid ng-touched" maxlength="144">
+                                        <label>Moratorium (if Applicable) </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group ">
+                                        <input ng-model="txtcalloption" class="mda-form-control ng-pristine ng-valid ng-touched" maxlength="144">
+                                        <label>Call / Put Option</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="update_repayment(data.limitinfodtl_gid)" ng-disabled="contactdetailsform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/customerbankinformation.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Add Customer Bank A/c. Details
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form novalidate="" name="bankdtl" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtbank_name" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                        <label>Name of the Bank <span style="color:red">*</span></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group float-label">
+                                        <input type="text" ng-model="txtaccount_no" class="mda-form-control ng-pristine ng-valid ng-touched" required />
+                                        <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group float-label">
+                                        <input type="text" ng-model="txtifsc_code" class="mda-form-control ng-pristine ng-valid ng-touched" required />
+                                        <label><strong>IFSC Code </strong><span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <br />
+                            <div class="text-center">
+                                &nbsp;&nbsp;
+                                <button ng-click="bankdetails(data.lsacreate_gid)" ng-disabled="bankdtl.$invalid" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>
+
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa fa-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/customerbankinformation_edit.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Edit Customer Bank A/c. Details
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacustomer2bankinfo" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form novalidate="" name="bankdtl" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group">
+                                        <input type="text" ng-model="txtbank_nameedit" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required />
+                                        <label><strong>Name of the Bank </strong><span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group">
+                                        <input type="text" ng-model="txtaccount_noedit" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required />
+                                        <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txtifsc_codeedit" name="verticalCodeedit" required="" tabindex="0" aria-required="true"
+                                               aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label><strong>IFSC Code </strong><span style="color:red">*</span></label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <br />
+                            <div class="text-center">
+                                &nbsp;&nbsp;
+                                <button ng-click="bankdetails_edit(data.lsacustomer2bankinfo)" ng-disabled="bankdtl.$invalid" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>
+
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa fa-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editprocessigninfo.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-edit"></em>
+                    Edit Processing Fees
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label><strong>Recovered Status </strong><span style="color:red">*</span></label>
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" name="rdbrecovered_type" value="Already Recovered" ng-model="rdbrecovered_type" required ng-click="recoveredstatus()" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Already Recovered
+                                            </label>
+                                            <label>
+                                                <input type="radio" name="rdbrecovered_type" value="To be Recovered" ng-model="rdbrecovered_type" required ng-click="recoveredstatus1()" />
+                                                <span class="fa fa-circle"></span>To be Recovered
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="already_recovered">
+                                <br />
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                Recovered
+                                                Amount in Rs.
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <input id="txtInput0" type="text" ng-model="txtrecovered_amount" ng-change="amountschange0()" class="form-control"
+                                               style="text-align:right;" required />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="editrecoveredamount_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                Cheque No.
+                                                RTGS / NEFT Details
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <input type="text" ng-model="txtcheque_no" class="form-control" required />
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="already_recovered">
+                                <br />
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                Cheque Date
+                                                RTGS/NEFT Date
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+
+                                            <input type="date" id="fromDate" name="fromdate" ng-model="txtcheque_date" required>
+                                        </md-input-container>
+                                       
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label><strong>Name of the Bank </strong><span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtrecoveredbank_name" class="form-control" required />
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-show="already_recovered">
+                                <br />
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtrecoveredaccount_no" class="form-control"
+                                               required />
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row" ng-show="tobe_recovered">
+                                <br />
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label>
+                                        <strong>
+                                            Recovered
+                                            Amount in Rs.
+                                        </strong><span style="color:red">*</span>
+                                    </label>
+                                    <input id="txtInput01" type="text" ng-model="txtto_be_recoveredamount" ng-change="amountschange01()"
+                                           style="text-align:right;" class="form-control" required />
+                                    <span style="font-style:italic;">Number in words:</span>
+                                    <span id="edittoberecoveredamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                </div>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+
+                                    <label><strong>Remarks </strong><span style="color:red">*</span></label>
+                                    <textarea rows="3" type="text" ng-model="txtrecovered_remarks" class="form-control" placeholder="Enter Here..." required />
+
+                                </div>
+                            </div>
+                            <div class="class">
+                                <br />
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="processignfee_update(data.lsacreate_gid)">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editdocumentcharge.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-edit"></em>
+                    Edit Document Charges
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Document Charge (If Applicable) </label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" id="rdbdocumentcharge" name="rdbdocumentcharge" value="Yes" ng-model="rdbdocumentcharge" ng-click="documentchargestatus_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="rdbdocumentcharge" name="rdbdocumentcharge" value="No" ng-model="rdbdocumentcharge" ng-click="documentchargestatus_no()" />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6" ng-show="documentcharge_yes">
+
+                                    <label>
+                                        <strong>
+                                            Document Charges
+                                        </strong><span style="color:red">*</span>
+                                    </label>
+                                    <input id="documentcharge_edit" type="text" ng-model="txtdocument_charges_edit" ng-change="documentchargesedit()"
+                                           style="text-align:right;" class="form-control" required />
+                                    <span style="font-style:italic;">Number in words:</span>
+                                    <span id="editdocumentamount_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="documentcharge_yes">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                  
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                GST in %
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <input type="text" id="txtinputgst_edit" ng-model="txtgst_edit" class="form-control" required ng-change="gstedit()" />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="editgst" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+
+                                        <label>
+                                            <strong>
+                                                Recovered
+                                                Amount in Rs.
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <input id="txtInput02" type="text" ng-model="txtdoc_recovered_amount" ng-change="amountschange02()"
+                                               style="text-align:right;" class="form-control" required />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="editdocumentrecoveredamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                Cheque No.
+                                                RTGS / NEFT Details
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <input type="text" ng-model="txtdoc_cheque_no" class="form-control" required />
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label>
+                                            <strong>
+                                                Cheque Date
+                                                RTGS/NEFT Date
+                                            </strong><span style="color:red">*</span>
+                                        </label>
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+
+                                            <input type="date" id="fromDate" name="fromdate" ng-model="txtdoc_cheque_date" required>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                   
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label><strong>Name of the Bank </strong><span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtdoc_bank_name" class="form-control" required />
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label><strong>Account No </strong><span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtdoc_account_no" class="form-control"
+                                               required />
+                                    </div>
+                                </div>
+                            </div>
+
+                           
+                          
+                        </div>
+                        <div >
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <label><strong>Remarks </strong></label>
+                                        <textarea rows="3" type="text" ng-model="txtdocumentcharge_remarks" class="form-control" placeholder="Enter Remarks..." />
+                                    </div>
+                                </div>
+                            </div>
+                          
+                           
+                        </div>
+                        <div class="class">
+                            <br />
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="documentcharges_update(data.lsacreate_gid)">
+                                    <em class="fa fa-check"></em>
+                                    <span>Update</span>
+                                </a>
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </div>
+
+</form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/personal_guarantee.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Edit Collateral Security
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+               
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtpersonalguarantor_name" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                        <label>Guarantor Name <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                         
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="borrowerinfo_submit(data.lsacreate_gid)" ng-disabled="contactdetailsform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/corporate_guarantee.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Edit Collateral Security
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtpersonalguarantor_name" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                        <label>Guarantor Name <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="borrowerinfo_submit(data.lsacreate_gid)" ng-disabled="contactdetailsform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/others_collateral.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Edit Collateral Security
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="lsacreate_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtsecurity_description" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                        <label>Security Description <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="borrowerinfo_submit(data.lsacreate_gid)" ng-disabled="contactdetailsform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/warning.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-warning (alias)"><b> Warning </b></i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                </div>
+
+                <div class="pd-sm-10">
+                    
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <br />
+                        <label style="font-size:14px;">
+    Kindly confirm, if the approval is held for collecting Documentation charges from the different A/c number-If yes, Upload the Approval mail
+  </label>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md"  ng-click="yes()">
+                        <i class="fa icon-check"></i> &nbsp;&nbsp;Yes
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;No</button>
+                </div>
+            </div>
+        </div>
+    </script>
+   
+</div>

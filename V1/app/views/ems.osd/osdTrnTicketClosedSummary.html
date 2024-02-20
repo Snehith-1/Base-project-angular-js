@@ -1,0 +1,250 @@
+﻿<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 86px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 86px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+      function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+
+      // Get the element with id="defaultOpen" and click on it
+   //   document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="osdTrnTicketClosedSummaryController">
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="tab">
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Alloted()" style="color:#871490;font-size:13px">
+                    <em class="fa fa-user fa-x" style="color:#871490;font-size: 18px;"></em>
+                    <br />
+                    Allotted
+                    <br />
+                    <div class="label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_newticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Workinprogress()" style="color:#141478;font-size:13px">
+                    <em class="fa fa-tasks fa-x" style="color:#141478;font-size: 18px;"></em>
+                    <br />
+                    Work In Progress
+                    <br />
+                    <div class="label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_transferticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="approvalpending()" style="color:#17ab15;font-size:13px">
+                    <em class="fa fa-thumbs-o-up" style="color:#17ab15;font-size: 18px;"></em>
+                    <br />
+                    Approval Pending
+                    <br />
+                    <div class="label" style="background-color:#17ab15;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{approvalpending_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Forward()" style="color:#1976d2;font-size:13px">
+                    <em class="fa fa-mail-forward fa-x" style="color:#1976d2;font-size: 18px;"></em>
+                    <br />
+                    External Transfer
+                    <br />
+                    <div class="label" style="background-color:#1976d2;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{forward_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Completed()" style="color:#00796b;font-size:13px">
+                    <em class="fa fa-check fa-x" style="color:#00796b;font-size: 18px;"></em>
+                    <br />
+                    Completed
+                    <br />
+                    <div class="label" style="background-color:#00796b;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_completedticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" onclick="openApplication(event, 'Rejected / Cancelled')" id="defaultOpen" ng-click="RejectCancel()" style="color:#FF0000;font-size:13px">
+                    <em class="fa fa-times-circle text-white fa-x" style="color:#FF0000;font-size: 18px;"></em>
+                    <br />
+                    Rejected / Cancelled
+                    <br />
+                    <div class="label" style="background-color:#FF0000;padding-top:4px;font-size:8px;padding-bottom:4px;">{{rejectcancel_count}}</div>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-1 col-sm-1 col-md-1">
+            <div class="list-group-item picColor" style="height:88px;">
+                <div class="media-box">
+                    <!--<div class="pull-left" style="padding-top:6px;">
+                        <span>
+                            <em class="fa fa-times-circle text-white fa-2x" style="color:#C10B68;"></em>
+                        </span>
+                    </div>-->
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <em class="fa fa-times-circle text-white fa-x" style="color:#C10B68;font-size: 18px;"></em>
+                            <div style="font-size:13px;color:#C10B68;" ng-click="Close()"><b> Closed</b></div>
+                            <div class="label" style="background-color:#C10B68;padding-top:4px;padding-bottom:4px;font-size:8px;">{{count_closedticket}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2" style="height:88px;" ng-show="new">
+            <div class="list-group-item picColor button">
+                <div class="media-box">
+                    <br />
+                    <div class="pull-left">
+                        <span>
+                            <em class="fa fa-bell text-white fa-2x" style="color:#110F0F;"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <div class="pull-right label" style="font-size:11px;background-color:#FB9235;">New</div>
+                            <div style="font-size:13px;color:#110F0F;text-align:center;" ng-click="BankAlert()"><b>Bank Alert</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-sm-2 col-md-2" ng-show="old">
+            <div class="list-group-item picColor" style="height:88px;background-color:#F8FABD">
+                <div class="media-box">
+                    <br />
+                    <div class="pull-left">
+                        <span>
+                            <em class="fa fa-bell-slash text-white fa-2x" style="color:#110F0F;"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <div style="font-size:13px;color:#110F0F;text-align:center;" ng-click="BankAlert()"><b>Bank Alert</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <br/>
+    <div class="panel">
+        <div class="row">
+            <div class="col-lg-11 col-sm-11 col-md-11">
+                <h3 style="font-size:18px;color:#C10B68;"> &nbsp;&nbsp; Activity Management - Closed </h3>
+            </div>
+            <div class="col-lg-1 col-sm-1 col-md-1" style="padding-top:15px">
+                <button title="Refresh" ng-click="Refresh()" class="btn btn-primary btn-sm">
+                    <em class="fa fa-refresh"></em>
+                </button>
+            </div>
+        </div>
+        <br />
+        <div class="table-responsive">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <table datatable="ng" class="table hover table-striped">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th class="text-center" style="display:none">S.No</th>
+                            <th class="text-nowrap">Request Ref No</th>
+                            <th class="text-nowrap">Raised On / By</th>
+                            <th class="text-nowrap">Raised By Department</th>
+                            <th class="text-nowrap">Raised To Business Unit</th>
+                            <th class="text-nowrap">Activity Name</th>
+                            <th class="text-nowrap">Request Title</th>
+                            <th class="text-nowrap">Assigned Team</th>
+                            <th class="text-nowrap">Assigned To</th>
+                            <th class="text-nowrap">Aging</th>
+                            <th class="text-nowrap">Request Status</th>
+                            <th class="text-nowrap">Business Unit Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in closeddtl | limitTo:limit" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                            <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                            <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                            <td data-title="'Department Name'">{{data.departmentname}}</td>
+                            <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                            <td data-title="'Request Title'">{{data.request_title}}</td>
+                            <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                            <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                            <td data-title="'aging'">{{data.aging}}</td>
+                            <td data-title="'Request Status'">{{data.request_status}}</td>
+                            <td data-title="'Business Unit Status'">{{data.Businessactivity_Status}}</td>
+                            <td data-title="'Source'" ng-switch="data.source">
+                                <label style="font-size:10px" ng-switch-when="E-mail" class="label label-green">E-Mail</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_Api" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_API" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="BRS" class="label label-pink">BRS</label>
+                                <label style="font-size:10px" ng-switch-when="Internal" class="label label-primary">Internal</label>
+                            </td>
+                            <td class="text-nowrap" data-title="'Action'">
+                                <button title="View" ng-click="viewClosed(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid,data.request_refno)" class="btn btn-info">
+                                    <em class="fa fa-eye "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+        <br />
+        <div class="text-right">
+            <button class="btn btn-success btn-md" ng-click="incrementLimit()">More</button>
+                    
+        <button  class="btn btn-warning btn-md" ng-click="decrementLimit()">Less</button>
+        <br /><br />
+            </div>
+        </br>
+    </div>
+</div>

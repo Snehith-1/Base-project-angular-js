@@ -1,0 +1,171 @@
+﻿<h3>
+   Create Sanction
+</h3>
+<div ng-controller="idasMstSanctionSummary">
+
+    <div>
+
+        <button title="Create Sanction" class="btn btn-info btn-sm"
+                ng-click="createSanction()">
+            <em class="fa fa-plus"></em>&nbsp;Create Sanction
+        </button>
+
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+
+            <tabset justified="true" >
+                <tab ng-click="pending()" id="id1" select="tab.activeTabId = 'pending'" active="tabpending">
+                    <tab-heading title="Case Range Upto 16-30 Days">
+                        <em class="fa fa-clock-o fa-1x"></em>
+                        Pending Sanction
+                        <label class="label label-pink" ng-if="pending_count != '0'">{{pending_count}}</label>
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedpending}} of {{pendingCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountpending" id="pagecountpending" type="number" />
+                                <button class="btn" id="loadmorepending" ng-click="loadMorepending(pagecountpending)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th style="display:none">S.No</th>
+                                    <th align="center">Created Date</th>
+                                    <th align="center">URN</th>
+                                    <th align="center">Customer Name</th>
+                                    <th align="center">Sanction Ref.No</th>
+                                    <th align="center">Sanction Amount</th>
+                                    <th align="center">Vertical</th>
+                                    <th align="center">Created By</th>
+                                    <th align="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in sanctionlist | filter : searchtxt | limitTo:totalDisplayedpending">
+                                    <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                                    <td data-title="'created date.'" class="text-nowrap">{{data.created_date}}</td>
+                                    <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                                    <td data-title="'Sanction Amount'" style="text-align:right;">{{data.sanction_amount}}</td>
+                                    <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td class="text-nowrap">
+                                        <button title="Edit" ng-click="EditSanction_pending(data.customer2sanction_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </button>
+                                        <!--<button title="Generate" class="btn btn-info btn-sm"
+                                                ng-click="editgenerate(data.customer2sanction_gid)">
+                                            <em class="fa fa-reorder "></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </button>-->
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab id="id2" ng-click="completed()" select="tab.activeTabId ='completed'" active="tabcompleted">
+
+                    <tab-heading title="Case Range Upto 31-45 Days">
+                        <em class="fa fa-clock-o fa-1x"></em>  Completed Sanction
+                        <label class="label label-pink" ng-if="completed_count != '0'">{{completed_count}}</label>
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedcompleted}} of {{completedCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecountcompleted" id="pagecountapproved" type="number" />
+                                <button class="btn" id="loadmoreapproved" ng-click="loadMorecompleted(pagecountcompleted)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtcompleted" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th style="display:none">S.No</th>
+                                    <th align="center">Created Date</th>
+                                    <th align="center">URN</th>
+                                    <th align="center">Customer Name</th>
+                                    <th align="center">Sanction Ref.No</th>
+                                    <th align="center">Sanction Amount</th>
+                                    <th align="center">Vertical</th>
+                                    <th align="center">Status</th>
+                                    <th align="center">Created By</th>
+                                    <th align="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in completed_sanctiondetails| filter : searchtxtcompleted | limitTo:totalDisplayedcompleted" ng-switch="data.sanction_status">
+                                    <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                                    <td data-title="'created date.'" class="text-nowrap">{{data.created_date}}</td>
+                                    <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                                    <td data-title="'Sanction Amount'" style="text-align:right;">{{data.sanction_amount}}</td>
+                                    <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                                    <td data-title="'Status'">
+                                        <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                        <label class="label label-warning" ng-switch-when='Approval Pending' style="font-size:10px;">Approval Pending</label>
+                                        <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                        <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                    </td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td class="text-nowrap">
+                                        <button title="Edit" ng-click="EditSanction_completed(data.customer2sanction_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </button>
+                                        <!--<button title="Generate" class="btn btn-info btn-sm"
+                                                 ng-click="generate(data.customer2sanction_gid)">
+                                            <em class="fa fa-reorder "></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </button>-->
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </tab>
+             
+            </tabset>
+        </div>
+    </div>
+</div>

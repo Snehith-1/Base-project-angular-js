@@ -1,0 +1,425 @@
+﻿<h3>
+    My Leave
+    <a href="#/app/hrmDashboard">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="myLeavecontroller">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="col-sm-3 col-md-3 col-lg-3" ng-repeat="data in leavetype_list">
+                <div class="panel widget">
+                    <div class="panel-body">
+                        <h4 class="mt0">{{data.leavetype_name}}</h4>
+                        <div class="text-center" ng-switch="data.count_leaveavailable">
+
+                            <p>
+                                Leave Taken <label class="text-danger">{{data.count_leavetaken}}</label>
+                            </p>
+                            <p>
+                                Available <label class="text-primary">{{data.count_leaveavailable}}</label>
+                            </p>
+                            <div id="apply" ng-switch="data.lsapply_leave">
+                                <a class="btn btn-success" ng-disabled="true" ng-switch-when="Y">
+                                    <em class="fa fa-hand-o-right"></em>
+                                    <span>Apply Leave</span>
+                                </a>
+                                <a class="btn btn-success" ng-model="leavetype_gid" ng-switch-default
+                                   ng-click="applyleave(data.leavetype_gid)">
+                                    <em class="fa fa-hand-o-right"></em>
+                                    <span>Apply Leave</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <label class="text-primary">Applied Leave Summary</label>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>Applied Date</th>
+                                    <th>Leave Type</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>No of Days</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Approved By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in leave_list">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td title="Leave Applied Date">{{data.leave_applydate}}</td>
+                                    <td title="Leave Type">{{data.leavetype_name}}</td>
+                                    <td title="From" class="nowrap">{{data.leave_from}}</td>
+                                    <td data-title="To" class="nowrap">{{data.leave_to}}</td>
+                                    <td data-title="No of Days">{{data.noofdays_leave}}</td>
+                                    <td data-title="Reason">
+                                        {{data.leave_reason}}
+                                    </td>
+                                    <td data-title="Status">{{data.approval_status}}</td>
+                                    <td data-title="Approved By">{{data.approved_by}}</td>
+                                    <td ng-switch="data.approval_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deleteleave(data.leavetype_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <a ng-switch="data.document_name">
+                                            <button title="Document" class="btn btn-info btn-sm"  ng-switch-when="Y"  ng-click="documentleave(data.leavetype_gid)">
+                                                <em class="fa fa-file"></em>
+                                            </button>
+                                            <button title="No Document" class="btn btn-primary btn-sm" ng-switch-when="N" disabled>
+                                                <em class="fa fa-file"></em>
+                                            </button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/DocumentModal.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                </span>Uploaded Document
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-secondary">
+                                <thead class="bg-gray text-white">
+                                    <tr width="100%">
+                                        <th scope="col">Document Name</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in filename_list" width="100%">
+                                        <td title="'Document Name'">{{data.documentname}}</td>
+                                        <td data-title="'Action'">
+                                            <a class="btn btn-xs btn-success" title="Download" ng-click="document_downloadclick(data.path,data.documentname)">
+                                                <span class="fa fa-download"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br />
+    </script>
+    <!--<div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                   <label class="text-primary"> Month Wise Leave Report</label>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>Duration</th>
+                                    <th>LOP</th>
+                                    <th>OD</th>
+                                    <th>Permission</th>
+                                    <th>CompOff</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in leavereport">
+                                    <td title="Leave Type">{{data.Duration}}</td>
+                                    <td title="Leave Type">{{data.SickLeave}}</td>
+                                    <td title="Leave Type">{{data.CasualLeave}}</td>
+                                    <td title="Leave Type">{{data.EarnedLeave}}</td>
+                                    <td title="Leave Type">{{data.MaternityLeave}}</td>
+                                    <td title="Leave Type">{{data.MarriageLeave}}</td>
+                                    <td title="Leave Type">{{data.OptionalHoliday}}</td>
+                                    <td title="From" class="nowrap">{{data.LOP}}</td>
+                                    <td data-title="To" class="nowrap">{{data.OD}}</td>
+                                    <td data-title="No of Days">{{data.Permission}}</td>
+                                    <td data-title="Reason">
+                                        {{data.CompOff}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+    <script type="text/ng-template" id="/applyLeaveModal.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                </span>Apply Leave
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="mda-form-group">
+                            <label>Leave Period</label>
+                            <div class="col">
+                                <label class="mda-radio">
+                                    <input type="radio" name="radio_fullhalf" ng-model="radio_selfothers" ng-change="fullclick()" value="Full">
+                                    <em class="bg-indigo-500"></em> Full
+                                </label>
+
+                            </div>
+                            <div class="col">
+                                &nbsp; &nbsp;
+                            </div>
+                            <div class="col">
+                                <label class="mda-radio">
+                                    <input type="radio" name="radio_fullhalf" ng-model="radio_selfothers" ng-click="halfclick()" value="Half">
+                                    <em class="bg-indigo-500"></em> Half
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="leavefull">
+                    <form novalidate="" name="userformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group float-label">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Leave Date (From)</label>
+                                        <input type="date" id="fromDate" name="fromdate" ng-model="fromdate" ng-change="onselectedchangefrom(fromdate)" required>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group float-label">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Leave Date (To)</label>
+                                        <input type="date" id="toDate" name="todate" ng-model="todate" ng-change="onselectedchangeto(todate)" required>
+                                      
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12" style="display:none;">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Leave Type</label>
+                                <br />
+                                <p ng-model="leavetype_gid">{{applyleavedetails.leavetype_gid}}</p>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Leave Days</label>
+                                <br />
+                                <p>{{leave_days}}</p>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Leave Type</label>
+                                <br />
+                                <p>{{applyleavedetails.leavetype_name}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="mda-form-group float-label">
+                                    <label>Leave Reason</label><span class="text-danger"> *</span>
+                                    <textarea id="reason_reject" name="leave_reason" rows="5" cols="4"
+                                              class="form-control" ng-model="leave_reason" placeholder="Enter The Reason" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label class="col-form-label "><strong>File Upload</strong></label>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <input type="file" id="addupload" ng-model="test_document" ng-disabled="disablevalue" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-secondary">
+                                            <thead class="bg-gray text-white">
+                                                <tr width="100%">
+                                                    <th scope="col">S.No</th>
+                                                    <th scope="col">Document Name</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in filename_list" width="100%">
+                                                    <td title="'S.No'">{{$index+1}}</td>
+                                                    <td title="'Document Name'">{{data.documentname}}</td>
+                                                    <td data-title="'Action'">
+                                                        <a class="btn btn-xs btn-danger" ng-click="document_delete(data.tmpdocument_gid)"><span class="fa fa-close"></span>Cancel</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <br />
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="fullleavesubmit()">
+                                <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                            </button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" ng-show="leavehalf">
+                    <form novalidate="" name="userformsubmit1" ng-submit="form.submitForm2()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group float-label">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Leave Date</label>
+                                        <input type="date" id="dob" name="dob" ng-model="fromdate" required>
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>Session</label>
+                                    <div class="col">
+                                        <label class="mda-radio">
+                                            <input type="radio" name="radio_fnan" ng-model="radio_fnan" value="FN">
+                                            <em class="bg-indigo-500"></em> FN
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div class="col">
+                                        <label class="mda-radio">
+                                            <input type="radio" name="radio_fnan" ng-model="radio_fnan" value="AN">
+                                            <em class="bg-indigo-500"></em> AN
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Leave Days</label>
+                                <br />
+                                <p>0.5</p>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Leave Type</label>
+                                <br />
+                                <p>{{applyleavedetails.leavetype_name}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="mda-form-group float-label">
+                                    <label>Leave Reason</label><span class="text-danger"> *</span>
+                                    <textarea id="reason_reject" name="leavehalf_reason" rows="5" cols="4"
+                                              class="form-control" ng-model="leavehalf_reason" placeholder="Enter The Reason" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label class="col-form-label "><strong>File Upload</strong></label>
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <input type="file" id="addhalfupload" ng-model="test_document" ng-disabled="disablevalue" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-secondary">
+                                            <thead class="bg-gray text-white">
+                                                <tr width="100%">
+                                                    <th scope="col">S.No</th>
+                                                    <th scope="col">Document Name</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in filename_list" width="100%">
+                                                    <td title="'S.No'">{{$index+1}}</td>
+                                                    <td title="'Document Name'">{{data.documentname}}</td>
+                                                    <td data-title="'Action'">
+                                                        <a class="btn btn-xs btn-danger" ng-click="document_delete(data.tmpdocument_gid)"><span class="fa fa-close"></span>Cancel</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="text-center">
+                            <br />
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit1.$invalid" ng-click="halfleavesubmit()">
+                                <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                            </button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </script>
+
+
+</div>

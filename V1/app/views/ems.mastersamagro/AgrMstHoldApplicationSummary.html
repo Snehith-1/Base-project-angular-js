@@ -1,0 +1,214 @@
+<h3>
+    Buyer Proposal - Hold
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 68px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 68px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    
+</script>
+<div ng-controller="AgrMstHoldApplicationSummaryController">
+    <div class="row">
+        <!--<div class="col-lg-2 col-md-2 col-sm-2">
+            <button type="button" title="Create New Application" class="btn btn-info btn-sm" ng-click="addapp_creation()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Create New Application
+            </button>
+        </div>-->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="tab">
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="my_applications()" style="color:#141478;font-size:13px">
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 18px;"></em>
+                    New Applications
+                    <br />
+                    <div class="label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;font-size:9px;">{{newapplication_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="rejected_applications()" style="color:#FF0000;font-size:13px">
+                    <em class="fa icon-close fa-x" style="color:#FF0000;font-size: 16px;"></em>
+                    Rejected Applications
+                    <br />
+                    <div class="label" style="background-color:#FF0000;padding-top:4px;font-size: 8px;padding-bottom:4px;font-size:9px;">{{rejected_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" onclick="openApplication(event, 'Hold Applications')" id="defaultOpen" ng-click="hold_applications()" style="color:#871490;font-size:13px">
+                    <em class="fa icon-control-pause fa-x" style="color:#871490;font-size: 16px;"></em>
+                    Applications on Hold
+                    <br />
+                    <div class="label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;font-size:9px;">{{hold_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="approved_applications()" style="color:#00796b;font-size:13px">
+                    <em class="fa fa-check-square-o fa-x" style="color:#00796b;font-size: 16px;"></em>
+                    AC Approved
+                    <br />
+                    <div class="label" style="background-color:#00796b;padding-top:4px;font-size:8px;padding-bottom:4px;font-size:9px;">{{ccapproved_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" style="font-size:13px;text-decoration: none;background-color: rgb(226, 221, 221);">
+                    Total Applications
+                    <br />
+                    <div class="label" style="background-color:#c1c1c1;padding-top:4px;font-size:8px;padding-bottom:4px;font-size:11px;color:black;">{{totalcount}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" style="font-size:14px;text-decoration: none;background-color: rgb(241, 241, 241);height:68px;">
+                    <now format="MMMM" style="font-size:14px;"></now>
+                    <now format="d" style="font-size:14px;"></now>
+                    <now format="EEEE" style="font-size:14px;"></now> |
+                    <now format="h:mm" style="font-size:14px;"></now>
+                    <now format="a" style="font-size:14px;"></now>
+                </button>
+            </div>
+        </div>       
+    </div>
+    <br />
+    <div class="panel" id="Hold Applications"> 
+        <br/>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Application Number </th>
+                                    <!--<th> Applicant Name </th>-->
+                                    <th> Customer Name </th>
+                                    <th> Vertical </th>
+                                    <!--<th> Customer/Supplier Type </th>-->
+                                    <th style="width:10%;"> Applicant Type </th>
+                                    <th> Status </th>
+                                    <th> Created Date</th>
+                                    <th> Submitted Date </th>
+                                    <th> Type </th>
+                                    <th class="text-center" style="width:14%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in applicationadd_list ">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}}</td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical"> {{data.vertical_name}} </td>
+                                    <td data-title="'Applicant Type" style="width:10%;"> {{data.applicant_type}} </td>
+                                    <td data-title="'Status"> {{data.application_status}} </td>
+                                    <td data-title="'Created Date'"> {{data.created_date}} </td>
+                                    <td data-title="'Updated Date'"> <span ng-show="data.application_status!='Incomplete'"> {{data.updated_date}} </span>
+                                        <span ng-show="data.application_status=='Incomplete'">--- </span></td>
+                                        <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.amendment_flag=='N' && data.shortclosing_flag=='N'">
+                                            <label class="label label-primary" style="font-size:10px;"> New </label>
+                                        </td>
+                                        <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                            <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                        </td>
+                                        <td data-title="'Application Type'" ng-if="data.amendment_flag=='Y'">
+                                            <label class="label label-success" style="font-size:10px;">Amendment </label>
+                                        </td>
+                                        <td data-title="'Application Type'" ng-if="data.shortclosing_flag=='Y'">
+                                            <label class="label label-success" style="font-size: 10px; background-color: #a013a9;">Short Closing </label>
+                                        </td>
+                                        <td class="nowrap" data-title="'Action'" style="text-align: center;width:14%;" ng-switch="data.application_status">
+                                            <button title="View" ng-click="applcreation_view(data.application_gid)" class="btn btn-info">
+                                                <em class="fa fa-eye"></em>
+                                            </button>
+    
+                                            <!--<button title="Edit" ng-show="data.application_status=='Incomplete'" ng-click="applicationcreation_edit(data.application_gid, data.economical_flag, data.productcharge_flag)" class="btn btn-green">
+                                                <em class="icon-pencil"></em>
+                                            </button>
+                                            <button title="Edit" ng-show="data.application_status!='Incomplete'" disabled class="btn btn-green">
+                                                <em class="icon-pencil"></em>
+                                            </button>
+                                            <button title="Assessed Score" ng-click="GradingTool_add(data.application_gid)" class="btn btn-primary">
+                                                <em class="fa fa-asterisk"></em>
+                                            </button>
+    
+                                            <button title="Visit Updates" ng-click="VisitReport_add(data.application_gid)" class="btn btn-pink">
+                                                <em class="fa fa-file-pdf-o"></em>
+                                            </button>
+    
+                                            <button title="Delete" ng-show="data.application_no == ''" ng-click="delete(data.application_gid)" class="btn btn-danger">
+                                                <em class="icon icon-trash "></em>
+                                            </button>
+                                            <button title="Delete" ng-show="data.application_no != ''" disabled class="btn btn-danger">
+                                                <em class="icon icon-trash "></em>
+                                            </button>-->
+                                            <button title="Approval" ng-show="data.application_status!='Incomplete'" class="btn btn-success" ng-click="rm_approval(data.application_gid, data.createdby)">
+                                                <em class="fa fa-check-square-o"></em>
+                                            </button>
+                                            <button title="Approval" ng-show="data.application_status=='Incomplete'" disabled class="btn btn-success">
+                                                <em class="fa fa-check-square-o"></em>
+                                            </button>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

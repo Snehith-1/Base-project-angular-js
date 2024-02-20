@@ -1,0 +1,123 @@
+﻿<h3>
+    Samunnati Associate Onboarding
+</h3>
+<div ng-controller="MstSAOnboardingSBAReportController as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>SA Report
+        </div>
+        
+            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                <md-content class="md-padding">
+                    <div class="dd-handle ng-scope">
+                        <form novalidate="" name="SBAReport" ng-submit="form.SBAReport()" autocomplete="off"
+                              class="form-validate">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label>SA Type <span style="color:red">*</span></label><br>
+                                        <select name="satype_name" id="satype_name" style="height:25px;" size="1"
+                                                ng-options="m.satype_name for m in applicationadd_salist"
+                                                ng-model="cbosatype" ng-change="search(cbosatype)">
+                                            <option value="">Select SA Type</option>
+
+                                        </select>
+                                        </div>                                                                           
+                                        
+
+                                  
+                                  <!--</div>-->
+                           
+                            <!-- <div class="row">-->
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label>Approval Status <span style="color:red">*</span></label><br>
+                                    <select name="approval_status" id="approvalstatus" class="chosen-select form-control"
+                                            ng-model="cboapproval"  ng-change="Onsearch(cboapproval)" style="height:30px;" size="1">
+                                        <option value="">Select Approval Status</option>
+                                        <option value="Registration Submitted">Registration Submitted</option>
+                                        <option value="Pending BD Verification">Pending BD Verification</option>
+                                        <option value="Assignment Pending">Assignment Pending</option>
+                                        <option value="Maker Pending">Maker Pending</option>
+                                        <option value="Query Raised by Maker">Query Raised by Maker</option>
+                                        <option value="Checker Pending">Checker Pending</option>
+                                        <option value="Query Raised by Checker">Query Raised by Checker</option>
+                                        <option value="Approver Pending">Approver Pending</option>
+                                        <option value="Query Raised by Approver">Query Raised by Approver</option>
+                                        <option value="BD Verification Rejected">BD Verification Rejected</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Rejected">Rejected</option>
+
+                                    </select>
+                                </div>
+                                    <div class="col-lg-4  col-sm-4 col-md-4"  style="height:25px;" >
+                                        <label></label>
+                                        <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="SBAReport.$invalid" ng-click="search(cbosatype)" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="SBAReport.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="SBAReport.$invalid" ng-click="ExportExcel()" title="Export Excel"><i class="fa fa-file"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;
+                                    </div>
+                                  </div>
+                                </div>
+                            <br />
+                            <div class="row">
+                                <!--<div class="col-lg-2  col-sm-2 col-md-2">
+
+                                    <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="SBAReport.$invalid" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="SBAReport.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="SBAReport.$invalid" ng-click="ExportExcel()" title="Export Excel"><i class="fa fa-file"></i></button>&nbsp;&nbsp;
+                                </div>-->
+                                </div>
+                                <!--<div class="row text-center">
+                                    <button type="button" class="btn btn-success btn-md" ng-click="ExportExcel()">
+                                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                                    </button>&nbsp;&nbsp;
+                                </div>-->
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                            <table datatable="ng" class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr class="text-white" style="background-color:#09385f;">
+                                                        <th> S.No </th>
+                                                        <th> SA Auto-Generated ID </th>
+                                                        <th> Samunnati Associate Name </th>                                                        
+                                                        <th> SA Entity Type </th>  
+                                                        <th> RM Name </th>
+                                                        <th> Approved By </th>
+                                                        <th> Status </th>                                             
+                                                        <th> Created Date </th>                                                       
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in reportList">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{data.sa_autogeneratedid}}</td>
+                                                        <td>{{data.sa_associatename}}</td>                                                       
+                                                        <td>{{data.saentitytype_name}}</td>     
+                                                        <td>{{data.sa_updated_by}}</td>                                                        
+                                                        <td>{{data.approvedBy}}</td>       
+                                                        <td>{{data.approvalstatus}}</td>                                                                                                    
+                                                       
+                                                        <td>{{data.sa_updated_date}}</td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            </form>
+
+                    </div>
+                    </md-content>
+            </div>
+            
+        </div>
+    </div>

@@ -1,0 +1,174 @@
+﻿<h3>
+    Service Request
+</h3>
+<!-- <style>
+.froalaheight {
+height: 500px !important;
+overflow-y: auto;    
+    }
+
+</style>
+
+<script>
+    var hosts = window.location.origin;
+   // var prefix = window.location.protocol + "//";
+    var imgurl = hosts+ '/WebApplication1/home/UploadImage';
+    new FroalaEditor('div#froala-editor', {
+        heightMin: 100,
+        heightMax: 300,
+        charCounterCount: false,
+        quickInsertEnabled: false,
+        imageMove: false,
+        imageDefaultWidth: 0,
+        imageDefaultAlign: 'left',
+        imageUploadURL: imgurl,
+      
+    })
+    $('div#froala-editor-p').on('froalaEditor.image.inserted', function (e, editor, $img, response) {
+        $img.after("<p></p>");
+    });
+</script> -->
+<!--<script> 
+    new FroalaEditor('div#froala-editor', {
+      heightMin: 100,
+      heightMax: 300,
+    })
+</script>-->
+<div ng-controller="osdTrnServiceRequestAdd">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-plus"></em>&nbsp; Raise Service Request
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form name="addservicerequest" id="addservicerequest" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Business Unit Name </label>&nbsp;<span style="color:red">*</span>
+                                <select name="department" id="department" ng-options="m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdept(cbodepartment)"
+                                        ng-model="cbodepartment" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Business Unit -----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Activity <span style="color:red">*</span></label>
+                                <select name="activity_name"  chosen 
+                                        ng-options="m.activity_name for m in activity_list" tabindex="1" 
+                                        ng-model="cboactivity" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value="">--Select Activity--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-9 col-sm-9 col-md-9">
+                                <div class="float-label">
+                                    <label> Request Title <span style="color:red">*</span></label>
+                                    <input ng-model="request_title" type="text" placeholder="Enter Request Title (Maximum 150 Characters Length)" tabindex="2"
+                                         ng-keyup="titlename(request_title)" maxlength="150" row="2" class="form-control ng-pristine ng-valid ng-touched" required>
+                                    <label style="color:red;">{{message}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-3 col-md-3 form-group">
+                                <label>Tag Member </label>
+                                <select name="tagmember_list" chosen="" multiple="multiple" ng-options="m.employee_name for m in employee_list" tabindex="4"
+                                        ng-model="tagmember_list" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row"> 
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Request Description <span style="color:red">*</span></label>
+                                // Froala Editor
+                                <div id="froala-editor">
+                                </div>
+                            </div>  -->
+                           
+                            <div  class="col-lg-12 col-md-12 col-sm-12 froalaheight " >
+                                <label>Request Description <span style="color:red">*</span></label>
+                                <textarea  style="resize:vertical;" name="specificcondition" placeholder="Enter Description..." required tabindex="3"
+                                        ng-model="request_description" class="form-control" rows="3"></textarea>
+                            </div> 
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope" style="height:350px;">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <strong>Upload Documents</strong>
+                                            <input type="file" id="file" tabindex="5" multiple onchange="angular.element(this).scope().ServiceRequestDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th scope="col">S.No</th>
+                                                                <th scope="col">Document Name</th>
+                                                                <th align="center" scope="col">
+                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                    <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall(lblfilepath,lblfilename)">
+                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                    </a>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in upload_list" >
+                                                                <td title="S.No">{{$index+1}}</td>
+                                                                <td title="Document Name">{{data.document_name}}</td>
+                                                                <td data-title="Action">
+                                                                    <button title="Download" class="btn btn-green btn-sm"
+                                                                            ng-click="downloads(data.document_path,data.document_name)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                        <em class="fa fa-download"></em>
+                                                                    </button>
+                                                                    <button title="View" class="btn btn-info btn-sm"  
+                                                                            ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em> 
+                                                                        </button>
+                                                                    <a title="Delete" class="btn btn-sm btn-danger" ng-click="uploaddocumentcancel(data.tmp_documentGid)">
+                                                                        <span class="icon icon-trash "></span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+
+                <div class="row">
+                    <br />
+                    <div class="text-center">
+
+                        <button type="button" class="btn btn-success btn-md" tabindex="6" ng-disabled="addservicerequest.$invalid" ng-click="submitserviceRequest(myHTML)">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="cancel()" class="btn btn-info" tabindex="7">
+                            <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                        </button>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

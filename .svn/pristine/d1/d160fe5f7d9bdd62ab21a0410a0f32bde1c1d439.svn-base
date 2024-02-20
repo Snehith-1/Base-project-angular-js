@@ -1,0 +1,137 @@
+﻿<h3>
+    Add Business Unit
+</h3>
+
+<div ng-controller="osdMstBusinessUnit">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-plus"></em>&nbsp; Add Business
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="modal-body ng-scope">
+                    <form novalidate="" name="businessunitformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="pd-sm-10">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label>Business Unit prefix &nbsp;<span style="color:red">*</span></label>
+                                        <input ng-model="txtbusinessunit_prefix" required="" maxlength="4"
+                                               tabindex="1" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                    </div>
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label>Business Unit Name &nbsp;<span style="color:red">*</span></label>
+                                        <input ng-model="txtbusinessunit_name" required="" maxlength="255"
+                                               tabindex="1" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <label>Business Unit Email Address &nbsp;</label>
+                                        <textarea ng-model="txtbusinessunit_emailaddress" ng-pattern="/^(\s?[^\s,]+@[^\s,]+\.[^\s,]+\s?,)*(\s?[^\s,]+@[^\s,]+\.[^\s,]+)$/g" placeholder="Enter Email with , seperation" rows="2" maxlength="500" class="form-control"
+                                                  id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+
+                                    <!--<div class="col-lg-6 col-sm-6 col-md-6">
+                    <label>Business Unit Status &nbsp;<span style="color:red">*</span></label>
+                    <input ng-model="txtbusinessunit_status" required="" maxlength="255"
+                           tabindex="1" aria-required="true" aria-invalid="true" class="form-control" style="">
+                </div>-->
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Business Unit Status Details </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-5 col-sm-5 col-md-5">
+                                                                <label>Business Unit Status &nbsp;</label>
+                                                                <input ng-model="txtbusinessunit_status"  maxlength="255"
+                                                                       tabindex="1" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                                            </div>
+
+                                                            <div class="col-lg-1 col-md-1 col-sm-1 align-top">
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="businessstatus_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <div style="max-height:200px;overflow:auto;">
+                                                                        <table class="table">
+                                                                            <thead class="bg-gray text-white">
+                                                                                <tr>
+                                                                                    <th>SNo</th>
+                                                                                    <th>Business Unit Status</th>
+                                                                                    <th>Created By</th>
+                                                                                    <th>Created Date </th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="list in businessstatusunit_list">
+                                                                                    <td>{{$index+1}}</td>
+                                                                                    <td>{{list.business_status}}</td>
+                                                                                    <td>{{list.created_by}}</td>
+                                                                                    <td>{{list.created_date}}</td>
+                                                                                    <td class="text-nowrap">
+                                                                    <button title="Delete" ng-click="businessstatus_delete(list.businessstatus_gid)"
+                                                                            class="btn btn-danger btn-xs ">
+                                                                        <em class="fa fa-trash-o"></em>
+                                                                    </button>
+                                                                </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="text-center">
+
+                                    <button type="button" class="btn btn-success btn-md" tabindex="6" ng-disabled="businessunitformsubmit.$invalid" ng-click="businessunitSubmit()">
+                                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                                    </button>&nbsp;&nbsp;
+                                    <button ng-click="cancel()" class="btn btn-info" tabindex="7">
+                                        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                                    </button>
+
+                                </div>
+                            </div>
+</form>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+</div>

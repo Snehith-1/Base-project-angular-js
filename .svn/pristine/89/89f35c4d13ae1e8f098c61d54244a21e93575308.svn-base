@@ -1,0 +1,310 @@
+﻿<h3>
+    DEPLOYMENT SUMMARY
+    <small>Overall Deployment Details</small>
+</h3>
+<div ng-controller="deploymentSummary as chart">
+    <div class="row">
+        <div class="col-lg-2 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-primary">
+                <div class="row row-table">
+                    <div class="col-xs-12 pv-lg">
+                        <div class="h2 mt0">{{count_approvalPending}}</div>
+                        <div class="text-uppercase">Approval Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-warning">
+                <div class="row row-table">
+                    <div class="col-xs-12 pv-lg">
+                        <div class="h2 mt0">
+                            {{count_approvalRejected}}
+                        </div>
+                        <div class="text-uppercase">Approval Rejected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-12 col-sm-12">
+            <!-- START widget-->
+            <div class="panel widget bg-success">
+                <div class="row row-table">
+                    <div class="col-xs-12 pv-lg">
+                        <div class="h2 mt0">{{count_deploymentDone}}</div>
+                        <div class="text-uppercase">Deployment Done</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-12 col-sm-12">
+            <!-- START date widget-->
+            <div class="panel widget bg-purple">
+                <div class="row row-table">
+                    <div class="col-xs-12 pv-lg">
+                        <div class="h2 mt0">{{count_deploymentPending}}</div>
+                        <div class="text-uppercase">Deployment Pending</div>
+                    </div>
+                </div>
+            </div>
+            <!-- END date widget    -->
+        </div>
+        <div class="col-lg-2 col-md-12 col-sm-12">
+            <!-- START date widget-->
+            <div class="panel widget bg-danger">
+                <div class="row row-table">
+                    <div class="col-xs-12 pv-lg">
+                        <div class="h2 mt0">{{count_deploymentRejected}}</div>
+                        <div class="text-uppercase">Deployment Rejected</div>
+                    </div>
+                </div>
+            </div>
+            <!-- END date widget    -->
+        </div>
+        <div class="col-lg-2 col-md-2">
+            <div class="panel panel-default">
+                <div class="panel-body" style="max-height:116px;">
+                    <div>
+                        <canvas doughnutchart="" options="chart.pieOptions" data="chart.pieData" height="190" responsive="true"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-labeled btn-default" title="Add Deployment" ng-click="addDep()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>Add Deployment
+        </button>
+    </div>
+    <br />
+    <div class="panel panel-info" >
+        <div class="panel-heading">Deployment Tracker</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="table-bordered bg-blue-300 hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Code</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">Client</th>
+                            <th class="text-center">Module</th>
+                            <th class="text-center">Raised By</th>
+                            <th class="text-center">Stage</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in summary_list">
+                            <td>{{ data.deployment_code }}</td>
+                            <td>{{ data.created_date }}</td>
+                            <td>{{ data.client_name }}</td>
+                            <td>{{data.module_name}}</td>
+                            <td>{{data.raised_by}}</td>
+                            <td class="text-center">{{data.stage}}</td>
+                            <td class="text-center">{{data.status}}</td>
+                            <td style="white-space:nowrap;">
+                                <button type="button" title="View" class="btn btn-sm btn-warning" ng-click="viewDep(data.deployment_gid)"><i class="fa fa-eye"></i></button>
+                                <button type="button" title="Edit" class="btn btn-sm btn-primary" ng-disabled="data.status=='Deployment Done' || data.status=='Deployment Rejected'" ng-click="editDep(data.deployment_gid)"><i class="fa fa-pencil"></i></button>
+                                <button type="button" title="Delete" class="btn btn-sm btn-danger" ng-disabled="data.status=='Deployment Done' || data.status=='Deploymnet Rejected'" ng-click="deleteDep(data.deployment_gid)"><i class="fa fa-close"></i></button>
+                                <button type="button" title="Update Status" ng-show="deployer" ng-disabled="data.status != 'Deployment Pending'" class="btn btn-sm btn-purple" ng-click="updateStatus(data.deployment_gid)"><i class="fa fa-rocket"></i></button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="Modals">
+        <script type="text/ng-template" id="/viewDeployment.html">
+            <div class="modal-header text-center bg-info">
+                <h4 id="myModalLabel" class="modal-title">VIEW DEPLOYMENT</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Code</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewCode}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Date</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewDate}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Raised By</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewRequest}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Deployed By</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewDeployed}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Stage</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewStage}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Status</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewStatus}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Client</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewClient}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Module(s)</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewModule}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Pages</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewPage}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Reports</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewReport}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Client Need</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewNeed}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewDescription}}
+                    </div>
+                </div>
+                <div class="row" ng-if="modified">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Last Modified By</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewUpdatedBy}}
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Modified Date</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        {{viewUpdatedDate}}
+                    </div>
+                </div>
+                <div ng-if="require">
+                    <table width="100%" class="table table-responsive table-bordered">
+                        <caption class="text-center"><b>Approvals</b></caption>
+                        <thead>
+                            <tr>
+                                <th class="text-center">S. No</th>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center" ng-show="$parent.viewAction">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="data in viewApprovals">
+                            <tr>
+                                <td class="text-center">{{$index +1}}</td>
+                                <td>{{data.employee_name}}</td>
+                                <td class="text-center">{{data.status}}</td>
+                                <td class="text-center" ng-show="$parent.viewAction">
+                                    <button type="button" title="Approve" class="btn btn-sm btn-primary" ng-disabled="$parent.viewEmployee != data.employee_gid || data.status=='Approved'" ng-click="approve(data.depAppGid)">
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </button>
+                                    <button type="button" title="Reject" class="btn btn-sm btn-danger" ng-disabled="$parent.viewEmployee != data.employee_gid || data.status=='Rejected'" ng-click="reject(data.depAppGid)">
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button ng-click="cancel()" class="btn btn-danger">Close</button>
+            </div>
+        </script>
+        <script type="text/ng-template" id="/updateStatus.html">
+            <div class="modal-header text-center bg-info">
+                <h4 id="myModalLabel" class="modal-title">Deployment Status</h4>
+            </div>
+            <div class="modal-body">
+                <br />
+                <div class="row text-center">
+                    Before update the status...
+                    <br />
+                    Please be confirm that, all files has been included such as new pages and new reports. And scripts were executed on the respected servers.
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="mb">
+                            <label class="mda-radio">
+                                <input type="radio" name="statusDep" ng-model="statusDep" ng-value="'deployed'" />
+                                <em class="bg-indigo-500"></em>Deployed
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="mb">
+                            <label class="mda-radio">
+                                <input type="radio" name="statusDep" checked="checked" ng-value="'rejected'" ng-model="statusDep" />
+                                <em class="bg-indigo-500"></em>Rejected
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <label class="mda-checkbox ">
+                            <input type="checkbox" checked="" ng-model="mailDep" />
+                            <em class="bg-purple-500"></em>Send mail to the requester
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="depStatus()">Submit</button>
+                <button ng-click="cancel()" class="btn btn-danger">Close</button>
+            </div>
+        </script>
+    </div>
+</div>

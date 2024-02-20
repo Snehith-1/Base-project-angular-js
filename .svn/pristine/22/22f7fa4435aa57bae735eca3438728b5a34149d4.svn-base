@@ -1,0 +1,512 @@
+
+<h3>
+    Co-lending Rule
+</h3>
+<style>
+    #changestyle_chosen {
+        width: 250px !important; 
+    }
+     #changestyle500_chosen {
+        width: 550px !important;  
+    }
+</style>
+<div ng-controller="MstColendingRulecontroller">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            &nbsp;<span class="btn-label bg-primary">
+                <i class="fa fa-legal"></i>
+            </span> Co-lending Rule
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editcreditgroup" ng-submit="form.editcreditgroup()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <!-- <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label class="col-form-label"> Colending Code </label>
+                            <input type="text" ng-model="colendingprogram_gid" tabindex="0" class="form-control" disabled />
+                        </div>  -->
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label class="col-form-label"> Co-lending Name </label>
+                            <input type="text" ng-model="colendar_name" tabindex="0" class="form-control" disabled />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label>Group Title  <span style="color:red">*</span></label>
+                            <select name="cluster2" chosen="" tabindex="2" ng-options="m.grouptitle_name for m in GroupTitle_list track by m.grouptitle_gid"
+                                    required="" ng-model="cbogroup_title" class="chosen-select form-control"></select>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label>Applicant Type  <span style="color:red">*</span></label>
+                            <input type="text" ng-model="cboapplicant_type" tabindex="0" class="form-control" disabled />
+                            <!-- <select name="cluster" chosen="" tabindex="2" ng-options="m.applicant_type for m in applicant_typelist track by m.id"
+                                    required="" ng-model="cboapplicant_type" class="chosen-select form-control"></select> -->
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <label class="col-form-label"> Question <span style="color:red">*</span> </label>
+                            <input type="text" ng-model="txtquestion" required tabindex="0" class="form-control" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Answer Type  <span style="color:red">*</span></label>
+                            <select name="cluster" chosen="" tabindex="2" ng-options="m.answer_typename for m in answertype track by m.id"
+                                    ng-change="AnswerTypeChange(cboanswer_type)" required=""
+                                    ng-model="cboanswer_type" class="chosen-select form-control"></select>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label class="col-form-label"> Do you need to add this score in final score ? <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="FinalScore" name="FinalScore" value="Yes" ng-model="rdbFinalScore" required />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="FinalScore" name="FinalScore" value="No" ng-model="rdbFinalScore" required />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label class="col-form-label"> Do you want to hide this question in score card ? <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="hiddenquestion" name="hiddenquestion" value="true" ng-model="rdbhiddenquestion" required />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="hiddenquestion" name="hiddenquestion" value="false" ng-model="rdbhiddenquestion" required />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row " ng-show="shownumberdiv"> 
+                </div>
+                <div class="row " ng-show="showlistdiv">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <label class="text-primary" style="font-size:16px;">List Details </label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label class="col-form-label"> List Name <span style="color:red">*</span> </label>
+                                        <input type="text" ng-model="txtlistName" tabindex="0" class="form-control" />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label> Score <span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtScore" tabindex="0" class="form-control" />
+                                        <!--pattern="[0-9]+"-->
+                                    </div>
+                                    <div class="col-sm-1 col-md-1 col-lg-1" style="padding-top:7px;">
+                                        <br />
+                                        <button class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;"
+                                                ng-click="addlist(variety_gid)" ng-disabled="(txtlistName && txtScore) ?  false : true">
+                                            <span class="fa fa-plus" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>List Name</th>
+                                                <th>Score </th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in listnamearr">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{data.list_name}}</td>
+                                                <td>{{data.Score}}</td>
+                                                <td class="text-nowrap">
+
+                                                    <button title="Delete" ng-click="deletelist($index)"
+                                                            class="btn btn-danger btn-xs ">
+                                                        <em class="fa fa-trash-o"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row " ng-show="showcalculatediv">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <label class="text-primary" style="font-size:16px;">Calculation Details </label>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <table class="table">
+                                        <tr>
+                                            <th>Key</th>
+                                            <th class="col-sm-6 col-lg-6 col-md-6 text-center">Question</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Field Type</th>
+                                            <th class="col-sm-1 col-lg-1 col-md-1 text-center">Constant</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Operations</th>
+                                            <th class="col-sm-1 col-lg-1 col-md-1 text-center">
+                                                <button title="Add" ng-click="Addcalculation($index)"
+                                                        class="btn btn-info btn-xs ">
+                                                    <em class="fa fa-plus"></em>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        <tbody ng-repeat="m in Calculationdetaillist">
+                                            <tr>
+                                                <td>{{m.simplify_key}}</td>
+                                                <td class="col-sm-6 col-lg-6 col-md-6">
+                                                    <select id="changestyle500" name="cluster" chosen="" tabindex="2" ng-options="(k.question + ' / '+ k.grouptitle_name) for k in MdlGroupTitleQuestionlist track by k.colendingquestionrule_gid"
+                                                            ng-model="m.question" class="chosen-select1 form-control" ng-change="Changeformula()"></select>
+                                                </td>
+                                                <td class="col-sm-3 col-lg-3 col-md-3">
+                                                    <select id="changestyle" name="cluster" chosen="" tabindex="2" ng-options="k.field_type for k in fieldtypelist track by k.id"
+                                                            ng-model="m.field_type" class="chosen-select form-control" ng-change="changefieldtype($index);Changeformula()"></select>
+                                                </td>
+                                                <td class="col-sm-1 col-lg-1 col-md-1">
+                                                    <input type="text" ng-model="m.constantvalue" placeholder="Enter Constant Value" ng-change="Changeformula()" pattern="[0-9]+" tabindex="0" class="form-control" ng-disabled="m.constantinput" />
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">
+                                                    <select id="changestyle" name="cluster" chosen="" tabindex="2" ng-options="k.operation_name for k in operationlist track by k.id"
+                                                            ng-model="m.operations" class="chosen-select form-control" ng-change="Changeformula()"></select>
+                                                </td>
+                                                <td class="col-sm-1 col-lg-1 col-md-1 text-center">
+                                                    <button title="Remove" ng-click="Removecalculation($index)"
+                                                            class="btn btn-danger btn-xs">
+                                                        <em class="fa fa-trash-o"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <!--<tfoot>
+                                </tfoot>-->
+                                    </table>
+                                    <div>
+                                        <div class="col-sm-8 col-lg-8 col-md-8">
+                                            <textarea rows="3" placeholder="Formula.." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                      ng-model="txtcalculation_formula" class="form-control" disabled ng-required="showcalculatediv"></textarea>
+                                        </div>
+                                        <div class="col-sm-4 col-lg-4 col-md-4">
+                                            <textarea rows="3" placeholder="Formula.." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                      ng-model="simplify_formula" class="form-control" ng-required="showcalculatediv"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="editcreditgroup.$invalid" ng-click="addquestion()"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <label class="text-primary" style="font-size:16px;">Question Details </label>
+                            <hr />
+                            <button title="Edit Group Order" ng-click="editgroupOrder()"
+                                    class="btn btn-green btn-xs">
+                                <em class="fa fa-edit"></em> Edit Group Order
+                            </button> &nbsp; &nbsp;
+                             <button title="Edit Question Order" ng-click="editquestionOrder()"
+                                    class="btn btn-green btn-xs" ng-show="editquesorder">
+                                <em class="fa fa-edit"></em> Edit Question Order
+                            </button>&nbsp; &nbsp;
+                             <button title="Update Question Order" ng-hide="editquesorder" ng-click="updatequestionOrder()"
+                                    class="btn btn-success btn-xs">
+                                <em class="fa fa-check-circle-o"></em> Update Question Order
+                            </button>&nbsp; &nbsp;
+                            <button title="Cancel Question Order" ng-hide="editquesorder" ng-click="CancelquestionOrder()"
+                                    class="btn btn-danger btn-xs">
+                                <em class="fa icon-close"></em> Cancel Question Order
+                            </button>&nbsp; &nbsp;
+                            <br />
+                            <div class="row">
+                                <br />
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <table class="table">
+                                            <thead class="bg-gray text-white">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Group Order</th>
+                                                    <th>Group Title</th>
+                                                    <th>Applicant Type</th>
+                                                    <th>Question Order</th>
+                                                    <th class="col-lg-6 col-md-6 col-sm-6">Question </th>
+                                                    <th>Answer Type</th>
+                                                    <th>Formula</th>
+                                                 
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in MdlGroupTitleQuestionlist">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{data.group_order}}</td>
+                                                    <td>{{data.grouptitle_name}}</td>
+                                                    <td>{{data.applicant_type}}</td>
+                                                    <td>
+                                                        <input type="text" ng-pattern="/^[0-9]*$/" ng-model="data.question_order" tabindex="0" 
+                                                               style="width:60px;" ng-disabled="editquesorder" class="form-control" />
+                                                    </td>
+                                                    <td>{{data.question}}</td>
+                                                    <td>{{data.answer_type}}</td>
+                                                    <td>{{data.simplify_formula}}</td> 
+                                                    <td class="text-nowrap">
+                                                        <button title="View" ng-click="rule_view(data.grouptitle_name,data.question,data.colendingquestionrule_gid,data.answer_type,data.simplify_formula,data.addfinal_score,data.hidden_question,data.applicant_type)"
+                                                                class="btn btn-info btn-xs ">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                        <!--<button title="Edit" ng-click="rule_edit(data.creditquestionrule_gid)"
+                                                        class="btn btn-success btn-xs ">
+                                                    <em class="fa fa-edit"></em>
+                                                </button>-->
+                                                        <button title="Delete" ng-click="rule_delete(data.colendingquestionrule_gid)"
+                                                                class="btn btn-danger btn-xs ">
+                                                            <em class="fa fa-trash-o"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <!--<button type="button" class="btn btn-success btn-md" ng-disabled="editcreditgroup.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;-->
+                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/ViewRule.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;&nbsp;<label style="font-size:16px"> View Question Details </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope" style="background-color: #f9f8f8;" ng-switch="txtanswer_type">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Group Title </label>
+                                            <br />
+                                            <p>{{txtviewgrouptitle_name}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Applicant Type </label>
+                                            <br />
+                                            <p>{{txtapplicant_type}}</p>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <label class="col-form-label"> Question </label>
+                                            <br />
+                                            <p>{{txtviewquestion}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /> 
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                       
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label">  Do you need to add this score in final score ? </label>
+                                            <br />
+                                            <p>{{lbladdfinal_score}}</p>
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5" ng-switch="lblhidden_question">
+                                            <label class="col-form-label"> Do you want to hide this question in score card ? </label>
+                                            <br />
+                                            <p ng-switch-when="false">No</p>
+                                            <p ng-switch-when="true">Yes</p>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label class="col-form-label"> Answer Type </label>
+                                            <br />
+                                            <p>{{txtanswer_type}}</p>
+                                        </div>
+                                    </div>
+                                </div><br /> 
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12"> 
+                                        <div class="col-lg-8 col-md-8 col-sm-8" ng-switch-when="Calculation">
+                                            <label class="col-form-label"> Calculation Formula </label>
+                                            <br />
+                                            <p>{{txtcalculation_formula}}</p>
+                                        </div>
+                                    </div>
+                                </div><br />
+                                <div class="row" ng-switch-when="Calculation">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Key</th>
+                                                                <th>Group Title </th>                                                                
+                                                                <th>Question </th>
+                                                                <th>Field Type</th>
+                                                                <th>Constant</th>
+                                                                <th>Operations</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in calculationlistarrdtl">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{data.simplify_key}}</td>
+                                                                <td>{{data.grouptitle_name}}</td>                                                               
+                                                                <td>{{data.question}}</td>
+                                                                <td>{{data.field_type}}</td>
+                                                                <td>{{data.constantvalue}}</td>
+                                                                <td>{{data.operations}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-switch-when="List">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>List Name</th>
+                                                            <th>Score </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in listnamearrdtl">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.list_name}}</td>
+                                                            <td>{{data.Score}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/EditGroupOrderPopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;&nbsp;<label style="font-size:16px"> Edit Group Order </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                <div class="row">
+                                    <br />
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Group Title</th>
+                                                        <th>Applicant Type</th>
+                                                        <th>Group Order</th>  
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in MdlGroupTitle_list">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{data.grouptitle_name}}</td>
+                                                        <td>{{data.applicant_type}}</td>
+                                                        <td>
+                                                            <input type="text" ng-model="data.group_order" required tabindex="0"
+                                                                   style="width:60px;" class="form-control" />
+                                                        </td> 
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>   

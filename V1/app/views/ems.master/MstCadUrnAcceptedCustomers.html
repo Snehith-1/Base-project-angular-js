@@ -1,0 +1,416 @@
+﻿<h3>
+    CAD Management
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 68px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 70px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="MstCadUrnAcceptedCustomersController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="tab">
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="pendincad_review()" style="color:#141478;font-size:12px">
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 18px;"></em>
+                    Pending CAD Review
+                    <br />
+                    <div class="label" style="padding-top:4px;font-size: 14px;padding-bottom:4px;color:#141478;">{{cadreview_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="cadaccepted_customers()" style="color:#00796b;font-size:12px">
+                    <em class="fa fa-check-square-o" style="color:#00796b;font-size: 18px;"></em>
+                    CAD Accepted Customers
+                    <br />
+                    <div class="label" style="font-size: 14px;padding-top:4px;padding-bottom:4px;color:#00796b;">{{accept_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="urn_grouping()"onclick="openApplication(event, 'CAD Inprogress')" id="defaultOpen"  style="color:#C10B68;font-size:12px">
+                    <em class="fa fa-users" style="color:#C10B68;font-size: 18px;"></em>
+                    URN Grouping
+                    <br />
+                    <div class="label" style="padding-top:4px;padding-bottom:4px;color:#C10B68;font-size: 14px;">{{urngrouping_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="sendback_underwriting()" style="color:#871490;font-size:12px">
+                    <em class="fa fa-file-text" style="color:#871490;font-size: 18px;"></em>
+                    Sent Back to Underwriting
+                    <br />
+                    <div class="label" style="color:#871490;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{backtounderwriting_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="sendback_cc()" style="color:#706710;font-size:12px">
+                    <em class="fa fa-arrow-circle-left" style="color:#706710;font-size: 18px;"></em>
+                    Sent Back to CC
+                    <br />
+                    <div class="label" style="color:#706710;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{sentbackcc_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="cc_rejected()" style="color:#FF0000;font-size:12px">
+                    <em class="fa icon-close fa-x" style="color:#FF0000;font-size: 18px;"></em>
+                    CC Rejected
+                    <br />
+                    <div class="label" style="color:#FF0000;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{ccrejected_count}}</div>
+                </button>
+                <!--<button class="col-lg-2 col-md-2 col-sm-2" style="font-size:12px;text-decoration: none;background-color: rgb(226, 221, 221);">
+                    Total Applications
+                    <br />
+                    <div class="label" style="background-color:#c1c1c1;padding-top:4px;font-size:8px;padding-bottom:4px;font-size:11px;color:black;">{{lstotalcount}}</div>
+                </button>-->
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel" id="CAD Inprogress">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="npa_tag_list()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <span class="fa-stack pull-left">
+                            <em class="fa fa-circle fa-stack-2x text-gray-darker"></em>
+                            <em class="fa fa-user-times fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                        <b style="font-size: 14px;"> NPA Tagged List </b>
+                        <div class="pull-right label" style="background-color:rgb(41, 41, 41);padding-top:6px;font-size: 8px;padding-bottom:6px;font-size:9px;color: white;">
+                            {{taggednpa_count}}
+                        </div>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="legal_tag_list()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <span class="fa-stack pull-left">
+                            <em class="fa fa-circle fa-stack-2x text-gray-darker"></em>
+                            <em class="fa fa-user-times fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                        <b style="font-size: 14px;"> Legal Tagged List </b>
+                        <div class="pull-right label" style="background-color:rgb(41, 41, 41);padding-top:6px;font-size: 8px;padding-bottom:6px;font-size:9px;color: white;">
+                            {{taggedlegal_count}}
+                        </div>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-lg-1 col-sm-1 col-md-1" style="padding-top:2px;">
+                    <button type="button" class="btn btn-success" ng-click="npareport()" title="NPA Export Excel"><i class="fa fa-file-excel-o"></i></button>
+                    <br /><label style="padding-top: 8px;"> <a download="" href="" id="btnpdf" style="display:none;"></a>NPA Export Excel </label>
+                </div>
+                <div class="col-lg-1 col-sm-1 col-md-1" style="padding-top: 2px; ">
+                    <button type="button" class="btn btn-success" ng-click="legalreport()" title="Legal Export Excel"><i class="fa fa-file-excel-o"></i></button>
+                    <br /><label style="padding-top: 8px;"> <a download="" href="" id="btnpdf" style="display:none;"></a>Legal Export Excel </label>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th class="text-center"> S.No</th>
+                                    <th class="nowrap"> Customer URN</th>
+                                    <th class="nowrap"> Customer Name </th>
+                                    <th class="nowrap"> Vertical </th>
+                                    <th class="nowrap"> Region </th> 
+                                    <th class="nowrap"> NPA Tagging</th>
+                                    <th class="nowrap"> Legal Tagging</th>                                  
+                                    <th class="nowrap"> CAD Accepted Date </th>
+                                    <th class="nowrap"> CAD Accepted By </th>
+                                    <th class="nowrap"> Type </th>
+                                    <th class="text-center nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Cadacceptedcustomer_list">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Customer URN'"> {{data.customer_urn}} </td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>  
+                                    <td data-title="'Vertical'"> {{data.vertical_name}} </td>
+                                    <td data-title="'Region'"> {{data.region}} </td>         
+                                    <td data-title="'Legal Tagging'" ng-switch="data.npatag_flag" class="text-center">
+                                        <label class="label label-success" ng-switch-when='Y' style="font-size:10px;">Tagged</label>
+                                        <label class="label label-warning" ng-switch-when='N' style="font-size:10px;">UnTagged</label>
+                                        <span ng-switch-when=''>NA</span>
+                                    </td>     
+                                    <td data-title="'Legal Tagging'" ng-switch="data.legaltag_flag" class="text-center">
+                                        <label class="label label-success" ng-switch-when='Y' style="font-size:10px;">Tagged</label>
+                                        <label class="label label-warning" ng-switch-when='N' style="font-size:10px;">UnTagged</label>
+                                        <span ng-switch-when=''>NA</span>
+                                    </td>                 
+                                    <td data-title="'CAD Accepted Date'"> {{data.cadaccepted_date}} </td>
+                                    <td data-title="'CAD Accepted By'"> {{data.cadaccepted_by}} </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                        <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.enhancement_flag=='Y'">
+                                        <label class="label label-success" style="font-size:10px;">Enhancement </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.enhancement_flag=='N'">
+                                        <label class="label label-primary" style="font-size:10px;"> New </label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="view_dtls(data.application_gid,data.customer_urn)" class="btn btn-info" style="background-color:#C10B68;">
+                                            <em class="fa fa-users"></em>
+                                        </button>
+                                        <button title="Limit Management" ng-click="limit_management(data.application_gid,data.customer_urn)"
+                                                class="btn btn-info" style="background-color: #6a1b9a; ">
+                                            <em class="fa fa-money"></em>
+                                        </button>
+                                        <button title="Tag" ng-click="urn_tag(data.customer_name,data.customer_urn,data.customer2tag_gid,data.legaltag_flag,data.npatag_flag)" style="color:white;" class="btn btn-info" ng-disabled="data.legaltag_flag == 'Y' && data.npatag_flag == 'Y'">
+                                            <em class="fa fa-tag"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/assignmentdtl_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Assignment Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">CAD Group Name</th>
+                                            <th scope="col">Menu Name</th>
+                                            <th scope="col">Maker Name </th>
+                                            <th scope="col">Checker Name </th>
+                                            <th scope="col">Approver Name </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in assignment_list">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="CAD Group Name">{{data.cadgroup_name}}</td>
+                                            <td title="Menu Name">{{data.menu_name}}</td>
+                                            <td title="Maker Name">{{data.maker_name}} </td>
+                                            <td title="Checker Name">{{data.checker_name}} </td>
+                                            <td title="Approver Name">{{data.approver_name}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/application_tag.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-tag"></em>&nbsp;<label style="font-size:16px">&nbsp;&nbsp;&nbsp; Customer Tag</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+            
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="customer_tag" ng-submit="form.customer_tag()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Tag <span style="color:red">*</span></label>
+                            <select name="customer_tag" ng-model="cbocustomer_tag" required="" chosen = ""
+                                    class="form-control ng-valid ng-touched ng-valid-parse chosen-select" size="1">
+                                <option value="NPA">NPA</option>
+                                <option value="Legal">Legal</option>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-md-12">
+                                <label>Remarks </label><span style="color:red;">*</span>
+                                <textarea ng-model="txttaggedremarks" placeholder="Enter the Remarks" required rows="2" class="form-control"  style="resize:vertical;max-height:120px;overflow:auto;"
+                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row" ng-show="legaltag_list!=null">
+                        <!-- <p class="text-purple text-bold" style="font-size:16px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Legal Tagged History</p> -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="table-responsive" >
+                                <div style="max-height:120px;overflow:auto;">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Legal Updated By</th>
+                                                <th scope="col">Status</th>
+                                                <th class="text-center" scope="col">Remarks</th>
+                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr width="100%" ng-repeat="data in legaltag_list">
+                                                <td  scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td  scope="col" title="'S.No'">{{data.created_by}} / {{data.created_date}}</td>
+                                                <td align="left" scope="col" title="'S.No'">{{data.tag_status}}</td>
+                                                <!-- <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td> -->
+                                                <td style="text-align: center;">
+                                                    <em class="fa fa-question-circle" ng-click=description(data.remarks) style="font-size:24px;align-content:center;"></em>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <br>
+                    <div class="row" ng-show="npatag_list!=null">
+                        <!-- <p class="text-purple text-bold" style="font-size:16px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NPA Tagged History</p> -->
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="table-responsive" >
+                                <div style="max-height:120px;overflow:auto;">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th align="center" scope="col">S.No</th>
+                                                <th align="center" scope="col">NPA Updated By</th>
+                                                <th scope="col">Status</th>
+                                                <th class="text-center" scope="col">Remarks</th>
+                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr width="100%" ng-repeat="data in npatag_list">
+                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td align="left" scope="col" title="'S.No'">{{data.created_by}} / {{data.created_date}}</td>
+                                                <td align="left" scope="col" title="'S.No'">{{data.tag_status}}</td>
+                                                <!-- <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td> -->
+                                                <td style="text-align: center;">
+                                                    <em class="fa fa-question-circle" ng-click=description(data.remarks) style="font-size:24px;align-content:center;"></em>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button ng-click="urn_tag_submit()" class="btn btn-success" ng-disabled = "customer_tag.$invalid"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Submit</button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script type="text/ng-template" id="/description.html">
+            <div class="modal-header bg-primary">
+                <h4 class="modal-title">
+                    <span class="btn-label bg-primary">
+                        <i class="fa fa-edit "></i>
+                    </span> Remarks
+                </h4>
+            </div>
+            <div class="modal-body">
+                <br>
+                &nbsp;&nbsp;{{description}}
+                <br>
+                <br>
+                <div align="center">
+                <button ng-click="back()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </script>
+    </script>
+</div>

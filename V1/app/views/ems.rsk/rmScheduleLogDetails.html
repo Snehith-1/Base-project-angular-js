@@ -1,0 +1,499 @@
+﻿<h3>
+    Schedule Log Details
+</h3>
+<div ng-controller="rmScheduleLogDetails as dp">
+    <div class="card">
+
+        <div class="row">
+            <div class="card-heading bg-primary">
+                <div class="card-title">{{customer_name}} - {{customer_urn}}</div>
+
+            </div>
+            <md-content class="md-padding">
+                <md-tabs md-dynamic-height="" md-border-bottom="">
+
+                    <md-tab label="Schedule">
+                        <md-content class="md-padding">
+
+                            <div class="">
+                                <h4>
+                                    <label>Allocated Date : <span>{{allocated_date}}</span></label>
+                                </h4>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <button title="Add" class="btn btn-info btn-sm"
+                                                    ng-click="scheduleLogDetails(customer_gid)">
+                                                <em class="fa fa-plus"></em>&nbsp;Schedule
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.NO</th>
+                                                    <th>Appointment Date</th>
+                                                    <th>Appointment Time</th>
+                                                    <th>Appointment Status</th>
+                                                    <th>Remarks</th>
+                                                    <th>Schedule Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in scheduleList" ng-switch="data.reschedule_flag">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Appointment Date'">{{data.appointment_date}}</td>
+                                                    <td data-title="'Appointment Time'">{{data.appointment_time}}</td>
+                                                    <td data-title="'Appointment Status'">{{data.appointment_status}}</td>
+                                                    <td data-title="'Remarks'">{{data.appointment_remarks}}</td>
+                                                    <td data-title="'Schedule Status'">{{data.schedule_status}}</td>
+                                                    <td>
+                                                        <button title="Re-Schedule" class="btn btn-success btn-sm"
+                                                                ng-click="scheduleLogDetailsEdit(data.schedulelog_gid )">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                        <button title="Schedule Status" class="btn btn-primary btn-sm"
+                                                                ng-click="ScheduleStatus(data.schedulelog_gid,data.schedule_status)">
+                                                            <em class="fa fa-check-square"></em>
+                                                        </button>
+                                                        <!--<button title="Schedule Log - History" class="btn bg-blue-grey-500 btn-sm" ng-switch-when="Y"
+                                                                ng-click="scheduleLoghistory(data.schedulelog_gid )">
+                                                            <em class="fa fa-history text-white" ></em>
+                                                        </button>-->
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+
+
+                    <md-tab label="Call Log">
+                        <md-content class="md-padding">
+
+                            <div class="">
+                                <h4>
+                                    <label>Allocated Date : <span>{{allocated_date}}</span></label>
+                                </h4>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <button title="Add" class="btn btn-info btn-sm"
+                                                    ng-click="callLogDetails(customer_gid)">
+                                                <em class="fa fa-plus"></em>&nbsp;Call Log
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.NO</th>
+                                                    <th>Dialed Number</th>
+                                                    <th>Call Response</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in calllogdtlList">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Dialed Number'">{{data.dialed_number}}</td>
+                                                    <td data-title="'Call Response'">{{data.call_response}}</td>
+                                                    <td data-title="'Remarks'">{{data.call_remarks}}</td>
+                                                    <td>
+                                                        <button title="Edit" class="btn btn-success btn-sm"
+                                                                ng-click="callLogDetailsedit(data.calllog_gid)">
+                                                            <em class="fa fa-edit"></em>
+                                                        </button>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+
+                </md-tabs>
+            </md-content>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <a class="btn btn-info" href="#/app/rmVisitReport">
+                    <em class="fa fa-arrow-left"></em>
+                    <span>Back</span>
+                </a>
+
+            </div>
+            <br />
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/schedule.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-calendar-times-o"></em>&nbsp;Schedule Details</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="schedulelogadd" id="schedulelogadd" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                    <label class="text-primary" ng-model="customer_gid">{{customer_name}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Appointment Date & Time<span style="color:red">*</span> </label>
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+
+                                        <input type="date" id="fromDate" name="fromdate" ng-model="txtappointmentdate" required>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+
+                                    <timepicker ng-model="txtappointment_time" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label>Appointment Status:  </label>
+                                    <input ng-model="txtappointmentstatus" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label>Remarks: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Remarks..." required
+                                              ng-model="txtremarks" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="scheduleappointment()" ng-disabled="schedulelogadd.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Editschedule.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-calendar"></em>&nbsp;Re-Schedule Details</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="ok()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="schedulelogedit" id="schedulelogedit" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                    <label class="text-primary" ng-model="customer_gid">{{customer_name}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Appointment Date & Time<span style="color:red">*</span> </label>
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+
+                                        <input type="date" id="fromDate" name="fromdate" ng-model="txtappointmentdate" required>
+                                    </md-input-container>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+
+                                    <timepicker ng-model="txtappointment_time" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Appointment Status:  </label>
+                                    <input ng-model="txtappointmentstatus" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Remarks: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Remarks..." required
+                                              ng-model="txtremarks" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="scheduleappointmentedit()" ng-disabled="schedulelogedit.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    &emsp;<h4><em class="fa fa-history"></em>&nbsp;Schedule Log - History</h4>
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table" style="padding: 0px 0px">
+                                            <thead>
+                                                <tr class="bg-gray-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Appointment Date</th>
+                                                    <th>Appointment Time</th>
+                                                    <th>Appointment Status</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in scheduleList">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Appointment Date'">{{data.appointment_date}}</td>
+                                                    <td data-title="'Appointment Time'">{{data.appointment_time}}</td>
+                                                    <td data-title="'Appointment Status'">{{data.appointment_status}}</td>
+                                                    <td data-title="'Remarks'">{{data.appointment_remarks}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/ScheduleStatusModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-check-square"></em>&nbsp; Schedule Status </h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="reportcancel" id="reportcancel" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Schedule Status <span style="color:red">*</span></label>
+                                    <select name="approval_authority" ng-model="cboschedule_status" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Schedule Status </option>
+                                        <option value="Pending"> Pending</option>
+                                        <option value="Completed"> Completed</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="ScheduleStatusUpdate()" ng-disabled="reportcancel.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/callLogDetailsModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-phone-square"></em>&nbsp;Call Log Details</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="calllogadd" id="calllogadd" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Dialed Number: <span style="color:red">*</span></label>
+                                    <input ng-model="txtdialed_number" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Call Response: <span style="color:red">*</span></label>
+                                    <input ng-model="txtcall_response" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Remarks: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Remarks..." required
+                                              ng-model="txtcall_remarks" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <!-- <a class="btn btn-success" ng-click="callLogsubmit()" ng-disabled="calllogadd.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Record Call Log</span>
+                                    </a> -->
+                                    <button type="button" class="btn btn-success btn-md" ng-click="callLogsubmit()"
+                                    ng-disabled="calllogadd.$invalid"><i class="fa fa-check"></i> &nbsp;&nbsp;Record Call Log</button>
+
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/callLogEditDetails.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-phone-square"></em>&nbsp;Edit Call Log Details</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="calllogedit" id="calllogedit" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Dialed Number: <span style="color:red">*</span></label>
+                                    <input ng-model="txtdialed_number" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Call Response: <span style="color:red">*</span></label>
+                                    <input ng-model="txtcall_response" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" required>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Remarks: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Remarks..." required
+                                              ng-model="txtcall_remarks" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <!-- <a class="btn btn-success" ng-click="editcallLogsubmit(data.calllog_gid)" ng-disabled="calllogedit.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update Call Log</span>
+                                    </a> -->
+                                    <button type="button" class="btn btn-success btn-md" ng-click="editcallLogsubmit(data.calllog_gid)"
+                                    ng-disabled="calllogedit.$invalid"><i class="fa fa-check"></i> &nbsp;&nbsp;Update Call Log</button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

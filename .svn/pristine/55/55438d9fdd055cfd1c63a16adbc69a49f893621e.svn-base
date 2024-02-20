@@ -1,0 +1,273 @@
+﻿<style>
+    .tabactivecolorstyle {
+        background-color: #84cbdb;
+    }
+</style>
+<h3>
+    Initiate Audit
+</h3>
+<div ng-controller="AtmTrnInitiateAuditApprovedController">
+
+    <button type="button" title="Initiate Audit" class="btn btn-info btn-sm" ng-click="createaudit()">
+        <span class="btn-label">
+            <i class="fa fa-plus"></i>
+        </span> Initiate Audit
+    </button>
+    <br><br>
+
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+
+                <!--<div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="pendingaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{pendingaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Pending Audit </b>
+                    </button>
+                    <br />
+                </div>-->
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="opentab" class="btn btn-labeled" ng-click="openaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{openaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Initiate Audit Pending</b>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="approvedtab" class="btn btn-labeled tabactivecolorstyle" ng-click="approvedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{Approvedaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Approved Audit </b>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="holdtab" class="btn btn-labeled" ng-click="auditsonhold()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{auditsonhold_count}}</b></div>
+                        <b style="font-size: 14px;">Audits on Hold </b>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="closedtab" class="btn btn-labeled" ng-click="closedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{closedaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Closed Audit </b>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="completedtab" class="btn btn-labeled" ng-click="completedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{completedaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Completed Audit </b>
+                    </button>
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" id="rejectedtab" class="btn btn-labeled" ng-click="rejectedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{rejectedaudit_count}}</b></div>
+                        <b style="font-size: 14px;">Rejected Audit </b>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="table-responsive">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th>S.No</th>
+                                    <th>Audit Ref No.</th>
+                                    <th>Audit Name</th>
+                                    <th>Audit Type</th>
+                                    <th>Audit Department </th>
+                                    <th>Priority </th>
+                                    <th>Audit End Date </th>
+                                    <th>Assigned Information</th>
+                                    <th>Approval Status</th>
+                                    <!--<th>Status</th>-->
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in auditcreation_list">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Audit Ref No.'">{{data.audit_uniqueno}}</td>
+                                    <td data-title="'Audit Name'">{{data.audit_name}}</td>
+                                    <td data-title="'Audit Name'">{{data.audittype_name}}</td>
+                                    <td data-title="'Audit Department'">{{data.auditdepartment_name}}</td>
+                                    <td data-title="'Priority'">{{data.auditpriority_name}}</td>
+                                    <td data-title="'Audit End Date'">{{data.due_date}}</td>
+                                    <td data-title="'Approval Information'" class="text-center">
+                                        <em class="fa fa-info-circle" ng-click=approvalinformation(data.auditcreation_gid) style="font-size:24px;align-content:center;"></em>
+                                    </td>
+                                    <td class="text-center" data-title="'Approval Status'">{{data.approval_status}}</td>
+                                    <!--<td data-title="'Status'">{{data.status_update}}</td>-->
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+
+                                    <td data-title="'Action'" class="nowrap">
+
+                                        <button title="Audit 360 view" ng-click="view(data.auditcreation_gid,data.checklistmaster_gid,data.sampleimport_gid);" class="btn bg-blue-500">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                        <!--<button title="Edit" ng-click="edit(data.auditcreation_gid);" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>-->
+                                        <button title="Status Update" ng-click="statusupdate(data.auditcreation_gid)" class="btn btn-green">
+                                            <em class="fa fa-arrow-circle-o-up"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="/statusupdate.html">
+    <div class="modal-header bg-primary ng-scope">
+
+        <h4>
+            &emsp;
+            <span>
+                <i class="fa fa-plus "></i>
+            </span> &nbsp; Status Update
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="statusupdate" ng-submit="form.status_update()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-sm-4 col-sm-4 col-sm-4">
+                                <label> Audit Name : </label>
+                            </div>
+                            <div class="col-sm-8 col-sm-8 col-sm-8">
+                                {{txtaudit_name}}
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Status Update <span style="color:red">*</span></label>
+                                <select id="statusupdate" name="statusupdate" chosen="" ng-model="status_update" required ng-change="onselectedchangeaudit(status_update)" class="chosen-select form-control">
+                                    <option value="Hold">Hold</option>
+                                    <option value="Closed">Closed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Remarks <span style="color:red"> *</span></label>
+                                <textarea rows="4" style="resize:vertical;" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                          required ng-model="txtremarks" class="form-control"></textarea>
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-md" ng-disabled="statusupdate.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </form>
+    </div>
+</script>
+<script type="text/ng-template" id="/Approvalinformation.html">
+    <!--<div class="modal-header bg-primary">
+                <h4 class="modal-title">
+                    <span class="btn-label bg-primary">
+                        <i class="fa fa-info-circle">&nbsp; Assigned Information</i>
+                       </span>
+                        <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+    </h4>
+            </div>-->
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-info-circle"></i>
+            </span> Assigned Information
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <label> Audit Period From </label><br /><span> {{lblauditperiod_fromdate}} </span>
+
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <label> Audit Period To </label><br /><span> {{lblauditperiod_todate}} </span>
+
+            </div>
+        </div>
+
+        <div class="dd-handle ng-scope">
+            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+            <hr class="space" />
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="table-responsive table-bordered">
+                            <div style="max-height:200px;overflow:auto;">
+                                <table class="table">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Auditee Maker</th>
+                                            <th align="center" scope="col">Auditee Checker</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                            <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                            <td align="left" scope="col" title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                            <td align="left" scope="col" title="Auditee Checker'">{{data.auditeechecker_name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label class="text-primary">Auditor Information</label>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label> Auditor Maker </label>
+                <br />
+                <span> {{lblaudit_maker}} </span>
+
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label> Auditor Checker </label><br /><span> {{lblaudit_checker}}</span>
+
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label> Auditor Approver </label><br /><span> {{lblauditapprover_name}}</span>
+            </div>
+        </div>
+        <br /><br />
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br />
+    </div>
+</script>
+</div>
+
+

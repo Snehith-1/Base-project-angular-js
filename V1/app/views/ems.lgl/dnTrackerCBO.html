@@ -1,0 +1,438 @@
+
+<h3>DN Tracker - CBO</h3>
+
+<div ng-controller="dnTrackerCBOcontroller as dpick">
+    <div class="widget">
+        
+        <br />
+        <div class="panel">
+            <div class="panel-body">
+              <div class="table-responsive">
+                            <table datatable="ng" class="row-border hover">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th style="display:none;">S.NO</th>
+                                        <th>URN</th>
+                                        <th class="text-nowrap">CUSTOMER NAME</th>
+                                        <th class="text-nowrap">ACCOUNT NO</th>
+                                        <th class="text-nowrap">OD DAYS</th>
+                                        <th>GUARANTOR</th>
+                                        <th>DN STATUS</th>
+                                        <th class="text-nowrap">COURIER STATUS</th>
+                                        <th class="text-nowrap">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="data in CBO_cases" >
+                                        <td data-title="S.No" style="display:none;">{{$index+1}}</td>
+                                        <td title="URN" class="text-nowrap">{{data.urn}}</td>
+                                        <td title="Customer Name">{{data.Customer_name}}</td>
+                                        <td title="Account No">{{data.account_no}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="Guarantor" >{{data.Guarantor_Name}}</td>
+                                         <td title="DN Status" class="text-nowrap">{{data.DNstatus}}</td>
+                                        <td title="Acknowledgement Status" class="text-nowrap">{{data.acknowledgement_status}}</td>
+                                        <td class="text-nowrap" title="Action" ng-switch="data.acknowledgement_status">
+                                            <button title="DN1 Status" class="btn btn-info btn-sm"
+                                                    ng-click="cbocustomerdetails(data.urn)">
+                                                <em class="fa fa-reorder "></em>
+                                            </button>
+
+                                            <button title="Acknowledgement Status" class="btn btn-pink btn-sm"
+                                                    ng-switch-when="Pending" ng-disabled="false" ng-click="cbodnack_status(data.urn)">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="Acknowledgement Status" class="btn btn-green btn-sm"
+                                                    ng-switch-when="---" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="Acknowledgement Status" class="btn btn-green btn-sm"
+                                                    ng-switch-when="--" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+
+                                            <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                    ng-switch-when="DN Delivered" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                    ng-switch-when="DN Returned" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                    ng-switch-when="DN Skipped" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                    ng-switch-when="DN Generated" ng-disabled="true">
+                                                <em class="fa fa-thumbs-o-up "></em>
+                                            </button>
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="--" ng-click="dn1pdf(data.urn)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="---" ng-disabled="true"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="DN Skipped" ng-disabled="true"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="DN Returned" ng-click="dn1pdf(data.urn)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="DN Delivered" ng-click="dn1pdf(data.urn)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+                                            <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                    ng-switch-when="Pending" ng-click="dn1pdf(data.urn)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </button>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    
+               </div>
+            </div>
+        <script type="text/ng-template" id="/dn1ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN1 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn1ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dn2ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN2 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Returned" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn2ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dn3ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN3 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Returned" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn3ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dnCBOackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN - CBO ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Returned" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dnCBOackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+    </div>
+</div>

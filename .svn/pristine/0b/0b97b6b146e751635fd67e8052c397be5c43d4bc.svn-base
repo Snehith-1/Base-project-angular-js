@@ -1,0 +1,482 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<a href="#/app/AtmRptAuditVisitReportApprovedSummary">
+    <button type="button" title="Back" class="pull-right btn btn-sm btn-primary">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a>
+<h3>
+    Audit Visit report View
+</h3>
+<div ng-controller="AtmRptAuditVisitReportApprovedViewController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Visit Report View</h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="overflow-x: hidden;">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;Audit Visit Report Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Date of Visit </label>
+                                                        <p>{{txtdate_ofvisit}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Names of the Inspecting officials </label>
+                                                        <p>{{txtname_inspecting}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Where the visit was done </label>
+                                                        <p>{{txtwhere_visitdone}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Entity </label>
+                                                        <p>{{txtentity_name}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="txtentity_name=='SAMFIN'">
+                                                        <label> Samfin Customer</label>
+                                                        <p>{{txtsamfincustomer_name}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="txtentity_name=='SAMAGRO'">
+                                                        <label> Samagro Customer</label>
+                                                        <p>{{txtsamagrocustomer_name}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Reporting Manager </label>
+                                                        <p>{{reportingmanager_name}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Visited Person Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Name of the Client Representative</th>
+                                                                    <th scope="col">Client Representative Designation </th>
+                                                                    <th scope="col">Personal Email Address</th>
+                                                                    <th scope="col">Office Email Address</th>
+                                                                    <th scope="col">Mobile Number</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in Visitpersondtl_list">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Name of the Client Representative">{{data.clientrepresentative_name}}</td>
+                                                                    <td title="Client Representative Designation">{{data.clientrepresentative_designationname}}</td>
+                                                                    <td title="Personal Email Address">{{data.clientrepresentative_personalmail}}</td>
+                                                                    <td title="Office Email Address">{{data.clientrepresentative_officemail}}</td>
+                                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;width:8%;">
+                                                                        <button title="View" ng-click="visitreportmobileno_view(data.auditvisit2person_gid)" class="btn btn-info">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <!--<div class="col-lg-12 col-md-12 col-sm-12">-->
+                                                <!--<p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Address Details </b></p>
+                    <hr />
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope" ng-repeat="data in Visitpersonaddress_list">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4" style="color:#3f51b5;font-size:100%;font-weight :bold;">
+                                        <label class="label" style="font-size:12px;background-color:#09385f;">Address Type: {{data.addresstype_name}} </label>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-md-4" style="color:#3f51b5;font-size:100%;font-weight :bold;">
+                                        Primary Status:  {{data.primary_status}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-sm-5 col-md-5">
+                                        <label style="font-weight:bold">Address Line 1</label>
+                                        <br />
+                                        {{data.address_line1}}
+                                    </div>
+                                    <div class="col-lg-5 col-sm-5 col-md-5">
+                                        <label style="font-weight:bold">Address Line 2</label>
+                                        <br />
+                                        {{data.address_line2}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">Landmark </label>
+                                        <br />
+                                        {{data.landmark}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">Postal Code </label>
+                                        <br />
+                                        {{data.postal_code}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">City </label>
+                                        <br />
+                                        {{data.city}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">State </label>
+                                        <br />
+                                        {{data.state_name}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">Taluka </label>
+                                        <br />
+                                        {{data.taluk}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">District </label>
+                                        <br />
+                                        {{data.district}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+                                        <label style="font-weight:bold">Country </label>
+                                        <br />
+                                        {{data.country}}
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>-->
+                                                <!--</div>-->
+
+                                                <div class="col-lg-12 col-sm-12 col-md-12 ">
+                                                    <b style="color:darkblue;font-size:15px;">
+                                                        <label>Address Details</label>
+                                                    </b>
+                                                    <hr />
+                                                </div>
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table m0">
+                                                            <thead>
+                                                                <tr width="100%" class="bg-gray-light text-white">
+                                                                    <th scope="col">S No.</th>
+                                                                    <th scope="col">Address Type</th>
+                                                                    <th scope="col">Address</th>
+                                                                    <th scope="col">Primary Status</th>
+                                                                    <th> Static Map / Photos</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in Visitpersonaddress_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td title="AddressType">{{data.addresstype_name}}</td>
+                                                                    <td title="Address">
+                                                                        {{data.address_line1}},{{data.address_line2}},<br />{{data.taluk}},{{data.district}},
+                                                                        <br />{{data.state_name}},{{data.country}},{{data.postal_code}}
+                                                                        <br /> <b>Latitude:</b> {{data.latitude}}
+                                                                        <br /> <b>Longitude:</b> {{data.longitude}}
+                                                                    </td>
+                                                                    <td title="PrimaryStatus">{{data.primary_status}}</td>
+                                                                    <td title="Static Map and Photos">
+                                                                        <button title="View" ng-click="StaticMapAndPhotos_View(data.latitude, data.longitude, data.address_line1, data.address_line2, data.postal_code)" class="btn btn-xs btn-info">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label>  Client and KMP Their activities </label>
+                                                        <p>{{txtkmp_activities}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Promoter Background </label>
+                                                        <p>{{txtpromoter_background}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Over all observations </label>
+                                                        <p>{{txtoverall_onservation}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label>Recommendation of the inspecting officials </label>
+                                                        <p>{{txtinspecting_officials}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Trading Releationship </label>
+                                                        <p>{{txttrading_relationship}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Summary  </label>
+                                                        <p>{{txtsummary}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <p class="text-primary" style="font-size:14px;"><b> Audit Visit Report Documents </b></p>
+                                                        <hr />
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th>Uploaded Document Name</th>
+                                                                        <th align="center" scope="col">
+                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                            <a download="" href="" title="Download All" id="btnpdf3" ng-click="downloadall()">
+                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                            </a>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in UploadDocumentList">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                                        <td title="Created Date">{{data.filename}}</td>
+                                                                        <td data-title="Action">
+
+                                                                            <button title="Download"
+                                                                                    class="btn btn-green btn-sm"
+                                                                                    ng-click="Document_Downloads(data.document_path,data.filename)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                            <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.filename)">
+                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <p class="text-primary" style="font-size:14px;"><b>Audit Visit Report Photo Documents </b></p>
+                                                        <hr />
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th scope="col">Photo Name</th>
+                                                                        <th>Uploaded Document Name</th>
+                                                                        <th align="center" scope="col">
+                                                                            Action &nbsp;&nbsp;&nbsp;
+                                                                            <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall_photo()">
+                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                            </a>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in UploadphotoList">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Document Name">{{data.photo_name}}</td>
+                                                                        <td title="Created Date">{{data.filename}}</td>
+                                                                        <td data-title="Action">
+                                                                            <button title="Download" class="btn btn-green btn-sm"
+                                                                                    ng-click="photo_downloads(data.document_path,data.filename)">
+                                                                                <em class="fa fa-download"></em>
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                            </button>
+                                                                            <button title="View" class="btn btn-info btn-sm" ng-click="documentphotoviewer(data.document_path,data.filename)">
+                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center">
+                                <br />
+                                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/mobileno_summary.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px"> Mobile Number Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="table-responsive table-bordered">
+                                <div>
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Mobile No</th>
+                                                <th>Primary Status</th>
+                                                <th>Whatsapp Number </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="list in Visitpersoncontact_list">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{list.mobile_no}}</td>
+                                                <td>{{list.primary_status}}</td>
+                                                <td>{{list.whatsapp_mobileno}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--</div>
+                </div>-->
+                <br />
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                </div>
+
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/StaticMapAndPhotosView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-image"></em>&nbsp;<label style="font-size:16px">Static Map and Photos</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="text-primary" style="font-size:14px;"><b>&nbsp; Static Map </b></p>
+                            <img ng-src="{{staticmapImgUrl}}">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="text-primary" style="font-size:14px;"><b>&nbsp; Photos </b></p>
+                            <div ng-repeat="item in photoUrlList" ng-show="photoFound">
+                                <img ng-src="{{item}}">
+                                <br />
+                                <br />
+                            </div>
+                            <label style="font-weight:bolder;color:red" ng-show="photoNotFound">Photos not found!</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

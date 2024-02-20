@@ -1,0 +1,151 @@
+﻿<h3>
+    CIBIL Data Uploaded Summary
+</h3>
+<div ng-controller="cibilsummaryController">
+    <div class="row ">
+                   
+                    <div class="col-lg-12 col-sm-12 col-md-12 ">
+                        <div class="text-info ">
+                            &nbsp;&nbsp;
+                            <label >
+
+                                <button type="button" title="Import Data"  class="btn btn-default bg-grey-400 btn-sm" ng-click="uploaddocument()">
+                                    <span class="btn-label">
+                                        <i class="fa fa-file-text"></i>
+                                    </span><b> Import Data</b>
+
+                                </button>
+                            </label>
+                           
+                        </div>
+
+                    </div>
+                </div>
+
+           
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table ng-table="tableParams2" class="table hover table-striped ">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th>S.N0</th>
+                            <th>Uploaded Date</th>
+                            <th>File Name</th>                            
+                            <th>Uploaded By </th>                         
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in list | filter : searchtxt | limitTo:totalDisplayed " >
+                            <td data-title="'S.No'" style="text-align:center">{{$index+1}}</td>
+                            <td data-title="Uploaded Date" style="text-align:center">{{data.uploaded_date}}</td>
+                            <td data-title="File Name">{{data.file_name}}</td>
+                            <td data-title="Uploaded By">{{data.uploaded_by}}</td>                        
+                           
+                           <td data-title="Action"  style="text-align:center" ng-switch="data.cibilhistory_flag" class="text-nowrap">                               
+                                <button title="View Cibil Info" ng-click="viewcibil_dtl(data.cibildata_gid)" class="btn btn-sm" style="background-color:#1273bf;">
+                                    <em style="color:white;" class="fa icon-notebook"></em>
+                                </button> 
+                               <button title="Log Details" ng-switch-when="Y" ng-click="logdtl(data.cibildata_gid)" style="background-color:#a25f26;"  class="btn btn-sm">
+                                 <em style="color:white;" class="fa fa-history"></em>
+                               </button>
+                               <button title="Log Details" ng-switch-when="N" ng-disabled="true" style="background-color:#a25f26;" class="btn  btn-sm">
+                                   <em style="color:white;" class="fa fa-history "></em>
+                               </button>                               
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/uploaddocument.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                   Upload Document
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label>Before Upload the document, Kindly check the below points, <span style="color:red"></span></label><br/>
+                                    &nbsp; &nbsp; &nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 1. Account No, Submitted On, Indicator is mandatory.<br />
+                                    &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 2. Date Format should be DD-MM-YYYY.
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <p class="text-primary text-bold" style=" font-size:15px;">File Upload</p>
+                                    <input type="file" id="addupload" ng-model="test_document"
+                                           onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)" class="form-control"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="class">
+                            <br />
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="uploadfile()" ng-disabled="contactdetailsform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Submit</span>
+                                </a>
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

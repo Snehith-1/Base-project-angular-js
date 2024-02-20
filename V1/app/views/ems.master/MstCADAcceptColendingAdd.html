@@ -1,0 +1,946 @@
+﻿<style>
+    .formstatic {
+        position: fixed;
+        width: 22%;
+    }
+
+    .formstaticbtn:hover {
+        background-color: rgb(89, 86, 90);
+        color: rgb(31, 26, 102);
+        text-decoration: underline;
+        font-weight: bold;
+    }
+</style>
+<h3>
+    Co-lending verification
+</h3>
+<div ng-controller="MstCADAcceptColendingAddController">
+    <div class="panel">
+        <form name="Colendingform" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-heading" style="background-color: #191370;color:#ffffff">
+                        <b>Credit Co-lending verification - {{txtbasiccustomer_name}} / {{txtapplication_no}}</b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="panelDemo8" class="panel panel-default">
+                                    <div ng-class="{'panel-heading-collapsed':panelDemo8}" class="panel-heading" style="background-color: #c9dcc1;">
+                                        <b> Credit Tagged Co-lending Details  </b>
+                                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo8=true"></paneltool>
+                                    </div>
+                                    <div collapse="panelDemo8" class="panel-wrapper">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Applicability</label>
+                                                        <p>{{lblcolendingaapplicability_stats}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified By</label>
+                                                        <p>{{lblmyapplcreditadd_by}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified Date</label>
+                                                        <p>{{lblmyapplcreditadd_date}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row" ng-show="myapplcreditcolendingsummary">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Co-lender Name</th>
+                                                                    <th>Co-lending Category</th>
+                                                                    <th>Percentage</th>
+                                                                    <th class="text-center">Co-lending Applicability</th>
+                                                                    <th> Tagged By</th>
+                                                                    <th> Tagged Date</th>
+                                                                    <th> BRE Status</th>
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in creditcolendingdtl_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{data.colendar_name}}</td>
+                                                                    <td>{{data.category_name}}</td>
+                                                                    <td>{{data.percentage_name}}</td>
+                                                                    <td class="text-center">{{data.applicability}}</td>
+                                                                    <td>{{data.credittagged_by}}</td>
+                                                                    <td>{{data.credittagged_date}}</td>
+                                                                    <td>{{data.bre_status}}</td>
+                                                                    <td class="text-center">
+                                                                        <button title="Credit Tagged Colending View" type="button" disabled ng-show="data.applicability==''"
+                                                                                class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Credit Tagged Colending View" type="button" ng-click="creditcolending_view(data.creditcolendingdtl_gid,data.colendingprogram_gid,data.portfolio_gid)"
+                                                                                ng-show="data.applicability!=''" class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Master Documents" type="button" ng-click="colending_docview(data.portfolio_gid)" class="btn btn-pink btn-xs">
+                                                                            <em class="fa fa-file-text-o"></em>
+                                                                        </button>
+                                                                        <button title="Rule" type="button" ng-disabled="data.bre_status!='BRE Executed'" ng-click="CreditColendingRule(data.colendingprogram_gid)" class="btn btn-success btn-xs">
+                                                                            <em class="fa fa-legal"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="panelDemo9" class="panel panel-default">
+                                    <div ng-class="{'panel-heading-collapsed':panelDemo9}" class="panel-heading" style="background-color: #c9dcc1;">
+                                        <b> Co-lending Credit verification Details  </b>
+                                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo9=true"></paneltool>
+                                    </div>
+                                    <div collapse="panelDemo9" class="panel-wrapper">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Applicability</label>
+                                                        <p>{{lblcolending_applicability}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified By</label>
+                                                        <p>{{lblcreditverified_by}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified Date</label>
+                                                        <p>{{lblcreditverified_date}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row" ng-show="creditcolendingsummary">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Co-lender Name</th>
+                                                                    <th>Co-lending Category</th>
+                                                                    <th>Percentage</th>
+                                                                    <th class="text-center">Co-lending Applicability</th>
+                                                                    <th>Credit Verification Tagged By</th>
+                                                                    <th>Credit Verification Tagged Date</th>
+                                                                    <th>BRE Status</th>
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in creditcolendingverification_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{data.colendar_name}}</td>
+                                                                    <td>{{data.category_name}}</td>
+                                                                    <td>{{data.percentage_name}}</td>
+                                                                    <td class="text-center">{{data.creditverified_applicability}}</td>
+                                                                    <td>{{data.credittverificationtagged_by}}</td>
+                                                                    <td>{{data.creditverificationtagged_date}}</td>
+                                                                    <td>{{data.bre_status}}</td>
+                                                                    <td class="text-center">
+                                                                        <button title="Credit Verified Colending View" type="button" disabled ng-show="data.creditverified_applicability==''"
+                                                                                class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Credit Verified Colending View" type="button" ng-click="creditcompletedcolending_view(data.creditverification_gid,data.colendingprogram_gid,data.portfolio_gid)"
+                                                                                ng-show="data.creditverified_applicability!=''" class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Master Documents" type="button" ng-click="colending_docview(data.portfolio_gid)" class="btn btn-pink btn-xs">
+                                                                            <em class="fa fa-file-text-o"></em>
+                                                                        </button>
+                                                                        <button title="Rule" type="button" ng-disabled="data.bre_status!='BRE Executed'" ng-click="CreditColendingRule(data.colendingprogram_gid)" class="btn btn-success btn-xs">
+                                                                            <em class="fa fa-legal"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="panelDemo10" class="panel panel-default">
+                                    <div ng-class="{'panel-heading-collapsed':panelDemo10}" class="panel-heading" style="background-color: #c9dcc1;">
+                                        <b> CC Approved Co-lending verification  </b>
+                                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo10=true"></paneltool>
+                                    </div>
+                                    <div collapse="panelDemo10" class="panel-wrapper">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Applicability</label>
+                                                        <p>{{lblcccolending_applicability}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified By</label>
+                                                        <p>{{lblccapprovedverified_by}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Colending Verified Date</label>
+                                                        <p>{{lblccapprovedverified_date}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row" ng-show="cccolendingsummary">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Co-lender Name</th>
+                                                                    <th>Co-lending Category</th>
+                                                                    <th>Percentage</th>
+                                                                    <th class="text-center">Co-lending Applicability</th>
+                                                                    <th>CC Verification Tagged By</th>
+                                                                    <th>CC Verification Tagged Date</th>
+                                                                    <th>BRE Status</th>
+                                                                    <th class="text-center">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in cccolendingverification_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{data.colendar_name}}</td>
+                                                                    <td>{{data.category_name}}</td>
+                                                                    <td>{{data.percentage_name}}</td>
+                                                                    <td class="text-center">{{data.ccverified_applicability}}</td>
+                                                                    <td>{{data.ccverificationtagged_by}}</td>
+                                                                    <td>{{data.ccverificationtagged_date}}</td>
+                                                                    <td>{{data.bre_status}}</td>
+                                                                    <td class="text-center">
+                                                                        <button title="CC Verified Colending View" type="button" disabled ng-show="data.ccverified_applicability==''"
+                                                                                class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="CC Verified Colending View" type="button" ng-click="ccapprovedcolending_view(data.ccapprovedverification_gid,data.colendingprogram_gid,data.portfolio_gid)"
+                                                                                ng-show="data.ccverified_applicability!=''" class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Master Documents" type="button" ng-click="colending_docview(data.portfolio_gid)" class="btn btn-pink btn-xs">
+                                                                            <em class="fa fa-file-text-o"></em>
+                                                                        </button>
+                                                                        <button title="Rule" type="button" ng-disabled="data.bre_status!='BRE Executed'" ng-click="CreditColendingRule(data.colendingprogram_gid)" class="btn btn-success btn-xs">
+                                                                            <em class="fa fa-legal"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="dd-handle ng-scope">
+                                    <p class="text-primary" style="font-size:14px;"><b>CAD Accepted Co-lending Add </b></p>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label> Co-lending Applicability <span style="color:red"> *</span></label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="ColendingApplicability" name="ColendingApplicability" value="Yes" ng-model="rdbcadapplicability"
+                                                           required="" ng-click="Colending_Applicability(rdbcadapplicability)" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="ColendingApplicability" name="ColendingApplicability" value="No" ng-model="rdbcadapplicability"
+                                                           required="" ng-click="Colending_Applicability(rdbcadapplicability)" />
+                                                    <span class="fa fa-circle"></span>No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row" ng-show="cadcolendingsummary">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Co-lender Name</th>
+                                                            <th>Co-lending Category</th>
+                                                            <th>Percentage</th>
+                                                            <th class="text-center">Co-lending Applicability</th>
+                                                            <th>CC Verification Tagged By</th>
+                                                            <th>CC Verification Tagged Date</th>
+                                                            <th>BRE Status</th>
+                                                            <th class="text-center">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in cadcolendingverification_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.colendar_name}}</td>
+                                                            <td>{{data.category_name}}</td>
+                                                            <td>{{data.percentage_name}}</td>
+                                                            <td class="text-center">{{data.cadverified_applicability}}</td>
+                                                            <td>{{data.cadverificationtagged_by}}</td>
+                                                            <td>{{data.cadverificationtagged_date}}</td>
+                                                            <td>{{data.bre_status}}</td>
+                                                            <td class="text-center">
+                                                                <button title="Colending Add" type="button" ng-click="cadcolending_add(data.cadapprovedverification_gid,data.colendingprogram_gid,data.portfolio_gid)"
+                                                                        style="background-color:#09385f;color:white;" class="btn btn-info btn-xs">
+                                                                    <em class="fa fa-plus"></em>
+                                                                </button>
+                                                                <button title="Master Documents" type="button" ng-click="colending_docview(data.portfolio_gid)" class="btn btn-pink btn-xs">
+                                                                    <em class="fa fa-file-text-o"></em>
+                                                                </button>
+                                                                <button title="Rule" type="button" ng-disabled="data.bre_status!='BRE Executed'" ng-click="CreditColendingRule(data.colendingprogram_gid)" class="btn btn-success btn-xs">
+                                                                    <em class="fa fa-legal"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="panelDemo11" class="panel panel-default">
+                                    <div ng-class="{'panel-heading-collapsed':panelDemo11}" class="panel-heading" style="background-color: #c9dcc1;">
+                                        <b> History Log  </b>
+                                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo11=true"></paneltool>
+                                    </div>
+                                    <div collapse="panelDemo11" class="panel-wrapper">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th> S.No</th>
+                                                                    <th> Co-lender Name</th>
+                                                                    <th> Co-lending Category</th>
+                                                                    <th> Percentage</th>
+                                                                    <th> W.e.f</th>
+                                                                    <th class="text-center">Co-lending Applicability</th>
+                                                                    <th> Applicability</th>
+                                                                    <th class="text-center"> Remarks</th>
+                                                                    <th> Updated By</th>
+                                                                    <th> Updated Date</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in cadverifiedlog_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{data.colendar_name}}</td>
+                                                                    <td>{{data.category_name}}</td>
+                                                                    <td>{{data.percentage_name}}</td>
+                                                                    <td>{{data.wef_date}}</td>
+                                                                    <td class="text-center">{{data.colending_applicability}}</td>
+                                                                    <td>{{data.applicability}}</td>
+                                                                    <td class="text-center">
+                                                                        <button title="Remarks View" type="button" ng-show="data.colending_applicability=='Yes'" ng-click="remarkslog_view(data.cadapprovedverificationlog_gid)"
+                                                                                class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Remarks View" type="button" ng-show="data.colending_applicability=='No'"
+                                                                                disabled class="btn btn-info btn-xs">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                    </td>  
+                                                                    <td>{{data.cadverifiedlog_by}}</td>
+                                                                    <td>{{data.cadverifiedlog_date}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+                            <br />
+                            <button class="btn btn-success" ng-disabled="Colendingform.$invalid" ng-click="confirm_cadverification()">
+                                <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                            </button>
+                            <button ng-click="Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/ng-template" id="/RemarksView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.formValidate()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Remarks : </label>
+                            <p>{{txtcolending_remarks}}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ColenderdocumentsView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Co-lending Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Remarks : </label>
+                            <p>{{txtcolending_remarks}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>W.e.f : </label>
+                            <p>{{txtwef_date}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <p class="text-primary" style="font-size:14px;"><b> Document Details </b></p>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Document Name</th>
+                                                <th scope="col">Uploaded By / On </th>
+                                                <th align="center" scope="col">
+                                                    Action&nbsp;&nbsp;&nbsp;
+                                                    <a download="" href="" title="Download All" id="btnpdf5" ng-click="downloadallcolending_doc()">
+                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in ColendingDocumentView_List">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Document Name">{{data.document_name}}</td>
+                                                <td title="Document Name">{{data.uploaded_by}} / {{data.updated_date}} </td>
+                                                <td data-title="Action">
+                                                    <button title="Download" class="btn btn-green btn-sm"
+                                                            ng-click="download_colendingdoc(data.document_path,data.document_name)">
+                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                        <em class="fa fa-download"></em>
+                                                    </button>
+                                                    <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/CreditColendingDtlview.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Credit Tagged Co-lending Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label> Applicability </label>
+                                    <p>{{lblapplicability}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Remarks </label>
+                                    <p>{{lblcolender_remarks}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <p class="text-primary" style="font-size:14px;"><b> Co-lending Document </b></p>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div ui-scroll-viewport="" style="height:160px; overflow-y: auto;overflow-x: hidden;" class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th scope="col">Document Title</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th align="center" scope="col">
+                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                            <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall_colender()()">
+                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                            </a>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in creditcolendingdocument_list">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Document Name">{{data.document_title}}</td>
+                                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                                        <td data-title="Action">
+                                                                            <button title="Download" class="btn btn-green btn-xs"
+                                                                                    ng-click="downloads(data.document_path,data.document_name)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                            <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/CreditColendingVerification.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Co-lending Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div>
+                                            <label> Applicability :</label>
+                                            <p>{{lblcompleted_applicability}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <label>Remarks <span style="color:red"> *</span></label>
+                                            <p>{{lblcompleted_remarks}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Upload Co-lending Document </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div ui-scroll-viewport="" style="height:160px; overflow-y: auto;overflow-x: hidden;" class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-secondary">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr width="100%">
+                                                                                <th scope="col">S.No</th>
+                                                                                <th scope="col">Document Title</th>
+                                                                                <th scope="col">Document Name</th>
+                                                                                <th align="center" scope="col">
+                                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                                    <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall_verificationdoc()()">
+                                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                                    </a>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in creditverificationdoc_list">
+                                                                                <td title="S.No">{{$index+1}}</td>
+                                                                                <td title="Document Name">{{data.document_title}}</td>
+                                                                                <td title="Document Name">{{data.document_name}}</td>
+                                                                                <td data-title="Action">
+                                                                                    <button title="Download" class="btn btn-green btn-xs"
+                                                                                            ng-click="downloads(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                        <em class="fa fa-download"></em>
+                                                                                    </button>
+                                                                                    <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/CCapprovedColendingVerification.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Co-lending Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div>
+                                            <label> Applicability :</label>
+                                            <p>{{rdbccapplicability}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <label>Remarks <span style="color:red"> *</span></label>
+                                            <p>{{txtccverification_remarks}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Upload Co-lending Document </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div ui-scroll-viewport="" style="height:160px; overflow-y: auto;overflow-x: hidden;" class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-secondary">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr width="100%">
+                                                                                <th scope="col">S.No</th>
+                                                                                <th scope="col">Document Title</th>
+                                                                                <th scope="col">Document Name</th>
+                                                                                <th align="center" scope="col">
+                                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                                    <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall_cadverificationdoc()()">
+                                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                                    </a>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in ccapprovedverificationdoc_list">
+                                                                                <td title="S.No">{{$index+1}}</td>
+                                                                                <td title="Document Name">{{data.document_title}}</td>
+                                                                                <td title="Document Name">{{data.document_name}}</td>
+                                                                                <td data-title="Action">
+                                                                                    <button title="Download" class="btn btn-green btn-xs"
+                                                                                            ng-click="downloads(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                        <em class="fa fa-download"></em>
+                                                                                    </button>
+                                                                                    <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/CadColendingVerification.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Co-lending Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div>
+                                            <label> Applicability <span style="color:red"> *</span></label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Applicability" name="Applicability" value="Yes" ng-model="rdbccapplicability" required="" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Applicability" name="Applicability" value="No" ng-model="rdbccapplicability" required="" />
+                                                    <span class="fa fa-circle"></span>No
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <label>Remarks <span style="color:red"> *</span></label>
+                                            <textarea style="resize:vertical;" rows="4" name="Remarks" id="Remarks" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                                      ng-model="txtccverification_remarks" class="form-control"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Upload Co-lending Document </b></p>
+                                                <hr />
+                                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                                    <div class="mda-form-group float-label">
+                                                        <input ng-model="txtdocument_title" tabindex="0" maxlength="75" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                                        <label>Document Title </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <div class="mda-form-group float-label">
+                                                        <strong>Upload Documents</strong>
+                                                        <input type="file" id="ccverificationfile" tabindex="5" multiple onchange="angular.element(this).scope().cadverificationdocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                               ng-model="cadverificationfile" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div ui-scroll-viewport="" style="height:160px; overflow-y: auto;overflow-x: hidden;" class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-secondary">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr width="100%">
+                                                                                <th scope="col">S.No</th>
+                                                                                <th scope="col">Document Title</th>
+                                                                                <th scope="col">Document Name</th>
+                                                                                <th align="center" scope="col">
+                                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                                    <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall_verificationdoc()()">
+                                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                                    </a>
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in cadapprovedverificationdoc_list">
+                                                                                <td title="S.No">{{$index+1}}</td>
+                                                                                <td title="Document Name">{{data.document_title}}</td>
+                                                                                <td title="Document Name">{{data.document_name}}</td>
+                                                                                <td data-title="Action">
+                                                                                    <button title="Download" class="btn btn-green btn-xs"
+                                                                                            ng-click="downloads(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                        <em class="fa fa-download"></em>
+                                                                                    </button>
+                                                                                    <button title="View" class="btn btn-info  btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                    </button>
+                                                                                    <a title="Delete" class="btn btn-xs btn-danger" ng-click="uploaddocumentcancel(data.cadapprovedverificationdoc_gid)">
+                                                                                        <span class="fa fa-trash-o"></span>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-success" ng-show="cadapprovedverification_gid==null" ng-click="submit_cccolendingdtl()">
+                    <i class="fa fa-check"></i>&nbsp;&nbsp;Submit
+                </button>
+                <button class="btn btn-success" ng-show="cadapprovedverification_gid!=null" ng-click="submit_cccolendingdtl()">
+                    <i class="fa fa-arrow-right"></i>&nbsp;&nbsp;Update
+                </button>
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/RemarksLogView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.formValidate()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Remarks : </label>
+                            <p>{{txtcadcolendinglog_remarks}}</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+</div>

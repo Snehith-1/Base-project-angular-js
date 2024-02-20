@@ -1,0 +1,274 @@
+<h3>
+    Caste
+</h3>
+<div ng-controller="MstCasteController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Caste" class="btn btn-info btn-sm"  ng-hide="lsoneapipage=='OneApi'" ng-click="addCaste()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Caste
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th> One API Code</th>
+                                    <th> Caste Name </th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> LMS Code </th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Bureau Code </th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th> Status </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in caste_list|filter:searchText|limitTo:totalDisplayed">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Created Date'" class="" ng-hide="lsoneapipage=='OneApi'"> {{data.created_date}} </td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'Caste Name'"> {{data.caste_name}} </td>
+                                    <td data-title="'LMS Code'" class="" ng-hide="lsoneapipage=='OneApi'"> {{data.lms_code}} </td>
+                                    <td data-title="'Bureau Code'" class="" ng-hide="lsoneapipage=='OneApi'"> {{data.bureau_code}} </td>
+                                    <td data-title="'Created By'" class="" ng-hide="lsoneapipage=='OneApi'"> {{data.created_by}} </td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" ng-hide="lsoneapipage=='OneApi'" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="editCaste(data.caste_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.caste_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.caste_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.caste_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addCaste.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Caste
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addCaste" ng-submit="form.addCaste()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtCaste_name"  maxlength="255" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Caste Name *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtlms_code"  maxlength="30" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>LMS Code </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtbureau_code"  maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Bureau Code </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addCaste.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/editCaste.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Caste
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="EditCaste" ng-submit="form.EditCaste()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditCaste_name"  maxlength="255" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Caste Name *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditlms_code"  maxlength="30" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>LMS Code </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditbureau_code"  maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Bureau Code </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="EditCaste.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/statusCaste.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusCaste" ng-submit="form.statusCaste()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label> Caste Name </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    {{txtcaste_name}}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Status  </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                            <span class="fa fa-circle"></span> Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statusCaste.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="castetypeinactivelog_data!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in castetypeinactivelog_data" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}} </td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

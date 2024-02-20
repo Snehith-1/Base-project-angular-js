@@ -1,0 +1,116 @@
+﻿<h3>
+    Add Leads
+</h3>
+<div ng-controller="MstMarketingRejectedCallSummaryController">
+    <button type="button" class="btn btn-info button-sm" ng-click="addinbound()" title="Add Lead Call">
+        <span class="btn-label">
+            <i class="fa fa-plus"></i>
+        </span>
+        Add Lead
+    </button>
+    <br><br>
+    <div class="panel">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>Rejected Leads Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="unassignedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{unassignedcall_count}}</b></div>
+                        <b style="font-size: 14px;">UnAssigned Leads</b>
+                    </button>
+                    <br />
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="assignedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{assignedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Assigned Leads</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="completedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{completedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Converted Leads</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="followupcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{followupcall_count}}</b></div>
+                        <b style="font-size: 14px;">Follow Up Calls</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="closedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{closedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Closed Leads</b>
+                    </button>
+                    <br />
+                </div>
+            </div>
+        </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                 
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="rejectedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{rejectedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Rejected Leads</b>
+                    </button>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Lead Number</th>
+                                    <th> Lead Name</th>
+                                    <th> Lead Request Type</th>
+                                    <!--<th> Assigned To</th>-->
+                                    <th> Lead Received Date</th>
+                                    <th> Origination </th>  
+                                    <th> Rejected By</th>
+                                    <th> Rejected Date </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in ibrejectedcall_list">
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'Lead Number'"> {{data.ticket_refid}}</td>
+                                    <td data-title="'Lead Name'"> {{data.caller_name}}</td>
+                                    <td data-title="'Lead Request Type'"> {{data.leadrequesttype_name}}</td>
+                                    <!--<td data-title="'Assigned To'"> {{data.assignemployee_name}}</td>-->
+                                    <td data-title="'Call Received Date'"> {{data.callreceived_date}}</td>
+                                    <td data-title="'Origination'"> {{data.origination}} </td> 
+                                    <td data-title="'Rejected By'"> {{data.assignemployee_name}}</td>
+                                    <td data-title="'Rejected Date'"> {{data.created_date}} </td>
+                                    <td align="center">
+                                        <button title="View" ng-click="view(data.marketingcall_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    
+</div>

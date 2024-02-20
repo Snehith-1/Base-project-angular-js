@@ -1,0 +1,711 @@
+﻿<h3>
+    Raise Request
+</h3>
+<div ng-controller="MstHRLoanEditRequestController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span> Edit Request
+        </div>
+        <div class="panel-body">
+            <form novalidate="" name="submitrequest" ng-submit="form.submitrequest()" autocomplete="off" class="form-validate">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary" style="font-size:16px;">
+                                            <b>&nbsp;&nbsp; Employee Details</b>
+                                        </p>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Employee Name</label><br>
+                                                {{txtemp}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Role</label><br>
+                                                {{txtrole}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label class="col-form-label">Department</label><br>
+                                                {{txtdept}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Official Email Address</label><br>
+                                                {{txtofficialmail}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Official mobile number</label><br>
+                                                {{txtofficialmobile}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Personal Email Address</label><br>
+                                                {{txtpersonalmail}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Personal Phone Number</label><br>
+                                                {{txtpersonalmobile}}
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Entity Name</label><br>
+                                                {{txtentityname}}
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary" style="font-size:16px;">
+                                            <b>
+                                                &nbsp;&nbsp; Approval details
+                                            </b>
+                                        </p>
+                                        <hr />
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label> Direct Reporting Manager </label>
+                                            <br />
+                                            {{txtreporting_manager}}
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label>  Functional Head </label><br />
+                                            {{txtfunctional_head}}
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <br>
+
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary" style="font-size:16px;">
+                                            <b>
+                                                &nbsp;&nbsp; Loan/Advance Details
+                                            </b>
+                                        </p>
+                                        <hr />
+                                        <!-- ng-change="Gettenure(cbofintype)"  -->
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Type of Financial Assistance<span style="color:red">*</span></label><br>
+                                            <select id="fin" name="cbofintype" required ng-options="m.fintype_gid as m.fintype_name for m in fintype_list"
+                                                    ng-change="loanamount(cbofintype)" ng-model="cbofintype" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                    size="1">
+                                                <option value=""> </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Purpose<span style="color:red">*</span></label><br>
+                                            <select id="purpose" name="cbopurpose" required ng-options="m.purpose_gid as m.purpose_name for m in purpose_list"
+                                                    ng-change="purposeNote(cbopurpose)" ng-model="cbopurpose" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                    size="1">
+                                                <option value=""></option>
+                                            </select>
+                                            <span style="font-style:italic;">Note:</span>
+                                            <span id="selectNote" class="text-bold text-primary"></span>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Severity<span style="color:red">*</span></label><br>
+                                            <select id="severity" name="cboseverity" required ng-options="m.severity_gid as m.severity_name for m in severity_list"
+                                                    ng-model="cboseverity" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                    size="1">
+                                                <option value=""> </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Requestor Tenure in months<span style="color:red">*</span></label><br>
+                                            <input id="tenure" ng-model="cbotenure" class="form-control ng-pristine ng-valid ng-touched"
+                                                   required maxlength="15">
+                                            <!-- <select id="tenure" name="tenure" required class="chosen-select form-control"
+                                ng-model="cbotenure" class="chosen-select form-control"  style="height:37px;"
+                                size="1">
+                                    <!-- <option value=""></option> -->
+                                            <!-- <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                </select> -->
+                                        </div>
+                                        <!-- <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label>Tenure in months<span style="color:red">*</span></label><br>
+                                {{txttenure}}
+                            </div> -->
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Amount <span style="color:red">*</span></label><br>
+                                            <input id="annual_turnover" ng-model="txtamount"
+                                                   class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="annual_turnoverChange()" required style="text-align:right;"
+                                                   maxlength="15">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_annualturnover" style="color:#003c96fc;"
+                                                  class="text-bold"></span>
+                                        </div>
+                                        <div ng-show="selectinterest == 'salaryadvance'" class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Requestor Interest</label><br>
+                                            <input disabled id="interest" ng-model="txtinterest" class="form-control ng-pristine ng-valid ng-touched"
+                                                   maxlength="15">
+                                        </div>
+                                        <div ng-show="selectinterest != 'salaryadvance'" class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Requestor Interest</label><br>
+                                            <input id="interest" ng-model="txtinterest" class="form-control ng-pristine ng-valid ng-touched"
+                                                   maxlength="15">
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <label>Reason<span style="color:red">*</span> </label>
+                                                    <textarea id="txtreason" name="txtreason" rows="4" ng-model="txtreason" required
+                                                              placeholder="Enter Reason..." class="form-control" style="resize:vertical;"></textarea>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <div ng-show="selectMandatory == 'Yes'" >
+                                        <p class="text-primary" style="font-size:16px;">
+                                            <b>
+                                                &nbsp;&nbsp; Employee Document Upload <span style="color:red">*</span>
+                                            </b>
+                                        </p>
+                                        <hr />
+                                        <div class="col-lg-4 col-sm-4 col-md-4">
+                                            <div>
+                                                <label> Document Title <span style="color:red">*</span></label>
+                                                <input type="text" ng-model="txtdocument_title" maxlength="20" class="form-control">
+                                            </div>
+                                            <br>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                            <label> Document ID <span style="color:red">*</span> </label>
+                                            <input type="text" class="form-control" ng-model="txtdocument_id">
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="mda-form-group float-label">
+                                                <strong>Upload Documents <span style="color:red">*</span></strong>
+                                                <input type="file" id="file" tabindex="5" multiple
+                                                       onchange="angular.element(this).scope().UploadDocument(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       ng-model="txt_document" data-classbutton="btn btn-default"
+                                                       data-classinput="form-control inline" data-button-text="Select" />
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div ng-show="selectMandatory == 'No'" >
+                                            <p class="text-primary" style="font-size:16px;">
+                                                <b>
+                                                    &nbsp;&nbsp; Employee Document Upload 
+                                                </b>
+                                            </p>
+                                            <hr />
+                                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                                <div>
+                                                    <label> Document Title </label>
+                                                    <input type="text" ng-model="txtdocument_title" maxlength="20" class="form-control">
+                                                </div>
+                                                <br>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-3 col-md-3">
+                                                <label> Document ID </label>
+                                                <input type="text" class="form-control" ng-model="txtdocument_id">
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <div class="mda-form-group float-label">
+                                                    <strong>Upload Documents </strong>
+                                                    <input type="file" id="file" tabindex="5" multiple
+                                                           onchange="angular.element(this).scope().UploadDocument(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           ng-model="txt_document" data-classbutton="btn btn-default"
+                                                           data-classinput="form-control inline" data-button-text="Select" />
+                                                </div>
+                                            </div>
+                                            </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document ID</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <!-- <th scope="col">Action</th> -->
+                                                                    <th align="center" scope="col">
+                                                                        Action&nbsp;&nbsp;&nbsp;
+                                                                        <a download="" href="" title="DownloadAll" id="btnpdf" ng-click="download_all()">
+                                                                            <em class="icon-arrow-down"></em>&nbsp;
+                                                                        </a>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in upload_list">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">
+                                                                        {{data.document_title}}
+                                                                    </td>
+                                                                    <td title="Document ID">{{data.document_id}}</td>
+                                                                    <td title="Document Name">
+                                                                        {{data.document_name}}
+                                                                    </td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download"
+                                                                                class="btn btn-green btn-sm"
+                                                                                ng-click="doc_downloads(data.document_path,data.document_name)">
+                                                                            <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <button title="View" class="btn btn-info btn-sm" 
+																		ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                            <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                        </button>
+                                                                        <a title="Delete" class="btn btn-sm btn-danger"
+                                                                           ng-click="delete_document(data.hrreqdocument_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row text-center">
+                                <button ng-click="tremsandcondtn_acknwlg()" ng-show="(HRDocument_list!=null) && (hrReuploadDocument_list!=null)" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;&nbsp; Acknowledge &nbsp;&nbsp; </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+               
+                <br>
+                <div class="row text-center" ng-show="selectMandatory == 'Yes'">
+                    <button type="button" class="btn btn-primary" ng-disabled="!cbofintype" ng-click="saveas_draft()" ng-model="lsrequest_status" ng-show="(lsrequest_status=='Draft')"><em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft</button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-success btn-md" ng-click="saveasdraft_submit()" ng-model="lsrequest_status" ng-show="(lsrequest_status=='Draft')"
+                            ng-disabled="((submitrequest.$invalid) || (upload_list == null))">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp; Submit &nbsp;&nbsp;
+                    </button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-success btn-md" ng-click="update()" ng-model="lsrequest_status" ng-hide="(lsrequest_status=='Draft')" ng-disabled="((submitrequest.$invalid) || (upload_list == null))">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="back()" class="btn btn-info">
+                        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                    </button>
+                </div>
+                <div class="row text-center" ng-show="selectMandatory == 'No'">
+                    <button type="button" class="btn btn-primary" ng-disabled="!cbofintype" ng-click="saveas_draft()" ng-model="lsrequest_status" ng-show="(lsrequest_status=='Draft')"><em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft</button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-success btn-md" ng-click="saveasdraft_submit()" ng-model="lsrequest_status" ng-show="(lsrequest_status=='Draft')"
+                            ng-disabled="(submitrequest.$invalid)">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp; Submit &nbsp;&nbsp;
+                    </button> &nbsp;&nbsp;
+                    <button type="button" class="btn btn-success btn-md" ng-click="update()" ng-model="lsrequest_status" ng-hide="(lsrequest_status=='Draft')" ng-disabled="(submitrequest.$invalid) ">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="back()" class="btn btn-info">
+                        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                    </button>
+                </div>
+                <br>
+                <div class="row" ng-show="mandatoryfields">
+                    <div class="col-sm-12 col-md-12 col-lg-12 text-left">
+                        <label style="color:red;"> Enter All Mandatory Values</label>
+                        <br />
+                    </div>
+                    <br>
+                </div>
+            </form>
+        </div>
+    </div>    
+
+                                    
+                            
+
+
+<script type="text/ng-template" id="/drmqueryview.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & Query Response View</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Description : </label>
+                                    <br />
+                                    <p>{{lblquery_desc}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response : </label>
+                                    <br />
+                                    <p>{{lblqueryresponse_remarks}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response By : </label>
+                                    <br />
+                                    <p>{{lblquery_responseby}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="/fhqueryview.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & Query Response View</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform2" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Description : </label>
+                                    <br />
+                                    <p>{{lblquery_desc}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response : </label>
+                                    <br />
+                                    <p>{{lblqueryresponse_remarks}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response By : </label>
+                                    <br />
+                                    <p>{{lblquery_responseby}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/hrqueryview.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & Query Response View</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform3" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Description : </label>
+                                    <br />
+                                    <p>{{lblquery_desc}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response : </label>
+                                    <br />
+                                    <p>{{lblqueryresponse_remarks}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response By : </label>
+                                    <br />
+                                    <p>{{lblquery_responseby}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/mangqueryview.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & Query Response View</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform3" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Description : </label>
+                                    <br />
+                                    <p>{{lblquery_desc}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response : </label>
+                                    <br />
+                                    <p>{{lblqueryresponse_remarks}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Query Response By : </label>
+                                    <br />
+                                    <p>{{lblquery_responseby}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="/drmqueryClose.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                            <br />
+                            <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/fhqueryClose.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                            <br />
+                            <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/hrqueryClose.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                            <br />
+                            <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/mangqueryClose.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                            <br />
+                            <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br /><br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+</div>

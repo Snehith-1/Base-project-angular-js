@@ -1,0 +1,268 @@
+﻿<h3>
+   Initiate Audit
+</h3>
+<div ng-controller="AtmTrnAuditCreationEditController as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-edit"></em>&nbsp;&nbsp; Edit Initiate Audit
+        </div>
+        <div class="panel-body">
+            <form novalidate="" name="editaudit" ng-submit="form.editaudit()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="dd-handle ng-scope" style="background-color: white;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                            <hr />
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label> Audit Type </label> &nbsp;<span style="color:red">*</span>
+                                <select name="Audittype" id="Audittype" ng-options="m.audittype_gid as m.audittype_name for m in audittype_list" chosen=""
+                                        ng-model="cboaudittypeedit" class="chosen-select form-control" required style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Auditor Observation</label><span style="color:red;">&nbsp;*</span>
+                                <select class="chosen-select form-control" id="customertype" tabindex="0" ng-model="cboauditobservationedit" required
+                                        style="height:37px;" size="1">
+                                    <option value="Observation score overall audit">Observation score overall audit</option>
+                                    <option value="Observation score for sample">Observation score for sample</option>
+                                    <option value="Observation score for Audit & sample">Observation score for Audit & sample</option>
+                                </select>
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label> Audit Department </label> &nbsp;<span style="color:red">*</span>
+                                <select name="AuditDepartment" id="AuditDepartment" ng-options="m.auditdepartment_gid as m.auditdepartment_name for m in auditdepartment_list" chosen=""
+                                        ng-model="cboauditdepartmentedit" class="chosen-select form-control" required ng-change="auditdepartmentname_change(cboauditdepartmentedit)" style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Audit Name </label> &nbsp;<span style="color:red">*</span>
+                                <select name="AuditNameEdit" id="AuditNameEdit" ng-options="m.checklistmaster_gid as m.audit_name for m in checklistmaster_list" chosen=""
+                                        ng-model="cboauditnameedit" class="chosen-select form-control" required ng-change="auditname_change(cboauditnameedit)" style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label> Priority </label> &nbsp;<span style="color:red">*</span>
+                                <select name="AuditPriority" id="AuditPriority" ng-options="m.auditpriority_gid as m.auditpriority_name for m in auditpriority_data" chosen=""
+                                        ng-model="cboauditpriorityedit" class="chosen-select form-control" required style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="dd-handle ng-scope" style="background-color: white;">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Audit Details </b></p>
+                                <hr />
+                                <div class="row" ng-show="cboauditnameedit">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label><strong>Entity Name</strong></label>
+                                            <br />
+                                            {{txtentity_name}}
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label><strong>Checkpoint Group</strong></label>
+                                            <br />
+                                            {{txtcheckpointgroup_name}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label><strong>Audit Description</strong></label>
+                                            <br />
+                                            {{txtauditdescription_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>End Date</strong><span style="color:red">*</span></label>
+                                <p class="input-group">
+                                    <input type="text" id="txtend_date" name="date" ng-model="txteditend_date" datepicker-popup="{{dp.format}}"
+                                           style="height:35px;" is-open="dp.open1" min-date="dp.mindate" datepicker-options="dp.dateOptions"
+                                           close-text="Close" class="form-control" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="dp.calender1($event)" style="height:35px;" class="btn btn-default">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Audit Period From</strong><span style="color:red">*</span></label>
+                                <p class="input-group">
+                                    <input type="text" id="txtperiod_from" name="date" ng-model="txteditperiod_from" datepicker-popup="{{dp.format}}"
+                                           style="height:35px;" is-open="dp.open2" min-date="dp.mindate" datepicker-options="dp.dateOptions"
+                                           close-text="Close" class="form-control" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="dp.calender2($event)" style="height:35px;" class="btn btn-default">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Audit Period To</strong><span style="color:red">*</span></label>
+                                <p class="input-group">
+                                    <input type="text" id="txtperiod_to" name="date" ng-model="txteditperiod_to" datepicker-popup="{{dp.format}}"
+                                           style="height:35px;" is-open="dp.open3" min-date="dp.mindate" datepicker-options="dp.dateOptions"
+                                           close-text="Close" class="form-control" required />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="dp.calender3($event)" style="height:35px;" class="btn btn-default">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <!--<div class="dd-handle ng-scope" style="background-color: white;">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <p class="text-primary" style="font-size:14px;">
+                                <b>
+                                    &nbsp;&nbsp; Assigned Information
+                                </b>
+                            </p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-12 col-sm-12">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label><strong>Auditee Maker</strong><span style="color:red"> *</span> </label>
+                                        <select name="AuditMaker" id="AuditeeMaker" ng-options="m.employee_name for m in employee_list" chosen=""
+                                                ng-model="cboauditeemaker" class="chosen-select form-control" style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Auditee Checker <span style="color:red"> *</span></label>
+                                        <select name="AuditChecker" id="AuditeeChecker" ng-options="m.employee_name for m in employee1_list" chosen=""
+                                                ng-model="cboauditeechecker" class="chosen-select form-control" style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3" style="padding-top: 3px;">
+                                        <br>
+                                        <strong class="ng-binding w3-text-indigo">
+                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white; height:35px; padding-top: 7px;" ng-click="add_auditee()"><span class="fa fa-plus"> </span>  Add</a>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Auditee Maker</th>
+                                                            <th scope="col">Auditee Checker</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                            <td title="Auditee Checker">{{data.auditeechecker_name}}</td>
+                                                            <td data-title="Action">
+                                                               
+                                                                <button title="Delete" ng-click="delete_auditee(data.multipleauditee_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br />-->
+                <div class="dd-handle ng-scope" style="background-color: white;">
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <p class="text-primary" style="font-size:14px;">
+                                <b>
+                                    &nbsp;&nbsp; Assigned Auditor Information
+                                </b>
+                            </p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label><strong>Auditor Maker</strong><span style="color:red"> *</span> </label>
+                                        <select name="AuditMaker" id="AuditMaker" ng-options="m.employee_gid as m.employee_name for m in auditmapping1_list" chosen=""
+                                                ng-model="cboauditmakeredit" class="chosen-select form-control" required style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Auditor Checker <span style="color:red"> *</span></label>
+                                        <select name="AuditChecker" id="AuditChecker" ng-options="m.auditmapping_gid as m.employee_name for m in auditmapping_list" chosen=""
+                                                ng-model="cboauditcheckeredit" class="chosen-select form-control" required style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Auditor Approver <span style="color:red"> *</span></label>
+                                        <select name="AuditChecker" id="AuditChecker" ng-options="m.auditmapping2employee_gid as m.approver_name for m in auditmapping2_list" chosen=""
+                                                ng-model="cboauditapproveredit" class="chosen-select form-control" required style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="editaudit.$invalid" ng-click="UpdateAuditCreation()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                            <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+   
+</div>

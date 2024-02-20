@@ -1,0 +1,76 @@
+<h3>
+    Buyer Report
+    
+</h3>
+
+<div ng-controller="MstBuyerReportController">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            
+            <div style="position: relative; float: right;"class="col-lg-2 col-md-2 col-sm-2">
+                <div style="text-align:center; display: inline-table; position: relative; float: right;">
+                        
+                    <div style="display:table-cell;padding:0px 10px;"> 
+                    <button type="button" class="btn btn-success" ng-click="exportbuyerreport()" title="Export Excel"><i class="fa fa-file-excel-o"></i></button>
+                    <br /><label style="background-color:white;left:90%;text-align:center;"> <a download="" href="" id="btnpdf" style="display:none;"></a>Export Excel </label>
+                    </div>
+                </div>
+                <br />
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th> S.No </th>
+                                        <th> Buyer Code </th>
+                                        <th> Buyer Name </th>
+                                        <th> Credit Status </th>
+                                        <th> Buyer Status </th>
+                                        <th> Buyer Approval Status </th>
+                                        <th> Contact Person Name </th>
+                                        <th> Created Date</th>
+                                        <th> Created By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in buyerreport_list">
+                                        <td data-title="'S.No'" class="text-center">{{$index+1}}</td>
+                                        <td data-title="'buyer Code'">{{data.buyer_code}}</td>
+                                        <td data-title="'buyer Name'"> {{data.buyer_name}} </td>
+                                        <td data-title="'Credit Status'">
+                                            <label class="label " ng-if="data.credit_status=='NA'" style="color:darkred;font-size:11px;">Not yet Completed</label>
+                                            <label class="label label-warning" ng-if="data.credit_status=='Pending'" style="color:aliceblue;font-size: 10px;">{{data.credit_status}}</label> 
+                                            <label class="label label-success" ng-if="data.credit_status=='Completed'" style="color:aliceblue;font-size: 10px;">{{data.credit_status}}</label> 
+                                        </td>
+                                        <td data-title="'Buyer Status'"> {{data.creditActive_status}} </td>
+                                        <td data-title="'Buyer Approval Status'"> 
+                                            <label class="label " ng-if="data.creditstatus_Approval=='NA'" style="font-size:11px; color:darkred;"> NA </label>
+                                            <label class="label label-success" ng-if="data.creditstatus_Approval=='Approved'" style="color:aliceblue;font-size:10px;">{{data.creditstatus_Approval}}</label>
+                                            <label class="label label-danger" ng-if="data.creditstatus_Approval=='Non Approved' " style="color:aliceblue;font-size: 10px;">{{data.creditstatus_Approval}}</label> 
+                                        </td>
+                                        <td data-title="'Contact Person Name'"> {{data.contactperson_name}} </td>
+                                        <td data-title="'Created Date'"> {{data.created_date}} </td>
+                                        <td data-title="'Created By'"> {{data.created_by}} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

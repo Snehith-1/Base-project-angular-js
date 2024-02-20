@@ -1,0 +1,274 @@
+﻿<h3>
+    Activity Master
+</h3>
+<div ng-controller="osdMstActivityController">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="button" title="Add Region" class="btn btn-info btn-sm" ng-click="popupactivity()">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>Add Activity
+                </button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:right;padding-bottom:10px;">
+                <button type="button" class="btn btn-success" ng-click="activityreport()" title="Export Excel"><i class="fa fa-file-excel-o"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <br /><br /><label style="background-color:white;left:90%;"><a download="" href="" id="btnpdf" style="display:none;"></a> Export Excel </label>
+            </div>
+        </div>
+        <!--<div class="col-lg-12 col-sm-12 col-md-12">
+        <button title="Add Activity" class="btn btn-info btn-sm"
+                ng-click="popupactivity()">
+            <em class="fa fa-plus"></em>&nbsp;Add Activity
+        </button>
+        <div style="text-align:right;padding-bottom:10px;">
+            <button type="button" class="btn btn-success" ng-click="activityreport()" title="Export Excel"><i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <br /><br /><label style="background-color:white;left:90%;"> Export Excel </label>
+        </div>
+    </div>-->
+    </div>
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+        <div class="panel-body">
+            <!--<div class="row">
+                <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" maxlength="5" ng-pattern="/^\d+$/" />
+                            <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                            <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                                <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchText" placeholder="Search Here .."
+                                       class="form-control input-sm" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>-->
+            <br/>
+            <div class="table-responsive">
+                <table datatable="ng" class="table hover table-striped">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th>Business Unit  Name</th>
+                            <th>Activity Code</th>
+                            <th>Activity Name</th>
+                            <th>Assigned Team</th>
+                            <th>Activity TAT (In Hours)</th>
+                            <th>Created On / By</th>
+                            <th class="nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in activitymasterlist">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Department Name'">{{data.department_name}}</td>
+                            <td data-title="'Activity Code'">{{data.activity_code}}</td>
+                            <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                            <td data-title="'Assigned Team'">{{data.supportteam_name}}</td>
+                            <td data-title="'Activity TAT'">{{data.activity_tat}}</td>
+                            <td data-title="'Created By'">{{data.created_date}} / {{data.created_by}}</td>
+                            <td class="nowrap"  data-title="'Action'">
+                                <button title="Edit Activity" ng-click="edit(data.activitymaster_gid)" class="btn btn-success">
+                                    <em class="fa fa-edit "></em>
+                                </button>
+                                <button title="Delete Activity" ng-click="delete(data.activitymaster_gid)" class="btn btn-danger">
+                                    <em class="icon icon-trash "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End Panel-->
+
+    <!--Add Popup Starts-->
+    <script  type="text/ng-template" id="/addActivityModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Add Activity</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="activityformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                           <label>Activity Code</label>
+                            <br/>
+                            <label class="text-info">Auto Generated</label>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row" ng-show="single" style="display:none">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+
+                            <p>{{lbldepartmentgid}}</p>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="single">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+                            <p>{{lbldepartmentname}}</p>
+
+                        </div>
+                    </div>
+                    <div class="row" ng-show="multiple">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;<span style="color:red">*</span>
+                            <select name="department" id="department" ng-options="m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdept(cbodepartment)"
+                                    ng-model="cbodepartment" class="chosen-select form-control" style="height:37px;"  size="1">
+                                <option value=""> ----- Select Business Unit  -----</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Activity Name </label>&nbsp;<span style="color:red">*</span>
+                            <input ng-model="activity_name" required="" tabindex="1" aria-required="true"
+                                   ng-keyup="activityname(activity_name)" placeholder="Enter Activity Name (Maximum 100 Characters)" maxlength="100" aria-invalid="true" class="form-control" style="">
+                            <label style="color:red;">{{message}}</label>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Assign Team <span style="color:red">*</span></label>
+                            <select chosen="" ng-options="m as m.team_name for m in supportdtllist track by m.supportteam_gid" tabindex="2"
+                                 ng-model="cbosuppport_team" class="chosen-select form-control" required></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>TAT </label>&nbsp;<span style="color:red">*</span>
+                            <input ng-model="activity_tat" required="" ng-pattern="/^[0-9]{1,3}$/" tabindex="3" aria-required="true"
+                                   maxlength="3" placeholder="In Hours" aria-invalid="true" class="form-control" style="">
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div>
+                    <div class="text-center">
+                        <button type="button" tabindex="4" class="btn btn-success btn-md" ng-disabled="activityformsubmit.$invalid" ng-click="activitySubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" tabindex="5" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <!--Add Popup Ends-->
+
+    <!--Edit Popup Starts-->
+    <script type="text/ng-template" id="/activityModaledit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Edit Activity</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body">
+            <div class="pd-sm-10">
+                <form novalidate="" name="activityform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Activity Code </label>
+                            <input ng-model="activitycodeedit" required="" tabindex="0" aria-required="true"
+                                   aria-invalid="true" class="form-control" style="" disabled>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="single" style="display:none">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+
+                            <p>{{lbldepartmentgidedit}}</p>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+                            <p>{{lbldepartmentnameedit}}</p>
+
+                        </div>
+                    </div>
+                    <!--<div class="row" ng-show="multiple">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Department Name </label>&nbsp;<span style="color:red">*</span>
+                            <select name="cbodepartmentedit" id="cbodepartment_edit" ng-options="m.department_gid as m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdeptedit(cbodepartmentedit)"
+                               ng-model="cbodepartmentedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                <option value=""> ----- Select Department -----</option>
+                            </select>
+
+                        </div>
+                    </div>-->
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Activity Name </label>&nbsp;<span style="color:red">*</span>
+                            <input ng-model="activitynameedit" required=""  maxlength="100"
+                                   placeholder="Enter Activity Name (Maximum 100 Characters)" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                            <label style="color:red;">Maximum 100 characters Length</label>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Assign Team <span style="color:red"></span></label>
+                           <!--<input ng-model="supportteam_name" tabindex="0" aria-required="true"
+                                   aria-invalid="true" class="form-control" style=""></select> -->
+                            <select name="code" chosen="cbosuppport_teamedit"
+                                    ng-options="m as m.team_name for m in supportdtleditlist track by m.supportteam_gid"
+                                    ng-model="cbosuppport_teamedit" class="chosen-select form-control" required ></select>
+                          
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>TAT </label>&nbsp;<span style="color:red">*</span>
+                            <input ng-model="activitytatedit" ng-pattern="/^[0-9]{1,3}$/" placeholder="In Hours" required="" tabindex="0" aria-required="true"
+                                  maxlength="3" maxaria-invalid="true" class="form-control" style="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br/>
+            <div>
+                <div class="text-center">
+                    <button type="button" ng-click="activityUpdate(data.activitymaster_gid)" class="btn btn-success btn-md" ng-disabled="activityform.$invalid">
+                        <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--Edit Popup Ends-->
+</div>

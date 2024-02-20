@@ -1,0 +1,1021 @@
+﻿
+<h3>DN Tracker - Retail</h3>
+
+<div ng-controller="dnTrackerRetailcontroller as dpick">
+    <div class="widget">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <label class="label" style="font-size:13px;background-color:darkgrey"> ADM - last updated by {{employee_name}} on {{process_date}}</label>
+                </div>
+
+            </div>
+        </div>
+        <br />
+        <div class="panel">
+            <div class="panel-body">
+                <tabset justified="true">
+                    <tab id="id1" ng-click="pending()" select="tab.activeTabId = 'pending'" active="tabpending">
+                        <tab-heading title="Pending List">
+                            <em class="fa fa-clock-o fa-1x"></em>
+                            List of Cases- Pending <label class="label label-primary" ng-if="lblpending_count != '0'"> {{lblpending_count}}</label>
+                        </tab-heading>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedpending}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pagecountpending" id="pagecountpending" type="number" />
+                                    <button class="btn btn-info" id="loadmorepending" ng-disabled="!$parent.pagecountpending" ng-click="loadMore($parent.pagecountpending)">
+                                        <em class="fa fa-spinner"></em> Load More
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtpending" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th style="display:none;">S No</th>
+                                        <th>URN</th>
+                                        <th class="text-nowrap">Customer Name</th>
+                                        <th class="text-nowrap">OD days</th>
+                                        <th>Vertical</th>
+                                        <th>Guarantor Info</th>
+                                        <th>DN Status</th>
+                                        <th class="text-nowrap">Courier Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr ng-repeat="data in DNpending_list| filter : searchtxtpending | limitTo:totalDisplayedpending">
+                                        <td data-title="S.No" style="display:none;">{{$index+1}}</td>
+                                        <td title="URN">{{data.urn}}</td>
+                                        <td title="Customer Name">{{data.Customer_name}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="Vertical">{{data.Vertical}}</td>
+                                        <td title="Guarantor">{{data.GurantorCustomerId}} {{data.Guarantor_Name}}</td>
+                                        <td title="DN Status">{{data.DNstatus}}</td>
+                                        <td title="Acknowledgement Status">{{data.acknowledgement_status}}</td>
+                                        <td class="text-nowrap" title="Action">
+                                            <a ng-switch="data.DNstatus">
+
+                                                <button title="DNstatus" class="btn btn-info btn-sm"
+                                                        ng-switch-when="DN1 Sent" ng-disabled="false" ng-click="dn2generatepage(data.urn)">
+                                                    <em class="fa fa-reorder "></em>
+                                                </button>
+
+                                                <button title="DNstatus" class="btn btn-info btn-sm"
+                                                        ng-switch-when="DN2 Sent" ng-disabled="false" ng-click="dn3generatepage(data.urn)">
+                                                    <em class="fa fa-reorder "></em>
+                                                </button>
+                                                <button title="DN Status" class="btn btn-info btn-sm"
+                                                        ng-switch-when="Pending" ng-click="dn1generatepage(data.urn)">
+                                                    <em class="fa fa-reorder "></em>
+                                                </button>
+                                            </a>
+                                            <a ng-switch="data.acknowledgement_status">
+
+                                                <button title="Exclusion List" class="btn btn-danger btn-sm"
+                                                        ng-click="exclusioncustomer(data.urn,data.Customer_name)">
+                                                    <em class="fa-1x icon-user-unfollow"></em>
+                                                </button>
+                                            </a>
+                                            <button title="Skip DN" class="btn btn-green btn-sm"
+                                                    ng-click="popupDNskip(data.urn,data.Customer_name)">
+                                                <em class="fa fa-step-forward"></em>
+                                            </button>
+                                            <button title="" class="btn btn-primary btn-sm"
+                                                    ng-click="legalsr(data.urn,data.Customer_name)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </tab>
+                    <tab id="id2" ng-click="generated()" select="tab.activeTabId ='generated'" active="tabgenerated">
+
+                        <tab-heading title="Generated List">
+                            <em class="fa fa-clock-o fa-1x"></em>   Generated Cases <label class="label label-primary" ng-if="lblgenerated_count != '0'"> {{lblgenerated_count}}</label>
+                        </tab-heading>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedgenerated}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pagecountgenerated" id="pagecountgenerated" type="number" />
+                                    <button class="btn btn-info" id="loadmoregenerated" ng-disabled="!$parent.pagecountgenerated" ng-click="loadMore($parent.pagecountgenerated)">
+                                        <em class="fa fa-spinner"></em> Load More
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtgenerated" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th style="display:none;">S No</th>
+                                        <th>URN</th>
+                                        <th class="text-nowrap">Customer Name</th>
+                                        <th class="text-nowrap">OD days</th>
+                                        <th>Vertical</th>
+                                        <th>DN Status</th>
+                                        <th class="text-nowrap">Courier Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in DNgenerated_list| filter : searchtxtgenerated | limitTo:totalDisplayedgenerated">
+                                        <td data-title="S.No" style="display:none;">{{$index+1}}</td>
+                                        <td title="URN">{{data.urn}}</td>
+                                        <td title="Customer Name">{{data.Customer_name}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="Vertical">{{data.Vertical}}</td>
+                                        <td title="DN Status">{{data.DNstatus}}</td>
+                                        <td title="Acknowledgement Status">{{data.acknowledgement_status}}</td>
+                                        <td class="text-nowrap" title="Action">
+                                            <a ng-switch="data.DNstatus">
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN1 Generated" ng-click="dn1pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN1 Sent" ng-click="dn1pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN2 Generated" ng-click="dn2pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN2 Sent" ng-click="dn2pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN3 Generated" ng-click="dn3pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm"
+                                                        ng-switch-when="DN3 Sent" ng-click="dn3pdf(data.urn)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="History"  class="btn bg-purple-100 btn-sm"
+                                                        ng-switch-when="Repayment Done" ng-click="dngenerated_history(data.urn)">
+                                                    <em class="fa fa-history"></em>
+                                                </button>
+                                            </a>
+                                            <a ng-switch="data.acknowledgement_status">
+
+
+                                                <button title="DN Status" class="btn btn-info btn-sm"
+                                                        ng-click="dngeneratedinfo(data.urn)">
+                                                    <em class="fa fa-reorder "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status" class="btn btn-pink btn-sm"
+                                                        ng-switch-when="Pending" ng-disabled="false" ng-click="dnackstatus(data.urn)">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status" class="btn btn-green btn-sm"
+                                                        ng-switch-when="---" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status" class="btn btn-green btn-sm"
+                                                        ng-switch-when="--" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                        ng-switch-when="DN Delivered" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                        ng-switch-when="DN Returned" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                        ng-switch-when="DN Skipped" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em>
+                                                </button>
+                                                <button title="Acknowledgement Status Updated" class="btn btn-green btn-sm"
+                                                        ng-switch-when="DN1 Generated" ng-disabled="true">
+                                                    <em class="fa fa-thumbs-o-up "></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                               
+                                            </a>
+                                        </td>
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </tab>
+                    <tab id="id3" ng-click="skipped()" select="tab.activeTabId = 'skipped'" active="tabskipped">
+                        <tab-heading title="Skipped List">
+                            <em class="fa fa-clock-o fa-1x"></em>  Skipped Cases <label class="label label-primary" ng-if="lblskipped_count != '0'"> {{lblskipped_count}}</label>
+                        </tab-heading>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedskipped}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pagecountskip" id="pagecountskip" type="number" />
+                                    <button class="btn btn-info" id="loadmoreskip" ng-disabled="!$parent.pagecountskip" ng-click="loadMore($parent.pagecountskip)">
+                                        <em class="fa fa-spinner"></em> Load More
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtskipped" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th style="display:none;">S No</th>
+                                        <th>URN</th>
+                                        <th class="text-nowrap">Customer Name</th>
+                                        <th class="text-nowrap">OD days</th>
+                                        <th>Vertical</th>
+                                        <th class="text-nowrap" >Skipped On</th>
+                                        <th >Valid Upto</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in DNskipped_list| filter : searchtxtskipped | limitTo:totalDisplayedskipped">
+                                        <td data-title="S.No" style="display:none;">{{$index+1}}</td>
+                                        <td title="URN">{{data.urn}}</td>
+                                        <td title="Customer Name">{{data.Customer_name}}</td>
+                                        <td title="OD Days" style="text-align:center">{{data.od_days}}</td>
+                                        <td title="Vertical">{{data.Vertical}}</td>
+                                        <td title="Skipped Date" style="text-align:center">{{data.Skipped_on}}</td>
+                                        <td title="Valid Upto" style="text-align:center">{{data.validity}}</td>
+                                        <td class="text-nowrap" title="Action" style="text-align:center">
+                                             <button title="Skip" class="btn bg-purple-100 btn-sm"
+                                                         ng-click="dnskip(data.urn)">
+                                                    <em class="fa fa-history"></em>
+                                                </button>
+                                             
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </tab>
+                    <tab id="id4" ng-click="exclusion()" select="tab.activeTabId = 'exclusion'" active="tabexclusion">
+                        <tab-heading title="Exclusion List">
+                            <em class="fa fa-clock-o fa-1x"></em>  Exclusion List <label class="label label-primary" ng-if="lblexclusion_count != '0'"> {{lblexclusion_count}}</label>
+                        </tab-heading>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedexclusion}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pagecountexclusion" id="pagecountexclusion" type="number" />
+                                    <button class="btn btn-info" id="loadmoreexclusion" ng-disabled="!$parent.pagecountexclusion" ng-click="loadMore($parent.pagecountexclusion)">
+                                        <em class="fa fa-spinner"></em> Load More
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtexclusion" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th style="display:none;">S No</th>
+                                        <th>URN</th>
+                                        <th>Excluded Date</th>
+                                        <th class="text-nowrap">Customer Name</th>
+                                        <th class="text-nowrap">OD days</th>
+                                        <th>Vertical</th>
+                                        <th>DN Status</th>
+                                        <th class="text-nowrap">Excluded By</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in DNexclusion_list| filter : searchtxtexclusion | limitTo:totalDisplayedexclusion">
+                                        <td data-title="S.No" style="display:none;">{{$index+1}}</td>
+                                        <td title="URN">{{data.urn}}</td>
+                                        <td title="Excluded Date">{{data.excluded_date}}</td>
+
+                                        <td title="Customer Name">{{data.Customer_name}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="Vertical">{{data.Vertical}}</td>
+                                        <td title="DN Status">{{data.DNstatus}}</td>
+                                        <td data-title="'Excluded By'">{{data.excluded_by}}</td>
+                                        <td class="text-nowrap">
+                                            <button title="Activate" class="btn btn-success btn-sm"
+                                                    ng-click="activateexclusion(data.urn,data.Customer_name)">
+                                                <em class="fa fa-check-square"></em>
+                                            </button>
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="exclusionHistory(data.urn,data.Customer_name)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </tab>
+                    <tab id="id5" ng-click="legalsrlist()" select="tab.activeTabId = 'legalsr'" active="tablegalsr">
+                        <tab-heading title="Legal SR List">
+                            <em class="fa fa-clock-o fa-1x"></em> Legal SR <label class="label label-primary" ng-if="lbllegalsr_count != '0'"> {{lbllegalsr_count}}</label>
+                        </tab-heading>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedlegalsr}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pagecountlegalsr" id="pagecountlegalsr" type="number" />
+                                    <button class="btn btn-info" id="loadmorelegalsr" ng-disabled="!$parent.pagecountlegalsr" ng-click="loadMore($parent.pagecountlegalsr)">
+                                        <em class="fa fa-spinner"></em> Load More
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtlegalsr" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+                                <thead>
+                                    <tr class="bg-indigo-500 text-white">
+                                        <th style="display:none;">S.NO</th>
+                                        <th>URN</th>
+                                        <th>CUSTOMER NAME</th>
+                                        <th>EMAIL ID</th>
+                                        <th>MOBILE NO</th>
+                                        <th>AUTHENTICATION STATUS</th>
+                                        <th>ODC APPROVAL STATUS</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in DNlegalsr_list| filter : searchtxtlegalsr | limitTo:totalDisplayedelegalsr">
+                                        <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                        <td data-title="URN">{{data.customer_urn}}</td>
+                                        <td data-title="Customer Name">{{data.customer_name}}</td>
+                                        <td data-title="Email Id">{{data.email_id}}</td>
+                                        <td data-title="Mobile No">{{data.mobile_no}}</td>
+                                        <td data-title="Authentication">{{data.auth_status}}</td>
+                                        <td data-title="Approval Status">{{data.approval_status}}</td>
+                                        <td data-title="'Action'" class="nowrap">
+                                            <button title="Raise Legal SR" ng-click="raisesr(data.templegalsr_gid,data.customer_gid)" class="btn bg-cyan-500">
+                                                <em class="fa fa-plus-square-o"></em>
+                                            </button>
+
+                                            <!--    <button title="View" ng-click="view(data.legalsr_gid,data.customer_gid)" class="btn btn-green">
+                                    <em class="fa fa-eye"></em>
+                                </button>-->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+        <script type="text/ng-template" id="/skipdn.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-check-square"></em>&nbsp;  SKIP DN </h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <h4>Do you want to skip the DN for this Customer ?</h4>
+
+                                        <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customer_name}}</span>
+                                        <br />
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Valid Upto: <span style="color:red">*</span></label>
+                                        <p class="input-group">
+                                            <input type="date" id="skip" name="date" ng-model="txtskipvalid_date" class="form-control" />
+                                            <span class="input-group-btn">
+
+                                            </span>
+                                        </p>
+                                    </div>
+                                   <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Skip Reason: <span style="color:red">*</span></label>
+                                        <textarea name="kip_reason" placeholder="Enter Skip Reason..."
+                                                  ng-model="txtskip_reason" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="class">
+                                    <div class="text-center">
+
+                                        <a class="btn btn-success" ng-click="confirmSkip()">
+                                            <em class="fa fa-check"></em>
+                                            <span>Confirm</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/legalsr.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-check-square"></em>&nbsp;  Legal SR</h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <h4>Do you want to move the Customer to Legal SR?</h4>
+
+                                        <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customer_name}}</span>
+                                        <br />
+                                    </div>
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Reason: <span style="color:red">*</span></label>
+                                        <textarea name="remarks" placeholder="Enter  Reason..."
+                                                  ng-model="txtremarks" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="class">
+                                    <div class="text-center">
+
+                                        <a class="btn btn-success" ng-click="confirm()">
+                                            <em class="fa fa-check"></em>
+                                            <span>Confirm</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dn1ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN1 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-change="changewarningmsg()" ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Returned" value="Returned" required ng-change="changewarningmsg()" ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-change="changewarningmsg()" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-change="changewarningmsg()" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center" ng-show="warningmsg">
+                                        <label style="color:red;">Enter Delivered Date</label>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn1ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dn2ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN2 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Returned" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn2ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/dn3ackstatus.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa icon-note"></em>
+                        DN3 ACKNOWLEDGEMENT STATUS
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="mda-form-group float-label">
+                                            <label>Status</label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="Delivered" name="Delivered" value="Delivered" required ng-click="isShowHide('hide')" ng-model="dn1ackstatus" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Delivered
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Returned" name="Returned" value="Returned" required ng-click="isShowHide('show')" ng-model="dn1ackstatus" />
+                                                    <span class="fa fa-circle"></span>Returned
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="hideval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Delivered Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtdelivered_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div ng-show="showval">
+                                            <div class="mda-form-group float-label">
+                                                <label>Returned Date </label>
+                                                <p class="input-group">
+                                                    <input type="date" id="dob" name="date" ng-model="txtreturned_date" class="form-control" />
+                                                    <span class="input-group-btn">
+
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="dn3ackstatusupdation()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="/exclusionpopup.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-user-times"></em>&nbsp;  Exclusion </h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <h4>Do you want to Exclude this Customer ?</h4>
+
+                                        <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customername}}</span>
+                                        <br />
+                                    </div>
+                                    <br />
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Exclusion Reason: <span style="color:red">*</span></label>
+                                        <textarea name="specificcondition" placeholder="Enter Exclusion Reason..."
+                                                  ng-model="txtexclusion_reason" class="form-control" rows="3"></textarea>
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <label>Exclusion History : </label>
+                                    </div>
+                                    <div ng-hide="Nohistoryexclusion" ui-scroll-viewport="" style="height:200px; overflow-y: auto;" class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12" ng-repeat="data in exclusioncustomerHistory" ng-show="historyexclusion">
+
+                                            <div class="list-group-item">
+                                                <div class="media-box-body clearfix">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <h4 class="popover-title">{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}}</h4>
+                                                            <div class="popover-content">
+                                                                <!--<p>{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}}</p>-->
+                                                                <p><span class="text-bold">Reason :</span> {{data.exclusion_reason}}</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 col-md-12" ng-show="Nohistoryexclusion">
+
+                                        <div class="list-group-item">
+                                            <div class="media-box-body clearfix">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="popover-title">
+                                                            <p><span class="text-bold" style="font-size:15px;">No History</span></p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="class">
+                                    <div class="text-center">
+
+                                        <a class="btn btn-success" ng-click="confirmExclusioncustomer()">
+                                            <em class="fa fa-check"></em>
+                                            <span>Confirm</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/activateconfirmation.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-check-square"></em>&nbsp;  Activate </h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <h4>Do you want to Activate this Customer ?</h4>
+
+                                        <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customername}}</span>
+                                        <br />
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Activate Reason: <span style="color:red">*</span></label>
+                                        <textarea name="specificcondition" placeholder="Enter Activate Reason..."
+                                                  ng-model="txtactivated_reason" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="class">
+                                    <div class="text-center">
+
+                                        <a class="btn btn-success" ng-click="confirmActivation()">
+                                            <em class="fa fa-check"></em>
+                                            <span>Confirm</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/exclusionHistoryPopup.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-history"></em>&nbsp;  Exclusion History</h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                        <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customername}}</span>
+                                        <br />
+                                    </div>
+                                    <div class="col-lg-12" ng-repeat="data in exclusioncustomerHistory">
+
+                                        <div class="list-group-item">
+                                            <div class="media-box-body clearfix">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <h4 class="popover-title">{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}}</h4>
+                                                        <div class="popover-content">
+                                                            <!--<p>{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}}</p>-->
+                                                            <p><span class="text-bold">Reason :</span> {{data.exclusion_reason}}</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="class">
+                                    <div class="text-center">
+
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Close</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+    </div>
+</div>

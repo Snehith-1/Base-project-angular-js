@@ -1,0 +1,390 @@
+﻿<h3>
+    Credit Group Mapping
+</h3>
+<div ng-controller="MstCreditMappingSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="button" title="Add Region" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="addcreditgroup()">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span> Add Credit Group
+                </button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align:right;padding-bottom:10px;">
+                <button type="button" class="btn btn-success" ng-click="creditmapplingexcel()"  ng-hide="lsoneapipage=='OneApi'" title="Export Excel"><i class="fa fa-file-excel-o"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <br /><br /><label style="background-color:white;left:90%;"><a download="" href="" id="btnpdf" style="display:none;"></a> </label>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th> One API Code</th>
+                                    <th> Credit Group Name </th>
+                                    <th> Credit Heads Details </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th> Status </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in CreditGroup ">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'Credit Group Name'">{{data.creditgroup_name}}</td>
+                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                               ng-click="showPopover(data.creditmapping_gid, data.creditgroup_name)">
+                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Status'" ng-switch="data.creditgroup_status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" ng-switch="data.creditgroup_status">
+                                        <button title="Edit" ng-click="editcreditgroup(data.creditmapping_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Log" ng-click="logcreditgroup(data.creditmapping_gid)" class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.creditmapping_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.creditmapping_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Rule" ng-click="editRule(data.creditmapping_gid)" class="btn btn-info">
+                                            <em class="fa fa-legal"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <!--<script type="text/ng-template" id="/addcreditmapping.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Credit Group
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addcreditgroup" ng-submit="form.addcreditgroup()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Credit Group ID </label>                                 
+                                    <input type="text" ng-model="txtcreditgroup" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />                           
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Credit Group Name <span style="color:red">*</span></label>                                   
+                                    <input type="text" ng-model="txtcreditgroupname" required tabindex="0" class="form-control" />                              
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Credit Head  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbocredithead_list" required=""
+                                        ng-model="cbocredithead" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>National Credit Manager  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbonationalmanager_list" required=""
+                                        ng-model="cbonationalmanager" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Regional Credit Manger  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboregionalmanager_list" required=""
+                                        ng-model="cboregionalmanager" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Credit Manager  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbocreditmanager_list" required=""
+                                        ng-model="cbocreditmanager" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                       
+
+                    </div>
+                </div>
+               
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addcreditgroup.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </script>-->
+ 
+    
+       <script type="text/ng-template" id="/editcreditmapping.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Credit Group
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editcreditgroup" ng-submit="form.editcreditgroup()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Credit Group ID </label>
+                                    <input type="text" ng-model="txtcreditgroup_edit" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />                            
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Credit Group Name<span style="color:red">*</span> </label>                                  
+                                    <input type="text" ng-model="txteditcreditgroup_name" required tabindex="0" class="form-control" />                              
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Credit Head  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbocredithead_editlist" required=""
+                                        ng-model="cbocredithead_edit" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>National Credit Manager  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbonational_editlist" required=""
+                                        ng-model="cbonational_edit" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Regional Credit Manger  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboregional_editlist" required=""
+                                        ng-model="cboregional_edit" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Credit Manager  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cbocreditmanager_editlist" required=""
+                                        ng-model="cbocreditmanager_edit" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+
+
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="editcreditgroup.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+  
+      <script type="text/ng-template" id="/showcreditheads.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:center;">{{creditgroup_name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Credit Head : </b> <br /></td>
+                        </tr>
+                        <tr  style="text-align: left;height:20px;">
+                            <td data-title="'Credit head'" style="width:2%; text-align:left"> {{Credithead}}</td>
+                        </tr>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> National Credit Manager : </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'National Credit Manager '" style="width:2%; text-align:left"> {{Creditnationalmanager}}</td>
+                        </tr>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b>  Regional Credit Manager : </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'Regional Credit Manager'" style="width:2%; text-align:left"> {{Creditregionalmanager}}</td>
+                        </tr>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Credit Manager : </b> <br /></td>
+                        </tr>
+                        <tr  style="text-align: left;height:20px;">
+                            <td data-title="'Credit Manager'" style="width:2%; text-align:left"> {{CreditManager}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/statuscreditgroup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statuscreditgroup" ng-submit="form.statuscreditgroup()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Region</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                {{creditgroup_name }}
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>Status  </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                        <span class="fa fa-circle"></span> Inactive
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statuscreditgroup.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="Creditlog!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Creditlog" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}}</td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>   

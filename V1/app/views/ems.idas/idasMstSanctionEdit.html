@@ -1,0 +1,1521 @@
+﻿<a href="#/app/idasMstSanctionSummary">
+    <button type="button" title="Back" class="pull-right btn btn-sm btn-primary">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a>
+<h3>
+    Edit Sanction
+</h3>
+<div ng-controller="idasMstSanctionEdit as dp" class="ball-clip-rotate">
+    <div id="panelDemo8" class="panel panel-primary ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span>Edit Sanction
+        </div>
+        <div class="panel-body">
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <ng-form novalidate="" name="userform5" ng-submit="form.submitForm2()" autocomplete="off" class="form-validate form-horizontal">
+                        <fieldset >
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Customer</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{customerNameEdit}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Zonal Head</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{zonalHeadNameEdit}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Business Head</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{businessHeadNameEdit}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Cluster Manager</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{clusterManagerEdit}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Relationship Manager</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{relationshipmgmtEdit}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Credit Manager</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{creditManagerEdit}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+
+
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Vertical</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{verticalCodeEdit}}</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    <label>Sanction Ref No. <span style="color:red">*</span></label>
+                                    <input ng-model="sanctionrefnoEdit" tabindex="0" ng-disabled="true"
+                                           required aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Sanction Date <span style="color:red">*</span></label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="SanctionDateEdit" is-open="dp.openEdit"
+                                               datepicker-options="dp.dateOptionsEdit" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calenderEdit($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    <label>Sanction Amount(ODLIM) <span style="color:red">*</span></label>
+                                    <input id="txtInput" ng-model="SanctionAmountEdit" required type="text" ng-change="amountschange()"
+                                           class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+                                    <span style="font-style:italic;">Number in words:</span>
+                                    <span id="sanctionamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                    <div ng-show="sanction_validation">
+                                        <label style="color:red;"> Enter Sanction Amount</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div ng-show="verticalCodeEdit=='FPO'" class="col-sm-4 col-md-4 col-lg-4">
+                                    <label>Paycard Solutions </label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            &nbsp;&nbsp; <input type="radio" name="rdbpaycard" value="applicable" ng-model="rdbpaycard" ng-disabled="true" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Applicable
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rdbpaycard" value="notapplicable" ng-model="rdbpaycard" ng-disabled="true" />
+                                            <span class="fa fa-circle"></span>Not Applicable
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="addfacility_pnl">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <br />
+                                    <strong class="ng-binding w3-text-indigo">
+                                        <a class="btn btn-sm btn-info" ng-click="addloanfacilitytype()"><span class="fa fa-plus" />  Add Loan Facility Type</a>
+
+
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="facility_pnl">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                                <div class="panel panel-green">
+                                    <div class="panel-heading">
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span>Add Facility Type
+
+                                        <div class="pull-right ">
+                                            <span class="btn-label btn-danger">
+                                                <i class="fa fa-close" title="Close" ng-click="loanfacilitycancel()"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body bg-grey-50">
+                                        <div class="pd-sm-10">
+                                            <ng-form novalidate="" name="userform09" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>Interchangeability (If Applicable)<span style="color:red">*</span> </label>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    &nbsp;&nbsp; <input type="radio" name="rdbinterchangeability" value="Yes" ng-model="rdbinterchangeability" ng-click="interchangeability_yes()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" name="rdbinterchangeability" value="No" ng-model="rdbinterchangeability" ng-click="interchangeability_no()" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+
+                                                            <div ng-show="interchangeabilityyes">
+                                                                <label><strong>Report Structure</strong><span style="color:red">*</span></label>
+                                                                <select id="report_structure" name="report_structure" dropzone="" ng-model="$parent.cboreport_structure"
+                                                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                                                        tabindex="0" aria-label="report_structure" aria-expanded="false" size="1" ng-change="onchangemandaotory()">
+                                                                    <option value=""> ---Select Report Structure--- </option>
+                                                                    <option value="ODLIM">ODLIM </option>
+                                                                    <option data-ng-repeat="data in loanfacilitytype_list" value="{{data.sanction2loanfacilitytype_gid}}">
+                                                                        {{data.loanfacilityref_no}}
+                                                                    </option>
+                                                                </select>
+
+                                                            </div>
+                                                            <div ng-show="interchangeabilityno">
+                                                                <label><strong>Condition On ODLIM</strong> <span style="color:red">*</span></label>
+                                                                <select id="applicable_condition" name="cboapplicable_condition" dropzone="" ng-model="$parent.cboapplicable_condition"
+                                                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                                                        tabindex="0" aria-label="cboapplicable_condition" aria-expanded="false" size="1">
+                                                                    <option value=""> ---Select Condition --- </option>
+                                                                    <option value="No">Applicable </option>
+                                                                    <option value="Yes"> Not Applicable </option>
+                                                                </select>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Nature of Facility </strong><span style="color:red">*</span></label>
+                                                            <select name="loan_title" ng-options="m.loan_title for m in loanfacility_list" ng-change="onchangemandaotory()"
+                                                                    ng-model="loanmaster_gid" class="chosen-select form-control">
+                                                                <option value="">---Select Facility--- </option>
+                                                            </select>
+
+
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>Loan Facility Amount </label> <span style="color:red">*</span>
+                                                            <input id="txtInputloanfacility_type" ng-model="txtloanfacility_amount" type="text" ng-change="facilitytype_amount()"
+                                                                   class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="loanfacilityamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <div ng-hide="warningfacility_amount">
+                                                                <label style="color:red;">Enter Loan Facility Amount</label>
+                                                            </div>
+                                                            <div ng-hide="amount_validation">
+                                                                <label style="color:red;">Amount Exceeded From Sanction </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Margin in %</strong></label>
+                                                            <input type="text" ng-model="txtmargin" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+
+
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Documented Limit (in Rs)</strong> <span style="color:red">*</span></label>
+                                                            <input id="txtInput1" type="text" ng-model="txtdocument_limit" ng-change="documentlimitchange()" class="form-control" style="text-align:right;" />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="documentlimitamount_words" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <div ng-hide="panel1">
+                                                                <label style="color:red;"> Amount is Exceeded from ODLIM</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Tenure  </strong></label>
+                                                            <input type="text" ng-model="txttenure" class="form-control" />
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Revolving Type </strong> <span style="color:red">*</span></label>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" name="rdbrevolving" value="Revolving" ng-model="rdbrevolving" ng-change="onchangemandaotory()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Revolving
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" name="rdbrevolving" value="Non-revolving" ng-model="rdbrevolving" ng-change="onchangemandaotory()" />
+                                                                    <span class="fa fa-circle"></span>Non Revolving
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>
+                                                                <strong>
+                                                                    Date of Expiry
+
+                                                                </strong> <span style="color:red">*</span>
+                                                            </label>
+                                                            <p class="input-group">
+                                                                <input type="text" id="mortage" name="date" ng-model="txtexpiry_date" datepicker-popup="{{dp.format}}"
+                                                                       style="height:30px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                       close-text="Close" class="form-control" ng-change="onchangemandaotory()" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="dp.calender3($event)" style="height:30px;" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <br />
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label><strong>Proposed ROI  </strong><span style="color:red">*</span></label>
+                                                            <input type="text" ng-model="txtproposed_roi" class="form-control" ng-change="onchangemandaotory()"/>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row" ng-show="mandatoryfields">
+
+                                                    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+
+                                                        <label style="color:red;"> Enter All Mandatory Values</label>
+                                                        <br />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="text-center">
+                                                        <a class="btn btn-success" ng-click="addloanfacility()">
+                                                            <em class="fa icon-plus"></em>
+                                                            <span>&nbsp;Add&nbsp;&nbsp;&nbsp;</span>
+                                                        </a>
+                                                        <a class="btn btn-danger" ng-click="loanfacilitycancel()">
+                                                            <em class="fa icon-close"></em>
+                                                            <span>Cancel</span>
+                                                        </a>
+
+                                                    </div>
+                                                </div>
+                                            </ng-form>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="dd-handle ng-scope">
+
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">Ref No</th>
+                                                        <th scope="col">Loan Facility Type</th>
+                                                        <th scope="col">Loan Facility Amount</th>
+                                                        <th scope="col">Interchangeability</th>
+                                                        <th scope="col">Report Structure</th>
+                                                        <th scope="col">Document Limit</th>
+                                                        <th scope="col">Margin</th>
+                                                        <th scope="col">Tenure</th>
+                                                        <th scope="col">Date of Expiry</th>
+                                                        <th scope="col">Proposed ROI</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in loanfacilitytype_list" width="100%">
+                                                        <td title="Ref No">{{data.loanfacilityref_no}}</td>
+                                                        <td title="Facility Type">{{data.loanfacility_type}}</td>
+                                                        <td title="Facility Amount" style="text-align:right;">{{data.loanfacility_amount}}</td>
+                                                        <td title="Facility Type">{{data.interchangeability}}</td>
+                                                        <td title="Facility Amount">{{data.report_structure}}</td>
+                                                        <td title="Facility Type" style="text-align:right;">{{data.document_limit}}</td>
+                                                        <td title="Facility Amount">{{data.margin}}</td>
+                                                        <td title="Facility Type">{{data.tenure}}</td>
+                                                        <td title="Facility Amount">{{data.expiry_date}}</td>
+                                                        <td title="Facility Amount">{{data.proposed_roi}}</td>
+                                                        <td data-title="Action" class="text-nowrap" style="text-align:center;">
+                                                            <a ng-show="data.proposed_roi==null" title="Update ROI" style="height:20px;"
+                                                                ng-click="btnupdate(data.sanction2loanfacilitytype_gid,data.loanfacilityref_no,data.loanfacility_type)">
+                                                                <span class="fa-stack">
+                                                                    <em class="fa fa-circle fa-stack-2x text-green"></em>
+                                                                    <em class="fa fa-check-squarefa-stack-1x fa-inverse text-white"></em>
+                                                                </span></a>
+
+                                                            <a  ng-show="data.proposed_roi==''" title="Update ROI" style="height:20px;" 
+                                                               ng-click="btnupdate(data.sanction2loanfacilitytype_gid,data.loanfacilityref_no,data.loanfacility_type)">
+                                                           <span class="fa-stack">
+                                <em class="fa fa-circle fa-stack-2x text-green"></em>
+                                <em class="fa fa-check-square fa-stack-1x fa-inverse text-white"></em>
+                            </span></a>
+                                                            <a  title="Delete" ng-click="deleteloanfacility(data.sanction2loanfacilitytype_gid)">
+                                                                <span class="fa-stack">
+                                                                    <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                                                                    <em class="fa fa-close fa-stack-1x fa-inverse text-white"></em>
+                                                                </span> </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                    <label><strong>Sanction Type </strong><span style="color:red">*</span></label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rdbsanction_type" value="New" ng-model="rdbsanction_type" required ng-click="sanctiontype_new()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>New
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rdbsanction_type" value="Existing Customer" ng-model="rdbsanction_type" required ng-click="sanctiontype_existing()" />
+                                            <span class="fa fa-circle"></span>Existing Customer
+                                        </label>
+                                    </div>
+
+                                    <div ng-show="existing_customer">
+                                        <br />
+                                        <select name="nature_proposal"
+                                                ng-model="cbonature_proposal" class="form-control ng-valid ng-touched ng-valid-parse"
+                                                size="1">
+                                            <option value=""> --Select Nature of Proposal-- </option>
+                                            <option value="Renewal"> Renewal</option>
+                                            <option value="Reduction"> Reduction </option>
+                                            <option value="Enhancement"> Enhancement</option>
+                                            <option value="Existing-New"> New</option>
+                                            <option value="Modification"> Modification</option>
+                                            <option value="Renewal-Cum-Enhancement"> Renewal Cum Enhancement</option>
+                                            <option value="RenewalCumModification"> Renewal Cum Modification</option>
+                                        </select>
+                                        <br />
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label>Entity <span style="color:red">*</span></label>
+                                    <select name="approval_authority" ng-model="cboentity_type" required="" ng-disabled="true" ng-options="m.entity_gid as m.entity_name for m in entity_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1"></select>
+
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>Entity Branch </strong></label> <span style="color:red">*</span>
+                                    <select id="branch_name" name="sanction_branch_gid" chosen="" ng-options="m.branch_gid as m.branch_name for m in branch_list" required
+                                            ng-model="sanction_branch_gid" class="chosen-select form-control">
+                                        <option value=""> ---Select Branch ---</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <!--<div layout="row">-->
+
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong> Entity State</strong> </label> <span style="color:red"> *</span>
+
+                                    <select id="state_name" name="sanction_state_gid" chosen="" ng-options="m.state_gid as m.state_name for m in state_list" required
+                                            ng-model="sanction_state_gid" class="chosen-select form-control">
+                                        <option value=""> ---Select State--- </option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>Purpose of Lending </strong></label>
+                                    <textarea type="text" rows="1" ng-model="txtpurpose_lendingedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>Facility </strong></label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rdbfacility_typeedit" value="Secured" ng-model="rdbfacility_typeedit" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Secured
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rdbfacility_typeedit" value="Unsecured" ng-model="rdbfacility_typeedit" />
+                                            <span class="fa fa-circle"></span>Unsecured
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>Approved By </strong> <span style="color:red">*</span></label>
+                                    <select id="ccgroup_name" name="cboapproved_byedit" chosen="" ng-options="c.ccgroupname_gid as c.ccgroup_name for c in ccgroup_list"  required
+                                            ng-model="cboapproved_byedit" class="chosen-select form-control">
+                                        <option value=""> ---Select Approved By--- </option>
+                                    </select>
+                                    <!--<select name="cboapproved_byedit" required="" ng-options="c.ccgroupname_gid as c.ccgroup_name for c in ccgroup_list"
+                                            ng-model="cboapproved_byedit" class="form-control ng-valid ng-touched ng-valid-parse"
+                                            size="1">
+                                        <option value=""> ---Select Approved By--- </option>
+                                         </select>-->
+                                </div>
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>Approved Date</strong> <span style="color:red">*</span></label>
+                                    <p class="input-group">
+                                        <input type="text" id="mortage" name="date" ng-model="txtapproveddateedit" datepicker-popup="{{dp.format}}"
+                                               style="height:30px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                               close-text="Close" class="form-control" required />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender2($event)" style="height:30px;" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label><strong>CC Decision </strong></label>
+                                    <select name="cbocc_decision"
+                                            ng-model="cbocc_decisionedit" class="form-control ng-valid ng-touched ng-valid-parse"
+                                            size="1">
+                                        <option value=""> ---Select CC Decision--- </option>
+                                        <option value="Approved"> Approved</option>
+                                        <option value="Conditional Approval"> Conditional Approval </option>
+                                        <option value="Declined"> Declined</option>
+                                        <option value="Deferred"> Deferred </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <br />
+                                    <strong class="ng-binding w3-text-indigo">
+                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                        Add CC Member
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <ng-form novalidate="" name="userform01" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>CC Group Name </label>
+                                                <select name="cboccgroup_name" ng-model="cboccgroup_name" ng-options="c.ccgroup_name for c in ccgroup_list"
+                                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1" ng-change="onselectedchangeccgroup()">
+                                                    <option value="">--- Select Group Name ---</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label class="col-form-label control-label">CC Member Name<span style="color:red">*</span></label>
+                                                <br />
+                                                <select name="cbocc_members" ng-options="c.CCMember_name for c in ccmember_list"
+                                                        ng-model="cbocc_members" ng-change="cbomember_msg()"
+                                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                                    <option value="">--- Select CC Member ---</option>
+                                                </select>
+                                                <div ng-hide="warningcbomember">
+                                                    <label style="color:red;">Select CC Member</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>CC Member Remarks </label>
+
+                                                <textarea rows="1" type="text" ng-model="txtccmember_remarks" class="form-control" />
+
+                                            </div>
+                                            <div class="col-lg-1 col-md-1 col-sm-1 align-top">
+                                                <a class="btn btn-sm btn-info" ng-disabled="userform01.$invalid" ng-click="ccmember_add()"><span class="fa fa-plus" /></a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-form>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">CC Group Name</th>
+                                                        <th scope="col">CC Members Name</th>
+                                                        <th scope="col">Remarks</th>
+
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in mdlccmember" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="CC Member Name">{{data.ccgroup_name}}</td>
+                                                        <td title="CC Member Name">{{data.ccmember_name}}</td>
+                                                        <td title="Remarks">{{data.ccmember_remarks}}</td>
+
+                                                        <td data-title="Action">
+                                                            <a class="btn btn-xs btn-danger" ng-click="deleteccmember(data.ccmemberlist_gid)"><span class="fa fa-close"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>CC Feedback (Remarks) </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtccfeedbackedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Product Solution </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtproduct_solutionedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Major Intervention </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtmajor_interventionedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Primary Value Chain </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtprimaryvalue_chainedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Secondary Value Chain </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtsecondaryvalue_chainedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>General Remarks </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtgeneral_remarksedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>External Rating </strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtexternalratingedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Business Description</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtbusiness_descriptionedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Associate Name(If Applicable)</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtassociate_nameedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>SA Payout</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtsapayoutedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Type Of Enterprises</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txttypeof_enterprisesedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>KYC AML Risk Categorization</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtrisk_categorizationedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>E&S application</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtes_applicationedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>E&S Risk categorization</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtesrisk_categorizationedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Samunnati’s Internal Rating</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtinternal_ratingedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>MSME Classification</strong></label>
+                                    <select name="msme_classification" id="msme_classification" dropzone="" ng-model="msme_classification" 
+                                            class="chosen-select form-control" size="1">
+                                        <option value="">-----MSME Classification----</option>
+                                        <option value="Large">Large</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Micro">Micro</option>
+                                        <option value="Small">Small</option>
+                                        <option value="NA">NA</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Industry</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtindustryedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Investment In P&M</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtinvesment_pmedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Turn Over</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtturn_overedit" class="form-control" />
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>UDYAM Reg No for MSME</strong></label>
+                                    <textarea rows="1" type="text" ng-model="txtregno_msmeedit" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Validity In Months</strong></label>
+                                    <input id="txtInput" ng-model="txtvalidity_monthsedit" type="text"
+                                           class="form-control ng-pristine ng-valid ng-touched" ng-change="changevaliditymnt(txtvalidity_monthsedit)">
+                                  
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label><strong>Proposed Penal Interest</strong></label>
+                                    <div class="dd-handle ng-scope">
+                                        <div ng-repeat="penal in penal_interest">
+                                            <label> &nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; {{penal.loanfacility_type}}: </label>      {{penal.penal_interest}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label><strong>PSL Classification</strong></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rdb_psl" value="Yes" ng-model="rdb_psl" ng-click="rdbpsl_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdb_psl" value="No" ng-model="rdb_psl" ng-click="rdbpsl_no()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label>Colending (If Applicable) <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        &nbsp;&nbsp; <input type="radio" name="rdbcolanding" ng-disabled="true" value="Yes" ng-model="rdbcolanding" required ng-click="rdbcolanding_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdbcolanding" value="No" ng-disabled="true" ng-model="rdbcolanding" required ng-click="rdbcolanding_no()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                                <div ng-show="colandingyes">
+                                    <label>Name of the Colending </label>
+                                    <input ng-model="txtcolander_name" tabindex="0" ng-disabled="true"
+                                           aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label><strong>BAL (Buyer Acknowledgement Letter)</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rdb_bal" value="Yes" ng-model="rdb_bal" ng-click="rdbbal_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdb_bal" value="No" ng-model="rdb_bal" ng-click="rdbbal_no()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+
+                                <div ng-show="bal_pnl">
+                                    <label>Virtual Account No </label>
+                                    <input ng-model="txtvirtualaccount_no" tabindex="0"
+                                           aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>                           
+                        </div>
+                </div>
+                <br />
+
+                <div class="row" ng-show="bal_pnl">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <br />
+                            <strong class="ng-binding w3-text-indigo">
+                                <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                Add Buyer Details
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="dd-handle ng-scope" ng-show="bal_pnl">
+                    <div>
+                        <button type="button" title="Add Limit Info" class="btn btn-default bg-grey-400 btn-sm" ng-click="addbuyer()">
+
+                            <span class="btn-label">
+                                <i class="fa fa-plus"></i>
+                            </span><b>Add</b>
+                        </button>
+                    </div>
+                    <br />
+                    <div class="panel-body">
+                        <div class="table-responsive table-bordered">
+                            <table class="table" style="padding: 0px 0px">
+                                <thead class="bg-indigo-400">
+                                    <tr class="bg-primary-light text-white">
+                                        <th class="text-nowrap">S No</th>
+                                        <th class="text-nowrap">Buyer Name</th>
+                                        <th class="text-nowrap">Exposure</th>
+                                        <th class="text-nowrap">Document Details</th>
+
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in buyer_list">
+                                        <td data-title="S No" class="text-nowrap">{{$index+1}}</td>
+                                        <td data-title="Buyer Name" class="text-nowrap">{{list.buyer_name}}</td>
+                                        <td data-title="Buyer Exposure" class="text-nowrap">{{list.buyer_exposure}}</td>
+                                        <td data-title="Document Details" class="text-nowrap">
+                                            <p ng-hide="list.document_name=='---'">
+                                                {{list.document_name}} / {{list.uploaded_by}} on {{list.uploaded_date}}
+                                                <button title="Download" class="btn btn-default btn-sm"
+                                                        ng-click="downloadsBAL(list.document_path,list.document_name)">
+                                                    <em class="fa fa-download"></em>
+                                                    <a download="" href="" id="btnpdf"></a>
+                                                </button>
+                                            </p>
+                                            <p ng-show="list.document_name=='---'">
+                                                {{list.document_name}}
+                                            </p>
+
+                                        </td>
+
+                                        <td data-title="Action" class="text-nowrap">
+
+                                            <a class="btn btn-xs btn-danger" ng-click="delete_buyer(list.buyer_gid)">
+                                                <span class="fa fa-close"></span>Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>E & S Declaration available <span style="color:red">*</span></label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            &nbsp;&nbsp; <input type="radio" name="rdbdeclaration" value="Yes" ng-model="rdbdeclaration" ng-click="rdbdeclaration_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rdbdeclaration" value="No" ng-model="rdbdeclaration" ng-click="rdbdeclaration_no()" />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div ng-show="esdeclarationyes">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <br />
+                                            <strong class="ng-binding w3-text-indigo">
+                                                <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                Upload E & S Declaration Document
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <input ng-model="es_declarationdocument_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        <label>Document Title </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                                </div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <strong>Upload Documents</strong>
+                                                        <input type="file" id="adduploades_declaration" ng-model="test_document" onchange="angular.element(this).scope().uploades_declaration(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Uploaded By</th>
+                                                                    <th scope="col">Uploaded Date</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in uploadesfilename_list" width="100%">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">{{data.document_type}}</td>
+                                                                    <td title="Document Name">{{data.document_name}}</td>
+                                                                    <td title="Uploaded By">{{data.uploaded_by}}</td>
+                                                                    <td title="Uploaded Date">{{data.updated_date}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-default btn-sm"
+                                                                                ng-click="esdownloaddocument(data.document_path,data.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                            <a download="" href="" id="btnpdf"></a>
+                                                                        </button>
+                                                                        <a class="btn btn-xs btn-danger" ng-click="esdocument_cancelclick(data.document_gid)">
+                                                                            <span class="icon icon-trash "></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="esdeclarationno">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <br />
+                                            <strong class="ng-binding w3-text-indigo">
+                                                <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                Upload Deviation Mail Document
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <input ng-model="deviationmaildocument_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        <label>Document Title </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                                </div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <strong>Upload Documents</strong>
+                                                        <input type="file" id="addmailupload" ng-model="test_document" onchange="angular.element(this).scope().deviationmailupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Uploaded By</th>
+                                                                    <th scope="col">Uploaded Date</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in mailfilename_list" width="100%">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">{{data.document_type}}</td>
+                                                                    <td title="Document Name">{{data.document_name}}</td>
+                                                                    <td title="Uploaded By">{{data.uploaded_by}}</td>
+                                                                    <td title="Uploaded Date">{{data.updated_date}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-default btn-sm"
+                                                                                ng-click="downloadmail(data.document_path,data.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                            <a download="" href="" id="btnpdf"></a>
+                                                                        </button>
+                                                                        <a class="btn btn-xs btn-danger" ng-click="maildocument_cancelclick(data.document_gid)">
+                                                                            <span class="icon icon-trash "></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <strong class="ng-binding w3-text-indigo">
+                                    <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                    Upload CAM Document
+                                </strong>
+                                <br />
+
+                                <div class="panel">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <input ng-model="CAMdocument_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        <label>Document Title </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                                           
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <br />  <strong>Upload Documents</strong>
+                                                    <input type="file" id="addCAMupload" ng-model="test_document"
+                                                           onchange="angular.element(this).scope().uploadCAM_doc(this.files, angular.element(this).scope().documentupload, this.name)" 
+                                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+
+                                                </div>
+                                               
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>Document Title</th>
+                                                                    <th>Document Name</th>
+                                                                    <th>Uploaded Date</th>
+                                                                    <th>Uploaded By</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="document in CAMfilename_list">
+                                                                    <td>{{document.document_type}}</td>
+                                                                    <td>{{document.document_name}}</td>
+                                                                    <td>{{document.updated_date}}</td>
+                                                                    <td>{{document.uploaded_by}}</td>
+                                                                    <td class="text-nowrap">
+                                                                        <button title="Download" class="btn btn-default btn-sm"
+                                                                                ng-click="downloadsCAM(document.document_path,document.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                            <a download="" href="" id="btnpdf"></a>
+                                                                        </button>
+                                                                        <a class="btn btn-sm btn-danger" ng-click="deleteCAM(document.document_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <strong class="ng-binding w3-text-indigo">
+                                    <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                    Upload MOM Document
+                                </strong>
+                                <br />
+                                <div class="panel">
+
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                    <div class="mda-form-group float-label">
+                                                        <input ng-model="MOMdocument_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        <label>Document Title </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                                <br/>   <strong>Upload Documents</strong>
+                                                    <input type="file" id="addMOMupload" ng-model="test_document"
+                                                           onchange="angular.element(this).scope().uploadMOM_doc(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                                </div>                                              
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="col-lg-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>Document Title</th>
+                                                                    <th>Document Name</th>
+                                                                    <th>Uploaded Date</th>
+                                                                    <th>Uploaded By</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="document in MOMfilename_list">
+                                                                    <td>{{document.document_type}}</td>
+                                                                    <td>{{document.document_name}}</td>
+                                                                    <td>{{document.updated_date}}</td>
+                                                                    <td>{{document.uploaded_by}}</td>
+                                                                    <td class="text-nowrap">
+                                                                        <button title="Download" class="btn btn-default btn-sm"
+                                                                                ng-click="downloadsMOM(document.document_path,document.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                            <a download="" href="" id="btnpdf"></a>
+                                                                        </button>
+                                                                        <a class="btn btn-sm btn-danger" ng-click="deleteMOM(document.document_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <br />
+                                    <strong class="ng-binding w3-text-indigo">
+                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                        Upload Sanction Letter
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="mda-form-group float-label">
+                                            <input ng-model="SANdocument_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            <label>Document Title </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="mda-form-group float-label">
+                                            <strong>Upload Documents</strong>
+                                            <input type="file" id="addSANupload" ng-model="test_document" onchange="angular.element(this).scope().sanupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Document Title</th>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Uploaded Details</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in sanctionfilename_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Document Title">{{data.document_type}}</td>
+                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                        <td title="Uploaded Details">
+                                                            {{data.uploaded_by}} - {{data.updated_date}}
+                                                            
+                                                        </td>
+                                                        <td data-title="Action">
+                                                            <button title="Download" class="btn btn-default btn-sm"
+                                                                    ng-click="downloadsanctionletter(data.document_path,data.document_name)">
+                                                                <em class="fa fa-download"></em>
+                                                                <a download="" href="" id="btnpdf"></a>
+                                                            </button>
+                                                            <a class="btn btn-xs btn-danger" ng-click="sandocument_cancelclick(data.document_gid)"><span class="fa fa-close"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <br />
+                                    <strong class="ng-binding w3-text-indigo">
+                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                        Upload Documents
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="mda-form-group float-label">
+                                            <input ng-model="document_type" tabindex="0" maxlength="45" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            <label>Document Title </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="mda-form-group float-label">
+                                            <strong>Upload Documents</strong>
+                                            <input type="file" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Document Title</th>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Uploaded Details</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in filename_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Document Title">{{data.document_type}}</td>
+                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                        <td title="Uploaded Details">
+                                                            {{data.uploaded_by}} - {{data.updated_date}}                                  
+                                                        </td>
+                                                        <td data-title="Action">
+                                                            <button title="Download" class="btn btn-default btn-sm"
+                                                                    ng-click="downloadsgeneral(data.document_path,data.document_name)">
+                                                                <em class="fa fa-download"></em>
+                                                                <a download="" href="" id="btnpdf"></a>
+                                                            </button>
+                                                            <a class="btn btn-xs btn-danger" ng-click="document_cancelclick(data.document_gid)"><span class="fa fa-close"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                <div class="ng-scope">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-click="sanctionUpdate(relpath1)" ng-disabled="userform5.$invalid"><i class="fa fa-arrow-circle-right"></i> &nbsp;&nbsp;Update</button>
+                        <button ng-click="sanctionback(relpath1)" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+
+                </ng-form>
+            </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <script type="text/ng-template" id="/addbuyer.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-plus"></em>
+                    Add Buyer
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="contactdetailsform" id="contactdetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Buyer Name <span style="color:red">*</span></label>
+
+                                    <input ng-model="txtbuyer_name" class="form-control ng-pristine ng-valid ng-touched" required>
+
+
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Exposure <span style="color:red">*</span></label>
+                                    <input id="txtexposure" ng-model="txtbuyer_exposure" required type="text" ng-change="exposurechange()"
+                                           class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <p class="text-primary text-bold" style=" font-size:15px;">File Upload</p>
+                                    <input type="file" id="addupload" ng-model="test_document"
+                                           onchange="angular.element(this).scope().uploadBAL_doc(this.files, angular.element(this).scope().documentupload, this.name)" class="form-control"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="class">
+                            <br />
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="submit_buyer()" ng-disabled="contactdetailsform.$invalid"> 
+                                    <em class="fa fa-check"></em>
+                                    <span>Update</span>
+                                </a>
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/updateROI.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="icon icon-share-alt"></em>&nbsp;Update ROI</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Ref No  : </label>&nbsp;<span>{{loanfacilityref_no}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Loan Facility Type: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{loanfacility_type}}</span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>ROI <span style="color:red;">*</span></label>
+                                    <input ng-model="txtroi" required="" tabindex="0" aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="UrnUpdate()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>
+
+

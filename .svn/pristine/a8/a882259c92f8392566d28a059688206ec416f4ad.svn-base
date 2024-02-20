@@ -1,0 +1,555 @@
+﻿<h3>
+    Renewal / Amendment / Short Closing
+</h3>
+<div ng-controller="AgrMstRenewalApplicationAddController">
+    <div id="scrollArea">
+        <div id="panelDemo20" class="panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                        <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:17px;padding-bottom:10px;">
+                            <em style="font-size:16px" class="fa fa-ge"></em>&nbsp;<label style="font-size:16px">Application Renewal / Amendment / Short Closing </label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="background-color: #3646b8; color: white; padding-top: 10px; padding-bottom: 10px; font-size: 16px;">
+                            <h5>{{application_no}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row" style="margin-bottom:-10px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 6px;">
+                                <div ui-scroll-viewport="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer name / Customer ID</label>
+                                                        <br />
+                                                        {{customerref_name}} / {{application_no}}
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer status </label>
+                                                        <br />
+                                                        {{lgltag_status}}
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer Overall Limit </label>
+                                                        <br />
+                                                        {{customeroverall_limit}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="dd-handle ng-scope">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Application - Product Details </b></p>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div>
+                                                                        <div class="table-responsive table-bordered">
+                                                                            <div class="panel-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                                        <table class="table table-stripped table-bordered">
+                                                                                            <tr style="background-color:#dde6e9;">
+                                                                                                <th class="text-center">ARN</th>
+                                                                                                <th class="text-center">Contract ID</th>
+                                                                                                <th class="text-center">Facility Details</th>
+                                                                                                <!--<th class="text-center">Expired On</th>-->
+                                                                                                <th class="text-center">Contract Status</th>
+                                                                                                <th class="text-center">Onboarding </th>
+                                                                                                <th>  Type </th>
+                                                                                                <th class="text-center">Action</th>
+                                                                                            </tr>
+
+                                                                                            <tbody ng-repeat="m1 in ProductTypeList">
+                                                                                                <tr style="background-color:#82cf74a6;">
+                                                                                                    <td align="left" colspan="7" style="font-size:14px;"><b>{{m1.producttype_name}} (Overall Limit - {{m1.overalllimit_amount}}) All active</b> </td>
+                                                                                                </tr>
+                                                                                                <tr ng-repeat-start="m2 in m1.SubproductArray">
+                                                                                                    <td align="center" colspan="7"><b>{{m2.productsubtype_name}} ({{m2.overalllimit_subamount}}) - only active {{m2.productsubtype_name}} program</b></td>
+
+                                                                                                <tr ng-repeat="m3 in m2.ApplicationListdtl">
+                                                                                                    <td>
+                                                                                                        <p>{{m3.application_no}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p>{{m3.contract_id}}</p>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                        <!--<a href="" ng-click="facilitydetailsview(m3.application_gid)">View Facility</a>-->
+                                                                                                        <table class="table table-stripped table-bordered">
+                                                                                                            <tr>
+                                                                                                                <td><b>Facility</b></td>
+                                                                                                                <td><b>Approved Limit</b></td>
+                                                                                                                <td><b>Utilised Limit</b></td>
+                                                                                                                <td><b>Available Limit</b></td>
+                                                                                                                <td><b>Valid From</b></td>
+                                                                                                                <td><b>Valid To</b></td>
+                                                                                                                <td><b>Facility Status</b></td>
+                                                                                                            </tr>
+                                                                                                            <tr ng-repeat="m4 in m3.ApplicationFacilityList">
+                                                                                                                <td title="Facility">{{m4.facility}}</td>
+                                                                                                                <td title="Approved Limit" style="text-align:right">
+                                                                                                                    {{m4.ApprovedLimit}}
+                                                                                                                </td>
+                                                                                                                <td title="Utilised Limit" style="text-align:right">
+                                                                                                                    {{m4.UtilizedLimit}}
+                                                                                                                </td>
+                                                                                                                <td title="Available Limit" style="text-align:right">
+                                                                                                                    {{m4.AvailableLimit}}
+                                                                                                                </td>
+                                                                                                                <td title="Valid From">{{m4.ValidFrom}}</td>
+                                                                                                                <td title="Valid To">{{m4.ValidTo}}</td>
+                                                                                                                <td title="Facility Status">{{m4.FacilityStatus}}</td>
+                                                                                                            </tr>
+                                                                                                        </table>
+                                                                                                    </td>
+
+                                                                                                    <!--<td>
+        <p>{{m3.processupdated_date}}</p>
+    </td>-->
+                                                                                                    <!--<td>
+        <table class="table table-stripped table-bordered">
+            <tr>
+
+                <td>Expired On</td>
+            </tr>
+            <tr ng-repeat="m5 in m4.MdlPmgExpiryDate">
+
+                <td title="Expired On">{{m5.processupdated_date}}</td>
+
+            </tr>
+        </table>
+    </td>-->
+                                                                                                    <td>
+                                                                                                        <p class="text-center">{{m3.contract_status}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p class="text-center" ng-if="m3.onboarding_status=='Proposal'">Credit</p>
+                                                                                                        <p class="text-center" ng-if="m3.onboarding_status=='Direct'">Advance</p>
+                                                                                                    </td>
+                                                                                                    <td data-title="'Application Type'" ng-if="m3.renewal_flag=='Y'">
+                                                                                                        <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                                                                                    </td>
+                                                                                                    <td data-title="'Application Type'" ng-if="m3.amendment_flag=='Y'">
+                                                                                                        <label class="label label-success" style="font-size:10px;">Amendment</label>
+                                                                                                    </td>
+                                                                                                    <td data-title="'Application Type'" ng-if="m3.shortclosing_flag=='Y'">
+                                                                                                        <label class="label label-info" style="font-size:10px;">Short Close</label>
+                                                                                                    </td>
+                                                                                                    <td data-title="'Application Type'" ng-if="m3.renewal_flag=='N' && m3.amendment_flag=='N' && m3.shortclosing_flag=='N'">
+                                                                                                        <label class="label label-primary" style="font-size:10px;"> New </label>
+                                                                                                    </td>
+                                                                                                    <td class="nowrap">
+                                                                                                        <button title="View" ng-click="limit_viewClick(m3.application_gid)" class="btn btn-grey btn-xs">
+                                                                                                            <em class="fa fa-eye"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Renewal" ng-show="m3.applicationrenewal_flag=='Y' && m3.onboarding_status=='Proposal'"
+                                                                                                                ng-click="buyer_renewal(m3.buyeronboard_gid,m3.application_gid)" class="btn btn-info btn-xs" style="background-color:#0828c7;">
+                                                                                                            <em class="icon-refresh"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Renewal" ng-show="m3.applicationrenewal_flag=='N' || m3.onboarding_status=='Direct'"
+                                                                                                                disabled class="btn btn-info btn-xs" style="background-color:#0828c7;">
+                                                                                                            <em class="icon-refresh"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Amendment" ng-click="buyer_amendment(m3.buyeronboard_gid,m3.application_gid)" ng-show="m3.applicationrenewal_flag=='Y' && m3.onboarding_status=='Proposal'"
+                                                                                                                class="btn btn-pink btn-xs">
+                                                                                                            <em class="fa fa-ge"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Amendment" disabled class="btn btn-pink btn-xs" ng-show="m3.applicationrenewal_flag=='N' || m3.onboarding_status=='Direct'">
+                                                                                                            <em class="fa fa-ge"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Short Closing" ng-click="buyer_shortclosing(m3.buyeronboard_gid,m3.application_gid)" ng-show="m3.applicationrenewal_flag=='Y' && m3.onboarding_status=='Proposal'"
+                                                                                                                class="btn btn-purple btn-xs" style="background-color: #a013a9;">
+                                                                                                            <em class="icon-close"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Short Closing" disabled class="btn btn-purple btn-xs" style="background-color: #a013a9;"
+                                                                                                                ng-show="m3.applicationrenewal_flag=='N' || m3.onboarding_status=='Direct'">
+                                                                                                            <em class="icon-close"></em>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr ng-repeat-end></tr>
+                                                                                            </tbody>
+                                                                                            <tfoot>
+
+                                                                                            </tfoot>
+                                                                                        </table>
+                                                                                        <br />
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div id="panelDemo10" class="panel panel-default">
+                            <div ng-class="{'panel-heading-collapsed':panelDemo10}" class="panel-heading" style="background-color: #c9dcc1;">
+                                <b> History Log </b>
+                                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo10=true"></paneltool>
+                            </div>
+                            <div collapse="panelDemo10" class="panel-wrapper">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Application Number</th>
+                                                            <th scope="col">Application Type</th>
+                                                            <th scope="col" class="text-center">Reason</th>
+                                                            <th scope="col">Updated By</th>
+                                                            <th scope="col">Updated Date</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in Applclonehistorylog_list">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Application Number">{{data.application_no}}</td>
+                                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.amendment_flag=='N' && data.shortclosing_flag=='N'">
+                                                                <p style="color: #3f51b5;"><b> New </b></p>
+                                                            </td>
+                                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                                                <p style="color: #e91e63;"><b> Renewal </b></p>
+                                                            </td>
+                                                            <td data-title="'Application Type'" ng-if="data.amendment_flag=='Y'">
+                                                                <p style="color: #0e8513;"><b>Amendment</b> </p>
+                                                            </td>
+                                                            <td data-title="'Application Type'" ng-if="data.shortclosing_flag=='Y'">
+                                                                <p style="color: #a013a9; "><b>Short Closing</b> </p>
+                                                            </td>
+                                                            <td title="Remarks" class="text-center" ng-if="data.renewal_flag=='N' && data.amendment_flag=='N' && data.shortclosing_flag=='N'">
+                                                                -
+                                                            </td>
+                                                            <td title="Remarks" class="text-center" ng-if="data.renewal_flag=='Y'">
+                                                                -
+                                                            </td>
+                                                            <td title="Remarks" class="text-center" ng-if="data.shortclosing_flag=='Y'">
+                                                                -
+                                                            </td>
+                                                            <td ng-if="data.amendment_flag=='Y'" class="text-center">
+                                                                <button title="Reason" ng-click="remarks_log(data.application_gid)" class="btn btn-info btn-xs">
+                                                                    <em class="fa fa-file-text-o"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td title="Updated By">{{data.updated_by}}</td>
+                                                            <td title="Updated Date">{{data.updated_date}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <br />
+                    <button ng-click="BackPageClick()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/ng-template" id="/facilitydetailsviewid.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Facility Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Facility</th>
+                                                            <th scope="col">Approved Limit</th>
+                                                            <th scope="col">Valid From</th>
+                                                            <th scope="col">Valid To</th>
+                                                            <th scope="col">Facility Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="data in MdlFaclilitydtl">
+                                                        <tr>
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Facility">{{data.facility}}</td>
+                                                            <td title="Approved Limit">
+                                                                {{data.ApprovedLimit}}
+                                                            </td>
+                                                            <td title="Valid From">{{data.ValidFrom}}</td>
+                                                            <td title="Valid To">{{data.ValidTo}}</td>
+                                                            <td title="Facility Status">{{data.FacilityStatus}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/BuyerRenewalpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="icon-refresh"></em>&nbsp;<label style="font-size:16px">Renewal</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div ng-show="renewalshow">
+                    <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <h4> Do you want to Renew this Application? </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="renewl_confirm()" class="btn btn-success"><em class="fa fa-check"></em>&nbsp;&nbsp;Confirm</button>
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="renewedshow">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p style="font-size:18px;color:#148417" class="text-center"><b>Renewed Successfully! </b> </p>
+                            <p style="font-size:14px;"><b> New Application created with Application number <span style="color:#7f1187;">{{renewedapplication_no}}</span>.</b></p>
+                            <p style="font-size:14px;"><b>Kindly, update the Customer information and proceed for further process. </b></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/BuyerAmendmentpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-ge"></em>&nbsp;<label style="font-size:16px">Amendment</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div ng-show="amendmentshow">
+                    <form novalidate="" name="amendmentadd" ng-submit="form.amendmentadd()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <h4> Do you want to Amendment this Application? </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Reason <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.amendment for m in amendment_list" required="" ng-model="cboamendment" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br /> <br />
+                        <div class="text-center">
+                            <button ng-click="amendment_confirm()" ng-disabled="amendmentadd.$invalid" class="btn btn-success"><em class="fa fa-check"></em>&nbsp;&nbsp;Confirm</button>
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="amendmentedshow">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p style="font-size:18px;color:#148417" class="text-center"><b>Amendmented Successfully! </b> </p>
+                            <p style="font-size:14px;"><b> New Application created with Application number <span style="color:#7f1187;">{{amendmentapplication_no}}</span>.</b></p>
+                            <p style="font-size:14px;"><b>Kindly, update the Customer information and proceed for further process. </b></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/HistoryRemarksView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Reason </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="RemarksView" ng-submit="form.RemarksView()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">Reason</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in historylogremarks_list">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="Application Number">{{data.amendment}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/BuyerShortClosingPopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="icon-close"></em>&nbsp;<label style="font-size:16px">Short Closing</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div ng-show="shortclosingshow">
+                    <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <h4> Do you want to Close this Application? </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="shortclosing_confirm()" class="btn btn-success"><em class="fa fa-check"></em>&nbsp;&nbsp;Confirm</button>
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="shortclosedshow">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p style="font-size:18px;color:#148417" class="text-center"><b>Short Closing Initiated Successfully! </b> </p>
+                            <p style="font-size:14px;"><b> New Application created with Application number <span style="color:#7f1187;">{{shortclosingapplication_no}}</span>.</b></p>
+                            <p style="font-size:14px;"><b>kindly, proceed the process to close the application. </b></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

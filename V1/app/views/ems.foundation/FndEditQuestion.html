@@ -1,0 +1,186 @@
+﻿<h3>
+    Questionnaire
+    <a href="#/app/FndMstQuestionBankMaster">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-primary ">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="FndEditQuestionController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Edit Questions
+        </div>
+        <div class="panel-body">
+
+            <form novalidate="" name="Addquestiontitle" id="Addquestiontitle" ng-submit="form.Addquestiontitle()" autocomplete="off" class="form-validate mb-lg">
+
+
+                <div class="dd-handle ng-scope">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+
+
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label class="col-form-label">Campaign Type </label> <span style="color:red">*</span>
+                                <br />
+
+                                <select name="Campaign_type" ng-change="Campaign_typeChange()" ng-options="m.campaigntype_gid as m.campaigntype_name for m in campaigntypelist"
+                                     required=""   ng-model="cboCampaign_type" class="chosen-select form-control"  style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Campaign Type-----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label class="col-form-label">Questionnarie Category </label> <span style="color:red">*</span>
+                                <br />
+                                <select name="Category"  ng-options="m.categorytype_gid as m.categorytype_name for m in categorytype_list" 
+                                       required="" ng-model="cboCategory" class="chosen-select form-control" chosen="" style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Category-----</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label class="col-form-label">Questions </label> <span style="color:red">*</span>
+                                <br />
+                                <input type="text" ng-model="txtEditQuestionnariename" required tabindex="0" class="form-control" />
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label>Mandatory</label> <span style="color:red">*</span>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="Mandatory" name="Qmandatory" value="Yes" ng-model="rdbQmandatory" ng-change="ngchange()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="Mandatory" name="Qmandatory" value="No" ng-model="rdbQmandatory" ng-change="ngchange()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label class="col-form-label">Answer Type </label> <span style="color:red">*</span>
+                                <br />
+                                <select id="Qtype" name="Qtype" ng-model="Q_type" ng-change="TypeChange(Q_type)" class="chosen-select form-control" ng-disabled="answerdesc_list!=null">
+                                    <option value="-----Select Answer Type-----"> -----Select Answer Type-----</option>
+                                    <option value="Text">Text</option>
+                                    <option value="List">List</option>
+                                    <option value="Number">Number</option>
+                                    <option value="Radio Button">Radio Button</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2" ng-show="invisible">
+                                <label class="col-form-label">Answer Description </label> <span style="color:red">*</span>
+                                <br />
+                                <input type="text" ng-model="txtAnswerDescription"  tabindex="0" class="form-control" />
+
+
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1"ng-show="invisible">
+                                <br />
+                                <a class="btn btn-sm btn-deafult" style="background-color:#09385f;color:white;" ng-click="answerdesc_add()"><span class="fa fa-plus" /> Add </a>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <br />
+                                <div class="table-responsive table-bordered" ng-show="invisible">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th>S.No</th>
+                                                <th>Answer Type</th>
+                                                <th>Answer Description</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in answerdesc_list" width="100%">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{data.questionnarie_type}}</td>
+                                                <td>{{data.questionnarie_answer}}</td>
+                                                <td data-title="Action">
+                                                    <a class="btn btn-xs btn-danger" ng-click="answerdesc_delete(data.questionnarieanswer_gid)"><span class="fa fa-trash-o"></span></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+
+
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                <div class ="col-lg-3 col-md-3 col-sm-3" hidden="hidden" >
+                                    <label class="col-form-label"> LMS Code </label>
+                                    <br />
+                                    <input type="text" ng-model="txtLmscode"  tabindex="0" class="form-control" />
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3" hidden="hidden">
+                                    <label class="col-form-label"> Bureau Code </label>
+                                    <br />
+                                    <input type="text" ng-model="txtBureaucode"  tabindex="0" class="form-control" />
+                                </div>
+
+                                <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                                    <div class="mda-form-group float-label">
+                                        
+                                        <br />
+                                        <label>Remarks </label><span style="color:red">*</span>
+                                        
+                                        <textarea ng-model="txtaddremarks" style="resize:vertical;" required rows="2" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <br />
+
+                    </div>
+                </div>
+
+
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="Addquestiontitle.$invalid" ng-click="Edit_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </form>
+        </div>
+        <br />
+    </div>
+</div>
+
+</div>

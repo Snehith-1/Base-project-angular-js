@@ -1,0 +1,295 @@
+﻿<h3>
+    Remaining Amount Summary
+</h3>
+<div ng-controller="BrsMstCloseRemainingAmountController as dp">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button ng-show="activeamount_count=='0'" type="button" title="Add Remaining Amount" class="btn btn-info btn-sm" ng-click="addRemainingAmount()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Remaining Amount
+            </button>
+            <button ng-show="activeamount_count!='0'" disabled type="button" title="Add Remaining Amount" class="btn btn-info btn-sm" ng-click="addRemainingAmount()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Remaining Amount
+            </button>
+        </div>
+    </div>
+
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> Created Date </th>
+                                    <!--<th> Remaining Amount Name </th>-->
+                                    <th> Remaining Amount </th>
+                                    <th> Remarks </th>
+                                    <th> Created By </th>
+                                    <th> Status </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in Remaining_lits ">
+                                    <td data-title="'Created Date'">{{data.created_date}} </td>
+                                    <!--<td data-title="'Remainding Amount Name'">{{data.remaindingamount_name}}</td>-->
+                                    <td data-title="'Amount'">{{data.remaindingamount_amount}}</td>
+                                    <td data-title="Remarks'">{{data.remarks}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td data-title="'Status'" ng-switch="data.remainding_status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.remainding_status">
+                                        <button title="Process" ng-click="process(data.remaindingamount_gid)" style="background-color:#871490;" class="btn btn-pink btn-sm">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.remaindingamount_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+
+                                        <button title="Status" disabled ng-switch-when='Inactive' ng-click="Status_update(data.remaindingamount_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addRemainingAmount.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Remaining Amount
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addRemainingAoumnt" ng-submit="form.addRemainingAoumnt()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <!--<div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtremainding_name" maxlength="255" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label> Remaining Amount Name <span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtremainding_amount" type="number" maxlength="5" ng- tabindex="1"  required="" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>Knockoff Amount <span style="color:red"> *</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtremarks" maxlength="30" tabindex="1" aria-required="true"  required="" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>Remarks <span style="color:red"> *</span> </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addRemainingAoumnt.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ProcessRemainingAmount.html">
+        <div class="modal-content" style=margin-top:0px;>
+            <div class="modal-header bg-primary ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-primary">
+                        <i class="fa fa-plus"></i>
+                    </span>Remaining Amount
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="addremainingamount" ng-submit="form.addremainingamount()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="pd-sm-10">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="row ">
+                                    <div class="col-sm-4 col-sm-4 col-sm-4">
+                                        <label> Remaining Amount </label>
+                                    </div>
+                                    <div class="col-sm-8 col-sm-8 col-sm-8">
+                                        {{txtremainding_amount}}
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row ">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> From date</strong> <span style="color:red">*</span></label>
+                                        <p class="input-group">
+                                            <input type="text" id="txtstart_date" name="txtstart_date" ng-model="txtfrom_date" datepicker-popup="{{format}}"
+                                                   style="height:37px;" is-open="opened1" min-date="minDate" datepicker-options="dateOptions"
+                                                   close-text="Close" class="form-control" required />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="open1($event)" style="height:37px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong>To date</strong> <span style="color:red">*</span></label>
+                                        <p class="input-group">
+                                            <input type="text" id="txtend_date" name="txtend_date" ng-model="txtend_date" datepicker-popup="{{format}}"
+                                                   style="height:37px;" is-open="opened2" min-date="minDate" datepicker-options="dateOptions"
+                                                   close-text="Close" class="form-control" required />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="open2($event)" style="height:37px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                        
+
+
+
+                                    </div>
+                                </div>
+                                <br />
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="addremainingamount.$invalid" ng-click="add_remainingamount()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/status.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusauditdepartment" ng-submit="form.statusauditdepartment()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Remaining Amount</label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    {{txtremainding_amount}}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Status  </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                            <span class="fa fa-circle"></span> Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statusauditdepartment.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="inactiveremaindingamount_list!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in inactiveremaindingamount_list" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}} </td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

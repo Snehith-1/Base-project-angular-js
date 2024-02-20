@@ -1,0 +1,184 @@
+﻿<h3>
+    My Zonal Customer
+</h3>
+<div ng-controller="myZonalCustomercontroller">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.NO</th>
+                            <th>URN No.</th>
+                            <th>Customer Name</th>
+                            <th>Vertical</th>
+                            <th>Zonal</th>
+                            <th>State</th>
+                            <th>District</th>
+                            <th>Zonal Risk Manager</th>
+                            <th>Risk Manager</th>
+                            <th>PPA</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in customer_data">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer Name'" width="20%">{{data.customername}}</td>
+                            <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                            <td data-title="'Zonal'">{{data.zonal_name}}</td>
+                            <td data-title="'State'">{{data.state_name}}</td>
+                            <td data-title="'District'">{{data.district_name}}</td>
+                            <td data-title="'Zonal Risk Manager'">{{data.zonal_riskmanager}}</td>
+                            <td data-title="'Risk Manager'">{{data.riskmanager_name}}</td>
+                            <td data-title="'PPA'">{{data.ppa_name}}</td>
+                            <td data-title="'Action'" class="nowrap">
+                                <button title="Customer 360" ng-click="customer360click(data.customer_gid)" class="btn btn-green">
+                                    <em class="fa fa-retweet"></em>
+                                </button>
+
+                                <button title="Assign Risk Manager" ng-click="assignRM(data.customer_gid)" class="btn btn-info">
+                                    <em class="fa fa-user"></em>
+                                </button>
+                                <!--<button title="Assign RM" ng-click="assignRM(data.customer_gid)" class="btn bg-info">
+                                    <em class="fa fa-user"></em>
+                                </button>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="/assign_RMModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-user"></em>&nbsp; Assign Risk Manager  </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                    <label class="text-primary text-bold">{{customer_name}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Address Line 1</label>
+                                    <p>{{addressline1}}</p>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Address Line 2</label>
+                                    <p>{{addressline2}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label ng-model="zonal_gid">Zonal </label>
+                                    <p>{{zonal_name}}</p>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>State </label>
+                                    <p>{{state_name}}</p>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>District <span style="color:red">*</span></label>
+                                    <select id="cbodistrictname" name="cbodistrictname" dropzone="" ng-model="cbodistrict_gid" required=""
+                                            ng-options="districtdata.district_gid as districtdata.district_name for districtdata in districtdtl"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" ng-change="onchangedistrict(cbodistrict_gid)">
+                                        <option value=""> Select District </option>
+
+                                    </select>
+                                    <!--<select id="cbodistrictname" name="cbodistrictname" ng-model="cbodistrict_gid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1" ng-change="onchangedistrict(cbodistrict_gid)">
+                                        <option value=""> Select District </option>
+                                        <option data-ng-repeat="data in districtdtl" value="{{data.district_gid}}"
+                                                style="width:250px;">
+                                            {{data.district_name}}
+                                        </option>
+                                    </select>-->
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Zonal Risk Manager </label>
+                                    <select id="subcategory" name="subcategory" dropzone="" ng-model="ZonalRM_gid" required=""
+                                            ng-options="zonaldata.employee_id as zonaldata.employee_name for zonaldata in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" disabled>
+                                        <option value=""> </option>
+
+                                    </select>
+                                    <!--<select name="subcategory" ng-model="ZonalRM_gid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1" disabled>
+                                        <option value=""> </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_id}}"
+                                                style="width:250px;">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>-->
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Risk Manager <span style="color:red">*</span></label>
+                                    <select id="subcategory" name="subcategory" dropzone="" ng-model="cboassignedRM_gid" required=""
+                                            ng-options="rmdata.employee_id as rmdata.employee_name for rmdata in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> </option>
+
+                                    </select>
+                                    <!--<select name="subcategory" ng-model="cboassignedRM_gid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_id}}"
+                                                style="width:250px;">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>-->
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>PPA </label>
+                                    <select id="ppa_name" name="ppaname" dropzone="" ng-model="cboPPA_gid"
+                                            ng-options="ppadata.employee_id as ppadata.employee_name for ppadata in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select PPA </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submitmapping()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

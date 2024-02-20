@@ -1,0 +1,139 @@
+﻿<h3>
+    Pending Acknowledgement
+</h3>
+<div ng-controller="idasCourierMgmtAckList">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>Courier Ref No</th>
+                                    <th>Courier Initiated Date</th>
+                                    <th>Courier Type</th>
+                                    <th>Status</th>
+                                    <th>Courier Initiated By</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in courierackpending_list">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Courier Ref No'">{{data.courierref_no}}</td>
+                                    <td data-title="'Courier Initiated Date">{{data.created_date}}</td>
+                                    <td data-title="'Courier Type'">{{data.courier_type}}</td>
+                                    <td data-title="'Status'">{{data.ack_status}} </td>
+                                    <td data-title="'Courier Initiated By'">{{data.created_by}} </td>
+                                    <td class="text-center">
+                                        <button ng-click="ack_submit(data.courierMgmt_gid)" title="View" class="btn btn-sm btn-info">
+                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <button ng-click="back()" class="btn btn-info">
+                <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+            </button>
+        </div>
+        <br />
+
+    </div>
+
+    <script type="text/ng-template" id="/sendack.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2>&nbsp;Courier Details</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Courier Ref No </label>
+                        <br />
+                        {{courierref_no}}
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Courier Date </label>
+                        <br />
+                        {{date_of_courier}}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Customer Name </label>
+                        <br />
+                        {{customer_name}}
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Sanction Ref No </label>
+                        <br />
+                        {{sanctionref_no}}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Document Type </label>
+                        <br />
+                        {{document_type}}
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Courier Type </label>
+                        <br />
+                        {{courier_type}}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Sender of the Document  </label>
+                        <br />
+                        {{sender_name}}
+                    </div>
+                    <div class="col-sm-6 col-lg-6 col-md-6">
+                        <label>Receiver of the Document </label>
+                        <br />
+                        {{courierhandover_to}}
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Remarks </label>
+                        <br />
+                        <p style="word-wrap: break-word;">{{remarks}}</p>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-click="sendcourierack()"><i class="fa fa-check"></i>&nbsp;&nbsp;Send Acknowledgement</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

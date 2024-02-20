@@ -1,0 +1,109 @@
+﻿<h3> LMS Repayment Matched Statements </h3>
+
+<div ng-controller="brsTrnRepaymentReconcillationController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <button type="button" id="opentab" class="btn btn-labeled tabactivecolorstyle" ng-click="repay_recon()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{repay_reconc_count}}</b></div>
+                            <b style="font-size: 14px;">Matched</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <button type="button" id="pendingtab" class="btn btn-labeled " ng-click="repay_unrecon()" style="width:100%; height: 50px; border: 1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{repay_unreconc_count}}</b></div>
+                            <b style="font-size: 14px;">Un-Matched</b>
+                        </button>
+                        <br />
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead class="text-nowrap">
+                                    <tr class="text-white" style="background-color: #09385f;">
+                                        <th class="text-center" style="display:none"> S.No </th>
+                                        <th> Repayment ID </th>
+                                        <th> Account Number </th>
+                                        <th> Transaction Date </th>
+                                        <th> Repayment Date </th>
+                                        <th> Account Code</th>
+                                        <th> Principle Amount </th>
+                                        <th> Repayment Amount</th>
+                                        <th> Remarks</th>
+                                        <th>Knockoff-Status</th>
+                                        <th>Knockoff-Date</th>
+                                        <th>Transaction ID</th>
+                                        <th>Created By</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in repayment_cocillation_list  ">
+                                        <td data-title="'S.No'" style="text-align: center; width: 10%; display: none;"> {{$index+1}} </td>
+                                        <td data-title="'Repayment ID'">{{data.bankrepaytransc_gid }}</td>
+                                        <td data-title="'Account Number'">{{data.account_number }}</td>
+                                        <td data-title="'Repayment Date'">{{data.transaction_date }}</td>
+                                        <td data-title="'Transaction Particulars'">{{data.repayment_date }}</td>
+                                        <td data-title="'Account Code'">{{data.account_code}}</td>
+                                        <td data-title="'Principle Amount'">{{data.principal}}</td>
+                                        <td data-title="'Repayment Amount'">{{data.repayment_amount}}</td>
+                                        <td data-title="'Remarks'">{{data.remarks}}</td>
+                                        <td data-title="'Knockoff-Status'" ng-switch="data.knockoff_status">
+                                            <label style="font-size:10px" ng-switch-when="Matched" class="label label-success">Matched</label>
+                                            <label style="font-size:10px" ng-switch-when="PartiallyMatched" class="label label-warning">Partial Matched</label>
+                                        </td>
+                                        <td data-title="'Knockoff-Date'">{{data.knockoff_date}}</td>
+                                        <td data-title="Transaction ID">{{data.banktransc_gid}}</td>
+                                        <td data-title="'Created By'">{{data.created_by}}</td>
+                                        <td class="nowrap" data-title="'Action'">
+                                            <button title="View" ng-click="view(data.banktransc_gid)" class="btn btn-info">
+                                                <em class="fa fa-eye"></em>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/remarks.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-info-circle"></i>
+                </span> Remarks
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="dd-handle ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <label>Remarks : </label>
+                        <br />
+                        <p> {{transaction_remarks}}  </p>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+</div>

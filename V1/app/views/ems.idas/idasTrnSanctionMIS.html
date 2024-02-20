@@ -1,0 +1,139 @@
+﻿ <h3>
+    Sanction MIS
+</h3>
+<div ng-controller="idasTrnSanctionMIS">
+  
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body table-responsive">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 text-right">
+                            <button type="button" class="btn btn-green btn-md"
+                                    ng-click="export()" title="Export Excel">
+                                <i class="fa fa-file-excel-o"></i><a download="" href="" id="btnpdf" style="display:none;"></a>
+                            </button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table hover table-striped row-border">
+                        <thead>
+                            <tr class="bg-primary-light text-white">
+                                <th>S.No</th>
+                                <th align="center">URN No.</th>
+                                <th align="center">Customer Name</th>
+                                <th align="center">Sanction Ref.No</th>
+                                <th align="center">Sanction Date</th>
+                                <th align="center">Sanction Amount</th>
+
+                                <th align="center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in sanctionlist|filter :searchtxt|limitTo:totalDisplayed">
+                                <td data-title="'S.No'">{{$index+1}}</td>
+                                <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                <td data-title="'Customer Name'">{{data.customername}}</td>
+                                <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                                <td data-title="'Sanction Date'">{{data.sanction_date}}</td>
+                                <td data-title="'Sanction Amount'">{{data.sanction_amount}}</td>
+
+                                <td class="text-nowrap">
+                                    <button title="Sanction Dashboard" ng-click="sanctionMIS360(data.customer2sanction_gid)" class="btn btn-pink">
+                                        <em class="fa fa-dashboard"></em>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/excelImport.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-file-excel-o"></em>&nbsp; Excel Import</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                    <label>Type <span style="color:red">*</span></label>
+                                    <select name="approval_authority" ng-model="cboexcel_type" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Type </option>
+                                        <option value="SamFin"> SamFin</option>
+                                        <option value="SamAgro"> SamAgro</option>
+                                        <option value="DBS"> DBS</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label>Document Upload <span style="color:red">*</span></label>
+                                    <input type="file" id="excelImport" name="file" ng-model="uploadexcel" class="form-group"
+                                           onchange="angular.element(this).scope().upload(this.files)" />
+                                </div>
+
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="uploadexcelclick()" ng-disabled="mappingEditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Upload</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

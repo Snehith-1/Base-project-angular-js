@@ -1,0 +1,383 @@
+﻿<h3>
+    Sanction Letter View
+</h3>
+<div ng-controller="MstAppSanctionLetterWordView">
+    <div>
+        <div class="row" ng-show="templatelogdetails">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading" style="background-color:#6565cb;height:40px;">
+                        <p style="font-size:14px;color:white;"><b> {{sanctionto_name}} </b></p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="dd-handle">
+                                <div class="row" ng-if="digitalsignature_flag!='Y'">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label ng-click="sanctionlogdocdownload(lspath1,lsname1)" class="pull-right">
+                                                <a download="" href="" id="btnpdf"> Click Here to Download </a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <p ng-bind-html="content" style="padding-left:20px;padding-right:20px;" class="text-justify"></p>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="templatelogdetails">
+            <div class="text-center">
+                <br />
+                <div class="row text-center">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+        <div class="row" ng-show="templatedetails">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <p style="font-size:14px;color:white;"><b> {{sanctionto_name}} </b></p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="dd-handle">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Sanction Ref No</label>
+                                        <p>{{sanction_refno}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Sanction Amount</label>
+                                        <p>{{sanction_amount}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Maker Submitted By</label>
+                                        <p>{{makersubmitted_by}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Maker Submitted Date</label>
+                                        <p>{{makersubmitted_on}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" ng-if="checkerletter_flag=='Y'">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Checker Submitted By</label>
+                                        <p>{{checkerupdated_by}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Checker Submitted Date</label>
+                                        <p>{{checkerupdated_on}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Approved By</label>
+                                        <p>{{approved_by}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Approved Date</label>
+                                        <p>{{approved_date}}</p>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="panelDemo18"> 
+                                    <div class="dd-handle">
+                                        <b  style="font-size:14px;" class="text-primary"> &nbsp;&nbsp;Approval Log </b>
+                                        <hr />
+                                        <div class="table-responsive" ng-if="sanctionletter_flag=='Y' || sanctiontocheckerlist.length > 0">
+                                            <table class="table hover table-striped ">
+                                                <thead>
+                                                    <tr class="text-white bg-gray-light">
+                                                        <th>S.No</th>
+                                                        <th align="center">Submitted Date</th>
+                                                        <th align="center">Status</th>
+                                                        <th align="center">Submitted By</th>
+                                                        <th align="center">Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in sanctiontocheckerlist">
+                                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                                        <td data-title="'Submitted Date'" class="text-nowrap">{{data.created_date}}</td>
+                                                        <td data-title="'Status'">{{data.sanction_status}}</td>
+                                                        <td data-title="'Submitted By'">{{data.created_by}}</td>
+                                                        <td data-title="'Submitted By'">{{data.remarks}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" style="margin-bottom:-10px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="panelDemo9" class="panel panel-primary">
+                                <div class="panel-heading" style="background-color: #d5591e;
+                            background-image: linear-gradient(316deg, rgb(236 195 100) 0%,  rgb(171 225 166) 74%);color:#000000;">
+                                    <b> Sanction Letter Document </b>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Document Upload </b></p>
+                                                <hr />
+                                                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="sanctionletter_flag=='Y' && checkerletter_flag=='N' && checkerapproval_flag=='N' ">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="mda-form-group float-label">
+                                                            <label>Document Title1 </label>
+                                                            <input ng-model="$parent.txtsanctiondocument_title" tabindex="0" maxlength="120" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="mda-form-group float-label">
+                                                            <strong>Upload Documents</strong>
+                                                            <input type="file" id="sanctiondocument" tabindex="5" multiple onchange="angular.element(this).scope().sanctiondocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                   ng-model="sanctiondocument" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="sanctionletter_flag=='Y' && checkerletter_flag=='Y' && checkerapproval_flag=='N' && sanupload=='Y'">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <div class="mda-form-group float-label">
+                                                            <label>Document Title2 </label>
+                                                            <input ng-model="$parent.txtsanctiondocument_title" tabindex="0" maxlength="120" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <div class="mda-form-group float-label">
+                                                            <strong>Upload Documents</strong>
+                                                            <input type="file" id="sanctiondocument" tabindex="5" multiple onchange="angular.element(this).scope().sanctiondocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                   ng-model="sanctiondocument" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th scope="col">Document Title</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th align="center" scope="col">
+                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                            <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall()">
+                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                            </a>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in sanctionuploaddocument_list">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Document Name">{{data.document_title}}</td>
+                                                                        <td title="Document Title">{{data.document_name}}</td>
+                                                                        <td data-title="Action" class="nowrap">
+                                                                            <button title="Download" class="btn btn-green btn-xs"
+                                                                                    ng-click="downloads(data.document_path,data.document_name)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                            <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                            </button>
+                                                                            <a title="Delete" ng-show="sanctionletter_flag=='Y' && checkerletter_flag=='N'" class="btn btn-xs btn-danger" ng-click="deletesanction(data.application2sanctiondoc_gid)">
+                                                                                <span class="fa fa-trash-o"></span>
+                                                                            </a>
+                                                                            <a title="Delete" ng-show="sanctionletter_flag=='Y' && checkerletter_flag=='Y' && checkerapproval_flag=='N'" class="btn btn-xs btn-danger" ng-click="deletesanction(data.application2sanctiondoc_gid)">
+                                                                                <span class="fa fa-trash-o"></span>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="dd-handle">
+                                    <div class="row" ng-show="download_show">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <label ng-click="downloaddocument(lspath,lsname)" class="pull-right">
+                                                    <a style="font-size:13px;" download ="" id="" href=""> Click Here to Download </a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <p ng-bind-html="content" style="padding-left:20px;padding-right:20px;" class="text-justify"></p>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-3 col-md-3 col-sm-3" ng-if="checkerletter_flag=='Y' && checkerfollowup == false && checkerapproval_flag=='N' && digitalsignature_flag!='Y'">
+                                            <button ng-click="insert_signature()" class="btn btn-info"> Insert Digital Signature</button>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-9" style="padding-top:8px;" ng-show="digitalsignature_flag=='Y'">
+                                            <a download="" href="" id="btnpdf" ng-click="download_signature(lspath,lsname)"><b> Click Here to Download Document </b><em class="icon-arrow-down"></em></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="templatedetails">
+                        <div class="text-center">
+                            <br />
+                            <div class="row text-center" ng-show="sanctionletter_flag=='Y' && checkerletter_flag=='N'">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button ng-click="proceedtocheckerapproval()" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Proceed To Approval</button>
+                                    <button ng-click="pushbacktomaker()" class="btn btn-purple"><i class="fa fa-mail-reply (alias)"></i>&nbsp;&nbsp;Pushback</button>
+                                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                </div>
+                            </div>
+                            <div class="row text-center" ng-if="checkerletter_flag=='Y' && checkerapproval_flag=='N' && checkerfollowup == false">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button ng-click="checkerapprove()" class="btn btn-success"><i class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;Approve</button>
+                                    <button ng-click="checkerreject()" class="btn btn-danger"><i class="fa fa-thumbs-o-down"></i>&nbsp;&nbsp;Reject</button>
+                                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                </div>
+                            </div>
+                            <div class="row text-center" ng-if="checkerapproval_flag=='Y'&& sanctionletter_flag=='Y'">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                </div>
+                            </div>
+                            <div class="row text-center" ng-show="sanctionletter_status=='Generated' && sanctionletter_flag=='N'">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                </div>
+                            </div>
+                            <div class="row text-center" ng-show="checkerfollowup ==true  || checkerapproval_flag=='R'">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/ng-template" id="/pushbacksanctionpopup.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-mail-reply (alias)"></em>&nbsp;Pushback Sanction</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="pushbackformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Remarks <span style="color:red">*</span></label>
+                        <textarea ng-model="pushback_remarks" placeholder="Enter Remarks" rows="3" class="form-control" style="resize:vertical;"
+                                  required="" id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="pushbackformsubmit.$invalid" ng-click="PushbackSanctionSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </form>
+        <br />
+    </div>
+</script>
+
+<script type="text/ng-template" id="/rejectsanctionpopup.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-thumbs-o-down"></em>&nbsp;Reject Sanction</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="rejectformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Remarks <span style="color:red">*</span></label>
+                        <textarea ng-model="reject_remarks" placeholder="Enter Remarks" rows="3" class="form-control" style="resize:vertical;"
+                                  required="" id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="rejectformsubmit.$invalid" ng-click="RejectSanctionSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </form>
+        <br />
+    </div>
+</script>

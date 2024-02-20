@@ -1,0 +1,293 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    PSL/CSA Management
+</h3>
+<div ng-controller="MstPSLCSAGroupPSLDataFlagEditController as form">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit PSL Data Flagging </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <form name="form.formValidate" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="dd-handle ng-scope">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <p class="text-primary" style="font-size:14px;"><b> PSL Data Flagging </b></p>
+                                                            <hr />
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label> Start up as of loan sanction date <span style="color:red"> *</span></label>
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="sanctiondate" name="sanctiondate" value="Yes" ng-model="rdbsanctiondate" required="" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="sanctiondate" name="sanctiondate" value="No" ng-model="rdbsanctiondate" required="" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                                <span ng-show="form.validateInput('sanctiondate', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Occupation <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="occupation_name" id="occupation_name" chosen="" ng-options="m.occupation_gid as m.occupation_name for m in occupation_list"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboOccupation">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('occupation_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Line of Activity <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="lineof_activity" id="lineof_activity" chosen="" ng-options="m.lineofactivity_gid as m.lineof_activity for m in lineofactivity_list"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboLineofActivity">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('lineof_activity', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                                <label class="col-form-label"> BSR code <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="bsr_code" id="bsr_code" chosen="" ng-options="m.bsrcode_gid as m.bsr_code for m in bsrcode_list"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboBSRcode">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('bsr_code', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> PSL Category <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="psl_category" id="psl_category" chosen="" ng-options="m.pslcategory_gid as m.psl_category for m in pslcategorylist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboPSLCategory">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('psl_category', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Weaker section <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="weaker_section" id="weaker_section" chosen="" ng-options="m.weakersection_gid as m.weaker_section for m in weakersectionlist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboWeakersection">
+                                                                    <option value=""> ----- Select From Dropdownn -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('weaker_section', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> PSL purpose <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="psl_purpose" id="psl_purpose" chosen="" ng-options="m.pslpurpose_gid as m.psl_purpose for m in pslpurpose_list"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboPSLpurpose">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('psl_purpose', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Total sanction from financial institutions <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <input type="text" ng-model="txtfinancialinstitutions" name="financialinstitutions" id="financialinstitutions" required="" tabindex="0" class="form-control" maxlength="15" />
+                                                                <span ng-show="form.validateInput('financialinstitutions', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> PSL Sanction Limit <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <input type="text" ng-model="txtPSLSanctionLimit" name="PSLSanctionLimit" id="PSLSanctionLimit" tabindex="0" required="" class="form-control" maxlength="15" />
+                                                                <span ng-show="form.validateInput('PSLSanctionLimit', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                </div>
+                                                <br />
+                                                <div class="dd-handle ng-scope">
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Nature of Entity <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="natureofentity_name" id="natureofentity_name" chosen="" ng-options="m.natureofentity_gid as m.natureofentity_name for m in natureofentitylist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboNatureofEntity">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('natureofentity_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Indulges in Marketing Activities (for FPOs only) <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="MarketingActivities" name="MarketingActivities" value="Yes" ng-model="rdbMarketingActivities" required="" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="MarketingActivities" name="MarketingActivities" value="No" ng-model="rdbMarketingActivities" required="" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                                <span ng-show="form.validateInput('MarketingActivities', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> Investment in Plant and Machinery <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="investment_name" id="investment_name" chosen="" ng-options="m.investment_gid as m.investment_name for m in investmentlist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboInvestment">
+                                                                    <option value=""> ------ Select From Dropdown ------</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('investment_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label">Turnover <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="turnover_name" id="turnover_name" chosen="" ng-options="m.turnover_gid as m.turnover_name for m in turnoverlist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboTurnover">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('turnover_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label"> MSME Classification <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="msme_name" id="msme_name" chosen="" ng-options="m.msme_gid as m.msme_name for m in msmelist"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboMSMEClassification">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('msme_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <div ng-controller="MstCreditPSLDataFlaggingEditController as dp">
+                                                                    <label class="col-form-label"> Date of Loan Sanction <span style="color:red"> *</span></label>
+                                                                    <br />
+                                                                    <p class="input-group">
+                                                                        <input type="text" id="DateofLoanSanction" name="DateofLoanSanction" ng-model="$parent.txtDate_ofLoanSanction" datepicker-popup="{{dp.format}}"
+                                                                               style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" required="" />
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                                                                                <em class="fa fa-calendar"></em>
+                                                                            </button>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                                <span ng-show="form.validateInput('DateofLoanSanction', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <div ng-controller="MstCreditPSLDataFlaggingEditController as dp">
+                                                                    <label class="col-form-label"> Date of Entity Incorporation <span style="color:red"> *</span></label>
+                                                                    <br />
+                                                                    <p class="input-group">
+                                                                        <input type="text" id="DateofEntity" name="DateofEntity" ng-model="$parent.txtDateofEntity" datepicker-popup="{{dp.format}}"
+                                                                               style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" required="" />
+                                                                        <span class="input-group-btn">
+                                                                            <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                                                <em class="fa fa-calendar"></em>
+                                                                            </button>
+                                                                        </span>
+                                                                    </p>
+                                                                </div>
+                                                                <span ng-show="form.validateInput('DateofEntity', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                <label class="col-form-label">Whether entity HQ is in a metropolitan city <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="metropolitan" name="metropolitan" value="Yes" ng-model="rdbmetropolitan" required="" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="metropolitan" name="metropolitan" value="No" ng-model="rdbmetropolitan" required="" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                                <span ng-show="form.validateInput('metropolitan', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <label class="col-form-label"> Client Details <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <select name="clientdtl_name" id="clientdtl_name" chosen="" ng-options="m.clientdtl_gid as m.clientdtl_name for m in clientdetail_list"
+                                                                        type="text" class="form-control parsley-error" required="" ng-model="cboClientDetails">
+                                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                                </select>
+                                                                <span ng-show="form.validateInput('clientdtl_name', 'required')" class="text-danger">This field is required</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success btn-md" ng-click="update_psldata()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                <button ng-click="psldata_Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

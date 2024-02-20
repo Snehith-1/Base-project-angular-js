@@ -1,0 +1,228 @@
+﻿<h3>
+    Business Revoke History
+</h3>
+<div ng-controller="MstBusinessRevokeHistoryController">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);color:#ffffff">
+            <h5> {{txtbasiccustomer_name}} / {{txtapplication_no}} </h5>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="ng-scope dd-handle">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="label label-pink" style="font-size:12px;padding-top:3px;"> Business Pending : </label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive table-bordered">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr style="font-size: 13px;">
+                                                <th class="text-center">S.No</th>
+                                                <th>Rejected By / Hold By</th>
+                                                <th>Rejected Date / Hold Date</th>
+                                                <th>Stage</th>
+                                                <th class="text-center">Reject / Hold Remarks </th>
+                                                <th>Reject / Hold</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in pendingapplhis_list">
+                                                <td class="text-center">{{$index+1}}</td>
+                                                <td>{{data.rejecttedhold_by}}</td>
+                                                <td>{{data.rejecttedhold_date}}</td>
+                                                <td>L{{data.hierary_level}}</td>
+                                                <td class="text-center">
+                                                    <button title="View" ng-click="RejectHoldRemarks_View(data.applicationapproval_gid)" class="btn btn-info">
+                                                        <em class="fa fa-eye"></em>
+                                                    </button>
+                                                </td>
+                                                <td data-title="'Approval Status'" ng-switch="data.approval_status">
+                                                    <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected By Business</label>
+                                                    <label class="label label-success" ng-switch-when='Hold' style="font-size:10px;">Hold By Business</label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="ng-scope dd-handle">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="label label-pink" style="font-size:12px;padding-top:3px;"> Business History Log : </label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive table-bordered">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white nowrap">
+                                            <tr style="font-size: 13px;">
+                                                <th class="text-center">S.No</th>
+                                                <th>Hold By</th>
+                                                <th>Hold Date</th>
+                                                <th>Rejected By</th>
+                                                <th>Rejected Date</th>
+                                                <th>Business Remarks</th>
+                                                <th>Business Stage</th>
+                                                <th>Revoked By</th>
+                                                <th>Revoked Date</th>
+                                                <th>Revoked Reason </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in businesshistory_list">
+                                                <td class="text-center">{{$index+1}}</td>
+                                                <td ng-show="data.hold_by==''"> - </td>
+                                                <td ng-show="data.hold_by!=''">{{data.hold_by}}</td>
+                                                <td ng-show="data.hold_date==''"> - </td>
+                                                <td ng-show="data.hold_date!=''">{{data.hold_date}}</td>
+                                                <td ng-show="data.rejected_by==''"> - </td>
+                                                <td ng-show="data.rejected_by!=''">{{data.rejected_by}}</td>
+                                                <td ng-show="data.rejected_date==''"> - </td>
+                                                <td ng-show="data.rejected_date!=''">{{data.rejected_date}}</td>
+                                                <td class="text-center">
+                                                    <button title="View" ng-click="BusinessRemarks_View(data.businessrejectrevokelog_gid)" class="btn btn-info">
+                                                        <em class="fa fa-eye"></em>
+                                                    </button>
+                                                </td>
+                                                <td>{{data.businessapproval_status}}</td>
+                                                <td>{{data.revoked_by}}</td>
+                                                <td>{{data.revoked_date}}</td>
+                                                <td class="text-center">
+                                                    <button title="View" ng-click="RevokedRemarks_View(data.businessrejectrevokelog_gid)" class="btn btn-info">
+                                                        <em class="fa fa-eye"></em>
+                                                    </button>
+                                                </td>                                                
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <br />
+                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <script type="text/ng-template" id="/HistoryBusinessRemarksView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-view"></em>&nbsp;<label style="font-size:16px">View Business Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="BusinessRemarksView" ng-submit="form.BusinessRemarksView()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <label> Business Remarks : </label>
+                                        <br />
+                                        {{lblbusiness_remarks}}
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/HistoryRevokedRemarksView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-view"></em>&nbsp;<label style="font-size:16px">View Revoked Reason</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="RevokedReasonView" ng-submit="form.RevokedReasonView()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <label> Revoked Reason : </label>
+                                        <br />
+                                        {{lblrevoked_remarks}}
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/RejectHoldRemarksView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-view"></em>&nbsp;<label style="font-size:16px">View Reject / Hold Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="RejectHoldRemarksView" ng-submit="form.RejectHoldRemarksView()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <label>  Reject / Hold Remarks : </label>
+                                        <br />
+                                        {{lblrejecthold_remarks}}
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

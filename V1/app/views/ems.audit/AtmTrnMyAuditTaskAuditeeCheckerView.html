@@ -1,0 +1,544 @@
+﻿<h3>
+    My Audit Task View
+</h3>
+<div ng-controller="AtmTrnMyAuditTaskAuditeeCheckerViewController">
+    <div class="panel panel-default ">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="panelDemo2" class="panel panel-default" style="border-radius: 0px;">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo2 }" class="panel-heading" style="border-radius: 20px;">
+                        <b>Audit View</b>
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo2=true"></paneltool>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Audit ID </strong> </label> :{{txtaudit_ref_no}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Audit Title </strong></label> :{{cboauditname}}
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Audit Department </strong></label> :{{cboauditdepartment}}
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Priority </strong></label> :{{cboauditpriority}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>End Date </strong> </label> :{{txtdue_date}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Report Period From</strong> </label> : {{txtperiod_from}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Report Period To </strong></label> : {{txtperiod_to}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Auditee Maker </strong> </label> : {{cboauditeemaker}}
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Auditee Checker </strong></label> : {{cboauditeechecker}}
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Auditor Maker</strong> </label> : {{cboauditmaker}}
+
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Auditor Checker </strong> </label> : {{cboauditeechecker}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Auditor Approver</strong> </label> : {{cboauditeeapprover}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="panelDemo3" class="panel panel-default" style="border-radius: 0px;">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo2 }" class="panel-heading" style="border-radius: 20px;">
+                        <b>Sample </b>
+                        <!--<button type="button" class="btn btn-primary btn-md" style="color:#FFFFFF;background-color:#5454b9;font-size: 10px;" title="Sample Export Excel" ng-click="importexcel(auditcreation_gid)">
+                            <i class="fa fa-file-excel-o"></i>
+                        </button>-->
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo3=true"></paneltool>
+                    </div>
+
+
+
+                    <div collapse="panelDemo3" class="panel-wrapper " style="border-radius: 0px;">
+                        <div class="panel-body" style="padding-top:0px;">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="bg-indigo-300">
+                                        <th ng-repeat="(key, val) in SampleDynamicTabledata[0]">{{stripAddr(key)}}</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="row in SampleDynamicTabledata">
+                                        <td ng-repeat="column in row">
+                                            {{ column }}
+                                        </td>
+                                        <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                            <button title="Sample Query" ng-click="dynamicsample($index,row.sampleimport_gid,auditcreation_gid)" class="btn btn-success active">
+                                                <em class="fa fa-comment-o"></em>
+                                            </button>
+                                        </td>
+                                        <!--<td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="Sample Query" ng-click="dynamicsample($index)" class="btn btn-success active">
+                                        <em class="fa fa-comment-o"></em>
+                                        </button>
+                                        </td>-->
+
+
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <!--<div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                            <br />
+                            <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                            <thead>
+                            <tr class="bg-indigo-300">
+                            <th> S.No </th>
+                            <th> Sample </th>
+                            <th> Tagged Employee </th>
+                            <th> Created Date </th>
+                            <th> Created By </th>
+                            <th class="text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="data in sample_list ">
+                            <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+
+
+
+                            <td data-title="'Sample Name'">{{data.sample_name}}</td>
+                            <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                            <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                            ng-click="showPopover(data.sampleimport_gid, data.sample_name)">
+                            <em class="fa fa-info-circle" style="font-size:24px;align-content:center;"></em>
+                            </label>
+                            </td>
+                            <td data-title="'Created By'">{{data.created_by}}</td>
+                            <td data-title="'Created Date'">{{data.created_date}} </td>
+                            <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                            <button title="View" ng-click="view(data.sampleimport_gid,data.auditcreation_gid)" class="btn btn-info">
+                            <em class="fa fa-eye"></em>
+                            </button>
+                            <button title="Tag User" ng-click="btntaguser(data.sampleimport_gid, data.auditcreation_gid)" style="color:white;" class="btn bg-deep-purple-400">
+                            <em class="fa fa-tag"></em>
+                            </button>
+                            <button title="Raise Query" ng-click="raisequery(data.sampleimport_gid)" class="btn btn-warning">
+                            <em class="fa fa-bolt "></em>
+                            </button>
+
+
+
+                            </td>
+                            </tr>
+                            </tbody>
+                            </table>
+                            <br>
+                            </div>
+                            </div>
+                            <br>
+                            </div>
+                            </div>-->
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="panelDemo4" class="panel panel-default" style="border-radius: 0px;">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo4 }" class="panel-heading" style="border-radius: 20px;">
+                        <b>Raise Query </b>
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo4=true"></paneltool>
+                    </div>
+                    <div collapse="panelDemo4" class="panel-wrapper " style="border-radius: 0px;">
+                        <div class="panel-body" style="padding-top:0px;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br />
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr class="bg-indigo-300">
+                                                        <th>S.No</th>
+                                                        <th>Raised By</th>
+                                                        <th>Raised Date</th>
+                                                        <th>Sample </th>
+                                                        <th>Query</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in SampleAssignedQueryList">
+                                                        <td data-title="'S.No'" class="text-center">{{$index+1}}</td>
+                                                        <td data-title="'Assigned By'">{{data.assigned_by}}</td>
+                                                        <td data-title="'Assigned Date'">{{data.assigned_date}}</td>
+                                                        <td data-title="'Sample '">{{data.sample_name}}</td>
+                                                        <td data-title="'Raised Query'">{{data.description}}</td>
+                                                        <td class="nowrap" data-title="'Action'" style="text-align: center;">
+
+                                                            <button title="Sample Query" ng-click="samplequery(data.auditcreation_gid,data.sampleimport_gid)" class="btn btn-primary active">
+                                                                <em class="fa fa-comment-o"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="panelDemo5" class="panel panel-default" style="border-radius: 0px;">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo5 }" class="panel-heading" style="border-radius: 20px;">
+                        <b>Observation </b>
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo5=true"></paneltool>
+                    </div>
+                    <div collapse="panelDemo5" class="panel-wrapper " style="border-radius: 0px;">
+                        <div class="panel-body" style="padding-top:0px;">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- START panel-->
+                                    <div id="panelDemo13" class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <div class="dd-handle ng-scope">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <table class="table">
+                                                                            <thead class="bg-gray text-white">
+                                                                                <tr class="bg-indigo-300">
+                                                                                    <th style="color:white;">S.No</th>
+                                                                                    <th style="color:white;">Audit Department</th>
+                                                                                    <th style="color:white;">Audit Type</th>
+                                                                                    <th style="color:white;">CheckPoint group</th>
+                                                                                    <th style="color:white;">Audit Title</th>
+                                                                                    <th style="color:white;">Checkpoint Title</th>
+                                                                                    <th style="color:white;">Checkpoint Description</th>
+                                                                                    <th style="color:white;">Risk Category</th>
+                                                                                    <th style="color:white;">Positive Conformity</th>
+                                                                                    <th style="color:white;">NoteTo Auditor</th>
+                                                                                    <th style="color:white;">Yes-Score</th>
+                                                                                    <th style="color:white;">No-Score</th>
+                                                                                    <th style="color:white;">Partial-Score</th>
+                                                                                    <th style="color:white;">NA-Score</th>
+                                                                                    <th style="color:white;">Capture-Score</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="data in makercheckpointobservationview_list">
+                                                                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                                                                    <td data-title="'CustomerName'">{{data.auditdepartment_name}}</td>
+                                                                                    <td data-title="'created_by'">{{data.audittype_name}}</td>
+                                                                                    <td data-title="'CustomerState'">{{data.checkpointgroup_name}}</td>
+                                                                                    <td data-title="'CustomerState'">{{data.audit_name}}</td>
+                                                                                    <td align="center">
+                                                                                        <em class="fa fa-info-circle" ng-click=checkpointintent(data.auditcreation_gid,data.checkpoint_intent) style="font-size:24px;align-content:center;"></em>
+                                                                                    </td>
+                                                                                    <td align="center">
+                                                                                        <em class="fa fa-info-circle" ng-click=description(data.auditcreation_gid,data.checkpoint_description) style="font-size:24px;align-content:center;"></em>
+                                                                                    </td>
+
+                                                                                    <td data-title="'created_by'">{{data.riskcategory_name}}</td>
+                                                                                    <td data-title="'CustomerState'">{{data.positiveconfirmity_name}}</td>
+                                                                                    <td align="center">
+                                                                                        <em class="fa fa-info-circle" ng-click=notetoauditor(data.auditcreation_gid,data.noteto_auditor) style="font-size:24px;align-content:center;"></em>
+                                                                                    </td>
+                                                                                    <!--<td data-title="'created_by'">{{data.noteto_auditor}}</td>-->
+                                                                                    <td data-title="'CustomerName'">{{data.yes_score}}</td>
+                                                                                    <td data-title="'created_by'">{{data.no_score}}</td>
+                                                                                    <td data-title="'CustomerState'">{{data.partial_score}}</td>
+                                                                                    <td data-title="'created_by'">{{data.na_score}}</td>
+                                                                                    <td data-title="'created_by'">{{data.capture_score}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ng-scope">
+                                                <div class="text-center">
+                                                    <!--<button ng-click="unassignchecklist(auditcreation_gid)" ng-disabled="userform.$invalid" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;UnAssign</button>-->
+                                                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="/importexcel.html">
+    <div class="modal-header bg-blue-600 ng-scope">
+        <h4 id="myModalLabel" class="modal-title">
+            <span class="btn-label bg-blue-600">
+                <em class="fa fa-plus"></em>
+                Sample Import Excel
+            </span>
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="pd-sm-10">
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px;">
+                                    <b> Click here to download Template </b>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label> Upload Excel : </label>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                <input type="file" id="fileimport" ng-model="test_document"
+                                       onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                &nbsp;
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                    <em class="icon-cloud-upload"></em>
+                                </button>
+                                <span>
+                                    <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                        <i class="fa icon-close"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/checkpointintent.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Intent
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtcheckpointintent}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/checkpointdescription.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Description
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+
+        <div style="white-space: pre-wrap;width:100%; word-wrap: break-word;display: inline-block;">
+            {{txtcheckpointdescription}}
+        </div>
+
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/notetoauditor.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Note To Auditor
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtnotetoauditor}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/raisequery.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-bolt"></em>&nbsp;Raise Query</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form name="raisequery" id="raisequery" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+            <div class="pd-sm-10">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-sm-4 col-sm-4 col-sm-4">
+                            <label> Sample Name </label>
+                        </div>
+                        <div class="col-sm-8 col-sm-8 col-sm-8">
+                            {{txtsample_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group float-label">
+                            <textarea ng-model="txtdescription" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            <label>Description *</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</script>
+
+
+<script type="text/ng-template" id="/taguser.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-bolt"></em>&nbsp;Tag User</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form name="taguser" id="taguser" novalidate="" class="form-validate mb-lg" autocomplete="off">
+            <div class="pd-sm-10">
+
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-sm-4 col-sm-4 col-sm-4">
+                            <label> Sample Name </label>
+                        </div>
+                        <div class="col-sm-8 col-sm-8 col-sm-8">
+                            {{txtsample_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label>Select User <span style="color:red">*</span></label>
+                        <select name="cboemployees" chosen="" tabindex="2" multiple="multiple"
+                                ng-options="m.employee_name for m in employee_list" required=""
+                                ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                    </div>
+                </div>
+                <br />
+
+
+                <div class="class">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="btnconfirm()" ng-disabled="taguser.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Confirm</span>
+                        </a>
+                        <a class="btn btn-danger" ng-click="ok()">
+                            <em class="fa fa-close"></em>
+                            <span>Cancel</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</script>
+
+

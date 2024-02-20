@@ -1,0 +1,188 @@
+﻿<h3>
+    Credit User
+</h3>
+<div ng-controller="MstCreditUserSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Credit Type" class="btn btn-info btn-sm" ng-click="addcredituser()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>Add Credit User
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table  class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th> Created Date </th>
+                                    <th> Credit User Code </th>
+                                    <th> Credit User Name </th>
+                                    <th> Credit User Role </th>
+                                    <th> Created By </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="display:none;"></td>
+                                    <td>04-06-2021</td>
+                                    <td>CODE 001</td>
+                                    <td>NAME</td>
+                                    <td>ROLE</td>
+                                    <td>SELF</td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="editcredituser()" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.credittype_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!--<tr ng-repeat="data in credittype_data">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Credit User Code'">{{data.created_date}}</td>
+                                    <td data-title="' Credit User Name '"> {{data.credittype_name}} </td>
+                                    <td data-title="'Role'"> {{data.lms_code}} </td>
+                                    <td data-title="'Created By'"> {{data.created_by}} </td>                                 
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="editcredittype(data.credittype_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.credittype_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>-->
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addcredituser.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Credit User
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="Addcredituser" ng-submit="form.Addcredituser()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtcredituser_code" ng-pattern="/^[ A-Za-z0-9)(}​​​​​​​​{​​​​​​​​\]\['\\/,.]*$/" maxlength="8" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Credit User Code *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Credit User Name * </label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="creditverticalhead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="txtcredituser_role" ng-pattern="/^[ A-Za-z0-9)(}​​​​​​​​{​​​​​​​​\]\['\\/,.]*$/" maxlength="30" tabindex="0"  required="" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Credit User Role *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="Addcredituser.$invalid" ng-click="submitcredituser()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/editcredituser.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Credit User
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="Editcredituser" ng-submit="form.Editcredituser()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditcredituser_code" ng-pattern="/^[ A-Za-z0-9)(}​​​​​​​​{​​​​​​​​\]\['\\/,.]*$/" maxlength="8" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Credit User Code *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group"> 
+                                       <label>Credit User Name *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="creditverticalhead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditcredituser_role" ng-pattern="/^[ A-Za-z0-9)(}​​​​​​​​{​​​​​​​​\]\['\\/,.]*$/" required="" maxlength="30" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Credit User Role *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="Editcredituser.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>    
+</div>

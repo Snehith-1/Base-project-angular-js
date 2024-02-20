@@ -1,0 +1,267 @@
+﻿<h3>
+    Penalty Alert
+</h3>
+<div ng-controller="penalityAlertcontroller">
+    <!--<a ng-switch="">Extanded Date Alert: <label class="blink_me text-danger">New...!</label></a>-->
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.No</th>
+                                    <th>Customer Code</th>
+                                    <th>Customer Name</th>
+                                    <th>Vertical</th>
+                                    <!--<th>Zonal Head</th>
+                                <th>Business Head</th>
+                                <th>Cluster Manager</th>-->
+                                    <th>Relationship Manager</th>
+                                    <!--<th>Credit Manager</th>-->
+                                    <th>Customer Alert sent on</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.startpenality_flag" ng-repeat="data in customer_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td title="'S.No'">{{$index+1}}</td>
+                                    <td title="'Customer Code'">{{data.customercode}}</td>
+                                    <td title="'Customer Name'">{{data.customername}}</td>
+                                    <td title="'Vertical'">{{data.vertical_code}}</td>
+                                    <!--<td data-title="'Zonal Head'">{{data.zonalGid}}</td>
+                                <td data-title="'Business Head'">{{data.businessHeadGid}}</td>
+                                <td data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>-->
+                                    <td title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+                                    <!--<td data-title="'Credit Manager'">{{data.creditmanagerName}}</td>-->
+                                    <td title="'Customer Alert sent on'">{{data.mailsent_date}}</td>
+                                    <td class="nowrap">
+                                        <button ng-switch-when !="N" title="Start Penalty"
+                                            ng-click="startpenalityalert(data.customeralert_gid)"
+                                            class="btn btn-sm btn-green">
+                                            <em class="icon-control-start"></em>
+                                        </button>
+                                        <!--<button ng-switch-when="Y" title="Extanded Penality" ng-click="expandpenalityalert(data.customeralert_gid)" class="btn btn-sm btn-danger blink_me">
+                                        <em class="icon-control-pause"></em>
+                                    </button>-->
+                                        <button ng-switch-when="Y" title="Stop Penalty"
+                                            ng-click="endpenalityalert(data.customeralert_gid)"
+                                            class="btn btn-sm btn-danger">
+                                            <em class="icon-control-end"></em>
+                                        </button>
+                                        <button title="Penalty Details"
+                                            ng-click="viewpenalityalert(data.customeralert_gid)"
+                                            class="btn btn-sm btn-info">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/ng-template" id="/penalityAlertMailContent.html">
+        <br />
+        <h4 id="myModalLabel" class="modal-title">
+            <p class="lead bb text-primary text-bold text-center">
+                Penal Start Alert Mail - Confirmation
+            </p>
+        </h4>
+        <div class="modal-body ng-scope">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-lg-6">
+                        <label>From :</label> {{customerdetails.from_mail}}
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-lg-6">
+                        <label>To : </label> {{customerdetails.to_mail}}
+                    </div>
+                </div>
+            </div>
+            <div class="row"  style="word-wrap: break-word;">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-lg-12">
+                        <label class="">CC :</label> {{customerdetails.cc_mail}}
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label>Subject :</label> Penal Start Alert For the Customer ({{customerdetails.customername}})
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="imgcrop-area" style="height:250px;">
+                 <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p>Dear Team,</p>
+                        <p>&emsp;&emsp;&emsp;&emsp;Penal interest of 0.25%  per month to be levied with immediate effect on </p>
+                        <p><b>M/s. {{customerdetails.customername}} </b></p>
+                        <p><b>URN No : {{customerdetails.customer_urn}}</b> for the non-compliance of terms & condition set by Samunnati.</p>
+                        <p></p>
+                        <br />
+                        <p>
+                            Thanks & Regards,
+                        </p>
+                        <p>
+                            Credit Administration Team
+                        </p>
+                        <p> Samunnati Financial Intermediation & Services Pvt Ltd</p>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+           <br/>
+            <div class="text-center">
+                <button ng-click="sendStartPenalityAlert()" class="btn btn-success">
+                    <i class="fa fa-send (alias)">
+                    </i>&nbsp;Send
+                </button>
+                <button ng-click="ok()" class="btn btn-danger">
+                    <i class="fa fa-close (alias)">
+                    </i>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/endpenalityAlertMailContent.html">
+        <br />
+        <h4 id="myModalLabel" class="modal-title">
+            <p class="lead bb text-primary text-bold text-center">
+                Penal Stop Alert Mail - Confirmation
+            </p>
+        </h4>
+        <div class="modal-body ng-scope">
+            <div class=" ">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-6">
+                            <label>From :</label> {{customerdetails.from_mail}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-6">
+                            <label>To : </label> {{customerdetails.to_mail}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-6">
+                            <label>CC :</label> {{customerdetails.cc_mail}}
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label>Subject :</label> Penal Stop Alert For the Customer ({{customerdetails.customername}})
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="imgcrop-area" style="height:250px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <p>Dear Team,</p>
+                                <p>&emsp;&emsp;&emsp;Penalty interest of 0.25% Per Month to be stopped with immediate effect on </p>
+                                <p><b> M/s.{{customerdetails.customername}} </b></p>
+                                <p><b> URN No.{{customerdetails.customer_urn}}</b></p>
+                                <br />
+                                <p>
+                                    Thanks & Regards,
+                                </p>
+                                <p>
+                                    Credit Administration Team
+                                </p>
+                                <p> Samunnati Financial Intermediation & Services Pvt Ltd</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="text-center">
+                    <button ng-click="sendendPenalityAlert()" class="btn btn-success">
+                        <i class="fa fa-send (alias)">
+                        </i>&nbsp;Send
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger">
+                        <i class="fa fa-close (alias)">
+                        </i>&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </script>
+
+    <style>
+        .blink_me {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</div>

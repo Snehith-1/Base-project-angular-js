@@ -1,0 +1,231 @@
+<h3>
+    View Insurance Company
+</h3>
+<div ng-controller="AgrMstInsuranceCompanyViewController as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            View Insurance Company
+        </div>
+        <div class="panel-body">
+            <br />
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <br />
+                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                            <hr />
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                               <label>Insurance Company Name </label>
+                                <br />
+                                {{lblinsurancecompany_name}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Policy Details  </b></p>
+                                <hr />
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="col-lg-12">
+                                            <div class="table-responsive table-bordered">
+                                                <div style="max-height:200px;overflow:auto;">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Policy Name</th>
+                                                                <th>Policy Number</th>
+                                                                <th>Policy Amount</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in policy_list">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{data.policy_name}}</td>
+                                                                <td>{{data.policy_number}}</td>
+                                                                <td>{{data.policy_amount}}</td>
+                                                                <td class="text-nowrap">
+                                                                    <button title="View" ng-click="policy_view(data)" class="btn btn-xs btn-info">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>    
+                                                                    <button title="Document View" ng-click="policydoc_view(data.insurancecompany2policy_gid)" class="btn btn-success btn-xs">
+                                                                        <em class="fa fa-upload"></em>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            <br />
+        </div>
+    </div>
+    <script type="text/ng-template" id="/policydocument_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Policy Documents </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+    
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                    <div class="dd-handle ng-scope">        
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive table-bordered">
+                                        <div style="max-height:200px;overflow:auto;">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Document Title</th>
+                                                        <th>Document Name</th>
+                                                        <!-- <th>Action</th> -->
+                                                        <th align="center" scope="col">
+                                                            Action&nbsp;&nbsp;&nbsp;
+                                                            <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall()">
+                                                                <em style="font-size: 1.5em;" class="icon-arrow-down"></em>&nbsp;
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in policydoc_list">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{data.document_title}}</td>
+                                                        <td>{{data.document_name}}</td>
+                                                        <td class="text-nowrap">
+                                                            <button title="Download" class="btn btn-green btn-xs"
+                                                                    ng-click="download_doc(data.document_path,data.document_name)">
+                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                <em class="fa fa-download"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/PolicyView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">View Policy</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="policyview" ng-submit="form.policyview()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <label>Policy Name   </label>
+                                            <br />
+                                            {{lblpolicy_name}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Policy Number   </label>
+                                            <br />
+                                            {{lblpolicy_number}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Policy Amount   </label>
+                                            <br />
+                                            {{lblpolicy_amount}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Policy Period From   </label>
+                                            <br />
+                                            {{lblpolicyperiod_from}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Policy Period To   </label>
+                                            <br />
+                                            {{lblpolicyperiod_to}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Premium Amount   </label>
+                                            <br />
+                                            {{lblpremium_amount}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label>Premium Payment Status   </label>
+                                            <br />
+                                            {{lblpremiumpayment_status}}
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4" ng-show="lblpremiumpayment_status == 'Yes'">
+                                            <label>Paid Date   </label>
+                                            <br />
+                                            {{lblpaid_date}}
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                   
+                    
+
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+ 
+
+</div>

@@ -1,0 +1,1155 @@
+﻿<h3>
+    HR Dashboard
+</h3>
+<style>
+    marquee {
+        font-size: 15px;
+        font-style: italic;
+        height: 100px;
+        padding: 2px 30px;
+    }
+</style>
+
+<div ng-controller="hrmDashboardcontroller as dp">
+    <div class="row ng-scope">
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/myTeam">
+                                <div class="text-center">
+                                    <h2 class="text-purple mt0"><i class="fa fa-user"></i></h2>
+                                    <p class="text-purple">My Profile</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/myLeave">
+                                <div class="text-center">
+                                    <h2 class="text-pink mt0"><i class="fa fa-reply"></i></h2>
+                                    <p class="text-pink">My Leave</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/approveLeave">
+                                <div class="text-center">
+                                    <h2 class="text-info mt0"><i class="fa fa-thumbs-o-up"></i></h2>
+                                    <p class="text-info">Approve Leave</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/companyPolicies">
+                                <div class="text-center">
+                                    <h2 class="text-dark mt0"><i class="fa fa-building-o"></i></h2>
+                                    <p class="text-dark">Company Policies</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/holidayCalender">
+                                <div class="text-center">
+                                    <h2 class="text-danger mt0"><i class="fa fa-calendar"></i></h2>
+                                    <p class="text-danger">Office Calender</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <div class="panel widget">
+                        <div class="panel-body">
+                            <a href="#/app/monthlyAttendance">
+                                <div class="text-center">
+                                    <h2 class="text-danger mt0"><i class="fa fa-calendar"></i></h2>
+                                    <p class="text-danger">Monthly Attendance Report</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-info" style="height:230px;">
+                <div class="panel-heading">What's Up!</div>
+                <div class="panel-body">
+                    <marquee behavior="scroll" direction="up" vspace="40px" onmouseover="this.stop();" onmouseout="this.start();">
+                        <img border="0" ng-src="{{company_logo}}"
+                             style="height:140%;width:100%">
+                        Welcome to {{company_name}} !
+                    </marquee>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Monthly Attendence - <span class="text-primary">{{monthlyattendence.monthyear}}</span> </h4>
+
+                    <div>
+                        <canvas doughnutchart="" options="dp.pieOptions" data="dp.pieData" height="80" responsive="true"></canvas>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <p> Total No.Of Days : {{monthlyattendence.totalDays}}</p>
+                            <p> No.Of Days Present : {{monthlyattendence.countPresent}} </p>
+                            <p> No.Of Days Absent : {{monthlyattendence.countAbsent}}</p>
+                        </div>
+                        <div class="pull-right">
+                            <p> No.Of Days Leave :  {{monthlyattendence.countLeave}}</p>
+                            <p> No.Of Days Holiday :  {{monthlyattendence.countholiday}}</p>
+                            <p> No.Of Days WeekOff :  {{monthlyattendence.countWeekOff}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h4>
+                        Monthwise Attendence
+                    </h4>
+                    <table style="position:absolute;top:14px;right:16px;;font-size:smaller;color:#545454">
+                        <tbody>
+                            <tr>
+                                <td class="legendColorBox">
+                                    <div style="border:1px solid #ccc;padding:1px">
+                                        <div style="width:4px;height:0;border:5px solid #009688;overflow:hidden"></div>
+                                    </div>
+                                </td>
+                                <td class="legendLabel">Present</td>
+                            </tr>
+                            <tr>
+                                <td class="legendColorBox">
+                                    <div style="border:1px solid #ccc;padding:1px">
+                                        <div style="width:4px;height:0;border:5px solid #f44336;overflow:hidden"></div>
+                                    </div>
+                                </td>
+                                <td class="legendLabel">Absent</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <canvas barchart="" options="dp.barOptions" data="dp.barData" height="140" responsive="true"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <hr />
+    <div class="row" ng-switch="iattendence_privilege">
+        <div class="col-lg-4" ng-switch-when="Y">
+            <div class="card">
+                <div class="card-heading bg-info shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-md">
+                            <now format="h:mm:ss" class="h2 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+                        </h3>
+                    </div>
+                    <div class="card-title">I - Attendence</div>
+                    <small>Punch in</small>
+                </div>
+                <div class="card-body">
+                    <div ng-switch="punchstatus">
+                        <div ng-switch-default>
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <p>Punch in</p>
+                                </div>
+                                <div class="pull-right">
+                                    <h4 class="m0">
+                                        <now format="d" class="mt0"></now>
+                                        <now format="MMMM" class="mt0"></now>
+                                        <now format="y" class="mt0"></now>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="text-center pv-lg">
+                                <em class="fa fa-clock-o fa-4x"></em>
+                            </div>
+                        </div>
+
+                        <div class="clearfix" ng-hide="punchin" ng-show="close" ng-switch-when="Y">
+                            <div class="clearfix">
+                                <div class="pull-left">
+                                    <p>Punch Out</p>
+                                </div>
+                                <div class="pull-right">
+                                    <h4 class="m0">
+                                        <now format="d" class="mt0"></now>
+                                        <now format="MMMM" class="mt0"></now>
+                                        <now format="y" class="mt0"></now>
+                                    </h4>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="pull-left">
+                                <p>
+                                    Your attendance has been marked at :
+                                </p>
+                                <label style="font-size:16px;" class="text-success">{{login_time_audit}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix">
+                        <div>
+
+                            <div class="pull-right" ng-switch="punchstatus">
+                                <a class="btn btn-info" ng-hide="punchin" ng-click="dp.open()" ng-show="close" ng-switch-default>
+                                    <em class="fa fa-hand-o-right"></em>
+                                    <span>Punch In</span>
+                                </a>
+                                <a class="btn btn-info" ng-hide="punchin" ng-click="dp.open()" ng-show="close" ng-switch-when="Y">
+                                    <em class="fa fa-hand-o-right"></em>
+                                    <span>Punch Out</span>
+                                </a>
+                            </div>
+                            <script type="text/ng-template" id="/myModalContent.html">
+                                <div class="modal-header">
+                                    <h4 id="myMapModalLabel" class="modal-title center">I-Attendence</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="col-lg-4">
+
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <h3 class="m0 text-md">
+                                                    <now format="h:mm:ss" class="h2 mt0"></now>
+                                                    <now format="a" class="text-sm"></now>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-controller="geo" class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div id="map" class="gmap"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="clearfix">
+                                        <div class="pull-right" ng-switch="punchstatus">
+                                            <a class="btn btn-success" ng-click="punchinlocation()" ng-switch-default>
+                                                <em class="fa fa-check"></em>
+                                                <span>Punch In</span>
+                                            </a>
+                                            <a class="btn btn-success" ng-click="punch_outlocation()" ng-switch-when="Y">
+                                                <em class="fa fa-check"></em>
+                                                <span>Punch Out</span>
+                                            </a>
+                                            <a ng-click="ok()" class="btn btn-danger">
+                                                <em class="fa fa-close"></em><span>Cancel</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4" ng-switch-default>
+            <div class="card" style="color:dimgray">
+                <div class="card-heading bg-info shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-md">
+                            <now format="h:mm:ss" class="h2 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+                        </h3>
+                    </div>
+                    <div class="card-title">I - Attendence</div>
+                    <small>Punch in</small>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>Punch in</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="clearfix" style="display:none;">
+                        <div class="pull-right">
+                            <a class="btn btn-success" disabled>
+                                <em class="fa fa-check"></em>
+                                <span>Submit</span>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-heading bg-primary shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-lg"><em class="fa fa-sign-in"></em></h3>
+                    </div>
+                    <div class="card-title">Apply Login Time</div>
+                    <small>Login Time Requisition </small>
+                </div>
+                <div class="card-body">
+                    <div ng-show="applylogininfodiv">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>Login</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+                    <div ng-show="applylogindiv">
+                        <form name="logintimeform" id="logintimeform1" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Attendance Date</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="attendencedate" is-open="dp.open1"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender1($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label for="input_13">Login Time</label>
+                                    <timepicker ng-model="logintime" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Reason</label>
+                                        <textarea ng-model="txtlogintimereason" rows="3" md-maxlength="150" class="ng-valid md-input ng-valid-md-maxlength
+                                                   ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="false" required></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a class="btn btn-success" ng-click="loginApply()" ng-disabled="logintimeform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="logincloseclick()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a class="btn btn-primary" ng-click="applylogintime()" ng-hide="applyloginbutton">
+                                <em class="fa fa-hand-o-right"></em>
+                                <span>Apply Login</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-heading bg-purple-800 shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-lg"><em class="fa fa-sign-out"></em></h3>
+                    </div>
+                    <div class="card-title">Apply Logout Time</div>
+                    <small>Logout Time Requisition </small>
+                </div>
+                <div class="card-body">
+                    <div ng-show="applylogoutinfodiv">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>Logout</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+
+                    <div ng-show="applylogoutdiv">
+                        <form name="logouttimeform" id="logoutform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Attendance Date</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="logoutattendencedate" is-open="dp.open2"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender2($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label for="input_13">Logout Time</label>
+                                    <timepicker ng-model="logouttime" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Reason</label>
+                                        <textarea ng-model="txtlogouttimereason" rows="3" md-maxlength="150" class="ng-valid md-input ng-valid-md-maxlength
+                                                   ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="false" required></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a class="btn btn-success" ng-click="logoutApply()" ng-disabled="logouttimeform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="logoutcloseclick()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a class="btn btn-purple" ng-click="applylogouttime()" ng-hide="applylogoutbutton">
+                                <em class="fa fa-hand-o-right"></em>
+                                <span>Apply Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-heading bg-blue-grey-400 shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-md"><em class="fa fa-calendar"></em></h3>
+                    </div>
+                    <div class="card-title">Apply OD</div>
+                    <small>OD</small>
+                </div>
+                <div class="card-body">
+                    <div ng-show="applyodinfodiv">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>OD</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+
+                    <div ng-show="applyoddiv">
+                        <form name="odform" id="odform1" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>OD Date</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="oddate" is-open="dp.open3"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender3($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label for="input_13">From</label>
+                                    <timepicker ng-model="od_from" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label for="input_13">To</label>
+                                    <timepicker id="od_tohour" ng-model="od_to" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group">
+                                        <label>Onduty Period</label>
+                                        <div class="col">
+                                            <label class="mda-radio">
+                                                <input type="radio" name="radio_halffull" ng-click="odhalf('show')" ng-model="radio_halffull"
+                                                       value="Half">
+                                                <em class="bg-indigo-500"></em>Half
+                                            </label>
+
+                                        </div>
+                                        <div class="col">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <div class="col">
+                                            <label class="mda-radio">
+                                                <input type="radio" name="radio_halffull" ng-model="radio_halffull" ng-click="odhalf()" value="Full" ng-checked="true">
+                                                <em class="bg-indigo-500"></em>  Full
+                                            </label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6" ng-show="session">
+                                    <div class="mda-form-group">
+                                        <label>Session</label>
+                                        <div class="col">
+                                            <label class="mda-radio">
+                                                <input type="radio" name="radio_FNAN" ng-model="radio_FNAN" ng-checked="true"
+                                                       value="FN">
+                                                <em class="bg-indigo-500"></em>FN
+                                            </label>
+                                        </div>
+                                        <div class="col">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <div class="col">
+                                            <label class="mda-radio">
+                                                <input type="radio" name="radio_FNAN" ng-model="radio_FNAN" value="AN">
+                                                <em class="bg-indigo-500"></em>AN
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Reason</label>
+                                        <textarea ng-model="txt_odreason" rows="3" md-maxlength="150" class="ng-valid md-input ng-valid-md-maxlength
+                                                   ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="false" required></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a class="btn btn-success" ng-click="odApply()" ng-disabled="odform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="odcloseclick()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a class="btn btn-default bg-blue-grey-400" ng-click="applyod()" ng-hide="applyodbutton">
+                                <em class="fa fa-hand-o-right"></em>
+                                <span>Apply OD</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-heading bg-teal-500 shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-md"><em class="fa fa-calendar"></em></h3>
+                    </div>
+                    <div class="card-title">Apply Compoff</div>
+                    <small>Compoff</small>
+                </div>
+                <div class="card-body">
+                    <div ng-show="applycompoffinfodiv">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>Compoff</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+                    <div ng-show="applyCompoffdiv">
+                        <form name="Compoffform" id="compoffform1" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Actual Working Date</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="actualworking_date" is-open="dp.open5"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender5($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Compoff Availed</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="compoff_date" is-open="dp.open6"
+                                               datepicker-options="dp.dateOptions" ng-required="true" ng-change="onselectedchangeto(workingTo_date)"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender6($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <!--<div class="col-lg-6">
+                                    <div class="mda-form-group float-label">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">From</label>
+                                            <input type="date" id="dob" name="dob" ng-model="workingFrom_date" required>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mda-form-group float-label">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">To</label>
+                                            <input type="date" id="dob" name="dob" ng-model="workingTo_date" ng-change="onselectedchangeto(workingTo_date)" required>
+                                        </md-input-container>
+                                    </div>
+                                </div>-->
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Reason</label>
+                                        <textarea ng-model="txtcompoffreason" rows="3" md-maxlength="150" class="ng-valid md-input ng-valid-md-maxlength
+                                                   ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="false" required></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a class="btn btn-success" ng-click="applycompoffclick()" ng-disabled="Compoffform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="Compoffcloseclick()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a class="btn btn-default bg-teal-500" ng-click="applycompoff()" ng-hide="applycompoffbutton">
+                                <em class="fa fa-hand-o-right"></em>
+                                <span>Apply Compoff</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-heading bg-cyan-500 shadow-z1">
+                    <div class="pull-right">
+                        <h3 class="m0 text-md">
+                            <now format="h:mm" class="h2 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+                        </h3>
+                    </div>
+                    <div class="card-title">Apply Permission</div>
+                    <small>Permission </small>
+                </div>
+                <div class="card-body">
+                    <div ng-show="applypermissioninfodiv">
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <p>Permission</p>
+                            </div>
+                            <div class="pull-right">
+                                <h4 class="m0">
+                                    <now format="d" class="mt0"></now>
+                                    <now format="MMMM" class="mt0"></now>
+                                    <now format="y" class="mt0"></now>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="text-center pv-lg">
+                            <em class="fa fa-clock-o fa-4x"></em>
+                        </div>
+                    </div>
+                    <div ng-show="applypermissiondiv">
+                        <form name="permissionform" id="permissionform1" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Permission Date</label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="permissiondate" is-open="dp.open4"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender4($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label for="input_13">From</label>
+                                    <timepicker ng-model="permissionFrom" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label for="input_13">To</label>
+                                    <timepicker ng-model="permissionTo" show-meridian="ismeridian">
+                                    </timepicker>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Permission Reason</label>
+                                        <textarea ng-model="txtpermissionreason" rows="3" md-maxlength="150" class="ng-valid md-input ng-valid-md-maxlength
+                                                   ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="false" required></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <a class="btn btn-success" ng-click="applypermission_Click()" ng-disabled="permissionform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="permissioncloseclick()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <a class="btn btn-default bg-cyan-500" ng-click="applypermission()" ng-hide="applypermissionbutton">
+                                <em class="fa fa-hand-o-right"></em>
+                                <span>Apply Permission</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="panel">
+        <tabset justified="true">
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-clock-o fa-1x"></em>
+                    Login Time Requisition
+                </tab-heading>
+                <div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>Apply Date</th>
+                                    <th>Attendence Date</th>
+                                    <th>Login Time</th>
+                                    <th>Login Reason</th>
+                                    <th>Approval Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in loginsummary_list">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td title="Apply Date">{{data.applyDate}}</td>
+                                    <td title="Attendence Date">{{data.attendanceDate}}</td>
+                                    <td title="Login Time">{{data.login_Time}}</td>
+                                    <td title="Login Reason">{{data.remarks}}</td>
+                                    <td title="Approval Status">
+                                        {{data.login_status}}
+                                    </td>
+                                    <td ng-switch="data.login_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deletelogin(data.attendancelogintmp_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-clock-o fa-1x"></em> Logout Time Requisition
+                </tab-heading>
+                <div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>Apply Date</th>
+                                    <th>Attendence Date</th>
+                                    <th>Logout Time</th>
+                                    <th>Logout Reason</th>
+                                    <th>Approval Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in logoutsummary_list">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td title="Apply Date">{{data.applyDate}}</td>
+                                    <td title="Attendence Date">{{data.attendanceDate}}</td>
+                                    <td title="Logout Time">{{data.logout_Time}}</td>
+                                    <td title="Logout Reason">{{data.remarks}}</td>
+                                    <td title="Approval Status">
+                                        {{data.logout_status}}
+                                    </td>
+                                    <td ng-switch="data.logout_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deletelogout(data.attendancetmp_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-clock-o fa-1x"></em> OnDuty
+                </tab-heading>
+                <div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>OD Date</th>
+                                    <th>OD From</th>
+                                    <th>OD To </th>
+                                    <th>OD Duration</th>
+                                    <th>OD Reason</th>
+                                    <th>OD Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in onduty_details">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td title="OD Date">{{data.onduty_date}}</td>
+                                    <td title="OD From">{{data.onduty_from}}</td>
+                                    <td title="OD To">{{data.onduty_to}}</td>
+                                    <td title="OD Duration">
+                                        {{data.onduty_duration}}
+                                    </td>
+                                    <td title="OD Reason">
+                                        {{data.onduty_reason}}
+                                    </td>
+                                    <td title="OD Status">
+                                        {{data.ondutytracker_status}}
+                                    </td>
+                                    <td ng-switch="data.ondutytracker_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deleteonduty(data.ondutytracker_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-clock-o fa-1x"></em> Compoff
+                </tab-heading>
+                <div>
+                     
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th style="display:none;">ID</th>
+                                    <th>Compoff Availed</th>
+                                    <th>Actual Working</th>
+                                    <th>Compoff Reason</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in compoff_details">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td style="display:none;">{{data.compensatoryoff_gid}}</td>
+                                    <td class="nowrap" title="Compoff From">{{data.compoff_date}}</td>
+                                    <td class="nowrap" title="Compoff To">{{data.atual_working}}</td>
+                                    
+                                    <td title="Compoff Reason">
+                                        {{data.compoff_reason}}
+                                    </td>
+                                    <td title="Status">
+                                        {{data.compoff_status}}
+                                    </td>
+                                    <td ng-switch="data.compoff_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deletecompoff(data.compensatoryoff_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-clock-o fa-1x"></em> Permission
+                </tab-heading>
+                <div>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th>Permission Date</th>
+                                    <th>Permission From</th>
+                                    <th>Permission To</th>
+                                    <th>Duration</th>
+                                    <th>Permission Reason</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in permission_details">
+                                    <td title="S.No">{{$index+1}}</td>
+                                    <td title="Permission Date">{{data.permission_date}}</td>
+                                    <td title="Permission From">{{data.permission_from}}</td>
+                                    <td title="Permission To">{{data.permission_to}}</td>
+                                    <td title="Duration">
+                                        {{data.permission_total}}
+                                    </td>
+                                    <td title="Reason">
+                                        {{data.permission_reason}}
+                                    </td>
+                                    <td title="Status">
+                                        {{data.permission_status}}
+                                    </td>
+                                    <td ng-switch="data.permission_status">
+                                        <button title="delete" class="btn btn-primary btn-sm" ng-switch-default disabled>
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <button title="delete" class="btn btn-danger btn-sm" ng-switch-when="Pending"
+                                                ng-click="deletepermission(data.permissiondtl_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <hr />
+            <h4 align="center">
+                Today Activity
+            </h4>
+            <div>
+                <div class="panel-body">
+                    <ul ng-class="timelineAlt ? 'timeline-alt' : 'timeline'" ng-init="timelineAlt=false">
+                        <li data-datetime="Today" class="timeline-separator"></li>
+                        <li ng-repeat="data in todayschdule_details">
+                            <div class="timeline-badge primary">
+                                <em class="fa fa-users"></em>
+                            </div>
+                            <div class="timeline-panel">
+                                <div ng-class="timelineAlt ? 'right' : 'left'" class="popover">
+                                    <h4 class="popover-title">{{data.today_event}} / Event Time : {{data.time}}</h4>
+                                    <div class="arrow"></div>
+                                    <div class="popover-content">
+                                        <p>{{data.event_title}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="timeline-end">
+                            <a class="timeline-badge">
+                                <em class="fa fa-ellipsis-v"></em>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style type="text/css">
+        .pulseIcon {
+            display: block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #f44336;
+            border: 2px solid white;
+            cursor: pointer;
+            box-shadow: 0 0 0 rgba(0, 204, 255, 0.4);
+            animation: pulse 1s infinite;
+        }
+
+            .pulseIcon:hover {
+                animation: none;
+            }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 204, 255, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 50px rgba(0, 204, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 204, 255, 0);
+            }
+        }
+    </style>
+</div>

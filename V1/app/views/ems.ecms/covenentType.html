@@ -1,0 +1,250 @@
+﻿<h3>
+    Covenant Type
+</h3>
+<div ng-controller="covenantcontroller">
+    <div>
+        <button type="button" title="Create Covenant Type" class="btn btn-success btn-sm" ng-click="popupcovenenttype()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE COVENANT TYPE
+        </button>
+    </div>
+    <br />
+   
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body ">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>COVENANT TYPE CODE</th>
+                                    <th>COVENANT TYPE NAME</th>
+                                    <th>CRITICALITY</th>
+                                    <th width="30%">COMMENTS</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in covenant_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Covenant Type code'">{{data.covenanttype_code}}</td>
+                                    <td data-title="'Covenant Type Name'">{{data.covenanttype_name}}</td>
+                                    <td data-title="'Deferral Name'">{{data.criticallity}}</td>
+                                    <td data-title="Comments">{{data.comments}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Edit" ng-click="edit(data.covenanttype_gid)" ng-model="covenanttype_gid" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.covenanttype_gid)" ng-model="covenanttype_gid" class="btn btn-danger">
+                                            <em class="icon icon-trash"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/covenanttype.html">
+        <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="modal-header bg-green-200 ng-scope">
+
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-green-200">
+                        <i class="fa fa-plus "></i>
+                    </span>CREATE COVENANT TYPE
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="row" style="display:none;">
+                </div>
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mda-form-group float-label">
+                                <label>Covenant Type Code  </label><span style="color:red;">*</span>
+                                <input type="text" ng-model="covenantTypecode" maxlength="45" tabindex="0"
+                                class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mda-form-group float-label">
+                                <label>Covenant Type Name </label>
+                                <span style="color:red;">*</span>
+                                <input type="text" ng-model="covenantTypename" maxlength="64" tabindex="0"
+                                class="form-control" required />
+       
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="col-form-label control-label"><strong>Criticality</strong></label>
+                            <span style="color:red;">*</span>
+                            <select name="criticality" dropzone=""
+                             ng-model="criticality"  required="" class="chosen-select form-control" size="1">
+                                <option value="">-----Select Criticality----</option>
+                                <option value="Critical">Critical</option>
+                                <option value="Non Critical">Non Critical</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mda-form-group float-label">
+                                <label>Comments </label>
+                                <textarea ng-model="comments" placeholder="Enter the Comments" rows="4"  class="form-control"
+                                 id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12"  ng-show="showval">
+                            <label class="col-form-label" ><strong>Mail Alert</strong></label>
+                            <div class="col">
+                                <div class="radio c-radio" >
+                                    <label>
+                                        <input type="radio"  name="enable"  ng-model="mailenable" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Enable
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" name="disabe"  ng-model="maildisable" />
+                                        <span class="fa fa-circle"></span>Disable
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <br />
+                </div>
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="covenantSubmit()">
+                            <i class="fa fa-arrow-circle-right"></i> &nbsp;&nbsp;Submit
+                        </button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script type="text/ng-template" id="/covenantedit.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-edit"></i>
+                </span>EDIT COVENANT TYPE
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                </div>
+            </div>
+            <div class="pd-sm-10">
+                <form novalidate="" name="userform3" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div >
+                                <label>Covenant Type Code </label><span style="color:red;">*</span>
+                                <input type="text" ng-model="covenantTypecodeedit" maxlength="45" tabindex="0"
+                                class="form-control" required />
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div >
+                                <label>Covenant Type Name  </label><span style="color:red;">*</span>
+                                <input type="text" ng-model="covenantTypenameedit" maxlength="64" tabindex="0"
+                                class="form-control" required />
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="col-form-label control-label"><strong>Criticality </strong></label>
+                            <span style="color:red;">*</span>
+                            <select name="deferral" dropzone="" ng-model="criticality" required=""
+                             class="chosen-select form-control" size="1">
+                                <option value="">-----Select Criticality----</option>
+                                <option value="Critical">Critical</option>
+                                <option value="Non Critical">Non Critical</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Comments </label>
+                            <textarea ng-model="commentsEdit" placeholder="Enter the Comments" rows="4"  class="form-control"
+                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                        </div>
+                    </div>
+                    <br/>
+                </form>
+            </div>
+
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform3.$invalid" ng-click="covenantUpdate()">
+                        <i class="fa fa-arrow-circle-up"></i> &nbsp;&nbsp;Update
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

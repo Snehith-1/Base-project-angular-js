@@ -1,0 +1,1570 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+   
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<h3>
+    Customer Application 
+</h3>
+<div ng-controller="AgrTrnCreditProductChargesDtlEditController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit Product & Charges </h5>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="tab">
+                    <button class="tablinks btn btn-info" onclick="openApplication(event, 'Overall Limit')" id="defaultOpen" ng-click="OverallLimit_add()"> Overall Limit </button>
+                    <button class="tablinks btn btn-info" onclick="openApplication(event, 'Product & Charges')" ng-click="ProductCharges_add()"> Product </button>
+                    <button class="tablinks btn btn-info" onclick="openApplication(event, 'Service Charges')" ng-click="ServiceCharges_add()"> Charges </button>
+                    <button class="tablinks btn btn-info" onclick="openApplication(event, 'Trade')" ng-click="Trade_add()"> Trade </button>
+                </div>
+                <div id="Overall Limit" class="tabcontent">
+                    <br />
+                    <form name="limit" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12" ng-hide="limithide">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Overall Recommendation of Limit Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Proposed Limit </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" class="form-control" id="Overalllimitamount" name="Overalllimitamount" ng-model="txtOveralllimit_amount" maxlength="15"
+                                               ng-change="Overalllimit_amountchange()" style="text-align:right" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount7" style="color:#003c96fc;" class="text-bold"></span>
+
+                                    </div>
+                                    <!--<div class="col-lg-2 col-md-2 col-sm-2">
+            <label class="col-form-label">
+                Validity of overall limit (years)
+            </label> <span style="color:red">*</span>
+            <br />
+            <input type="text" ng-model="txtvalidityoveralllimit_year" maxlength="5" tabindex="0" class="form-control" required ng-change="calculatelimit()" />
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2">
+            <label class="col-form-label"> Validity of overall limit(month) </label> <span style="color:red">*</span>
+            <br />
+            <input type="text" ng-model="txtvalidityoveralllimit_month" maxlength="5" tabindex="0" class="form-control" required ng-change="calculatelimit()" />
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2">
+            <label class="col-form-label"> Validity of overall limit (days) </label><span style="color:red">*</span>
+            <br />
+            <input type="text" ng-model="txtvalidityoveralllimit_day" maxlength="5" tabindex="0" class="form-control" required ng-change="calculatelimit()" />
+        </div>-->
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Validity From <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="validity_from" name="validity_from" ng-model="txtvalidity_from" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open6" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" ng-change="OverallLimitValidity()" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender6($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Validity To <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="txtvalidity_to" name="txtvalidity_to" ng-model="txtvalidity_to" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open06" min-date="dp.minDate" datepicker-options="dp.dateOptions" ng-change="OverallLimitValidity();"
+                                                   close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender06($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Calculation of overall limit validity </label>
+                                        <br />
+                                        <input type="text" ng-model="txtcalculationoveralllimit_validity" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="limithide">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Overall Recommendation of Limit Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Proposed Limit </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" class="form-control" id="Overalllimitamount" name="Overalllimitamount" disabled ng-model="txtOveralllimit_amount" maxlength="15"
+                                               ng-change="Overalllimit_amountchange()" style="text-align:right" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount7" style="color:#003c96fc;" class="text-bold"></span>
+
+                                    </div>
+                               
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Validity From <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="validity_from" name="validity_from" ng-model="txtvalidity_from" disabled datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open6" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" ng-change="OverallLimitValidity()" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender6($event)" disabled style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Validity To <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="txtvalidity_to" name="txtvalidity_to" ng-model="txtvalidity_to" disabled datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open06" min-date="dp.minDate" datepicker-options="dp.dateOptions" ng-change="OverallLimitValidity();"
+                                                   close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender06($event)" disabled style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Calculation of overall limit validity </label>
+                                        <br />
+                                        <input type="text" ng-model="txtcalculationoveralllimit_validity" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div ng-hide="overlimit_warning">
+                                            <span style="color:red"><b>Amount Exceeded from entered loan facility amount</b> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br /><br />
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-success" ng-disabled="limit.$invalid"
+                                                    ng-click="SubmitOverallLimit()">
+                                                <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                </div>
+
+                <div id="Product & Charges" class="tabcontent">
+                    <br />
+                    <form name="loan" ng-submit="form.submitForm2()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Trade Features </b></p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="row-border hover" id="statictable">
+                                            <thead class="bg-gray text-white">
+                                                <tr class="bg-gray text-white">
+                                                    <th style="width:5%;text-align:center;">S.No</th>
+                                                    <th> Facility Requested On </th>
+                                                    <!--<th> Product Type </th>
+                                                    <th> Product Sub Type </th>-->
+                                                    <th> Product Name </th>
+                                                    <th> Program Name </th>
+                                                    <!--<th> Facility Loan Amount </th>-->
+                                                    <th>Proposed Program Limit</th>
+                                                    <th> Loan </th>
+                                                    <th> Facility </th>
+                                                    <!--<th> Repayment </th>
+                                                    <th> Moratorium </th>-->
+                                                    <th style="width:6%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in mstloan_list" width="100%">
+                                                    <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                    <td title="Facility Requested On">{{data.facilityrequested_date}} </td>
+                                                    <td title="Product Type">{{data.product_type}}</td>
+                                                    <td title="Product Sub Type ">{{data.productsub_type}} </td>
+                                                    <td title="Facility Loan Amount" style="text-align:right;">{{data.loanfacility_amount}}</td>
+                                                    <td title="Trade Features">
+                                                        <b>Loan Type : </b> {{data.loan_type}} <br />
+                                                        <!--<b>Rate of Interest/Margin  : </b> {{data.rate_interest}}  <br />-->
+                                                        <b>Margin(%) : </b> {{data.rate_interest}}  <br />
+                                                        <b>Penal Interest(%) : </b> {{data.penal_interest}}
+                                                    </td>
+                                                    <!--<td title="Facility Loan Amount">
+                                                        <br />
+                                                        <b>Validity of the facility (overall limit validity) : </b> {{data.facilityoverall_limit}} <br />
+                                                        <b>Tenure of the product/Credit Period (overall limit validity) : </b>{{data.tenureoverall_limit}} <br />
+                                                        <b>Facility Type : </b> {{data.facility_type}}
+                                                        <b>Facility mode : </b> {{data.facility_mode}}
+                                                    </td>-->
+                                                    <td title="Facility Loan Amount">
+                                                        <!--<b>Validity of the facility (overall limit validity) : </b> {{data.facilityoverall_limit}} <br />
+                                                        <b>Tenure of the product/Credit Period (overall limit validity) : </b>{{data.tenureoverall_limit}} <br />
+                                                        <b>Facility Type : </b> {{data.facility_type}}
+                                                        <b>Facility mode : </b> {{data.facility_mode}}-->
+                                                        <b>Program Limit (overall limit validity) : </b> {{data.facilityoverall_limit}} <br />
+                                                        <b>Credit Period of the Program (overall limit validity) : </b>{{data.tenureoverall_limit}} <br />
+                                                        <b>Product Type : </b> {{data.facility_type}}
+                                                        <b>Program Mode : </b> {{data.facility_mode}}
+                                                    </td>
+                                                    <!--<td title="Repayment">
+                                                        <b>Principal Frequency  : </b> {{data.principalfrequency_name}} <br />
+                                                        <b>Interest Frequency : </b> {{data.interestfrequency_name}}  <br />
+                                                        <b>Interest to be deducted upfront : </b> {{data.interest_status}}
+                                                    </td>
+                                                    <td title="Moratorium">
+                                                        <b>Moratorium Type  : </b> {{data.moratorium_type}} <br />
+                                                        <b>Start Date : </b>{{data.moratorium_startdate}}  <br />
+                                                        <b>End Date : </b> {{data.moratorium_enddate}}
+                                                    </td>-->
+                                                    <td class="text-nowrap" style="width:6%;text-align: center;">
+                                                       <!--  <button ng-show="data.product_type == 'Agri Receivable Finance (ARF)'" title="BuyerView" ng-click="Buyer_view(data.application2loan_gid)" class="btn btn-info btn-xs">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button> -->
+                                                        <button title="Edit" ng-click="creditproductchargesloan_edit(data.application2loan_gid,data.product_gid,data.variety_gid)"
+                                                                class="btn btn-green btn-xs ">
+                                                            <em class="fa fa-edit"></em>
+                                                        </button>
+                                                       <!--  <button title="Delete" ng-click="Deleteloan(data.application2loan_gid,data.producttype_gid)"
+                                                                class="btn btn-danger btn-xs ">
+                                                            <em class="fa fa-trash-o"></em>
+                                                        </button> -->
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <br />
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div id="Service Charges" class="tabcontent">
+                    <br />
+                    <form name="SaveProduct" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                        <div ng-show="divshow">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Service Charges Details </b></p>
+                                        <hr />
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label class="col-form-label">Product Name  </label> <span style="color:red">*</span>
+                                            <br />
+                                            <select name="Product Type" id="Product Type" chosen="" multiple ng-options="m.product_type  for m in product_list"
+                                                    ng-model="cboProductTypelist" class="chosen-select form-control" required></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Processing Fee / Initiation Fee </label> <span style="color:red">*</span>
+                                            <br />
+                                            <input id="processingfee" ng-model="txtprocessing_fee" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange1()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount51" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label><span style="color:red">*</span> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType1" name="Collection Type1" ng-change="collectdeduct()" value="Collect" ng-model="rdbprocessing_collectiontype" required />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType1" name="Collection Type1" value="Deduct" ng-change="collectdeduct()" ng-model="rdbprocessing_collectiontype" required />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Documentation Charges </label> 
+                                            <br />
+                                            <input id="doc_charges" ng-model="txtdoc_charges" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange2()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01"  style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount52" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType2" name="Collection Type2" ng-change="collectdeduct()" value="Collect" ng-model="rdbdoccharge_collectiontype"  />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType2" name="Collection Type2" ng-change="collectdeduct()" value="Deduct" ng-model="rdbdoccharge_collectiontype"  />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Field Visit Charges </label> 
+                                            <br />
+                                            <input id="fieldvisit_charges" ng-model="txtfieldvisit_charges" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange3()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01"  style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount53" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType3" name="Collection Type3" ng-change="collectdeduct()" value="Collect" ng-model="rdbfieldvisit_collectiontype"  />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType3" name="Collection Type3" ng-change="collectdeduct()" value="Deduct" ng-model="rdbfieldvisit_collectiontype"  />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Adhoc Fee </label> 
+                                            <br />
+                                            <input id="adhoc_fee" ng-model="txtadhoc_fee" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange4()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01"  style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount54" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType4" name="Collection Type4" ng-change="collectdeduct()" value="Collect" ng-model="rdbadhoc_collectiontype"  />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType4" name="Collection Type4" ng-change="collectdeduct()" value="Deduct" ng-model="rdbadhoc_collectiontype"  />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Term Life Insurance </label> 
+                                            <br />
+                                            <input id="life_insurance" ng-model="txtlife_insurance" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange5()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01"  style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount55" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType5" name="Collection Type5" ng-change="collectdeduct()" value="Collect" ng-model="rdblifeinsurance_collectiontype"  />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType5" name="Collection Type5" ng-change="collectdeduct()" value="Deduct" ng-model="rdblifeinsurance_collectiontype"  />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Personal Accident Insurance </label>
+                                            <br />
+                                            <input id="acct_insurance" ng-model="txtacct_insurance" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtamountchange6()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01"  style="text-align:right;">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount56" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label class="col-form-label"> Collection Type </label> 
+                                            <br />
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="CollectionType6" name="Collection Type6" ng-change="collectdeduct()" value="Collect" ng-model="rdbpersonalaccident_collectiontype"  />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="CollectionType6" name="Collection Type6" ng-change="collectdeduct()" value="Deduct" ng-model="rdbpersonalaccident_collectiontype"  />
+                                                    <span class="fa fa-circle"></span>Deduct
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label class="col-form-label"> Total Collectable </label>
+                                            <br />
+                                            <input type="text" id="total_collect" ng-model="txttotal_collect" tabindex="0" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label class="col-form-label"> Total Deductable </label>
+                                            <br />
+                                            <input type="text" id="total_deduct" ng-model="txttotal_deduct" tabindex="0" class="form-control" disabled />
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br /><br />
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;" ng-disabled="SaveProduct.$invalid"
+                                                ng-click="SubmitServiceCharges()">
+                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Add Charges
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+</form>
+
+                    <br />
+                    <br />
+                    <div class="row" ng-show="servicecharges">
+                        <!--<div class="dd-handle ng-scope" style="background-color: #f9f8f8;">-->
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <!--<div ng-show="servicecharges">-->
+                                <br />
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Service Charges Details </b></p>
+                                <hr />
+                                <!--</div>-->
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="table-responsive">
+                                    <table class="row-border hover" id="statictable">
+                                        <thead class="bg-gray text-white">
+                                            <tr class="bg-gray text-white">
+                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                <th> Product Name </th>
+                                                <th> Processing Fees/Initiation Fees </th>
+                                                <th> Document Charges </th>
+                                                <th> Field Visit Charges </th>
+                                                <th> Adhoc Fee </th>
+                                                <th> Term Life Insurance </th>
+                                                <th>  Personal Accident Insurance </th>
+                                                <th> Total  </th>
+                                                <th style="width:6%;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in servicecharges_list" width="100%">
+                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                <td title="Product Type">{{data.product_type}}</td>
+                                                <td title="Processing Fees/Initiation Fees">
+                                                    <b> Processing Fees/Initiation Fees : </b> {{data.processing_fee}} <br />
+                                                    <b>Collection Type  : </b> {{data.processing_collectiontype}}  <br />
+                                                </td>
+                                                <td title="Document Charges">
+                                                    <b>Document Charges : </b> {{data.doc_charges}} <br />
+                                                    <b>Collection Type  : </b>{{data.doccharge_collectiontype}} <br />
+                                                </td>
+                                                <td title="Field Visit Charges">
+                                                    <b>Field Visit Charges  : </b> {{data.fieldvisit_charge}} <br />
+                                                    <b>Collection Type: </b> {{data.fieldvisit_collectiontype}}  <br />
+                                                </td>
+                                                <td title="Adhoc Fee">
+                                                    <b>Adhoc Fee : </b> {{data.adhoc_fee}} <br />
+                                                    <b>Collection Type: </b>{{data.adhoc_collectiontype}}  <br />
+                                                </td>
+                                                <td title="Term Life Insurance">
+                                                    <b>Term Life Insurance: </b> {{data.life_insurance}} <br />
+                                                    <b>Collection Type : </b>{{data.lifeinsurance_collectiontype}}  <br />
+                                                </td>
+                                                <td title="Personal Accident Insurance">
+                                                    <b>Personal Accident Insurance : </b> {{data.acct_insurance}} <br />
+                                                    <b>Collection Type : </b>{{data.acctinsurance_collectiontype}}  <br />
+                                                </td>
+                                                <td title="Total">
+                                                    <b>Collectable: </b> {{data.total_collect}} <br />
+                                                    <b>Deductable : </b>{{data.total_deduct}}  <br />
+                                                </td>
+                                                <td class="text-nowrap" style="width:6%;">
+                                                    <button title="Edit" ng-click="servicedtl_edit(data.application2servicecharge_gid)"
+                                                            class="btn btn-green btn-xs ">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                    <button title="Delete" ng-click="DeleteCharge(data.application2servicecharge_gid)"
+                                                            class="btn btn-danger btn-xs ">
+                                                        <em class="fa fa-trash-o"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br />
+                            </div>
+                            <!--</div>-->
+                        </div>
+
+                    <div ng-hide="divshow">
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Service Charges Details </b></p>
+                                    <hr />
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="row-border hover" id="statictable">
+                                            <thead class="bg-gray text-white">
+                                                <tr class="bg-gray text-white">
+                                                    <th style="width:5%;text-align:center;">S.No</th>
+                                                    <th> Product Name </th>
+                                                    <th> Processing Fees/Initiation Fees </th>
+                                                    <th> Document Charges </th>
+                                                    <th> Field Visit Charges </th>
+                                                    <th> Adhoc Fee </th>
+                                                    <th> Term Life Insurance </th>
+                                                    <th>  Personal Accident Insurance </th>
+                                                    <th> Total  </th>
+                                                    <th style="width:6%;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in servicecharges_list" width="100%">
+                                                    <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                    <td title="Product Type">{{data.product_type}}</td>
+                                                    <td title="Processing Fees/Initiation Fees">
+                                                        <b> Processing Fees/Initiation Fees : </b> {{data.processing_fee}} <br />
+                                                        <b>Collection Type  : </b> {{data.processing_collectiontype}}  <br />
+                                                    </td>
+                                                    <td title="Document Charges">
+                                                        <b>Document Charges : </b> {{data.doc_charges}} <br />
+                                                        <b>Collection Type  : </b>{{data.doccharge_collectiontype}} <br />
+                                                    </td>
+                                                    <td title="Field Visit Charges">
+                                                        <b>Field Visit Charges  : </b> {{data.fieldvisit_charge}} <br />
+                                                        <b>Collection Type: </b> {{data.fieldvisit_collectiontype}}  <br />
+                                                    </td>
+                                                    <td title="Adhoc Fee">
+                                                        <b>Adhoc Fee : </b> {{data.adhoc_fee}} <br />
+                                                        <b>Collection Type: </b>{{data.adhoc_collectiontype}}  <br />
+                                                    </td>
+                                                    <td title="Term Life Insurance">
+                                                        <b>Term Life Insurance: </b> {{data.life_insurance}} <br />
+                                                        <b>Collection Type : </b>{{data.lifeinsurance_collectiontype}}  <br />
+                                                    </td>
+                                                    <td title="Personal Accident Insurance">
+                                                        <b>Personal Accident Insurance : </b> {{data.acct_insurance}} <br />
+                                                        <b>Collection Type : </b>{{data.acctinsurance_collectiontype}}  <br />
+                                                    </td>
+                                                    <td title="Total">
+                                                        <b>Collectable: </b> {{data.total_collect}} <br />
+                                                        <b>Deductable : </b>{{data.total_deduct}}  <br />
+                                                    </td>
+                                                    <td class="text-nowrap" style="width:6%;">
+                                                        <button title="Edit" ng-click="servicedtl_edit(data.application2servicecharge_gid)"
+                                                                class="btn btn-green btn-xs ">
+                                                            <em class="fa fa-edit"></em>
+                                                        </button>
+                                                        <button title="Delete" ng-click="DeleteCharge(data.application2servicecharge_gid)"
+                                                                class="btn btn-danger btn-xs ">
+                                                            <em class="fa fa-trash-o"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <div id="Trade" class="tabcontent">
+                    <div>
+                        <br />
+                        <div>
+
+                            <div>
+                                <div ng-show="Tradedivshow">
+                                    <form name="SaveTrade" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Trade Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Product </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="ProductType" chosen="" ng-options="m.product_type for m in tradeproduct_list track by m.application2loan_gid"
+                                                                ng-model="cboProductTypelist" class="chosen-select form-control" ng-change="tradeproducttype()" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Program </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <input type="text" ng-model="txtProductsubType" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Sales contract Applicability </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <input type="radio" id="Salescontract1" name="Salescontract" value="Yes" ng-model="rdbsalescontract_availability" required />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" id="Salescontract1" name="Salescontract" value="No" ng-model="rdbsalescontract_availability" required />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of transport </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of transport" chosen="" ng-options="m.scope_name for m in scope_list"
+                                                                ng-model="cboScopeoftransport" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of loading </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of loading" chosen="" ng-options="m.scope_name for m in scope_list"
+                                                                ng-model="cboScopeofloading" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of unloading </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of unloading" chosen="" ng-options="m.scope_name for m in scope_list"
+                                                                ng-model="cboScopeofunloading" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of quality and quantity </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_name  for m in scope_list"
+                                                                ng-model="cboScopeofqualityandquantity" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of moisture gain/loss </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_name  for m in scope_list"
+                                                                ng-model="cboScopeofmoisturegainloss" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of Insurance </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_name  for m in scope_list"
+                                                                ng-model="cboScopeofInsurance" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+
+                                            <div class="dd-handle ng-scope">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Warehouse Details </b></p>
+                                                        <hr />
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Other Creditor Applicant Type </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <p style="font-size:14px;">Warehouse Service Provider (WSP)</p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse agency (WSP) </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="ProductType" chosen="" ng-options="m.Applicant_name for m in creditorwsp_list track by m.creditor_gid"
+                                                                    ng-model="cbowarehouseagency" class="chosen-select form-control" ng-change="warehouseagencychange()"></select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse name </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="ProductType" chosen="" ng-options="m.warehouse_name for m in warehousename_list track by m.warehouse_gid"
+                                                                    ng-model="cbowarehouse_name" class="chosen-select form-control" ng-change="warehousenamechange()"></select>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse type </label>
+                                                            <br />
+                                                            <input type="text" ng-model="cbowarehousetype_name" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Total Capacity (In Area)</strong></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtareacapacity" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Capacity Area UOM</strong></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtareacapacity_uom" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Total Capacity (Volume) </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtcapacity_volume" disabled tabindex="0" class="form-control" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Volume UOM</strong> </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtvolume_uom" tabindex="0" disabled class="form-control" />
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                                            <label class="col-form-label">Warehouse Address </label><span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="Scope of transport" chosen="" ng-options="m.warehouseaddress_name for m in warehouseaddress_list"
+                                                                    ng-model="cbowarehouseaddress" class="chosen-select form-control"></select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Capacity accepted as per standards state wise (commodity wise) </label>
+
+                                                            <textarea ng-model="txtcapacity_commodity" maxlength="5000" rows="2" class="form-control"
+                                                                      id="input_13" tabindex="0" aria-invalid="true"></textarea>
+
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Capacity accepted as per standards commodity wise (PAN Ina) </label>
+
+                                                            <textarea ng-model="txtcapacity_panina" maxlength="5000" rows="2" class="form-control"
+                                                                      id="input_13" tabindex="0" aria-invalid="true"></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br /><br />
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;"
+                                                                ng-disabled="!cbowarehouseagency || !cbowarehouse_name || !cbowarehouseaddress || !cbowarehouseaddress"
+                                                                ng-click="Submit_Trade(tradeapplication2loan_gid, trade_gid)">
+                                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                                        </button>
+
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <div class="table-responsive table-bordered">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                <th> Warehouse agency (WSP) </th>
+                                                                <th> Warehouse name </th>
+                                                                <th> Warehouse type </th>
+                                                                <th> Warehouse Address </th>
+                                                                <th style="width:6%;">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr width="100%" ng-repeat="data in tradewarehouse_list">
+                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                <td title="Product">{{data.warehouse_agency}}</td>
+                                                                <td title="Program">
+                                                                    {{data.warehouse_name}}
+                                                                </td>
+                                                                <td title="Sales contract Applicability">
+                                                                    {{data.typeofwarehouse_name}}
+                                                                </td>
+                                                                <td title="Scope of transport">
+                                                                    {{data.warehouse_address}}
+                                                                </td>
+                                                                <td class="text-nowrap text-center" style="width:6%;">
+                                                                    <button title="View" ng-click="view(data.applicationtrade2warehouse_gid)"
+                                                                            class="btn btn-info btn-xs ">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>
+                                                                    <button title="Delete" ng-click="Delete_trade(data.applicationtrade2warehouse_gid)"
+                                                                            class="btn btn-danger btn-xs ">
+                                                                        <em class="fa fa-trash-o"></em>
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Other Creditor Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Other Creditor </label><span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="ProductType" chosen="" ng-options="m.Applicant_name for m in creditoradd_list track by m.creditor_gid"
+                                                                ng-model="cbocreditor" class="chosen-select form-control" ng-change="creditorchange()"></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="showdtls">
+                                                        <label class="col-form-label">Appliant category </label><span style="color:red">*</span>
+                                                        <br />
+                                                        <input type="text" ng-model="txtApplicant_category" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="showdtls">
+                                                        <label class="col-form-label">Designation </label>
+                                                        <br />
+                                                        <input type="text" ng-model="designation_type" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row" ng-show="showdtls">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label><strong>Contact Person</strong></label>
+                                                        <br />
+                                                        <input type="text" ng-model="contactperson_name" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label><strong>Contact No</strong></label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtcontact_no" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label>Email </label>
+                                                        <br />
+                                                        <input type="text" ng-model="email_id" disabled tabindex="0" class="form-control" />
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label>Pan </label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtpan_no" disabled tabindex="0" class="form-control" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <br /><br />
+                                                <div class="text-center">
+                                                    <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;"
+                                                            ng-disabled="!cbocreditor"
+                                                            ng-click="Submit_creditor(tradeapplication2loan_gid, trade_gid)">
+                                                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                                    </button>
+
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th style="width:5%;text-align:center;">S.No</th>
+                                                            <th> Other Creditor </th>
+                                                            <th> Basic Details </th>
+                                                            <th style="width:6%;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr width="100%" ng-repeat="data in trade2creditor_list">
+                                                            <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                            <td>
+                                                                <b>Applicant: </b> {{data.Applicant_name}} <br />
+                                                                <b>Applicant Category: </b> {{data.Applicant_category}} <br />
+                                                                <b>Designation: </b> {{data.designation_type}} <br />
+                                                            </td>
+                                                            <td>
+                                                                <b>Contact Person: </b> {{data.contactperson_name}} <br />
+                                                                <b>Contact Number: </b> {{data.contact_no}} <br />
+                                                                <b>E-Mail: </b> {{data.email_id}} <br />
+                                                                <b>Pan: </b> {{data.pan_no}} <br />
+                                                            </td>
+                                                            <td class="text-nowrap text-center" style="width:6%;">
+
+                                                                <button title="Delete" ng-click="Delete_creditor(data.applicationtrade2creditor_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <br /><br />
+                                                <div class="text-center">
+                                                    <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;" ng-disabled="SaveTrade.$invalid"
+                                                            ng-click="SubmitTrade()">
+                                                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Add Trade
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br />
+                                <div ng-show="TradeEditdivshow">
+                                    <form name="EditTrade" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Edit Trade Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Product </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <input type="text" ng-model="cboeditproduct_type" tabindex="0" class="form-control" disabled />
+                                                        <!--<select name="Product Type" id="ProductType" chosen="" ng-options="m.application2loan_gid as m.product_type for m in tradeproduct_list track by m.application2loan_gid"
+                            ng-model="cboeditProductTypelist" class="chosen-select form-control" ng-change="tradeeditproducttype()" required></select>-->
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Program </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <input type="text" ng-model="txteditProductsubType" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Sales contract Applicability </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <input type="radio" id="Salescontract1" name="Salescontract" value="Yes" ng-model="rdbeditsalescontract_availability" required />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" id="Salescontract1" name="Salescontract" value="No" ng-model="rdbeditsalescontract_availability" required />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of transport </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of transport" chosen="" ng-options="m.scope_gid as m.scope_name for m in scope_list"
+                                                                ng-model="cboeditScopeoftransport" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of loading </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of loading" chosen="" ng-options="m.scope_gid as m.scope_name for m in scope_list"
+                                                                ng-model="cboeditScopeofloading" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of unloading </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Scope of unloading" chosen="" ng-options="m.scope_gid as m.scope_name for m in scope_list"
+                                                                ng-model="cboeditScopeofunloading" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of quality and quantity </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_gid as m.scope_name for m in scope_list"
+                                                                ng-model="cboeditScopeofqualityandquantity" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of moisture gain/loss </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_gid as m.scope_name  for m in scope_list"
+                                                                ng-model="cboeditScopeofmoisturegainloss" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label">Scope of Insurance </label> <span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="Product Type" chosen="" ng-options="m.scope_gid as m.scope_name for m in scope_list"
+                                                                ng-model="cboScopeofInsurance" class="chosen-select form-control" required></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="dd-handle ng-scope">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+                                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Warehouse Details </b></p>
+                                                        <hr />
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Other Creditor Applicant Type </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <p style="font-size:14px;">Warehouse Service Provider (WSP)</p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse agency (WSP) </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="ProductType" chosen="" ng-options="m.Applicant_name for m in creditorwsp_list track by m.creditor_gid"
+                                                                    ng-model="cbowarehouseagency" class="chosen-select form-control" ng-change="warehouseagencychange()"></select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <br />
+
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse name </label> <span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="ProductType" chosen="" ng-options="m.warehouse_name for m in warehousename_list track by m.warehouse_gid"
+                                                                    ng-model="cbowarehouse_name" class="chosen-select form-control" ng-change="warehousenamechange()"></select>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label">Warehouse type </label>
+                                                            <br />
+                                                            <input type="text" ng-model="cbowarehousetype_name" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Total Capacity (In Area)</strong></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtareacapacity" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Capacity Area UOM</strong></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtareacapacity_uom" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Total Capacity (Volume) </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtcapacity_volume" disabled tabindex="0" class="form-control" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong>Volume UOM</strong> </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtvolume_uom" tabindex="0" disabled class="form-control" />
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                                            <label class="col-form-label">Warehouse Address </label><span style="color:red">*</span>
+                                                            <br />
+                                                            <select name="Product Type" id="Scope of transport" chosen="" ng-options="m.warehouseaddress_name for m in warehouseaddress_list"
+                                                                    ng-model="cbowarehouseaddress" class="chosen-select form-control"></select>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Capacity accepted as per standards state wise (commodity wise) </label>
+
+                                                            <textarea ng-model="txtcapacity_commodity" maxlength="5000" rows="2" class="form-control"
+                                                                      id="input_13" tabindex="0" aria-invalid="true"></textarea>
+
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Capacity accepted as per standards commodity wise (PAN Ina) </label>
+
+                                                            <textarea ng-model="txtcapacity_panina" maxlength="5000" rows="2" class="form-control"
+                                                                      id="input_13" tabindex="0" aria-invalid="true"></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br /><br />
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;"
+                                                                ng-disabled="!cbowarehouseagency || !cbowarehouse_name || !cbowarehouseaddress || !cbowarehouseaddress"
+                                                                ng-click="Submit_Trade(tradeapplication2loan_gid, trade_gid)">
+                                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                                        </button>
+
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                                <div class="table-responsive table-bordered">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                <th> Warehouse agency (WSP) </th>
+                                                                <th> Warehouse name </th>
+                                                                <th> Warehouse type </th>
+                                                                <th> Warehouse Address </th>
+                                                                <th style="width:6%;">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr width="100%" ng-repeat="data in tradewarehouse_list">
+                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                <td title="Product">{{data.warehouse_agency}}</td>
+                                                                <td title="Program">
+                                                                    {{data.warehouse_name}}
+                                                                </td>
+                                                                <td title="Sales contract Applicability">
+                                                                    {{data.typeofwarehouse_name}}
+                                                                </td>
+                                                                <td title="Scope of transport">
+                                                                    {{data.warehouse_address}}
+                                                                </td>
+                                                                <td class="text-nowrap text-center" style="width:6%;">
+                                                                    <button title="View" ng-click="view(data.applicationtrade2warehouse_gid)"
+                                                                            class="btn btn-info btn-xs ">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>
+                                                                    <button title="Delete" ng-click="Delete_trade(data.applicationtrade2warehouse_gid)"
+                                                                            class="btn btn-danger btn-xs ">
+                                                                        <em class="fa fa-trash-o"></em>
+                                                                    </button>
+
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Other Creditor Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Other Creditor </label><span style="color:red">*</span>
+                                                        <br />
+                                                        <select name="Product Type" id="ProductType" chosen="" ng-options="m.Applicant_name for m in creditoradd_list track by m.creditor_gid"
+                                                                ng-model="cbocreditor" class="chosen-select form-control" ng-change="creditorchange()"></select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="showdtls">
+                                                        <label class="col-form-label">Appliant category </label><span style="color:red">*</span>
+                                                        <br />
+                                                        <input type="text" ng-model="txtApplicant_category" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="showdtls">
+                                                        <label class="col-form-label">Designation </label>
+                                                        <br />
+                                                        <input type="text" ng-model="designation_type" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row" ng-show="showdtls">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label><strong>Contact Person</strong></label>
+                                                        <br />
+                                                        <input type="text" ng-model="contactperson_name" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label><strong>Contact No</strong></label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtcontact_no" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label>Email </label>
+                                                        <br />
+                                                        <input type="text" ng-model="email_id" disabled tabindex="0" class="form-control" />
+                                                    </div>
+
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label>Pan </label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtpan_no" disabled tabindex="0" class="form-control" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <br /><br />
+                                                <div class="text-center">
+                                                    <button type="button" class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;"
+                                                            ng-disabled="!cbocreditor"
+                                                            ng-click="Submit_creditor(tradeapplication2loan_gid, trade_gid)">
+                                                        <i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                                    </button>
+
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="table-responsive table-bordered">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th style="width:5%;text-align:center;">S.No</th>
+                                                            <th> Other Creditor </th>
+                                                            <th> Basic Details </th>
+                                                            <th style="width:6%;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr width="100%" ng-repeat="data in trade2creditor_list">
+                                                            <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                            <td>
+                                                                <b>Applicant: </b> {{data.Applicant_name}} <br />
+                                                                <b>Applicant Category: </b> {{data.Applicant_category}} <br />
+                                                                <b>Designation: </b> {{data.designation_type}} <br />
+                                                            </td>
+                                                            <td>
+                                                                <b>Contact Person: </b> {{data.contactperson_name}} <br />
+                                                                <b>Contact Number: </b> {{data.contact_no}} <br />
+                                                                <b>E-Mail: </b> {{data.email_id}} <br />
+                                                                <b>Pan: </b> {{data.pan_no}} <br />
+                                                            </td>
+                                                            <td class="text-nowrap text-center" style="width:6%;">
+
+                                                                <button title="Delete" ng-click="Delete_creditor(data.applicationtrade2creditor_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <br /><br />
+                                                <div class="text-center">
+                                                    <button type="button" class="btn btn-md btn-deafult btn-success" ng-disabled="EditTrade.$invalid"
+                                                            ng-click="tradedtl_submit()">
+                                                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update
+                                                    </button>
+                                                    <button type="button" class="btn btn-md btn-deafult btn-danger"
+                                                            ng-click="cancel_edit()">
+                                                        <i class="icon icon-close"></i>&nbsp;&nbsp;Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br />
+                                <div class="dd-handle ng-scope">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div ng-hide="Tradedivshow">
+                                                <br />
+                                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Trade Details </b></p>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="row-border hover" id="statictable">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr class="bg-gray text-white">
+                                                            <th style="width:5%;text-align:center;">S.No</th>
+                                                            <th> Product </th>
+                                                            <th> Program </th>
+                                                            <th> Sales contract Applicability </th>
+                                                            <th> Scope of transport </th>
+                                                            <th> Scope of loading </th>
+                                                            <th> Scope of unloading </th>
+                                                            <th> Scope of quality and quantity </th>
+                                                            <th> Scope of moisture gain/loss  </th>
+                                                            <th style="width:6%;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr width="100%" ng-repeat="data in MdlTradelist">
+                                                            <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                            <td title="Product">{{data.producttype_name}}</td>
+                                                            <td title="Program">
+                                                                {{data.productsubtype_name}}
+                                                            </td>
+                                                            <td title="Sales contract Applicability">
+                                                                {{data.salescontract_availability}}
+                                                            </td>
+                                                            <td title="Scope of transport">
+                                                                {{data.scopeof_transport}}
+                                                            </td>
+                                                            <td title="Scope of loading">
+                                                                {{data.scopeof_loading}}
+                                                            </td>
+                                                            <td title="Scope of unloading">
+                                                                {{data.scopeof_unloading}}
+                                                            </td>
+                                                            <td title="Scope of quality and quantity">
+                                                                {{data.scopeof_qualityandquantity}}
+                                                            </td>
+                                                            <td title="Scope of moisture gain/loss">
+                                                                {{data.scopeof_moisturegainloss}}
+                                                            </td>
+                                                            <td class="text-nowrap text-center" style="width:6%;">
+                                                                <button title="Edit" ng-click="tradedtl_edit(data.application2trade_gid)"
+                                                                        class="btn btn-green btn-xs ">
+                                                                    <em class="fa fa-edit"></em>
+                                                                </button>
+                                                                <button title="Delete" ng-click="DeleteTrade(data.application2trade_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="text-center">
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Warehouse Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <br />
+                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Warehouse Details </b></p>
+                        <hr />
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label class="col-form-label">Warehouse agency (WSP) </label>
+                            <br />
+                            {{cbowarehouseagency}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label class="col-form-label">Warehouse name </label>
+                            <br />
+                            {{cbowarehouse_name}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label class="col-form-label">Warehouse type </label>
+                            <br />
+                            {{cbowarehousetype_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label><strong>Total Capacity (In Area)</strong></label>
+                            <br />
+
+                            {{txtareacapacity}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label><strong>Capacity Area UOM</strong></label>
+                            <br />
+
+                            {{txtareacapacity_uom}}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label>Total Capacity (Volume) </label>
+                            <br />
+
+                            {{txtcapacity_volume}}
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label><strong>Volume UOM</strong> </label>
+                            <br />
+
+                            {{txtvolume_uom}}
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <label class="col-form-label">Warehouse Address </label>
+                            <br />
+
+                            {{cbowarehouseaddress}}
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Capacity accepted as per standards state wise (commodity wise) </label>
+
+                            <br />
+                            {{txtcapacity_commodity}}
+
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Capacity accepted as per standards commodity wise (PAN Ina) </label>
+                            <br />
+
+                            {{txtcapacity_panina}}
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                </div>
+
+            </div>
+        </div>
+    </script>
+        </div>

@@ -1,0 +1,232 @@
+﻿<h3>
+    Penalty Alert View
+</h3>
+<div ng-controller="penalityAlertViewcontroller">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 "> 
+
+                    <p class="lead bb text-primary text-bold text-center">{{customerdetails.customername}}<label style="font-weight:bold">/</label>{{customerdetails.customercode}}</p>
+                    <form class="form-horizontal p-20">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12 ">
+                                <div class="col-lg-12">
+                                    <label class="col-form-label">Address</label>
+                                    <br />
+                                    <p style="font-size:14px;">
+                                        {{customerdetails.contactperson}}<br />{{customerdetails.addressline1edit}}<br />{{customerdetails.addressline2edit}}
+                                        <br />{{customerdetails.mobileNoedit}}
+                                    </p>
+
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="col-form-label"> URN No :</label>
+                                    <br />
+                                    <p style="font-size:14px;">{{customerdetails.customer_urn}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Vertical</label>
+                                    <br />
+                                    <p style="font-size:14px;">{{customerdetails.vertical_code}}</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Zonal Head</label>
+                                    <br />
+                                    <p ng-model="vertical_code" style="font-size:14px;">{{customerdetails.zonalGid}}</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Business Head</label>
+                                    <br />
+                                    <p style="font-size:14px;">{{customerdetails.businessHeadGid}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Cluster Manager</label>
+                                    <br />
+                                    <p ng-model="vertical_code" style="font-size:14px;">{{customerdetails.clustermanagerGid}}</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Relationship Manager</label>
+                                    <br />
+                                    <p style="font-size:14px;">{{customerdetails.relationshipMgmtGid}}</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="col-form-label">Credit Manager</label>
+                                    <br />
+                                    <p ng-model="vertical_code" style="font-size:14px;">{{customerdetails.creditmanagerName}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Recent Mail Sent - Deferral Details</p>
+                     
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <a title="view360" style="color:#ff0000;" class="ng-binding ng-scope label label-pink">
+                            <em class="fa"></em>
+                        </a>&nbsp;<lable> - Color Indicates for Extend Deferral</lable>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="table-responsive">
+                            <table class="row-border hover" id="statictable">
+
+                                <thead>
+                                    <tr class="bg-success text-white">
+                                        <th width="3%">S.No</th>
+                                        <th width="13%">Record ID</th>
+
+                                        <th width="10%">Deferral Type</th>
+
+                                        <th width="10%">Due Date</th>
+
+                                        <th  width="4%">Aging</th>
+
+                                        <th width="20%">Remarks</th>
+                                        <th width="10%">Customer Alert Sent On</th>
+                                        <th width="10%">Extend Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in deferral_data" class="bg-indigo-50 row-border"
+                                         ng-style="data.extend_flag == 'Y'?{'color':'#e91e63'}:{}" style="grid-row:auto" width="100%">
+                                        <td class="text-center">{{$index +1}}</td>
+                                        <td title="Record ID">{{data.record_id}}</td>
+
+                                        <td title="Deferral Type">{{data.deferral_name}}</td>
+
+                                        <td title="Due Date">{{data.due_date}}</td>
+
+                                        <td title="Aging">{{data.aging}}</td>
+
+                                        <td title="Remarks">{{data.remarks}}</td>
+                                        <td title="Customer Alert Sent On">{{data.customeralert_sentdate}}</td>
+                                        <td title="Extend Date">{{data.extend_date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p class="lead bb text-green text-bold" style="font-size:16px;"> Penal Alert History - Mail Details </p>
+                    <p>Penal Alert On : <b >{{customerdetails.penality_alertdate}}</b> </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="table-responsive">
+                            <table class="row-border hover" id="statictable">
+
+                                <thead>
+                                    <tr class="bg-success text-white">
+                                        <th width="3%">S.No</th>
+                                        <th width="13%">Penal Status</th>
+                                        <th width="10%">Created By</th>
+  
+                                        <!--<th width="20%">Action</th>-->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr  class="bg-indigo-50 row-border" ng-repeat="penalitydata in penalityalert" style="grid-row:auto" width="100%">
+                                        <td class="text-center">{{$index+1}}</td>
+                                        <td title="Penal Status">{{penalitydata.penalityalert_start}}</td>
+                                        <td title="Created By">{{penalitydata.created_by}} </td>
+                                        <!--<td title="Action">{{data.remarks}}</td>-->
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <p class="lead bb text-green text-bold" style="font-size:16px;">Penal Alert History - Deferral Details 
+                         
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="table-responsive">
+                                <table class="row-border hover" id="statictable">
+
+                                    <thead>
+                                        <tr class="bg-success text-white">
+                                            <th width="3%">S.No</th>
+                                            <th width="13%">Record ID</th>
+
+                                            <th width="10%">Deferral Type</th>
+
+                                            <th width="10%">Due Date</th>
+
+                                            <th width="4%">Aging</th>
+
+                                            <th width="20%">Remarks</th>
+                                            <th width="10%">Customer Alert Sent On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="penalityhty in penalityhistory" class="bg-indigo-50 row-border" style="grid-row:auto" width="100%">
+                                            <td class="text-center">{{$index +1}}</td>
+                                            <td title="Record ID">{{penalityhty.record_id}}</td>
+
+                                            <td title="Deferral Type">{{penalityhty.deferral_name}}</td>
+
+                                            <td title="Due Date">{{penalityhty.due_date}}</td>
+
+                                            <td title="Aging">{{penalityhty.aging}}</td>
+
+                                            <td title="Remarks">{{penalityhty.remarks}}</td>
+                                            <td title="Customer Alert Sent On">{{penalityhty.customeralert_sentdate}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br/>
+            <div class="ng-scope">
+                <div class="text-center">
+
+                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

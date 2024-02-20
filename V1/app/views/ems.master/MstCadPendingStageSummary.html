@@ -1,0 +1,179 @@
+﻿<style>
+    .picColor:hover {
+        background: linear-gradient(to right, rgb(171 225 166) 0%, #E3E4E3 100%);
+        box-shadow: none;
+        color: #000000;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        font-weight: bold;
+        text-decoration-color: #141478;
+    }
+
+   @keyframes glowing {
+        0% {
+            background: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            box-shadow: 0 0 5px #F9B77F;
+        }
+
+        50% {
+            background: linear-gradient(to right, #33ccff 0%, #ff99cc 100%);
+            box-shadow: 0 0 20px #FCE4D0;
+        }
+
+        100% {
+            background: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            box-shadow: 0 0 5px #FCE4D0;
+        }
+    }
+
+    .button {
+        animation: glowing 2000ms infinite;
+    }
+</style>
+<h3>
+    CAD Pending Stage
+</h3>
+<div ng-controller="MstCadPendingStageSummaryController">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="incomplete_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix" style="padding-top:2px;">
+                        <div class="media-box-heading">
+                            <div class="pull-right label" style="font-size:8px;padding-top:2px;font-size:12px;color:black;"> {{incompletestage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> Incomplete Stage  </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="business_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix" style="padding-top:2px;">
+                        <div class="media-box-heading">
+                            <div class="pull-right label" style="font-size:8px;padding-top:2px;font-size:12px;color:black;"> {{businessstage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> Business Stage  </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="credit_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:2px;">
+                            <div class="pull-right label" style="padding-top:2px;color:black;font-size:12px;"> {{creditstage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> Credit Stage </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="cc_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:2px;">
+                            <div class="pull-right label" style="padding-top:2px;color:black;font-size:12px;"> {{ccstage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> CC Stage </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor button" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="cadpending_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:2px;">
+                            <div class="pull-right label" style="padding-top:2px;color:black;font-size:12px;"> {{cadpendingstage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> CAD Pending </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;" ng-click="cadaccepted_stage()">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:2px;">
+                            <div class="pull-right label" style="padding-top:2px;color:black;font-size:12px;"> {{cadacceptedstage_count}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> CAD Accepted </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item" style="height:46px;border-radius: 6px;border:1px solid #a0a4a5;">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:2px;">
+                            <div class="pull-right label" style="padding-top:2px;color:black;font-size:12px;"> {{lstotalcount}} </div>
+                            <div style="font-size:13px;color:#000000;"><b> Total Applications </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead class="nowrap">
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;" class="text-center"> S.No</th>
+                                    <th> Application Number</th>
+                                    <th> Applicant Name </th>
+                                    <th> Vertical</th>
+                                    <th> Program </th>
+                                    <th> RM Name </th>
+                                    <th> Hierarchy Status </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in cadpendingstage_list">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical'" style="width:15%;"> {{data.vertical_name}} </td>
+                                    <td data-title="'Program'" style="width:15%;"> {{data.program_name}} </td>
+                                    <td data-title="'RM Name'" style="width:15%;"> {{data.created_by}} </td>
+                                    <td data-title="'Hierarchy Status'" ng-switch="data.hierarchyupdated_flag">
+                                        <label class="label label-success" ng-switch-when='Y' style="font-size:10px;"> Updated</label>
+                                        <label class="label label-warning" ng-switch-when='N' style="font-size:10px;"> Not Updated</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="applcreation_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Hierarchy Update" ng-click="hierarchy_update(data.application_gid,data.created_by)" style="background-color:#00635a;" class="btn btn-purple">
+                                            <em class="icon-layers"></em>
+                                        </button>
+                                        <button title="History" ng-show="data.hierarchyupdated_flag=='Y'" ng-click="hierarchyupdate_history(data.application_gid)" class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <button title="History" ng-show="data.hierarchyupdated_flag=='N'" disabled class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

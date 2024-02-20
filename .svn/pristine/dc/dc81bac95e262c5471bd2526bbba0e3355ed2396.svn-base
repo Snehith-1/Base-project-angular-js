@@ -1,0 +1,124 @@
+﻿
+<h3>
+    Acknowledge My Asset
+</h3>
+<div ng-controller="acknowledgeMyAssetcontroller">
+    <div class="">
+        <div class="panel-body">
+            <div class="row">
+                <div ng-repeat="data in acksummary">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="panel widget">
+                            <div class="panel-body text-center">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <img style="height:100%;width:100%;" ng-src="{{data.asset_image}}">
+                                    </div>
+                                    <div class="col-lg-8 col-sm-8 col-md-8">
+                                        <p style="text-align:left;"> <strong class="text-primary">Asset Name : &emsp;  {{data.asset_name}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Asset ID :<strong> {{data.asset_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Serial ID :<strong> {{data.assetserial_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Issued By :<strong> {{data.issued_by}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Issued Date :<strong>{{data.issued_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Assigned Remarks :<strong>{{data.assigned_remarks}}</strong></p>
+                                    </div>
+                                </div>
+                                <p style="text-align:left;font-size:13px;">By Clicking the submit button you are acknowledged that</p>
+                                <p style="text-align:left;font-size:13px;">1. The above listed asset was received in good condition.</p>
+                                <p style="text-align:left;font-size:13px;">2. The above listed asset is belongs to Samunnati Financial Intermediation & Services Pvt Ltd.</p>
+                                <p style="text-align:left;font-size:13px;"> I hear by assured that I will take care of the asset provided to me by the company to the best possible extend.</p>
+                            </div>
+                            <div class="panel-body text-center bg-gray">
+                                <div class="row row-table">
+                                    <div align="center">
+                                        <input ng-model="ack" type="checkbox" id="myCheck" />
+                                        <label id="lbl_acknowlege" title="I Acknowledge">I Acknowledge</label> &nbsp;&nbsp;
+                                        <br />
+                                        <button ng-disabled="!ack" id="btn_submit" class="btn btn-success" value="Accept" ng-click="ack_click(data.asset2custodian_gid)"
+                                                title="Submit">
+                                            <span class="fa fa-check-circle">Accept</span>
+                                        </button>
+                                        <button id="btn_reject" class="btn btn-warning" value="Reject"
+                                                title="Reject" ng-click="reject_popup(data.asset2custodian_gid)">
+                                            <span class="fa fa-ban"> Reject</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/rejectasset.html">
+        <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="modal-header bg-green-200 ng-scope">
+
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-green-200">
+                        <i class="fa fa-ban"></i>
+                    </span>Reason For Reject
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="mda-form-group float-label">
+                                <label>Reject Reason *</label>
+                                <textarea id="reason_reject" name="reason_reject" rows="5" cols="4"
+                                          class="form-control" ng-model="input.reason_reject" placeholder="Enter The Reason" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-center">
+                        <button id="btnsubmit" ng-click="ackreject_click()" class="btn btn-success" value="Submit"
+                                title="Submit" ng-disabled="userform.$invalid">
+                            <span class="fa fa-check-circle">  Submit</span>
+                        </button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </script>
+    <!--<div id="popup_reject" class="w3-modal">
+        <div class="w3-animate-right w3-modal-content w3-responsive w3-round-large" style="width:410px;">
+            <br /><br />
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="center">
+                        <h5><label style="font-weight:bold;">Reject the Asset</label></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="container-login100 chat-form1-title">
+                <div class="row">
+                    <textarea id="reason_reject" name="reason_reject" rows="5" cols="4" class="form-control" ng-model="input.reason_reject" placeholder="Enter The Reason"></textarea>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <button id="btnsubmit" ng-click="ackreject_click()" class="btn-success w3-right" value="Submit"
+                                title="Submit" ng-disabled="reason_reject">
+                            <span class="fa fa-check-circle">  Submit</span>
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button id="btn_cancel" class="btn-warning w3-left" value="Reject"
+                                title="Cancel" onclick="document.getElementById('popup_reject').style.display = 'none'">
+                            <span class="fa fa-ban"> Cancel</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>-->
+</div>

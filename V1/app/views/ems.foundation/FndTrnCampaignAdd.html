@@ -1,0 +1,361 @@
+﻿<h3>
+    Campaign Creation
+    <a href="#/app/FndTrnCampaignSummary">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-primary ">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="FndTrnCampaignAddController as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Add Campaign
+        </div>
+        <div class="dd-handle ng-scope">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+
+                    <form novalidate="" name="userform2" ng-submit="form.userform2()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <br />
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Campaign Details </b></p>
+                                    <hr />
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Campaign Ref No </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" ng-model="txtCampaignrefno" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label class="col-form-label"> Campaign Name </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" ng-model="txtcampaign_name" required tabindex="0" class="form-control" />
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Campaign Type </label><span style="color:red">*</span>
+                                        <br />
+                                        <select name="Campaign_type" ng-options="m.campaigntype_name for m in campaigntypelist"
+                                                ng-model="cboCampaign_type" class="chosen-select form-control" required chosen="" style="height:37px;"
+                                                size="1">
+                                            <option value=""> -----Select Campaign Type-----</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <br />
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Campaign Cost </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" id="txtcampaign_cost" ng-model="txtcampaign_cost" tabindex="0" required ng-change="txtcampaign_cost_change()" required class="form-control" style="text-align:right;" />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_campaign_cost" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <!--<div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label class="col-form-label"> Campaign Cost </label>
+                                    <br />
+
+                                    <input type="text" ng-model="txtcampaign_cost" tabindex="0" class="form-control" />
+                                </div>-->
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Campaign Start Date <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="dob" disabled name="date" ng-model="txtstart_date" required datepicker-popup="{{dpick.format}}"
+                                                   style="height:37px;" is-open="dpick.opened1" min-date="{{dpick.min}}" datepicker-options="dpick.dateOptions"
+                                                   close-text="Close"  class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dpick.open1($event)" style="height:37px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Campaign End Date <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="dob" disabled name="date" ng-model="txtend_date" required datepicker-popup="{{dpick.format}}"
+                                                   style="height:37px;" is-open="dpick.opened2" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                   close-text="Close" ng-change="checkErr(txtstart_date,txtend_date)" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dpick.open2($event)" style="height:37px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                        <span style="color:red">{{errMessage}}</span>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Assesment Date </label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="Assesment_date" disabled name="date" ng-model="txtAssesment_date"  datepicker-popup="{{dpick.format}}"
+                                                   style="height:37px;" is-open="dpick.opened3" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                   close-text="Close" ng-change="pastdatecheck(txtAssesment_date)" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dpick.open3($event)" style="height:37px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+
+                            <div class="row">
+
+                                <div class="col-md-11 col-lg-11 col-sm-11">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> O/S as on Assesment Date (in Mn) </label>
+                                        <br />
+                                        <input type="text" name="txtAssesment_date" id="txtosAssesment_date" ng-model="txtosAssesment_date" maxlength="25" ng-pattern="/^[0-9+]*$/"
+                                               aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Loan or Facility Availed By the Customer <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text" ng-model="txtloanavailed" ng-pattern="/^[0-9]{1,10}$/" tabindex="0" required maxlength="1000" class="form-control" />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">      
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Customer Details </b></p>
+                                            <hr />
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label">Customer Name </label><span style="color:red">*</span>
+                                                <br />
+                                                <select name="Campaign_type" ng-options="m.customer_name for m in customerlist track by m.customer_gid"
+                                                        ng-model="cboCustomer" class="chosen-select form-control" required ng-change="getdetails(cboCustomer)" chosen="" style="height:37px;"
+                                                        size="1">
+                                                    <option value=""> -----Select Customer-----</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg- col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Contact Person Name </label><span style="color:red">*</span>
+                                                <br />
+                                                <input type="text" ng-model="txtcontactperson" required tabindex="0" class="form-control" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> Contact Person Mobile Number </label><span style="color:red">*</span>
+                                                <br />
+                                                <input type="text" ng-model="txtcontactperson_mobile" ng-pattern="/^[0-9]{1,10}$/" tabindex="0" required class="form-control" />
+                                            </div>
+
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> Contact Person Email Address </label><span style="color:red">*</span>
+                                                <br />
+                                                <input type="text" ng-model="txtcontactperson_email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$"  tabindex="0" required class="form-control" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Details </b></p>
+                                    <hr />
+
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <div class="row ">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label>Campaign Manager <span style="color:red">*</span></label>
+                                                <select name="cboCampaign_mgr" chosen="" tabindex="2" multiple="multiple"
+                                                        ng-options="m.employee_name for m in employee_list" required=""
+                                                        ng-model="cboCampaign_mgr" class="chosen-select form-control"></select>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label>Campaign Approver <span style="color:red">*</span></label>
+                                                <select name="cboCampaign_apr" chosen="" tabindex="2"
+                                                        ng-options="m.employee_name for m in employee_list track by m.employee_gid" required=""
+                                                        ng-model="cboCampaign_apr" class="chosen-select form-control"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Single Form Add </b></p>
+                                    <hr />
+
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Select Category </label>
+                                        <br />
+                                        <select name="Campaign_type" ng-options="m.categorytype_name for m in categorytype_list track by m.categorytype_gid"
+                                                ng-model="cboSCategory" ng-change="getQuestionnarie(cboSCategory)" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                size="1">
+                                            <option value=""> -----Select Category-----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <label class="col-form-label">Select Questionnarie Title </label>
+                                        <br />
+                                        <select name="Questionnarie_name" ng-options="m.questionnarie_name for m in questionnarielist track by m.questionnarie_gid"
+                                                ng-model="cboSquestionnarie_name" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                size="1">
+                                            <option value=""> -----Select Questionnarie Title-----</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+                                        <br />
+
+                                        <a class="btn btn-sm btn-deafult" style="background-color:#09385f;color:white;" ng-click="Questionnarie_Sadd()"><span class="fa fa-plus" /> Add </a>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <br />
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th>S.No</th>
+                                                        <th>Category</th>
+                                                        <th>Questionnarie Title</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in singleform_list" width="100%">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{data.questionnarie_type}}</td>
+                                                        <td>{{data.questionnarie_answer}}</td>
+                                                        <td data-title="Action">
+                                                            <a class="btn btn-xs btn-danger" ng-click="Questionnarie_Sdelete(data.questionnarie_gid)"><span class="fa fa-trash-o"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="row ">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Multiple Form Add </b></p>
+                                            <hr />
+
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label">Select Category </label>
+                                                <br />
+                                                <select name="Campaign_type" ng-options="m.categorytype_name for m in categorytype_list track by m.categorytype_gid"
+                                                        ng-model="cboMCategory" ng-change="getQuestionnarie1(cboMCategory)"  class="chosen-select form-control" chosen="" style="height:37px;"
+                                                        size="1">
+                                                    <option value=""> -----Select Category-----</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <label class="col-form-label">Select Questionnarie Title </label>
+                                                <br />
+                                                <select name="Questionnarie_name" ng-options="m.questionnarie_name for m in multiplequestionnarie_list track by m.questionnarie_gid"
+                                                        ng-model="cboMquestionnarie_name" class="chosen-select form-control"  chosen="" style="height:37px;"
+                                                        size="1">
+                                                    <option value=""> -----Select Questionnarie Title-----</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                <br />
+
+                                                <a class="btn btn-sm btn-deafult" style="background-color:#09385f;color:white;" ng-click="Questionnarie_Madd()"><span class="fa fa-plus" /> Add </a>
+                                            </div>
+                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                <br />
+                                                <div class="table-responsive table-bordered">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th>S.No</th>
+                                                                <th>Questionnarie Title</th>
+                                                                <th>Answer Description</th>
+                                                                <th scope="col">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in multipleform_list" width="100%">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{data.questionnarie_type}}</td>
+                                                                <td>{{data.questionnarie_answer}}</td>
+                                                                <td data-title="Action">
+
+                                                                    <a class="btn btn-xs btn-danger" ng-click="Questionnarie_Mdelete(data.questionnarie_gid)"><span class="fa fa-trash-o"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br />
+
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" ng-disabled="(userform2.$invalid) || (multipleform_list == null && singleform_list == null)" ng-click="campaign_save()"> <em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft</button> &nbsp;&nbsp;
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="(userform2.$invalid) || (multipleform_list == null && singleform_list == null)" ng-click="campaign_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </form>
+                    <br />
+                </div>
+            </div>
+
+        </div>
+</div>
+    </div>

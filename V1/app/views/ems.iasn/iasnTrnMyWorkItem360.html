@@ -1,0 +1,806 @@
+<h3>
+    I-Assign My WorkItem 360
+
+    <a href="#/app/iasnTrnMyWorkItemSummary">
+        <button type="button" title="Back to Home" class="pull-right btn btn-sm btn-primary">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+        </button>
+     </a>
+</h3>
+<style>
+    #bordersty {
+        border: 1px solid #ebebeb;
+        padding: 10px;
+        border-radius: 25px;
+        
+    }
+    .mailbtn {
+  border: none;
+  background-color: inherit;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.info {color: dodgerblue;}
+
+.list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .panel-scroll {max-height:120px;overflow: auto;}
+</style>
+<div ng-controller="iasnTrnMyWorkItem360">
+    <div class="card">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="bordersty" style="background-color: #FAF8F8;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Mail From & Date
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{rmemployee_name}}/ {{rmemployee_mailid}}<br>
+                                        {{email_date}}
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Zone
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{zone_name}}
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Workitem Owner
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{checkeremployee_name}}
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Allotted By & On
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{allottedby_on}}
+                                    </span>
+                                    <span ng-if="checkeremployee_name=='' || checkeremployee_name==null">
+                                        -
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Status Updated By & On
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{updatedby_on}}
+                                    </span>
+                                    <span ng-if="updatedby_on=='' || updatedby_on==null">
+                                        -
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Status
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;" ng-switch="status">
+                                        <label ng-switch-when="Pending" class="label label-warning">Pending</label>
+                                        <label ng-switch-when="Pushback" class="label label-info">Pushback</label>
+                                        <label ng-switch-when="Forward" class="label label-primary">Forward</label>
+                                        <label ng-switch-when="Merged" class="label label-pink">Merged</label>
+                                        <label ng-switch-when="Close" class="label label-danger">Close</label>
+                                        <label ng-switch-when="Archival" class="label label-green">Archival</label>
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Aging
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        <span class="label label-info" title="Aging">{{aging}}</span>
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Log Details
+                                    </label>
+
+                                    <br>
+                                    <button class="btn btn-info" ng-click="logdetails()">
+                                        <em class="fa fa-history"></em>
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;color:#dc7328;">
+                                        Customer Type
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{customer_type}}
+                                    </span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label style="font-size:14px;color:#dc7328;">
+                                        Customer Name
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{customer_name}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" ng-if="hold_flag=='Y'">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label style="font-size:14px;" class="text-danger">
+                                        Hold Remarks
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{workitemhold_reason}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-if="status=='Pending'">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label style="font-size:14px;" class="text-green">
+                                        Assigned Remarks
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{assigned_remarks}}
+                                    </span>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row"> 
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-show="closerem">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-danger">
+                                        Closed Mail Trigger
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{Mail_Trigger}}
+                                    </span>
+                                </div>
+                                <div class="col-lg-9 col-md-9 col-sm-9">
+
+                                    <label style="font-size:14px;" class="text-danger">
+                                       Closed Remarks
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{closedremarks}}
+                                    </span>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                            </div>
+                          </div>
+                        </div>
+                          <br>
+                          <div class="row"> 
+                          <div class="col-lg-12 col-md-12 col-sm-12" ng-show="archiverem">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label style="font-size:14px;" class="text-danger">
+                                Archived Remarks
+                             </label>
+
+                             <br>
+                             <span style="font-size:13px;">
+                                 {{archivalremarks}}
+                             </span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            </div>
+                        </div>
+                       </div>                    
+                        <br>
+                    </div>
+                    <br>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row" ng-show="IsLogShow">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="panel">
+
+                        <div class="panel-body ">
+                            <div class="pd-sm-10">
+                                <div class="row" ng-hide="transfershow">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12  ">
+                                                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Transfer Log</p>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <div style="max-height:300px;overflow:auto;">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th align="center" scope="col">S.No</th>
+                                                            <th align="center" scope="col">Transfer From</th>
+                                                            <th align="center" scope="col">Transfer To</th>
+                                                            <th align="center" scope="col">Allotted By/On</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in transferlog_list" width="100%">
+                                                            <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                            <td align="left" scope="col" title="Transfer From">{{data.assignedby_name}}</td>
+                                                            <td align="left" scope="col" title="Transfer To'">{{data.transferby_name}}</td>
+                                                            <td align="left" scope="col" title="Allotted By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12  ">
+                                                <p class="lead bb text-purple text-bold" style="font-size:16px;">Audit Log</p>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive">
+                                            <div style="max-height:300px;overflow:auto;">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th align="center" scope="col">S.No</th>
+                                                        <th align="center" scope="col">Workitem Response</th>
+                                                        <th align="center" scope="col">Done By/On</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in auditlog_list" width="100%">
+                                                        <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                        <td align="left" scope="col" title="Workitem Response">{{data.action_taken}}</td>
+                                                        <td align="left" scope="col" title="Done By/On">{{data.created_by}}/{{data.created_date}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-ms-12 col-sm-12">
+                    <div class="btn-group pull-left">
+                        <h4 style="color:grey;"><b>Work Item Reference No:{{workitemref_no}}</b></h4>
+                    </div>
+                    <div class="btn-group pull-left">
+
+
+                    </div>
+                    <div class="btn-group pull-right" ng-show="status=='Pending'">
+                        <button type="button" class="btn  btn-sm" ng-click="signature()" title="Email Signature">
+                            <em class="fa fa-clipboard text-info"></em> &nbsp;Signature
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="pushback()" ng-if="status!=close" title="Pushback">
+                            <em class="fa fa-mail-reply (alias) text-info"></em> &nbsp;Pushback
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="forward()" ng-if="status!=close" title="Forward">
+                            <em class="fa fa-mail-forward (alias) text-info"></em>&nbsp;Forward
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="CloseWorkItem()" ng-if="status!=close" title="Close">
+                            <em class="fa fa-times-circle text-info"></em>&nbsp;Close
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="archivalWI()" title="Archival">
+                            <em class="fa fa-archive text-info"></em>&nbsp;Archival
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right" ng-show="status=='Pushback'">
+                        <button type="button" class="btn  btn-sm" ng-click="signature()" title="Email Signature">
+                            <em class="fa fa-clipboard text-info"></em> &nbsp;Signature
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="forward()" ng-if="status!=close" title="Forward">
+                            <em class="fa fa-mail-forward (alias) text-info"></em>&nbsp;Forward
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="CloseWorkItem()" ng-if="status!=close" title="Close">
+                            <em class="fa fa-times-circle text-info"></em>&nbsp;Close
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="archivalWI()" title="Archival">
+                            <em class="fa fa-archive text-info"></em>&nbsp;Archival
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right" ng-show="status=='Forward'">
+                        <button type="button" class="btn  btn-sm" ng-click="signature()" title="Email Signature">
+                            <em class="fa fa-clipboard text-info"></em> &nbsp;Signature
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="forward()" ng-if="status!=close" title="Forward">
+                            <em class="fa fa-mail-forward (alias) text-info"></em>&nbsp;Forward
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="CloseWorkItem()" ng-if="status!=close" title="Close">
+                            <em class="fa fa-times-circle text-info"></em>&nbsp;Close
+                        </button>
+                        <button type="button" class="btn  btn-sm" ng-click="archivalWI()" title="Archival">
+                            <em class="fa fa-archive text-info"></em>&nbsp;Archival
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right" ng-show="status=='Close'">
+                        <!--<button type="button" class="btn  btn-sm" ng-click="signature()" title="Email Signature">
+                            <em class="fa fa-clipboard text-info"></em> &nbsp;Signature
+                        </button>-->
+
+                        <button type="button" class="btn  btn-sm" ng-click="archivalWI()" title="Archival">
+                            <em class="fa fa-archive text-info"></em>&nbsp;Archival
+                        </button>
+
+                        <button type="button" class="btn  btn-sm " title="Merge"
+                                ng-click="mergeworkitem(email_gid,email_subject,workitemref_no)">
+                            <em class="icon icon-grid text-info"></em> &nbsp;Merge
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+<div class="card" ng-repeat="data in referenceMail">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+         <div class="col-lg-12 col-md-12 col-sm-12">
+         <table class="table mb-mails mb-view">
+             <tbody>
+                 <td style="display: none;">
+                     {{$index+1}}
+                 </td>
+                 <tr>
+                      <td>
+                         <div class="clearfix">
+                            
+                                 <a href="#" class="pull-left">
+                                     <img alt="" ng-src="{{user.picture}}" class="media-box-object img-rounded thumb32 mb-mail-avatar" />
+                                 </a>
+                           
+                                 <div class="media-box-body">
+                                     <span style="font-size:15px;">
+                                        {{data.email_from}}
+                                     </span><br>
+                                   
+                                    
+                                     
+                                     <span>
+                                         <b>Sent:</b>
+                                     </span>
+                                     <span > {{data.email_date}} </span><br>
+                                     <span>
+                                         <b>To:</b> {{data.email_to}}
+                                     </span><br>
+                                     <span>
+                                        <b>Cc:</b>  {{data.email_cc}}
+                                     </span><br>
+                                     <span>
+                                       <b>Bcc:</b>  {{data.email_bcc}}
+                                     </span>
+                                 </div>
+                            
+                            
+                             <!-- <img ng-src="{{mailview.mail.from.avatar}}" alt="Mail Avatar" class="mb-mail-avatar" /> -->
+                            
+                            
+                            
+                         </div>
+                      
+                         <div class="mb-mail-preview mt-lg">
+                            
+                                 <h5>Subject:{{data.email_subject[0]}}</h5>
+                         </div>
+                         <p ng-bind-html=trustAsHtml(data.email_content)></p>
+                         <div class="mb-attachment">
+                            
+                             <ul class="list-inline">
+                                 <li ng-repeat="att in data.MdlAttachmentList">
+                                     <a  ng-click="export(att.document_path,att.document_name)">
+                                        <em class="icon-arrow-down"></em>&nbsp;{{att.document_name}}
+                                     </a>
+                                 </li>
+                             </ul>
+                         </div>
+                        
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+         </div>
+        </div>
+    
+    </div>
+ </div>
+ 
+    <div class="card">
+       <div class="row">
+           <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+            <table class="table mb-mails mb-view">
+                <tbody>
+                    <tr>
+                         <td>
+                            <div class="clearfix">
+                               
+                                    <a href="#" class="pull-left">
+                                        <img alt="" ng-src="{{user.picture}}" class="media-box-object img-rounded thumb32 mb-mail-avatar" />
+                                    </a>
+                              
+                                    <div class="media-box-body">
+                                        <span style="font-size:15px;">
+                                           {{email_from}}
+                                        </span><br>
+                                       
+                                     
+                                      
+                                       
+                                        
+                                        <span>
+                                            <b>Sent:</b>
+                                        </span>
+                                        <span > {{email_date}} </span><br>
+                                        <span>
+                                            <b>To:</b> {{to_mail}}
+                                        </span><br>
+                                        <span>
+                                           <b>Cc:</b>  {{cc_mail}}
+                                        </span><br>
+                                        <span>
+                                          <b>Bcc:</b>  {{bcc_mail}}
+                                        </span>
+                                    </div>
+                               
+                               
+                                <!-- <img ng-src="{{mailview.mail.from.avatar}}" alt="Mail Avatar" class="mb-mail-avatar" /> -->
+                               
+                               
+                               
+                            </div>
+                         
+                            <div class="mb-mail-preview mt-lg">
+                                <span>
+                                    <b>Subject:</b>
+                                </span>
+                                    <h5>{{originalmail_Subject}}</h5>
+                                  
+                              
+                                   
+                                
+                            </div>
+                            <p ng-bind-html=trustAsHtml(email_content)></p>
+                            <br>
+                          
+                            <div class="mb-attachment">
+                                <!--<label>
+                                    <b>
+                                        Attachment
+                                    </b>
+                                </label>-->
+                                
+                                <div class=" row" >
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div ng-repeat="att in attch_list" class="panel bg-grey-200">
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <a  ng-click="export(att.document_path,att.document_name)">
+                                                    <em class="icon-arrow-down"></em>&nbsp;{{att.document_name}}                                                   
+                                                </a>
+                                               
+                                            </div>
+                                            </div>
+                                        </div>
+                
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            
+          <div ng-if="status=='Pending'">
+            <button class="mailbtn info" ng-click="pushback()"><b>Pushback</b></button>&nbsp;&nbsp;|
+            <button class="mailbtn info" ng-click="forward()"><b>Forward</b></button>&nbsp;&nbsp;|
+            <button class="mailbtn info" ng-click="CloseWorkItem()"><b>Close</b></button>&nbsp;&nbsp;|
+            <button class="mailbtn info" ng-click="archivalWI()"><b>Archival</b></button>&nbsp;&nbsp;
+          </div>
+           
+         
+            </div>
+           </div>
+       
+       </div>
+    </div>
+    <br>
+
+    <div>
+        <div class="text-center">
+
+            <button ng-click="back()" class="btn btn-info"><i
+                    class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/closeWIContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-times-circle"></em>&nbsp;Close Work Item</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+                  
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks <span style="color:red">*</span></label>
+                            <textarea ng-model="close_remarks" placeholder="Enter Remarks" rows="3" class="form-control"
+                            required="" id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br/>
+                     <div class="row" >
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label ><strong>Mail Trigger </strong></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio"  name="mail_trigger" value="Y"  
+                                        ng-change="onchangearchival(mail_trigger)"
+                                         ng-model="Acknowledge_mail_trigger" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes 
+                                    </label>
+                                    <label>
+                                        <input type="radio"  name="mail_trigger" ng-checked="true" ng-change="onchangearchival(mail_trigger)"
+                                         value="N" ng-model="Acknowledge_mail_trigger" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>                    
+                               </div>                                  
+                        </div>
+                    </div>
+                  
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="CloseWIUpdate()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/signatureContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-clipboard"></em>&nbsp; Email Signature</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                           
+                           
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Email Signature</label>
+
+                                    <div text-angular="" ng-model="EmailSignature"
+                                         placeholder="Type Email Signature..." name="wysiswyg-editor" class="btn-group-justified"></div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submit()" ng-disabled="!EmailSignature">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="icon icon-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/archivalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-archive"></em>&nbsp;Archival Work Item</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+          
+                    <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                       
+
+                            <div class="row" >
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                  
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label ><strong>Archival Type </strong></label>
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio"  name="types_of_archival" value="Customer" ng-checked="true" ng-click="onclickcustomer()"
+                                                ng-change="onchangearchival(types_of_archival)"
+                                                 ng-model="archival.types_of_archival" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Customer 
+                                            </label>
+                                            <label>
+                                                <input type="radio"  name="types_of_archival" ng-change="onchangearchival(types_of_archival)"
+                                                 value="Specific" ng-model="archival.types_of_archival" ng-click="onclickspecific()" />
+                                                <span class="fa fa-circle"></span>Specific
+                                            </label>
+                            
+                                        </div>
+                
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label control-label"><strong>Customer <span style="color:red">*</span></strong></label>
+                                       <input type="text" name="customer" id="customer" ng-model="customer" required
+                                        ng-keyup="complete(customer)"  class="form-control" placeholder="Search Customer Name Here..." />
+                                       
+                                        <ul  class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                            <li  class="list-group-item" ng-repeat="m in customer_list"
+                                                ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                                        </ul>
+                                 
+                                    <label style="color:red;">{{message}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="PnlSpecific">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                       
+                                            <label class="col-form-label control-label"><strong>Sanction Ref No.
+                                                <span style="color:red">*</span></strong>
+                                            </label>
+        
+                                            <select id="sanction" name="sanction" chosen=""
+                                                ng-options="m.sanctionrefno for m in sanctiondtl"
+                                                ng-model="cbosanctionrefno" class="form-control">
+                                                <option value="">---Select Sanction Ref No.---</option>
+                                            </select>
+        
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                                        <textarea ng-model="archival.Remarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+            
+                        <div>
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="ArchivalSubmit()" ng-disabled="documentAddform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Submit</span>
+                                </a>
+                                <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+               
+        
+    </script>
+
+   
+
+</div>

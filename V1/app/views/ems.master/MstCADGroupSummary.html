@@ -1,0 +1,251 @@
+﻿<h3>
+    CAD Group
+</h3>
+<div ng-controller="MstCADGroupSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add CAD Group" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="addcadgroup()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add CAD Group
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <!--Summary-->
+
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th> One API Code </th>
+                                    <th> CAD Group Name </th>
+                                    <!--<th> CAD Group Name </th>-->
+                                    <th class="text-center"> CAD Group Managers </th>
+                                    <th class="text-center"> CAD Group Members</th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in cadgroup_list ">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'CAD Group Name'">{{data.cadgroup_name}}</td>
+                                    <td align="center" style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration-color:#49afcd;"                                       
+                                               title="CAD Group Managers"  ng-click="cadgroupmanagerpopover(data.cadgroup_gid, data.cadgroup_name)">
+                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>
+                                    <td align="center" style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration-color:#49afcd;"
+                                               title="CAD Group Members"  ng-click="cadgroupmemberpopover(data.cadgroup_gid, data.cadgroup_name)">
+                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" >
+
+                                        <button title="Edit" ng-hide="lsoneapipage=='OneApi'"ng-click="editcadgroup(data.cadgroup_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+
+                                        <button title="Delete" ng-hide="lsoneapipage=='OneApi'"ng-click="delete(data.cadgroup_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <!--Add-->
+
+    <script type="text/ng-template" id="/addcadgroup.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add CAD Group
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addcadgroup" ng-submit="form.addcadgroup()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label class="col-form-label"> CAD Group Name <span style="color:red">*</span></label>
+                                        <input type="text" ng-model="txtcadgroupname" required tabindex="0" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>CAD Group Managers  <span style="color:red">*</span></label>
+                                        <select name="CAD Group Managers" chosen="" multiple="multiple" tabindex="2"
+                                                ng-options="m.employee_name for m in cbocadgroupmanager_list" required=""
+                                                ng-model="cbocadgroupmanager" class="chosen-select form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>CAD Group Members  <span style="color:red">*</span></label>
+                                        <select name="CAD Group Members" chosen="" multiple="multiple" tabindex="2"
+                                                ng-options="m.employee_name for m in cbocadgroupmembers_list" required=""
+                                                ng-model="cbocadgroupmember" class="chosen-select form-control"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addcadgroup.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <!--Showpopover-->
+
+    <script type="text/ng-template" id="/showcadmanager.html">
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;"> CAD Group Name : {{cadgroup_name}} </th>
+                        </tr>
+                    </thead>                
+                    <tbody>
+                        <tr>
+                            <td style="width:2%; text-align:left"><b> CAD Group Managers : </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'CAD Group Managers'" > {{cadmanager}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/showcadmember.html">
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;">CAD Group Name : {{cadgroup_name}} </th>
+                        </tr>
+                    </thead>                  
+                    <tbody>
+                        <tr>
+                            <td style="width:2%; text-align:left"><b> CAD Group Members : </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'CAD Group Members'"> {{cadmembers}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>  
+
+    <!--EDIT-->
+
+    <script type="text/ng-template" id="/editcadgroup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit CAD Group
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editcadgroup" ng-submit="form.editcadgroup()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <label class="col-form-label"> CAD Group Name <span style="color:red">*</span> </label>
+                                    <input type="text" ng-model="txteditcadgroup_name" required tabindex="0" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <label>CAD Group Managers  <span style="color:red">*</span></label>
+                                    <select name="CAD Group Managers" chosen="" multiple="multiple" tabindex="2"
+                                            ng-options="m.employee_name for m in cbocadgroupmanager_editlist" required=""
+                                            ng-model="cbocadmanager_edit" class="chosen-select form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <label>CAD Group Members  <span style="color:red">*</span></label>
+                                    <select name="CAD Group Members" chosen="" multiple="multiple" tabindex="2"
+                                            ng-options="m.employee_name for m in cbocadgroupmembers_editlist" required=""
+                                            ng-model="cbocadmember_edit" class="chosen-select form-control"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="editcadgroup.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+</div>

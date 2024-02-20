@@ -1,0 +1,283 @@
+﻿<h3>
+    Other Creditor Master
+</h3>
+
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 48px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 56px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tabactivecolorstyle {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<!--<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>-->
+<div ng-controller="AgrMstCreditorMasterSummaryController">
+
+    <div class="row">
+        <div class="col-lg-2 col-md-10 col-sm-12">
+            <button type="button" title="Add Creditor" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="creditor_Add()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Creditor
+            </button>
+        </div>
+        </div>
+    <br />
+
+        <!--<div class="col-lg-10 col-md-10 col-sm-10">
+
+        </div>-->
+        <!--<div class="col-lg-2 col-md-6 col-sm-12">
+            <button type="button" id="opentab" class="btn btn-labeled tabactivecolorstyle" ng-click="openaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{openaudit_count}}</b></div>
+                <b style="font-size: 14px;">Open </b>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <button type="button" id="approvedtab" class="btn btn-labeled" ng-click="approvedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{Approvedaudit_count}}</b></div>
+                <b style="font-size: 14px;">Approval Pending </b>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <button type="button" id="holdtab" class="btn btn-labeled" ng-click="auditsonhold()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{auditsonhold_count}}</b></div>
+                <b style="font-size: 14px;">Approved  </b>
+            </button>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <button type="button" id="completedtab" class="btn btn-labeled" ng-click="completedaudit()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{completedaudit_count}}</b></div>
+                <b style="font-size: 14px;">Completed </b>
+            </button>
+        </div>-->
+
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <div class="tab nowrap">
+                    <button class="tablinks" id="opentab" ng-hide="lsoneapipage=='OneApi'"ng-click="openfn()" style="color:#141478;font-size:13px">
+                        <em class="fa fa-user fa-x" style="color:#141478;font-size: 15px;"></em> &nbsp;  Open
+                        &nbsp; <div class="pull-right label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{CreditorCount.Open_Creditor}}</div>
+                    </button>
+                    <button class="tablinks" id="approvalpendingtab" ng-hide="lsoneapipage=='OneApi'"ng-click="pending()" style="color:#871490;font-size:13px">
+                        <em class="fa fa-group fa-x" style="color:#871490;font-size: 15px;"></em> &nbsp;  Approval Pending
+                        &nbsp; <div class="pull-right label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{CreditorCount.ApprovalPending_Creditor}}</div>
+                    </button>
+                    <button class="tablinks" id="approvedtab" ng-hide="lsoneapipage=='OneApi'"ng-click="approved()" style="color:#00796b;font-size:13px">
+                        <em class="fa fa-file-text fa-x" style="color:#00796b;font-size: 15px;"></em> &nbsp; Approved
+                        &nbsp; <div class="pull-right label" style="background-color:#00796b;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{CreditorCount.Approved_Creditor}}</div>
+                    </button>
+                    <button class="tablinks" id="rejectedtab" ng-hide="lsoneapipage=='OneApi'"ng-click="rejected()" style="color:#800000;font-size:13px">
+                        <em class="fa fa-file-text fa-x" style="color:#800000;font-size: 15px;"></em> &nbsp; Rejected
+                        &nbsp; <div class="pull-right label" style="background-color:#800000;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{CreditorCount.Rejected_Creditor}}</div>
+                    </button>
+
+                </div>
+            </div>
+            <div class="col-lg-2 col-sm-2 col-md-2">
+                <div class="list-group-item picColor" style="height:50px;">
+                    <div class="media-box">
+                        <div class="media-box-body clearfix">
+                            <div class="media-box-heading" style="padding-top:6px;">
+                                <div class="pull-right label" style="background-color:#C10B68;padding-top:6px;padding-bottom:4px;font-size:8px;">{{CreditorCount.Total_Creditor}}</div>
+                                <div style="font-size:14px;color:#C10B68;"><b> Total  </b></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th class="text-center" style="display:none"> S.No</th>                                 
+                                    <th> Creditor Ref No</th>
+                                    <th> Applicant Name </th>
+                                    <th ng-show="open" ng-hide="lsoneapipage=='OneApi'"> Created by </th>
+                                    <th ng-show="open" ng-hide="lsoneapipage=='OneApi'"> Created date </th>
+                                    <th ng-show="submit" ng-hide="lsoneapipage=='OneApi'"> Submitted by </th>
+                                    <th ng-show="submit" ng-hide="lsoneapipage=='OneApi'"> Submitted date </th>
+                                    <th ng-show="Approved"> Approved by </th>
+                                    <th ng-show="Approved"> Approved date </th>
+                                    <th ng-show="reject" ng-hide="lsoneapipage=='OneApi'"> Rejected by </th>
+                                    <th ng-show="reject" ng-hide="lsoneapipage=='OneApi'"> Rejected date </th>
+
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in creditoradd_list">
+                                    <td data-title="'S.No'" class="text-center" style="display:none"> {{$index+1}}</td>
+                                    <td data-title="'Warehouse Code'"> {{data.creditorref_no}} </td>
+                                    <td data-title="'Warehouse Name'"> {{data.Applicant_name}} </td>
+                                    <td ng-show="open" data-title="'Created by'" ng-hide="lsoneapipage=='OneApi'"> {{data.created_by}} </td>
+                                    <td ng-show="open" data-title="'Created date'" ng-hide="lsoneapipage=='OneApi'"> {{data.created_date}} </td>
+                                    <td ng-show="submit" data-title="'Created by" ng-hide="lsoneapipage=='OneApi'"> {{data.created_by}} </td>
+                                    <td ng-show="submit" data-title="'Created date'" ng-hide="lsoneapipage=='OneApi'"> {{data.approval_submitteddate}} </td>
+                                    <td ng-show="Approved" data-title="'Created by"> {{data.approved_by}} </td>
+                                    <td ng-show="Approved" data-title="'Created date'"> {{data.approved_date}} </td>
+                                    <td ng-show="reject" data-title="'Created by'" ng-hide="lsoneapipage=='OneApi'"> {{data.rejected_by}} </td>
+                                    <td ng-show="reject" data-title="'Created date'" ng-hide="lsoneapipage=='OneApi'"> {{data.rejected_date}} </td>
+
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;">
+                                        <button ng-hide="data.approval_status=='Y'||data.approval_status=='R'" ng-hide="lsoneapipage=='OneApi'"title="View" ng-click="creditor_view(data.creditor_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button ng-show="data.approval_status=='Y'||data.approval_status=='R'" ng-hide="lsoneapipage=='OneApi'"title="View" ng-click="RM_view(data.creditor_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-hide="lsoneapipage=='OneApi'"ng-show="showallbtn || data.query_status=='Query Raised'" ng-click="creditor_edit(data.creditor_gid)" class="btn btn-green">
+                                            <em class="icon-pencil"></em>
+                                        </button>
+                                        <button title="Submit to Approval" ng-hide="lsoneapipage=='OneApi'"ng-show="showallbtn" ng-click="SubmitApproval(data.creditor_gid, data.creditorref_no, data.Applicant_name)" class="btn btn-success">
+                                            <em class="fa fa-check-square-o"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+
+    <script type="text/ng-template" id="/SubmitApproval.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-check-circle"></em>&nbsp; Submit to Approval </h2>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="taguser" id="taguser" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="pd-sm-10  dd-handle">
+                    <!--<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <span style="font-size:14px;"> Your record will be submitted for Approval </span>
+                        </div>
+                    </div>-->
+
+                    <div class="pd-sm-10">
+                        <div class="row ">
+                            <br>
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                    <label>Ref ID </label> :
+                                    {{txtapplication_no}} 
+                                </div> 
+
+                        </div>
+                        <br>
+                        <div class="row ">
+                            <br>
+                            <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                <label>Applicant Name </label> :
+                                {{txtcustomer_name}}
+                            </div>
+
+                        </div>
+                        <br>
+
+                        <div class="row">
+                            <br>
+                            <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                <label>Remarks <span style="color:red">*</span></label>
+                                <br />
+                                <textarea style="resize:vertical;" ng-model="txtremarks" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="form-control"></textarea>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="class">
+                        <div class="text-center">
+                            <button class="btn btn-success"  ng-disabled="!txtremarks" ng-click="submit()">
+                                <em class="fa fa-check"></em>
+                                <span>Submit Approval</span>
+                            </button>
+                            <button class="btn btn-danger" ng-click="ok()">
+                                <em class="icon icon-close"></em>
+                                <span>Cancel</span>
+                            </button>
+</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+</div>

@@ -1,0 +1,180 @@
+﻿<style>
+    .modal-content {
+        margin-top: 150px;
+    }
+</style>
+<h3>
+    Contract Management
+</h3>
+<div ng-controller="AgrMstRMSanctionSummaryController">
+    <div class="panel">
+        <br />
+        <div class="row">
+            <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Application Ref No</th>
+                                    <th> Applicant Name</th>
+                                    <th> CC Approved Date </th>
+                                    <!--<th> Sanction Ref No</th>-->
+                                    <!-- <th> Sanction Date</th> -->
+                                    <!--<th> Customer Status </th>-->
+                                    <th align="center">Status</th>
+                                    <th align="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in sanctionlist" ng-switch="data.sanction_status">
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'Application Ref No'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.sanctionto_name}} </td>
+                                    <td data-title="'CC Approved Date'"> {{data.ccapproved_date}} </td>
+                                    <!--<td data-title="'Sanction Ref No'"> {{data.sanction_refno}} </td>-->
+                                    <!-- <td data-title="'Sanction Date'"> {{data.sanction_date}} </td> -->
+
+                                    <!--<td data-title="'Customer Status'" ng-switch="data.edit_flag">
+                                        <label class="label label-success" ng-switch-when='N' style="font-size:10px;">Customer Accepted</label>
+                                        <label class="label label-warning" ng-switch-when='Y' style="font-size:10px;">Customer Not Accepted</label>
+                                        <label class="label label-warning" ng-switch-when='' style="font-size:10px;"></label>
+                                    </td>-->
+                                    <td data-title="'CAD Status'" ng-switch="data.submitedtoapproval_status">
+                                        <label class="label label-success" ng-switch-when='Y' style="font-size:10px;">CAD Updated</label>
+                                        <label class="label label-warning" ng-switch-when='N' style="font-size:10px;">Waiting For CAD Update </label>
+                                        <label class="label label-warning" ng-switch-when='Z' style="font-size:10px;"></label>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <button ng-show="data.sanction_status == 'Approved'" title="Checker Approval 360" ng-click="view(data.application2sanction_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button ng-show="data.sanction_status == 'Checker Approval Pending' || data.sanction_status == 'Final Approval Pending' || data.sanction_status == 'Pushback' || data.sanction_status == 'Rejected'" disabled title="Checker Approval 360" ng-click="view(data.application2sanction_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <!--<button ng-show="data.sanction_status != 'Approved'"  disabled title="Customer Status" ng-click="getReApprovalRequest(data.application2sanction_gid,data.application_gid)" class="btn bg-success">
+                                            <em class="fa fa-thumbs-o-up"></em>
+                                        </button>
+                                        <button ng-show="data.sanction_status == 'Approved'"  title="Customer Status" ng-click="getReApprovalRequest(data.application2sanction_gid,data.application_gid)" class="btn bg-success">
+                                            <em class="fa fa-thumbs-o-up"></em>
+                                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="text-center">
+                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+        </div>
+    </div>
+    <script type="text/ng-template" id="/Acceptpopup.html">
+        <div class="modal-content" style="margin-top:0px">
+            <div class="modal-header bg-primary ng-scope">
+
+                <h4>
+                    &emsp;
+                    <span class="btn-label bg-primary">
+                        <i class="fa fa-thumbs-up"></i>
+                    </span>Customer Status
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="statusprogram" ng-submit="form.statusprogram()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row ">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label> Sanction Ref No </label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    {{lblsanction_refno }}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Customer Status<span style="color:red"> *</span></label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="rdbcustomer()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Customer Accepted
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="rdbcustomernot()" />
+                                            <span class="fa fa-circle"></span> Customer Not Accepted
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row " ng-show="customeraccepted">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="mda-form-group float-label">
+                                        <label>Remarks</label>
+                                        <textarea ng-model="txtremarks" placeholder="Allow 1000 characters only" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row " ng-show="customernotaccepted">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="mda-form-group float-label">
+                                        <label>Remarks<span style="color:red"> *</span></label>
+                                        <textarea ng-model="txtremarks" placeholder="Allow 1000 characters only" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="statusprogram.$invalid" ng-click="update_accept()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="table-responsive" ng-show="appsanctionlog_list!=null">
+                        <div style="max-height:300px;overflow:auto;">
+                            <table class="table table-striped table-secondary">
+                                <thead class="bg-gray text-white">
+                                    <tr width="100%">
+                                        <th align="center" scope="col">S.No</th>
+                                        <th align="center" scope="col">Status</th>
+                                        <th align="center" scope="col">Updated By</th>
+                                        <th align="center" scope="col">Updated Date</th>
+                                        <th align="center" scope="col">Remarks</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in appsanctionlog_list" width="100%">
+                                        <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                        <td align="left" scope="col" title="'Status'">{{data.accepted_status}}</td>
+                                        <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                        <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                        <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</script>
+</div>

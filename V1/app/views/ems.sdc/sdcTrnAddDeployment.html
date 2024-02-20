@@ -1,0 +1,413 @@
+﻿<h3>
+    Deployment
+</h3>
+<div ng-controller="sdcTrnDeploymentAddController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-plus"></em>&nbsp; Add Deployment
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form name="adddeployment" id="adddeployment" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Module <span style="color:red">*</span></label>
+                                <select name="activity_name"
+                                        ng-options="m.module_prefix for m in modulemaster_summary" required="" tabindex="1" ng-change="cboChange(cbomodule.module_gid)"
+                                        ng-model="cbomodule" class="chosen-select form-control">
+                                    <option value="">--Select Module--</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <label>Cleints <span style="color:red">*</span></label>
+                                <select name="approval_authority" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.customer_name for m in module2customerdtl" required=""
+                                        ng-model="cbocustomer" class="chosen-select form-control"></select>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Objective <span style="color:red">*</span></label>
+                                <select name="activity_name" required
+                                        ng-model="cboObjective" class="chosen-select form-control">
+                                    <option value="">--Select Objective--</option>
+                                    <option value="Major Release">Major Release</option>
+                                    <option value="Enhancement">Enhancement</option>
+                                    <option value="Patch">Patch</option>
+                                    <option value="Bug Fixing">Bug Fixing</option>
+                                </select>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-sm-4 col-lg-4 col-md-4">
+                                <label>Files <span style="color:red">*</span></label>
+                                <select name="approval_authority" chosen="" multiple="multiple" tabindex="2"
+                                        required=""
+                                        ng-model="cbofiles" class="chosen-select form-control">
+                                    <option value=""></option>
+                                    <option value="API">API</option>
+                                    <option value="HTML">HTML</option>
+                                    <option value="JS">JS</option>
+                                    <option value="ASPX">ASPX</option>
+                                    <option value="VB">VB</option>
+                                    <option value="RPT">RPT</option>
+                                    <option value="RPT_DLL">RPT_DLL</option>
+                                    <option value="Image Files">Image Files</option>
+                                    <option value="Common Files">Common Files</option>
+                                    <option value="Templates">Templates</option>
+                                    <option value="Webconfig">Webconfig</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <label>Description <span style="color:red">*</span></label>
+                                <textarea name="specificcondition" placeholder="Enter Description..." required tabindex="3"
+                                          ng-model="test_description" class="form-control" rows="1"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Any New DLL</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="New_Dll" name="New_Dll" value="Yes" ng-model="newdll" required ng-change="onselectedDll_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="New_Dll" name="New_Dll" value="No" ng-model="newdll" required ng-change="onselectedDll_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>
+                                <!--<div ng-show="no_pages" class="col-lg-3 col-sm-3 col-md-3">
+                                    <div class="form-group float-label">
+                                        <label> No. of Pages <span style="color:red"></span></label>
+                                        <input ng-model="no_of_pages" type="text" placeholder="No. of Pages" tabindex="2"
+                                               ng-keyup="titlename(request_title)" maxlength="2" class="form-control ng-pristine ng-valid ng-touched">
+                                        <label style="color:red;">{{message}}</label>
+                                    </div>
+                                </div>-->
+                                                    
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Any Dependency</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="any_dependency" name="any_dependency" value="Yes" ng-model="newDependency" required ng-change="onselectedDep_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="any_dependency" name="any_dependency" value="No" ng-model="newDependency" required ng-change="onselectedDep_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Any New Pages</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="New_Pages" name="New_Pages" value="Yes" ng-model="newpage" required ng-change="onselectednp_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="New_Pages" name="New_Pages" value="No" ng-model="newpage" required ng-change="onselectednp_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>    
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Any New Report Pages</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="New_Reports" name="New_Reports" value="Yes" ng-model="newReports" required ng-change="onselectednr_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="New_Reports" name="New_Reports" value="No" ng-model="newReports" required ng-change="onselectednr_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>  
+
+                            <!--<div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Any Web Config File</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="New_webconfig" name="New_webconfig" value="Yes" ng-model="newWebconfig" required ng-change="onselectednw_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="New_webconfig" name="New_webconfig" value="No" ng-model="newWebconfig" required ng-change="onselectednw_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>-->  
+
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>app.js</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="New_js" name="New_js" value="Yes" ng-model="newjs" required ng-change="onselectedjs_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="New_js" name="New_js" value="No" ng-model="newjs" required ng-change="onselectedjs_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div> 
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label class="col-form-label"><strong>Script</strong> <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="script" name="script" value="Yes" ng-model="script" required ng-change="onselectedscript_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="script" name="script" value="No" ng-model="script" required ng-change="onselectedscript_yes()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+
+                                </div>
+                            </div>                  
+                        </div>
+                    </div>
+
+                   
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="form-group float-label">
+                            <div class="col-lg-2 col-sm-2 col-md-2 form-group">
+                                <div ng-show="new_dll">
+                                    <label> Enter New DLL <span style="color:red"></span></label>
+                                    <textarea name="pagenameAdd" placeholder="Enter New DLL here..."
+                                              ng-model="newdll_name" class="form-control" rows="4"></textarea>
+                                </div>
+                             </div>
+                                <div class="col-lg-2 col-sm- col-md-2 form-group">
+                                    <div ng-show="new_dependency">
+                                        <label> Enter Dependency <span style="color:red"></span></label>
+                                        <textarea name="pagenameAdd" placeholder="Enter Dependency here..."
+                                                  ng-model="dependency_name" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <!--<div ng-show="no_pages" class="col-lg-1 col-sm-1 col-md-1">
+                                    <div class="form-group float-label">
+                                        <label> No. of Pages <span style="color:red"></span></label>
+                                        <input ng-model="no_of_pages" type="text" tabindex="2" style="height:55px"
+                                               ng-keyup="titlename(request_title)" maxlength="2" class="form-control ng-pristine ng-valid ng-touched">
+                                        <label style="color:red;">{{message}}</label>
+                                    </div>
+                                </div>-->
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div ng-show="new_pages">
+                                        <label> Enter New Page Names <span style="color:red"></span></label>
+                                        <textarea name="pagenameAdd" placeholder="Enter New Page Names here..."
+                                                  ng-model="newpage_names" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div ng-show="new_reports">
+                                        <label> Enter New Report Names <span style="color:red"></span></label>
+                                        <textarea name="pagenameAdd" placeholder="Enter New Report Page Names here..."
+                                                  ng-model="newreport_names" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div ng-show="new_webconfig">
+                                        <label> Enter New Webconfig Names <span style="color:red"></span></label>
+                                        <textarea name="pagenameAdd" placeholder="Enter New Webconfig Names here..."
+                                                  ng-model="newwebconfig_names" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>-->
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2">
+                                    <div ng-show="app_js">
+                                        <label> Enter New Page Names <span style="color:red"></span></label>
+                                        <textarea name="Appjs" placeholder="Enter New app.js Code..."
+                                                  ng-model="appjs_text" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>-->
+                            <!--<div ng-show="no_reports" class="col-lg-1 col-sm-1 col-md-1">
+                                <div class="form-group float-label">
+                                    <label> No. of Reports <span style="color:red"></span></label>
+                                    <input ng-model="request_title" type="text" tabindex="2" style="height:55px"
+                                           maxlength="2" class="form-control ng-pristine ng-valid ng-touched">
+
+                                </div>
+                            </div>-->
+                           
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="app_js">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label ng-binding">
+                                        <strong>Upload JS</strong>
+                                        <input type="file" id="uploadjs" multiple onchange="angular.element(this).scope().jsupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Uploaded Details</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in jsfilename_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Document Details">{{data.file_name}}</td>
+                                                        <td title="Uploaded Details">{{data.uploaded_by}} </td>
+                                                        <td data-title="Action">
+                                                            <a class="btn btn-xs btn-danger" title="Delete" ng-click="jsdocument_cancelclick(data.uploaddocument_gid)"><span class="fa fa-close"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row" ng-show="upload_script">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label ng-binding">
+                                        <strong>Upload Script Documents</strong>
+                                        <input type="file" id="addupload" multiple onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-secondary">
+                                            <thead class="bg-gray text-white">
+                                                <tr width="100%">
+                                                    <th scope="col">S.No</th>
+                                                    <th scope="col">Document Name</th>
+                                                    <th scope="col">Uploaded Details</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in filename_list" width="100%">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Document Details">{{data.file_name}}</td>
+                                                    <td title="Uploaded Details">{{data.uploaded_by}} </td>
+                                                    <td data-title="Action">
+                                                        <a class="btn btn-xs btn-danger" title="Delete" ng-click="document_cancelclick(data.uploaddocument_gid)"><span class="fa fa-close"></span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    </div>
+                    </div>
+
+                    <div class="row" >
+
+                        <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label ng-binding">
+                                        <strong>Upload Version Document</strong>
+                                        <input type="file" id="versionaddupload" multiple onchange="angular.element(this).scope().versionupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                       
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Uploaded Details</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in versionfilename_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Document Details">{{data.file_name}}</td>
+                                                        <td title="Uploaded Details">{{data.uploaded_by}} </td>
+                                                        <td data-title="Action">
+                                                            <a class="btn btn-xs btn-danger" title="Delete" ng-click="versiondocument_cancelclick(data.uploaddocument_gid)"><span class="fa fa-close"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="row">
+                    
+                    <div class="text-center">
+
+                        <button type="button" class="btn btn-success btn-md" tabindex="6" ng-disabled="adddeployment.$invalid" ng-click="submitDeployment()">
+                            <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                        </button>&nbsp;&nbsp;
+                        <button ng-click="back()" class="btn btn-info" tabindex="7">
+                            <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                        </button>
+
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+
+</div>

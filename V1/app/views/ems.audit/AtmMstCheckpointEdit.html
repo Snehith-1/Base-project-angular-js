@@ -1,0 +1,129 @@
+﻿<h3>
+    Checklist Master
+</h3>
+<div ng-controller="AtmMstCheckpointEditController">
+    <div id="panelDemo8" class="panel panel-primary ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span> Checklist Master
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="row">
+                <form name="checklist" id="checklist" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Checkpoint Intent </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txteditcheckpoint_intent" style="resize:vertical;" maxlength="3000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <label><strong>Checkpoint Description </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txteditcheckpoint_description" style="resize:vertical;" maxlength="15000" required rows="3" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2 ">
+                                <label><strong>Risk Category </strong> <span style="color:red">*</span></label>
+                                <select name="cboriskcategorydit" id="cboriskcategorydit" ng-options="m.riskcategory_gid as m.riskcategory_name for m in riskcategory_list" chosen=""
+                                        ng-model="cboriskcategoryedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2 ">
+                                <label><strong>Positive Conformity </strong><span style="color:red">*</span> </label>
+                                <select name="cbopositiveconfirmityedit" id="cbopositiveconfirmityedit" ng-options="m.positiveconfirmity_gid as m.positiveconfirmity_name for m in positiveconfirmity_data" chosen=""
+                                        ng-model="cbopositiveconfirmityedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <label><strong>Note To Auditor </strong></label>
+                                <textarea ng-model="txteditnoteto_auditor" style="resize:vertical;" maxlength="5000" rows="3" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>Yes-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtedityes_disposition" style="resize:vertical;" maxlength="5000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Yes-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtedityes_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>No-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txteditno_disposition" style="resize:vertical;" maxlength="5000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>No-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txteditno_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>Partial-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txteditpartial_disposition" style="resize:vertical;" maxlength="5000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Partial-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txteditpartial_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>NA-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txteditna_disposition" style="resize:vertical;" maxlength="5000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>NA-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txteditna_score" ng-change="changevalue()" tabindex="0" style="text-align:center;" maxlength="5" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-10 col-sm-10 col-sm-10">
+
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Total Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtedit_totalscore" readonly style="text-align:right;" tabindex="0" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                </form>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="checklist.$invalid" ng-click="Update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

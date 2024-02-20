@@ -1,0 +1,166 @@
+﻿<h3>
+    SA Onboarding Individual Summary
+</h3>
+<div ng-controller="MstSAOnboardingIndividualRejectedSummaryController">
+        <!-- <p style="color:#09385f;font-size: 17px;"><b>Individual Summary</b></p>
+        <hr /> -->
+        <button type="button" title="Add Samunnati Associate " class="btn btn-info btn-sm" ng-click="addsaonboarding()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span> Add Samunnati Associate
+        </button>
+
+    <div class="row">
+        <br />
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="institution_pending()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{pending_Inst_count}}</b></div>
+                    <b style="font-size: 14px;">Institution Pending</b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="institution_grouping()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{institution_groupingcount}}</b></div>
+                    <b style="font-size: 14px;">Institution Grouping</b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="institution_rejected()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{institution_rejectedcount}}</b></div>
+                    <b style="font-size: 14px;">Institution Rejected</b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="individual_pending()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{pending_Indi_count}}</b></div>
+                    <b style="font-size: 14px;">Individual Pending</b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="individual_grouping()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{individual_groupingcount}}</b></div>
+                    <b style="font-size: 14px;">Individual Grouping</b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="individual_rejected()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{individual_rejectedcount}}</b></div>
+                    <b style="font-size: 14px;">Individual Rejected</b>
+                </button>
+                <br />
+            </div>
+        </div>
+
+    </div>
+
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th>SA Application ID </th>
+                                    <th>Samunnati Associate Name </th>
+                                    <th>SA Type</th>
+                                    <th>SA Entity Type</th>
+                                    <th> Referred By</th>
+                                    <th>Approval Status</th>
+                                    <th> Renewal Status</th>
+                                    <th> Origination</th>
+                                    <th>RM Tagged</th>
+                                    <th>Submitted Date</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in saOnboardSummary_list">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{data.sa_autogeneratedid}}</td>
+                                    <td>{{data.sa_firstname}} {{data.sa_middlename}} {{data.sa_lastname}}</td>
+                                    <td>{{data.satype_name}}</td>
+                                    <td>{{data.saentitytype_name}}</td>
+                                    <td>{{data.referred_by}}</td>
+                                    <td>{{data.approvalstatus}}</td>
+                                    <td>{{data.renewal_status}}</td>
+                                    <td>{{data.recordsource}}</td>
+                                    <td>{{data.sa_updated_by}}</td>
+                                    <td>{{data.sa_updated_date}}</td>
+
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="rejectedview(data.sacontact_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+
+                                        <!--<button title="Delete" ng-click="delete(data.sacontact_gid)" class="btn btn-danger">
+            <em class="icon icon-trash "></em>
+        </button>-->
+
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br>
+    <script type="text/ng-template" id="/addsaonboarding.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span>Add Samunnati Associate
+            </h4>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <button width="3300px" type="button" title="Add Company/Institution " class="btn btn-info btn-lg" ng-click="addcompany()" style="align:left"> Add Company/Institution</button>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <button type="button" title="Add Individual " class="btn btn-info btn-lg" ng-click="addindividual()">&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Add Individual &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp; close </button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+
+        <br>
+    </script>
+</div>

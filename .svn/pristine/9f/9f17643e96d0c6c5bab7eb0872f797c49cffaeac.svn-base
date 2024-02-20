@@ -1,0 +1,324 @@
+<style>
+.menu-level3{
+    width:auto;      
+}
+.menu-level4{
+    width:auto;         
+    max-height:200px;
+    overflow:auto;
+    overflow-y:scroll;
+}
+.menu-level1{
+    float: left;
+    width:auto;           
+}
+.hover-me:hover .submenu-2{
+    margin-top:-20px;
+}
+ .submenu-1{
+    margin-top:3px;
+} 
+
+.menu-bar{
+    background: rgb(65, 165, 95);
+    height: 50px;
+}
+.menu-level1{
+    background: rgb(65, 165, 95);
+}
+    /* custom scrollbar */
+::-webkit-scrollbar {
+  width:18px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 20px;
+  border: 8px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+/* Testing for new menu*/
+
+#nav > ul > li:last-child > ul > li > ul {
+    right: 0;
+}
+.menu-bar ul li:hover .submenu-1 ul li {
+    padding: 3px
+}
+.menu-bar ul{
+    flex-flow: wrap;
+}
+.menu-bar ul li {
+    padding: 5px;
+    margin-top: 5px;
+}
+
+.submenu-3{
+    font-weight: bolder;
+    display: none;
+    opacity: 98%;
+}
+
+.onhover:hover .submenu-3{
+    position: absolute;
+    display: block;
+    margin-left: 170px;
+    margin-top: -20px;
+    background: rgb(94 172 86 / 1);
+    justify-content: flex-end;
+}
+</style>
+
+
+<!-- START Top Navbar-->
+<nav role="navigation" class="navbar topnavbar" ng-controller="topnavbarcontroller">
+    <!-- START navbar header-->
+    <div class="navbar-header" style="background-color:white;">
+        <div>
+            <img src="app/img/Samunnati Login Logo.svg" alt="App Logo" class="img-responsive" style="height:48px;padding-top:15px;padding-left:20px;" />
+
+        </div>
+        <div class="brand-logo-collapsed">
+            <img src="app/img/logo_circle.jpg" alt="App Logo" class="img-responsive" />
+
+        </div>
+    </div>
+    <!-- END navbar header-->
+    <!-- START Nav wrapper-->
+    <div class="nav-wrapper" style="background-color:white;">
+        <!-- START Left navbar-->
+        <ul class="nav navbar-nav">
+            <li>
+
+                <!--<a trigger-resize=""  title="Expand/Collapse" ng-click="expand()" md-ink-ripple="md-ink-ripple" class="hidden-xs">
+                   <em class="fa fa-navicon" ></em>
+                </a>-->
+                <!-- <a href="" trigger-resize="" title="Expand/Collapse" ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" md-ink-ripple="md-ink-ripple" class="hidden-xs">
+                    <em class="fa fa-navicon"></em>
+                </a> -->
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only -->
+                <a href="" ng-click="app.asideToggled = !app.asideToggled" title="Expand" md-ink-ripple="md-ink-ripple" class="visible-xs sidebar-toggle">
+                    <em class="fa fa-navicon"></em>
+                </a> 
+
+            </li>
+            <!-- START User avatar toggle
+            <li dropdown="" class="dropdown dropdown-list" title="My Profile">
+                <a dropdown-toggle="">
+                    <em class="icon-user"></em>
+
+                </a> -->
+                <!-- START Dropdown menu-->
+                <ul class="dropdown-menu animated flipInX" style="width:300px;">
+                    <li>
+                        <!-- START list group-->
+                        <div class="list-group">
+                            <!-- list item-->
+                            <div class="list-group-item" style="border: 1px solid grey;border-radius: 5px;background-color:#ffffff;">
+                                <div class="item user-block">
+                                    <div class="user-block-picture">
+                                        <div class="user-block-status">
+                                            <img ng-src="app/img/user/user-avatar.png" alt="Avatar" class="img-thumbnail img-circle" src="app/img/user/user-avatar.png">
+                                            <div class="circle circle-success circle-lg"></div>
+                                        </div>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <br />
+                                        <p><b>Name:</b> <span class="user-block-name"> {{userData.user_name}}</span></p>
+                                        <p><b>User Code :</b> <span class="user-block-name">{{userData.user_code}}</span></p>
+                                        <p><b>Designation :</b>  <span class="user-block-role">{{userData.user_designation}}</span></p>
+                                        <p><b>Department : </b><span class="user-block-role">{{userData.user_department}}</span></p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- END list group-->
+                    </li>
+                </ul>
+                <!-- END Dropdown menu-->
+            </li>
+
+            <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops
+                <a href="#/app/welcome" title="Landing Page">
+                    <em class="icon-home"></em>
+                </a> -->
+            </li>
+            <!-- END User avatar toggle-->
+            <!-- START lock screen-->
+            <!--<li>
+               <a ui-sref="page.lock" title="Lock screen">
+                  <em class="icon-lock"></em>
+               </a>
+            </li>-->
+            <!-- END lock screen-->
+        </ul>
+ 
+        <ul class="nav navbar-nav navbar-right">
+            <li  style="margin-top: 5px;">
+                <p style="padding-top: 18px; padding-bottom: 6px;">
+                    <span style="font-size:15px;">&nbsp;{{userData.user_name}}</span>
+                </p>
+
+            </li>
+            
+            <li dropdown="" class="dropdown dropdown-list" title="My Profile"  style="margin-top: 0px;">
+                <a dropdown-toggle="" ng-click="user_profile()">
+                    <em class="icon-user"></em>
+
+                </a>
+                <!-- START Dropdown menu-->
+                <!--<ul class="dropdown-menu animated flipInX" style="width:300px;">
+                    <li>
+                       
+                        <div class="list-group">
+                            
+                            <div class="list-group-item" style="border: 1px solid grey;border-radius: 5px;background-color:#ffffff;">
+                                <div class="item user-block">
+                                    <div class="user-block-picture">
+                                        <div class="user-block-status">
+                                            <img ng-src="app/img/user/user-avatar.png" alt="Avatar" class="img-thumbnail img-circle" src="app/img/user/user-avatar.png">
+                                            <div class="circle circle-success circle-lg"></div>
+                                        </div>
+                                    </div>
+                                    <div class="media-box-body clearfix">
+                                        <br />
+                                        <p><b>Name:</b> <span class="user-block-name"> {{userData.user_name}}</span></p>
+                                        <p><b>User Code :</b> <span class="user-block-name">{{userData.user_code}}</span></p>
+                                        <p><b>Designation :</b>  <span class="user-block-role">{{userData.user_designation}}</span></p>
+                                        <p><b>Department : </b><span class="user-block-role">{{userData.user_department}}</span></p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                       
+                    </li>
+                </ul>-->
+                <!-- END Dropdown menu-->
+            </li>
+            <li  style="margin-top: 0px;">
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#/app/welcome" title="Landing Page" style="color: green;">
+                    <em class="icon-home"></em>
+                </a>
+            </li>
+            <li  style="margin-top: 0px;">
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" title="Translate" style="color: green;">
+                    <img src="app/img/translate.jpg" height="15px" alt="" srcset="">
+                </a>
+            </li>
+            <li  style="margin-top: 0px;">
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" title="Location" style="color: green;">
+                    <img src="app/img/placeholder.jpg" height="14px" alt="" srcset="">
+                </a>
+            </li>
+            <li  style="margin-top: 0px;">
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" title="Notification" style="color: green;">
+                    <em class="icon-bell"></em>
+                </a>
+            </li>
+            <li style="margin-top: 0px;">
+                <a href="#/page/helpdashboard" target="_blank" title="Help" style="color: green;">
+                    <em class="icon-question"></em>
+                </a>
+            </li>
+            <li>
+                <a href="#/" ng-click="logout()" title="Log Out"><button ng-click="logout()" style="background-color: white; color: green; border-radius:20px; border-color: green;"> Logout <em class="fa fa-sign-out"></em></button></a>
+            </li>
+           </ul>
+    </div>
+    <!-- END Nav wrapper-->
+    <!-- START Search form-->
+    <form role="search" action="search.html" class="navbar-form">
+        <div class="form-group has-feedback">
+            <input type="text" placeholder="{{ 'topbar.search.PLACEHOLDER' | translate }}" class="form-control" />
+            <div search-dismiss="search-dismiss" class="fa fa-times form-control-feedback"></div>
+        </div>
+        <button type="submit" class="hidden btn btn-default">Submit</button>
+    </form>
+    <!-- END Search form-->
+</nav>
+<div class="menu-bar" id="nav">
+    <ul class="menu-level1">
+        <li ng-repeat="menu in menu_list" >
+            <a href="#" ng-href="{{$state.href(menu.sref, menu.params)}}" style="font-size: 12px;">{{menu.text}}</a>
+            <div class="submenu-1">
+                <ul class="menu-level2">
+                    <li ng-repeat="submenu in menu.submenu" class="hover-me" ng-class="{'teststyle': $last}">
+                        <a href="#" ng-href="{{$state.href(submenu.sref, submenu.params)}}" style="font-size: 11px;"><span><i class="{{submenu.icon}}"></i></span>{{submenu.text}}<i class="fa fa-angle-right"></i></a>
+                        <div class="submenu-2">
+                            <ul class="menu-level3">
+                                <li ng-repeat="child in submenu.sub1menu" class="onhover">
+                                    <a href="#" ng-href="{{$state.href(child.sref, child.params)}}" style="font-size: 11px;"><span><i class="{{child.icon}}"></i></span>{{child.text}}<i class="fa fa-angle-right"></i></a>
+                                    <div class="submenu-3">
+                                        <ul class="menu-level4">
+                                            <li ng-repeat="child4 in child.sub2menu" class="onhover">
+                                                <a href="#" ng-href="{{$state.href(child4.sref, child4.params)}}" style="font-size: 11px;"><span><i class="{{child4.icon}}"></i></span>{{child4.text}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        
+    </ul>
+</div>
+
+
+
+
+
+<!-- END Top Navbar-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

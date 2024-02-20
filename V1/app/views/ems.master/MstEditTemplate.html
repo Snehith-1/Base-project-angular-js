@@ -1,0 +1,721 @@
+﻿<script>
+    var hosts = window.location.origin; 
+    var imgurl = hosts+ '/WebApplication1/home/UploadImage';
+
+    // new FroalaEditor('div#froala-editor', {
+    //     heightMin: 100,
+    //     heightMax: 300,
+    //     charCounterCount: false,
+    //     quickInsertEnabled: false,
+    //     imageMove: false,
+    //     imageDefaultWidth: 0,
+    //     imageDefaultAlign: 'left',
+    //     imageUploadURL: imgurl,
+    //     toolbarButtons: [['undo', 'redo' , 'bold'], ['alert', 'clear', 'insert']]
+    // })
+    // $('div#froala-editor-p').on('froalaEditor.image.inserted', function (e, editor, $img, response) {
+    //     $img.after("<p></p>");
+    // });
+
+</script> 
+<h3>
+    Edit Template
+</h3>
+<div ng-controller="MstEditTemplateController">
+    <div class="panel  panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span>Edit Template 
+        </div> 
+        <br/>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="col-lg-3 col-sm-3 col-md-3">
+                    <label class="col-form-label"> Vertical </label>
+                    <br />
+                    <p>{{vertical_name}} </p>
+                </div> 
+                <div class="col-lg-4 col-sm-4 col-md-4">
+                    <label class="col-form-label"> Program </label>
+                    <br />
+                    <p>{{program_name}} </p>
+                </div> 
+                <div class="col-lg-5 col-sm-5 col-md-5">
+                    <label><strong>Template Name <span style="color:red;">*</span></strong></label>
+                    <input type="text" ng-model="template_name" tabindex="0" class="form-control" />
+                </div>
+                <!-- <div class="col-lg-6 col-sm-6 col-md-6">
+                     
+                </div>
+                <div class="col-lg-1 col-sm-1 col-md-1">
+                    <button ng-click="editTemplate()" class="btn btn-success">
+                        <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit
+                    </button> 
+                </div>   -->
+            </div>
+        </div>
+        <br/> 
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label> Template Content <span style="color:red;">*</span></label>
+
+                    <div>
+                        <div id="froala-editor">
+                        </div>
+                        <!-- <div class="simple">
+                            <textarea id="test" ng-show="editMode" froala ng-model="content" class="nw-editor__src"> </textarea>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+                <br/>
+                <div class="dd-handle ng-scope">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12"> 
+                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Fill the Details </b></p>
+                            <hr />
+                            <form novalidate="" name="editinputtextbox" ng-submit="form.editinputtextbox()" autocomplete="off" class="form-validate form-horizontal">
+                                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="m in inputlist">
+                                    <label>{{m.inputgroup_name}} <span ng-show="{{m.input_mandatory}}" style="color:red;">*</span></label>
+                                    <br/>
+                                    <div ng-if="m.input_type=='text'">
+                                        <input class="form-control" id="{{m.index}}" name="{{m.input_placeholder}}"
+                                        placeholder="{{m.input_placeholder}}" type="text" ng-model="m.inputgivendata" ng-required="{{m.input_mandatory}}" 
+                                        maxlength="{{m.inputmax_length}}"/>
+                                    </div>
+                                    <div ng-if="m.input_type=='textarea'">
+                                        <textarea class="form-control"  id={{m.index}} name="{{m.input_placeholder}}"
+                                        placeholder="{{m.input_placeholder}}" ng-required="{{m.input_mandatory}}"
+                                         ng-model="m.inputgivendata" type="textarea"></textarea>  
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                    <br/>
+                                    <button ng-click="updateinputTemplate()" ng-disabled="editinputtextbox.$invalid" class="btn btn-success">
+                                        <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                                    </button>
+                                </div>
+                               
+                            </form>
+                           
+                        </div>
+                    </div> 
+                </div>
+               
+            </div> -->
+        </div>
+        <br/>
+        <div class="row">
+            <div class="text-center">
+
+                <button ng-click="updateTemplate()" ng-disabled="!template_name" class="btn btn-success" >
+                    <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                </button>
+
+                <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left fa-1x"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br>
+        </div>
+
+
+    </div>
+    <script type="text/ng-template" id="/addsmalltextbox.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Small Textbox</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addsmalltextbox" ng-submit="form.addsmalltextbox()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label>Field Type</label>&nbsp;<span style="color:red">*</span>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" id="Inputfield" name="Inputfield"  value="ManualCapturingField" 
+                                            ng-model="rdbInputfield" required ng-change="Changedbfield()">
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Manual Capturing Field
+                                        </label>&nbsp;&nbsp;
+                                        <label>
+                                            <input type="radio" id="Inputfield" name="Inputfield" value="DBField"
+                                            ng-change="Changedbfield('text')" ng-model="rdbInputfield" required />
+                                            <span class="fa fa-circle"></span>DB Field
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div ng-show="rdbInputfield=='DBField'">
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <label>Field Mapping </label>&nbsp;<span style="color:red">*</span>
+                                        <select name="FieldMapping" id="FieldMapping" 
+                                            ng-options="(m.fieldmapping_name + '/' + m.fieldmapping_code) for m in fieldmappinglist" 
+                                            chosen=""  ng-model="cbofieldmapping" class="chosen-select form-control" style="height:37px;"
+                                            ng-required="rdbInputfield=='DBField'" size="1">
+                                            <option value=""> ----- Select Field Mapping -----</option>
+                                        </select> 
+                                    </div> 
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Stage </label>
+                                        <br /> 
+                                        <p>{{cbofieldmapping.stage_fieldname}}</p>
+                                    </div> 
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Menu </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.menu_fieldname}}</p>
+                                    </div> 
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Field </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.fieldname}}</p>
+                                    </div> 
+                                    <div class="col-md-6 col-lg-6 col-sm-6" ng-show="cbofieldmapping.subfield_flag=='Y'"> 
+                                        <label class="col-form-label"> Sub Field </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.subfield_fieldname}}</p>
+                                    </div> 
+                                </div>
+                            </div>
+                            <br />
+                            <div ng-show="rdbInputfield=='ManualCapturingField'">
+                                <div class="row ">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <label>Group Name </label>&nbsp;<span style="color:red">*</span>
+                                        <select name="department" id="department" 
+                                        ng-options="m.input_fieldname for m in groupnamelist" chosen="" ng-change="onchangegroup()"
+                                                ng-model="txtgroup_name" class="chosen-select form-control" style="height:37px;"
+                                                ng-required="rdbInputfield=='ManualCapturingField'" size="1">
+                                            <option value=""> ----- Select Group Name -----</option>
+                                        </select> 
+                                    </div>
+                                      
+                                </div>
+                                <br />
+                                <div class="row ">
+                                    <div class="col-md-12 col-lg-12 col-sm-12"> 
+                                        <label class="col-form-label"> Field Name  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text"  ng-model="txttextbox_name" ng-disabled="txtdisabled" tabindex="0" 
+                                        class="form-control" ng-required="rdbInputfield=='ManualCapturingField'"  />
+                                    </div> 
+                                </div>
+                                <br />
+                                <div class="row ">
+                                    <div class="col-md-9 col-lg-9 col-sm-9"> 
+                                        <label class="col-form-label"> Placeholder  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text"  ng-model="txtplaceholder" ng-disabled="txtdisabled" tabindex="0" 
+                                        class="form-control" ng-required="rdbInputfield=='ManualCapturingField'"  />
+                                    </div>  
+                                    <div class="col-md-3 col-lg-3 col-sm-3"> 
+                                        <label class="col-form-label"> Mandatory  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <div class="radio c-radio" ng-hide="txtdisabled">
+                                            <label>
+                                                <input type="radio" id="Requiredcheck" name="Requiredcheck"  value="true" 
+                                                ng-model="rdbMandatory" ng-required="rdbInputfield=='ManualCapturingField'" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="Requiredcheck" name="Requiredcheck" value="false" 
+                                                ng-model="rdbMandatory" ng-required="rdbInputfield=='ManualCapturingField'" />
+                                                <span class="fa fa-circle"></span>No
+                                            </label>
+                                        </div>
+                                        <div ng-show="txtdisabled"> 
+                                            <input type="text"  ng-model="rdbMandatory" ng-disabled="txtdisabled" tabindex="0" class="form-control"  /> 
+                                        </div>
+                                     </div>
+                                </div>
+                                <br />
+                                <div class="row">  
+                                    <div class="col-md-12 col-lg-12 col-sm-12"> 
+                                        <label class="col-form-label"> Maxlength  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text"  ng-model="txtmaxlength" ng-disabled="txtdisabled" tabindex="0" 
+                                        class="form-control" ng-required="rdbInputfield=='ManualCapturingField'"  />
+                                    </div>  
+                                  
+                                </div>
+                                <br /> 
+                            </div>
+                           
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addsmalltextbox.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    
+    <script type="text/ng-template" id="/addlargetextbox.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Large Textbox</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addlargetextbox" ng-submit="form.addlargetextbox()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label>Group Name </label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department" 
+                                    ng-options="m.input_fieldname for m in groupnamelist" chosen="" ng-change="onchangegroup()"
+                                            ng-model="txtgroup_name" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Group Name -----</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12"> 
+                                    <label class="col-form-label"> Field Name  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txttextbox_name" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div> 
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-md-9 col-lg-9 col-sm-9"> 
+                                    <label class="col-form-label"> Placeholder  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txtplaceholder" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div>  
+                                <div class="col-md-3 col-lg-3 col-sm-3"> 
+                                    <label class="col-form-label"> Mandatory  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <div class="radio c-radio" ng-hide="txtdisabled">
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck"  value="true" ng-model="rdbMandatory" required />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck" value="false" ng-model="rdbMandatory" required />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                    <div ng-show="txtdisabled"> 
+                                        <input type="text"  ng-model="rdbMandatory" ng-disabled="txtdisabled" tabindex="0" class="form-control"  /> 
+                                    </div>
+                                 </div>
+                            </div>  
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addlargetextbox.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/adddropdownbox.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Dropdown</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addlargetextbox" ng-submit="form.addlargetextbox()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label>Field Type</label>&nbsp;<span style="color:red">*</span>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" id="Inputfield" name="Inputfield"  value="ManualCapturingField" 
+                                            ng-model="rdbInputfield" required ng-change="Changedbfield()">
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Manual Capturing Field
+                                        </label>&nbsp;&nbsp;
+                                        <label>
+                                            <input type="radio" id="Inputfield" name="Inputfield" value="DBField"
+                                            ng-change="Changedbfield('select-one')" ng-model="rdbInputfield" required />
+                                            <span class="fa fa-circle"></span>DB Field
+                                        </label>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div ng-show="rdbInputfield=='DBField'">
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <label>Field Mapping </label>&nbsp;<span style="color:red">*</span>
+                                        <select name="FieldMapping" id="FieldMapping" 
+                                            ng-options="(m.fieldmapping_name + '/' + m.fieldmapping_code) for m in fieldmappinglist" 
+                                            chosen=""  ng-model="cbofieldmapping" class="chosen-select form-control" style="height:37px;"
+                                            ng-required="rdbInputfield=='DBField'" size="1">
+                                            <option value=""> ----- Select Field Mapping -----</option>
+                                        </select> 
+                                    </div> 
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Stage </label>
+                                        <br /> 
+                                        <p>{{cbofieldmapping.stage_fieldname}}</p>
+                                    </div> 
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Menu </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.menu_fieldname}}</p>
+                                    </div> 
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-6 col-sm-6"> 
+                                        <label class="col-form-label"> Field </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.fieldname}}</p>
+                                    </div> 
+                                    <div class="col-md-6 col-lg-6 col-sm-6" ng-show="cbofieldmapping.subfield_flag=='Y'"> 
+                                        <label class="col-form-label"> Sub Field </label>
+                                        <br />
+                                        <p>{{cbofieldmapping.subfield_fieldname}}</p>
+                                    </div> 
+                                </div>
+                            </div>
+                            <br />
+                            <div ng-show="rdbInputfield=='ManualCapturingField'">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                            <label>Group Name </label>&nbsp;<span style="color:red">*</span>
+                                            <select name="department" id="department" 
+                                            ng-options="m.input_fieldname for m in groupnamelist" chosen="" ng-change="onchangegroup()"
+                                                    ng-model="txtgroup_name" class="chosen-select form-control" style="height:37px;" required size="1">
+                                                <option value=""> ----- Select Group Name -----</option>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row ">
+                                        <div class="col-md-5 col-lg-5 col-sm-5"> 
+                                            <label class="col-form-label"> Field Name  <span style="color:red"> *</span></label>
+                                            <br />
+                                            <input type="text"  ng-model="txttextbox_name" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                        </div> 
+                                        <div class="col-md-4 col-lg-4 col-sm-4"> 
+                                            <label class="col-form-label"> Placeholder  <span style="color:red"> *</span></label>
+                                            <br />
+                                            <input type="text"  ng-model="txtplaceholder" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                        </div>  
+                                        <div class="col-md-3 col-lg-3 col-sm-3"> 
+                                            <label class="col-form-label"> Mandatory  <span style="color:red"> *</span></label>
+                                            <br />
+                                            <div class="radio c-radio" ng-hide="txtdisabled">
+                                                <label>
+                                                    <input type="radio" id="Requiredcheck" name="Requiredcheck"  value="true" ng-model="rdbMandatory" required />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="Requiredcheck" name="Requiredcheck" value="false" ng-model="rdbMandatory" required />
+                                                    <span class="fa fa-circle"></span>No
+                                                </label>
+                                            </div>
+                                            <div ng-show="txtdisabled"> 
+                                                <input type="text"  ng-model="rdbMandatory" ng-disabled="txtdisabled" tabindex="0" class="form-control"  /> 
+                                            </div>
+                                         </div>
+                                    </div>
+                                    <br /> 
+                                    <div class="row"  ng-hide="txtdisabled">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label class="col-form-label"> Preview Text <span style="color:red">*</span> </label>
+                                            <input type="text" ng-model="txtPreviewText" tabindex="0" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <label> Value <span style="color:red">*</span></label>
+                                            <input type="text" ng-model="txtValue" tabindex="0" class="form-control" /> 
+                                        </div>
+                                        <div class="col-sm-1 col-md-1 col-lg-1" style="padding-top:7px;">
+                                            <br />
+                                            <button class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;"
+                                                    ng-click="addlist(variety_gid)" ng-disabled="(txtPreviewText && txtValue) ?  false : true">
+                                                <span class="fa fa-plus" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-lg-12 col-md-12">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Preview Text</th>
+                                                        <th>Value </th>
+                                                        <th ng-hide="txtdisabled">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in dropdownlistarray">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{data.preview_text}}</td>
+                                                        <td>{{data.Value}}</td>
+                                                        <td  ng-hide="txtdisabled" class="text-nowrap">
+        
+                                                            <button title="Delete" ng-click="deletelist($index)"
+                                                                    class="btn btn-danger btn-xs ">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addlargetextbox.$invalid && dropdownlistarray.length !=0" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/addradiobutton.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Radiobutton</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addlargetextbox" ng-submit="form.addlargetextbox()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label>Group Name </label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department" 
+                                    ng-options="m.input_fieldname for m in groupnamelist" chosen="" ng-change="onchangegroup()"
+                                            ng-model="txtgroup_name" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Group Name -----</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-md-7 col-lg-7 col-sm-7"> 
+                                    <label class="col-form-label"> Field Name  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txttextbox_name" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div> 
+                                <!-- <div class="col-md-4 col-lg-4 col-sm-4"> 
+                                    <label class="col-form-label"> Placeholder  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txtplaceholder" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div>   -->
+                                <div class="col-md-5 col-lg-5 col-sm-5"> 
+                                    <label class="col-form-label"> Mandatory  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <div class="radio c-radio" ng-hide="txtdisabled">
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck"  value="true" ng-model="rdbMandatory" required />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck" value="false" ng-model="rdbMandatory" required />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                    <div ng-show="txtdisabled"> 
+                                        <input type="text"  ng-model="rdbMandatory" ng-disabled="txtdisabled" tabindex="0" class="form-control"  /> 
+                                    </div>
+                                 </div>
+                            </div>
+                            <br /> 
+                            <div class="row"  ng-hide="txtdisabled">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"> Preview Text <span style="color:red">*</span> </label>
+                                    <input type="text" ng-model="txtPreviewText" tabindex="0" class="form-control" />
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label> Value <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtValue" tabindex="0" class="form-control" /> 
+                                </div>
+                                <div class="col-sm-1 col-md-1 col-lg-1" style="padding-top:7px;">
+                                    <br />
+                                    <button class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;"
+                                            ng-click="addlist()" ng-disabled="(txtPreviewText && txtValue) ?  false : true">
+                                        <span class="fa fa-plus" />
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Preview Text</th>
+                                                <th>Value </th>
+                                                <th  ng-hide="txtdisabled">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in radiobuttonlistarray">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{data.preview_text}}</td>
+                                                <td>{{data.Value}}</td>
+                                                <td  ng-hide="txtdisabled" class="text-nowrap">
+
+                                                    <button title="Delete" ng-click="deletelist($index)"
+                                                            class="btn btn-danger btn-xs ">
+                                                        <em class="fa fa-trash-o"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addlargetextbox.$invalid && dropdownlistarray.length !=0" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/addCheckboxbutton.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Checkbox</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addlargetextbox" ng-submit="form.addlargetextbox()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label>Group Name </label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department" 
+                                    ng-options="m.input_fieldname for m in groupnamelist" chosen="" ng-change="onchangegroup()"
+                                            ng-model="txtgroup_name" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Group Name -----</option>
+                                    </select> 
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-md-7 col-lg-7 col-sm-7"> 
+                                    <label class="col-form-label"> Field Name  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txttextbox_name" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div> 
+                                <!-- <div class="col-md-4 col-lg-4 col-sm-4"> 
+                                    <label class="col-form-label"> Placeholder  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text"  ng-model="txtplaceholder" ng-disabled="txtdisabled" tabindex="0" class="form-control" required  />
+                                </div>   -->
+                                <div class="col-md-5 col-lg-5 col-sm-5"> 
+                                    <label class="col-form-label"> Mandatory  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <div class="radio c-radio" ng-hide="txtdisabled">
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck"  value="true" ng-model="rdbMandatory" required />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="Requiredcheck" name="Requiredcheck" value="false" ng-model="rdbMandatory" required />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                    <div ng-show="txtdisabled"> 
+                                        <input type="text"  ng-model="rdbMandatory" ng-disabled="txtdisabled" tabindex="0" class="form-control"  /> 
+                                    </div>
+                                 </div>
+                            </div>
+                            <br /> 
+                            <div class="row" >
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label class="col-form-label"> Preview Text  </label>
+                                    <textarea ng-model="txtPreviewText" rows="2" class="form-control"  ng-disabled="txtdisabled" style="resize:vertical;"
+                                    id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea> 
+                                </div>
+                                <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label> Value <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtValue" required tabindex="0" class="form-control" /> 
+                                </div> -->
+                                
+                            </div>
+                            <br /> 
+                        </div>
+                    </div>
+    
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addlargetextbox.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    </div> 

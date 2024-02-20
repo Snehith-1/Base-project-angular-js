@@ -1,0 +1,154 @@
+﻿<h3>
+    MIS Data Import
+</h3>
+<div ng-controller="misDataimportcontroller">
+    <div class="row ">
+       
+            <div class="col-lg-12 col-sm-12 col-md-12 ">
+                <div class="col-sm-4 col-lg-4 col-md-4">
+                    <div class="row " ng-show="show">
+                        <br />
+                        <div class="col-lg-12 col-sm-12 col-md-12 ">
+                            <div class="text-info ">
+                                &nbsp;&nbsp;
+                                <label ng-hide="data.hide" ng-click="data.hide=true">
+                                   
+                                        <button type="button" title="Import Data" popover="Note:- 1. Accepts only csv file format.
+           2. The format of file name must be in  'AllDataModified-NBFC-Current Date'.
+           3. Before upload, change the format for 'Account No & URN'" popover-trigger="mouseenter" class="btn btn-default bg-grey-400 btn-sm" ng-click="openpanel()">
+                                            <span class="btn-label">
+                                                <i class="fa fa-file-text"></i>
+                                            </span><b> Import Data</b>
+
+                                        </button>
+</label>
+                                <label ng-show="data.hide" ng-click="data.hide=false">
+                                    <button type="button" title="Import Data" class="btn btn-default bg-grey-400 btn-sm" ng-click="openpanel()">
+                                        <span class="btn-label">
+                                            <i class="fa fa-file-text"></i>
+                                        </span><b> Import Data</b>
+
+                                    </button>
+                                </label>
+                            </div>
+                       
+                        </div>
+                    </div>
+                   
+                        <div class="row" ng-show="options">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <p class="text-primary text-bold" style=" font-size:15px;">Import Data</p>
+                                        <input type="file" id="addupload" required ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           popover="Note:- 1. Accepts only csv file format.
+           2. The format of file name must be in  'AllDataModified-NBFC-Current Date'.
+           3. Before upload, change the format for 'Account No & URN'" popover-trigger="mouseenter" class="form-control" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                                    </div>
+                                 
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <br /><br />
+                                        <button type="button" value="Upload" class="btn btn-info" 
+                                                ng-click="handleFile()">
+                                            <em class="fa fa-upload">&nbsp;Upload</em>
+                                        </button>
+                                        <button ng-click="cancel()" class="btn btn-danger">
+                                            <i class="fa fa-close"></i>&nbsp;&nbsp;Cancel</button>
+                                    </div>
+                                 </div>
+                             <br />
+                          </div>
+                        <br />
+                    </div>
+              </div>       
+</div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary text-white">
+                            <th style="display:none;">S.NO</th>
+                            <th>IMPORTED DATE</th>
+                            <th>FILE NAME</th>
+                            <th>IMPORTED BY</th>
+                            <th>STATUS</th>
+                            <th>PROCESSED DATE</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in imported_list">
+                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                            <td data-title="Imported Date">{{data.imported_date}}</td>
+                            <td data-title="File Name">{{data.file_name}}</td>
+                            <td data-title="Imported By">{{data.imported_by}}</td>
+                            <td data-title="Process Status">{{data.status}}</td>
+                            <td data-title="Process Date">{{data.process_date}}</td>
+                            <td data-title="Action">
+                                <div ng-switch="data.status">
+                                    <button title="Process" class="btn btn-info btn-sm" ng-switch-when="Pending" ng-disabled="false"
+                                            ng-click="processdata(data.misdocumentimport_gid)">
+                                        <em class="fa fa-cog"></em>
+                                    </button>
+                                    <button title="Process Completed" class="btn btn-info btn-sm" ng-switch-when="Processed"
+                                            ng-disabled="true">
+                                        <em class="fa fa-cog"></em>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/processdata.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-upload"><b> Process - Imported Data </b></i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                </div>
+
+                <div class="pd-sm-10">
+                  
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            </div>
+                            <b>Imported Date</b> &nbsp;<b style="color:darkblue"> {{imported_date}}</b>
+                        </div>
+
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                            </div>
+                            <b> File Name </b>&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <b style="color:darkblue">{{file_name}}</b>
+                        </div>
+                   
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <br />
+                        <div class="col-sm-1 col-md-1 col-lg-1">
+                        </div>
+                     Do you want to process the imported data?
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform3.$invalid" ng-click="process()">
+                        <i class="fa icon-check"></i> &nbsp;&nbsp;Yes
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;No</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

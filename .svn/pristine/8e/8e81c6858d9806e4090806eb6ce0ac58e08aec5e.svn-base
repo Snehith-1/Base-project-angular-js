@@ -1,0 +1,170 @@
+﻿
+<h3>
+    CC Member
+</h3>
+<div ng-controller="ccmembersummarycontroller">
+    <div>
+        <button type="button" title="Add Security Type" class="btn btn-info btn-sm" ng-click="popupaddccmember()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>ADD CC Member
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body table-responsive">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="bg-primary-light text-white">
+                                <th>S.No</th>
+                                <th>CC Group Name</th>
+                                <th>CC Member Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in ccmember_list">
+                                <td data-title="'S.No'">{{$index+1}}</td>
+                                <td data-title="'CC Group Name'">{{data.ccgroup_name}}</td>
+                                <td data-title="'CC Member Name'">{{data.CCMember_name}}</td>
+                                <td data-title="'Action'" class="nowrap">
+                                    <button title="Edit" ng-click="edit(data.ccmembermaster_gid)" class="btn btn-green">
+                                        <em class="fa fa-edit"></em>
+                                    </button>
+                                    <button title="Delete" ng-click="delete(data.ccmembermaster_gid)" class="btn btn-danger">
+                                        <em class="icon icon-trash "></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/addccmember.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-plus "></i>
+                </span>ADD CC Member
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row " style="display:none">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label ng-model="ccmembermaster_gid"></label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label>CC Group Name <span style="color:red">*</span></label>
+                                    <select name="cboccgroup_name" ng-model="cboccgroup_name" required="" ng-options="m.ccgroup_name for m in ccgroup_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> ---Select CC Group--- </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                                    <label>CC Member Name <span style="color:red">*</span></label>
+                                    <select name="customer" chosen="" multiple ng-options="m.employee_name for m in employee_list"
+                                            ng-model="cboccemployee_name" class="chosen-select form-control" required>
+                                        <option value=""> ---Select Employee--- </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="ccmembersubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editccmember.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-plus "></i>
+                </span>Edit CC Member
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row " style="display:none">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label ng-model="ccmembermaster_gid"></label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label>CC Group Name <span style="color:red">*</span></label>
+                                    <select id="ccgroupname_gid" name="ccgroupname_gid" ng-options="m.ccgroupname_gid as m.ccgroup_name for m in ccgroup_list" required
+                                            ng-model="ccgroupname_gid" class="chosen-select form-control">
+                                        <option value=""> ---Select  CC Group ---</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                                    <label>CC Member Name <span style="color:red">*</span></label>
+
+                                    <select id="employee_gid" name="employee_gid" ng-options="m.employee_gid as m.employee_name for m in employee_list" required
+                                            ng-model="cboemployee_gid" class="chosen-select form-control">
+                                        <option value=""> ---Select Employee ---</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="ccmembersubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

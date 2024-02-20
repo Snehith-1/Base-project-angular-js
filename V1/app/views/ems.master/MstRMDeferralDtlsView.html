@@ -1,0 +1,1046 @@
+﻿<style>
+    .buttonstyclr {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<h3>
+    Document Submission
+</h3>
+<div ng-controller="MstRMDeferralDtlsViewController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                            <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;">
+                                <h5>{{txtcustomer_name}} / {{txtstakeholder}}</h5>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" style="background-color:#3a4ccb;color:white;padding-top:10px;padding-bottom:10px;">
+                                <h5>{{txtapplication_no}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row panel-body">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <tabset justified="true">
+                                <tab ng-click="scanneddocumentssummary()">
+                                    <tab-heading>
+                                        Softcopy Vetting <label style="font-size:11px;" class="label label-info pull-right">{{MakerPendingCount}}</label>
+                                    </tab-heading>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <button type="button" class="mb-sm btn btn-lg buttonstyclr" ng-click="gotoscanneddeferral()">
+                                                <b> Loan Documents </b>
+                                            </button>
+                                            <button type="button" class="mb-sm btn btn-lg buttonstyclr" ng-click="gotoscannedcovenant()">
+                                                <b> Covenant Documents </b>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="scanneddeferraldocdtl">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;">
+                                                        <b>&nbsp;&nbsp; Loan Documents  </b>
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Extension','N')">&nbsp; Initiate Extension </a>
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Waiver','N')">&nbsp; Initiate Waiver &nbsp;<span>|</span> </a> 
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Deferral','N')"> &nbsp;Initiate Deferral &nbsp;<span>|</span> </a>
+                                                    </p>
+                                                    <hr />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray nowrap">
+                                                                <tr width="100%">
+                                                                    <th style="color:#000000;">S.No</th>
+                                                                    <th style="color:#000000;">Document Code</th>
+                                                                    <th style="color:#000000;">Document Type</th>
+                                                                    <th style="color:#000000;">Name of the Document</th>
+                                                                    <th style="color:#000000;">Available Copy</th>
+                                                                    <th style="color:#000000;">
+                                                                        Submitted Softcopy
+                                                                        <button title="Upload" ng-show="ScannedCompleted=='N'" ng-click="deferraldocmultiple_upload('N')">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                    </th>
+                                                                    <!--<th style="color:#000000;">Physical Documents</th>-->
+                                                                    <th style="color:#000000;">Softcopy Vetting</th>
+                                                                    <th style="color:#000000;">Vetting Status</th>
+                                                                    <th style="color:#000000;">Query - Status</th>
+                                                                    <!--<th style="color:#000000;">Deferral Status</th>-->
+                                                                    <th style="color:#000000;">Original Due Date</th>
+                                                                    <!--<th style="color:#000000;">Tagged Date & Time</th>-->
+                                                                    <th style="color:#000000;">Extended Due Date</th>
+
+                                                                    <th style="text-align: center;width:8%;color:#000000;"> Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="nowrap">
+                                                                <tr ng-repeat="data in ScannedDocumentlist">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Code">{{data.document_code}}</td>
+                                                                    <td title="Document Type">{{data.documenttype_code}}</td>
+                                                                    <td title="Name of the Document">{{data.documenttype_name}}</td>
+                                                                    <td title="Available Copy">
+                                                                        <button title="View" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'N')" class="btn btn-info">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Upload" ng-if="ScannedCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                        <button title="Moved to Submitted Softcopy" ng-if="ScannedCompleted=='N'" ng-click="movedtosigned_doc(data.groupdocumentchecklist_gid)" class="btn btn-info" style="background-color:#9e9d24;">
+                                                                            <em class="fa fa-arrow-right"></em>
+                                                                        </button>
+                                                                    </td>
+
+                                                                    <td title="Submitted Softcopy">
+                                                                        <button title="View" ng-show="data.scanned_documentcount > 0" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'Y')" class="btn btn-primary">
+                                                                            <em class="fa fa-list-ul"></em>
+                                                                        </button>
+                                                                        <button title="Upload" ng-show="data.scanned_documentcount > 0 && ScannedCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'Y')" class="btn btn-success">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                    <!--<td title="Physical Documents">
+        <button title="View" ng-click="defferalphysicaldoc_view(data.groupdocumentchecklist_gid)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+        <button title="Upload" disabled ng-click="deferralphysicaldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>
+    </td>-->
+
+                                                                    <td style="text-align: center;">
+                                                                        <!--<button title="Softcopy Vetting" ng-click="tagtodefferal_edit(data.deferraltagdoc_gid,data.groupdocumentchecklist_gid,data.scanned_documentcount,data.documenttype_code,data.documenttype_name,'N')" class="btn btn-green">
+            <em class="icon icon-check"></em>
+        </button>-->
+                                                                        <button title="Softcopy Vetting" ng-click="Close_query(data.groupdocumentchecklist_gid,data.due_date,'N')" class="btn btn-green">
+                                                                            <em class="icon icon-check"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td title="Vetting Status" ng-switch="data.scanned_documentcount == 0 && data.overall_docstatus ==''">
+                                                                        <span ng-switch-when="true"> Document Not Submitted </span>
+                                                                        <span ng-switch-when!="true">{{data.overall_docstatus}}</span>
+                                                                    </td>
+                                                                    <td title="Query - Status">{{data.softcopyquerystatus}}</td>
+
+                                                                    <!--<td title="Deferral Status" ng-switch="data.deferraltag_status">
+        <span ng-switch-when="1">Tagged</span>
+        <span ng-switch-when="2">Deferral Taken</span>
+        <span ng-switch-when="3">Approval Pending</span>
+    </td>-->
+                                                                    <td title="Original Due Date">{{data.due_date}}  </td>
+                                                                    <!--<td title="Created Date & Time"> {{data.taggeddate}}</td>-->
+                                                                    <td title="Extended Due Date"> {{data.extendeddue_date}}</td>
+
+                                                                    <td>
+                                                                        <!--<button title="Query" ng-click="Close_query(data.groupdocumentchecklist_gid)" class="btn btn-primary">
+            <em class="fa fa-comment"></em>
+        </button>-->
+                                                                        <button title="Initiate Extension/waiver" ng-click="extension_waiver(data.groupdocumentchecklist_gid,data.due_date,'Y')" class="btn btn-success">
+                                                                            <em class="fa fa-external-link-square"></em>
+                                                                        </button>
+                                                                        <button title="Deferral History" ng-click="defferal_history(data.groupdocumentchecklist_gid,'N')" class="btn btn-purple">
+                                                                            <em class="fa fa-history"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="scannedcovenantdocdtl">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;">
+                                                        <b>&nbsp;&nbsp; Covenant Documents  </b>
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Extension','Y')">&nbsp; Initiate Extension </a>
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Waiver','Y')">&nbsp; Initiate Waiver &nbsp;<span>|</span> </a>
+                                                        <a href="" class="pull-right" ng-click="initiatebulkapproval('Deferral','Y')"> &nbsp;Initiate Deferral &nbsp;<span>|</span> </a> 
+                                                    </p>
+                                                    <hr />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray nowrap">
+                                                                <tr width="100%">
+                                                                    <th style="color:#000000;">S.No</th>
+                                                                    <th style="color:#000000;">Document Code</th>
+                                                                    <th style="color:#000000;">Document Type</th>
+                                                                    <th style="color:#000000;">Name of the Document</th>
+                                                                    <th style="color:#000000;">Available Copy</th>
+                                                                    <th style="color:#000000;">
+                                                                        Submitted Softcopy
+                                                                        <button title="Upload" ng-show="ScannedCompleted=='N'" ng-click="deferraldocmultiple_upload('Y')">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                    </th>
+                                                                    <!--<th style="color:#000000;">Physical Documents</th>-->
+                                                                    <th style="color:#000000;">Softcopy Vetting	</th>
+                                                                    <th style="color:#000000;">Vetting Status</th>
+                                                                    <th style="color:#000000;">Query - Status</th>
+                                                                    <!--<th style="color:#000000;">Deferral Status</th>-->
+                                                                    <th style="color:#000000;">Original Due Date</th>
+                                                                    <!--<th style="color:#000000;">Tagged Date & Time</th>-->
+                                                                    <th style="color:#000000;">Extended Due Date</th>
+
+                                                                    <th style="text-align: center;width:8%;color:#000000;"> Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="nowrap">
+                                                                <tr ng-repeat="data in ScannnedCovenantDocumentlist">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Code">{{data.document_code}}</td>
+                                                                    <td title="Document Type">{{data.documenttype_code}}</td>
+                                                                    <td title="Name of the Document">{{data.documenttype_name}}</td>
+                                                                    <td title="Available Copy">
+                                                                        <button title="View" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'N')" class="btn btn-info">
+                                                                            <em class="fa fa-eye"></em>
+                                                                        </button>
+                                                                        <button title="Upload" ng-show="ScannedCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                        <button title="Moved to Submitted Softcopy" ng-show="ScannedCompleted=='N'" ng-click="movedtosigned_doc(data.groupdocumentchecklist_gid)" class="btn btn-info" style="background-color:#9e9d24;">
+                                                                            <em class="fa fa-arrow-right"></em>
+                                                                        </button>
+                                                                    </td>
+
+                                                                    <td title="Submitted Softcopy">
+                                                                        <button title="View" ng-show="data.scanned_documentcount > 0" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'Y')" class="btn btn-primary">
+                                                                            <em class="fa fa-list-ul"></em>
+                                                                        </button>
+                                                                        <button title="Upload" ng-show="data.scanned_documentcount > 0 && ScannedCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'Y')" class="btn btn-success">
+                                                                            <em class="fa fa-upload"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                    <!--<td title="Physical Documents">
+        <button title="View" ng-click="defferalphysicaldoc_view(data.groupdocumentchecklist_gid)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+        <button title="Upload" disabled ng-click="deferralphysicaldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>
+    </td>-->
+                                                                    <td style="text-align: center;">
+                                                                        <button title="Softcopy Vetting" ng-click="Close_query(data.groupdocumentchecklist_gid,data.due_date,'Y')" class="btn btn-green">
+                                                                            <em class="icon icon-check"></em>
+                                                                        </button>
+                                                                        <!--<button title="Softcopy Vetting" ng-click="tagtodefferal_edit(data.deferraltagdoc_gid,data.groupdocumentchecklist_gid,data.scanned_documentcount,data.documenttype_code,data.documenttype_name,'Y')" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>-->
+                                                                    </td>
+                                                                    <td title="Vetting Status" ng-switch="data.scanned_documentcount == 0 && data.overall_docstatus ==''">
+                                                                        <span ng-switch-when="true"> Document Not Submitted </span>
+                                                                        <span ng-switch-when!="true">{{data.overall_docstatus}}</span>
+                                                                    </td>
+                                                                    <td title="Query - Status">{{data.softcopyquerystatus}}</td>
+                                                                    <!--<td title="Deferral Status" ng-switch="data.deferraltag_status">
+        <span ng-switch-when="1">Tagged</span>
+        <span ng-switch-when="2">Deferral Taken</span>
+        <span ng-switch-when="3">Approval Pending</span>
+    </td>-->
+                                                                    <td title="Original Due Date">{{data.due_date}}  </td>
+                                                                    <!--<td title="Created Date & Time"> {{data.taggeddate}}</td>-->
+                                                                    <td title="Extended Due Date"> {{data.extendeddue_date}}</td>
+
+                                                                    <td>
+                                                                        <!--<button title="Query" ng-click="Close_query(data.groupdocumentchecklist_gid)" class="btn btn-primary">
+            <em class="fa fa-comment"></em>
+        </button>-->
+                                                                        <button title="Initiate Extension/waiver" ng-click="extension_waiver(data.groupdocumentchecklist_gid,data.due_date,'Y')" class="btn btn-success">
+                                                                            <em class="fa fa-external-link-square"></em>
+                                                                        </button>
+                                                                        <button title="Deferral History" ng-click="defferal_history(data.groupdocumentchecklist_gid,'N')" class="btn btn-purple">
+                                                                            <em class="fa fa-history"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab ng-click="physicaldocumentsSummary()">
+                                    <tab-heading>
+                                        Original Copy Vetting <label style="font-size:11px;" class="label label-info pull-right">{{MakerPendingCount}}</label>
+                                    </tab-heading>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <button type="button" class="mb-sm btn btn-lg buttonstyclr" ng-click="gotophysicaldeferral()">
+                                                <b> Loan Documents </b>
+                                            </button>
+                                            <button type="button" class="mb-sm btn btn-lg buttonstyclr" ng-click="gotophysicalcovenant()">
+                                                <b> Covenant Documents </b>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="physicaldeferraldocdtl">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Loan Documents  </b>
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Extension','N')">&nbsp; Initiate Extension </a>
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Waiver','N')">&nbsp; Initiate Waiver &nbsp;<span>|</span> </a> 
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Deferral','N')"> &nbsp;Initiate Deferral &nbsp;<span>|</span> </a>
+                                                    </p>
+                                                    <hr />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray nowrap">
+                                                                <tr width="100%">
+                                                                    <th style="color:#000000;">S.No</th>
+                                                                    <th style="color:#000000;">Document Code</th>
+                                                                    <th style="color:#000000;">Document Type</th>
+                                                                    <th style="color:#000000;">Name of the Document</th>
+                                                                    <!--<th style="color:#000000;">Initial Documents submitted</th>-->
+                                                                    <!-- <th style="color:#000000;">Softcopy Vetting</th> -->
+                                                                    <th style="color:#000000;">Original Copy Vetting</th>
+                                                                    <th style="color:#000000;">Vetting Status</th>
+                                                                    <th style="color:#000000;">Query - Status</th>
+                                                                    <!-- <th style="color:#000000;">Deferral Remarks</th>
+    <th style="color:#000000;">Deferral Status</th> -->
+                                                                    <th style="color:#000000;">Original Due Date</th>
+                                                                    <!-- <th style="color:#000000;">Tagged Date & Time</th> -->
+                                                                    <th style="color:#000000;">Extended Due Date</th>
+
+                                                                    <th style="text-align: center;width:8%;color:#000000;"> Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="nowrap">
+                                                                <tr ng-repeat="data in PhysicalDocumentlist">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Code">{{data.document_code}}</td>
+                                                                    <td title="Document Type">{{data.documenttype_code}}</td>
+                                                                    <td title="Name of the Document">{{data.documenttype_name}}</td>
+                                                                    <!--<td title="Initial Documents submitted">
+        <button title="View" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'N')" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+        <button title="Upload" ng-show="PhysicalCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>
+    </td>-->
+                                                                    <!-- <td title="Softcopy Vetting">
+        <button title="View" ng-show="data.scanned_documentcount > 0" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'Y')" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+    </td> -->
+                                                                    <td title="Original Copy Vetting" class="text-center">
+                                                                        <!-- <button title="View" ng-show="data.physical_documentcount > 0" ng-click="defferalphysicaldoc_view(data.groupdocumentchecklist_gid)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button> -->
+                                                                        <button title="Original Copy Vetting" ng-click="Close_query(data.groupdocumentchecklist_gid,data.due_date,'N')" class="btn btn-green">
+                                                                            <em class="icon icon-check"></em>
+                                                                        </button>
+                                                                        <button title="Document Sent" ng-show="data.physical_documentcount == 0 && data.physicaloverall_docstatus != 'Document Sent'" ng-click="defferalphysicaldoc_sent(data.groupdocumentchecklist_gid,'N')" class="btn btn-pink">
+                                                                            <em class="fa fa-location-arrow"></em>
+                                                                        </button>
+                                                                        <button title="Document Sent - Undo" ng-show="data.physicaloverall_docstatus == 'Document Sent'" ng-click="defferalphysicaldoc_undo(data.groupdocumentchecklist_gid,'N')" class="btn btn-danger">
+                                                                            <em class="fa fa-undo"></em>
+                                                                        </button>
+                                                                        <!--<button title="Upload" disabled ng-click="deferralphysicaldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>-->
+                                                                    </td>
+                                                                    <td title="Vetting Status" ng-switch="data.physical_documentcount == 0 && data.physicaloverall_docstatus ==''">
+                                                                        <span ng-switch-when="true"> Document Not Submitted </span>
+                                                                        <span ng-switch-when!="true">{{data.physicaloverall_docstatus}}</span>
+                                                                    </td>
+                                                                    <td title="Query - Status">{{data.physicalcopyquerystatus}}</td>
+                                                                    <!-- <td style="text-align: center;">
+        <button title="Deferral Remarks" ng-click="physicaltagtodefferal_edit(data.deferraltagdoc_gid,data.groupdocumentchecklist_gid,data.documenttype_code,data.documenttype_name)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+    </td>
+    <td title="Deferral Status" ng-switch="data.deferraltag_status">
+        <span ng-switch-when="1">Tagged</span>
+        <span ng-switch-when="2">Deferral Taken</span>
+        <span ng-switch-when="3">Approval Pending</span>
+    </td> -->
+                                                                    <td title="Original Due Date">{{data.due_date}}  </td>
+                                                                    <!-- <td title="Created Date & Time"> {{data.taggeddate}}</td> -->
+                                                                    <td title="Extended Due Date"> {{data.extendeddue_date}}</td>
+                                                                    <td>
+                                                                        <button title="Initiate Extension/waiver" ng-click="extension_waiver(data.groupdocumentchecklist_gid,data.due_date,'N')" class="btn btn-success">
+                                                                            <em class="fa fa-external-link-square"></em>
+                                                                        </button>
+                                                                        <button title="Deferral History" ng-click="defferal_history(data.groupdocumentchecklist_gid,'Y')" class="btn btn-purple">
+                                                                            <em class="fa fa-history"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="physicalcovenantdocdtl">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Covenant Documents  </b>
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Extension','Y')">&nbsp; Initiate Extension </a>
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Waiver','Y')">&nbsp; Initiate Waiver &nbsp;<span>|</span> </a> 
+                                                        <a href="" class="pull-right" ng-click="initiatephysicalbulkapproval('Deferral','Y')"> &nbsp;Initiate Deferral &nbsp;<span>|</span> </a>
+                                                    </p>
+                                                    <hr />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray nowrap">
+                                                                <tr width="100%">
+                                                                    <th style="color:#000000;">S.No</th>
+                                                                    <th style="color:#000000;">Document Code</th>
+                                                                    <th style="color:#000000;">Document Type</th>
+                                                                    <th style="color:#000000;">Name of the Document</th>
+                                                                    <!--<th style="color:#000000;">Initial Documents submitted</th>-->
+                                                                    <!-- <th style="color:#000000;">Softcopy Vetting</th> -->
+                                                                    <th style="color:#000000;">Original Copy Vetting</th>
+                                                                    <th style="color:#000000;">Vetting Status</th>
+                                                                    <th style="color:#000000;">Query - Status</th>
+                                                                    <!-- <th style="color:#000000;">Deferral Remarks</th>
+    <th style="color:#000000;">Deferral Status</th> -->
+                                                                    <th style="color:#000000;">Original Due Date</th>
+                                                                    <!-- <th style="color:#000000;">Tagged Date & Time</th> -->
+                                                                    <th style="color:#000000;">Extended Due Date</th>
+
+                                                                    <th style="text-align: center;width:8%;color:#000000;"> Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody class="nowrap">
+                                                                <tr ng-repeat="data in PhysicalCovenantDocumentlist">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Code">{{data.document_code}}</td>
+                                                                    <td title="Document Type">{{data.documenttype_code}}</td>
+                                                                    <td title="Name of the Document">{{data.documenttype_name}}</td>
+                                                                    <!--<td title="Initial Documents submitted">
+        <button title="View" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'N')" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+        <button title="Upload" ng-show="PhysicalCompleted=='N'" ng-click="deferraldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>
+    </td>-->
+                                                                    <!-- <td title="Softcopy Vetting">
+        <button title="View" ng-show="data.scanned_documentcount > 0" ng-click="deferraldoc_view(data.groupdocumentchecklist_gid,'Y')" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+    </td> -->
+                                                                    <td title="Original Copy Vetting" class="text-center">
+                                                                        <!-- <button title="View" ng-show="data.physical_documentcount > 0" ng-click="defferalphysicaldoc_view(data.groupdocumentchecklist_gid)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button> -->
+                                                                        <button title="Original Copy Vetting" ng-click="Close_query(data.groupdocumentchecklist_gid,data.due_date,'Y')" class="btn btn-green">
+                                                                            <em class="icon icon-check"></em>
+                                                                        </button>
+                                                                        <button title="Document Sent" ng-show="data.physical_documentcount == 0 && data.physicaloverall_docstatus != 'Document Sent'" ng-click="defferalphysicaldoc_sent(data.groupdocumentchecklist_gid,'Y')" class="btn btn-pink">
+                                                                            <em class="fa fa-location-arrow"></em>
+                                                                        </button>
+                                                                        <button title="Document Sent - Undo" ng-show="data.physicaloverall_docstatus == 'Document Sent'" ng-click="defferalphysicaldoc_undo(data.groupdocumentchecklist_gid,'Y')" class="btn btn-danger">
+                                                                            <em class="fa fa-undo"></em>
+                                                                        </button>
+                                                                        <!--<button title="Upload" disabled ng-click="deferralphysicaldoc_upload(data.groupdocumentchecklist_gid,data.documenttype_name,data.covenant_type,'N')" class="btn btn-success">
+            <em class="fa fa-upload"></em>
+        </button>-->
+                                                                    </td>
+                                                                    <td title="Vetting Status" ng-switch="data.physical_documentcount == 0 && data.physicaloverall_docstatus ==''">
+                                                                        <span ng-switch-when="true"> Document Not Submitted </span>
+                                                                        <span ng-switch-when!="true">{{data.physicaloverall_docstatus}}</span>
+                                                                    </td>
+                                                                    <td title="Query - Status">{{data.physicalcopyquerystatus}}</td>
+                                                                    <!-- <td style="text-align: center;">
+        <button title="Deferral Remarks" ng-click="physicaltagtodefferal_edit(data.deferraltagdoc_gid,data.groupdocumentchecklist_gid)" class="btn btn-info">
+            <em class="fa fa-eye"></em>
+        </button>
+    </td>
+    <td title="Deferral Status" ng-switch="data.deferraltag_status">
+        <span ng-switch-when="1">Tagged</span>
+        <span ng-switch-when="2">Deferral Taken</span>
+        <span ng-switch-when="3">Approval Pending</span>
+    </td> -->
+                                                                    <td title="Original Due Date">{{data.due_date}}  </td>
+                                                                    <!-- <td title="Created Date & Time"> {{data.taggeddate}}</td> -->
+                                                                    <td title="Extended Due Date"> {{data.extendeddue_date}}</td>
+
+                                                                    <td>
+
+                                                                        <button title="Initiate Extension/waiver" ng-click="extension_waiver(data.groupdocumentchecklist_gid,data.due_date,'N')" class="btn btn-success">
+                                                                            <em class="fa fa-external-link-square"></em>
+                                                                        </button>
+                                                                        <button title="Deferral History" ng-click="defferal_history(data.groupdocumentchecklist_gid,'Y')" class="btn btn-purple">
+                                                                            <em class="fa fa-history"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="text-center">
+                        <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/document_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-list-ul"></em>&nbsp;<label style="font-size:16px"> Submitted Softcopy </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">S.No</th>
+                                            <th>Softcopy Code</th>
+                                            <th scope="col">Document Title</th>
+                                            <th scope="col">Document Name</th>
+                                            <th scope="col">Submitted by / On </th>
+                                            <th>Status</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in scanneduploaddocumentlist">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td>{{data.scanneddocument_code}}</td>
+                                            <td title="Document Title">{{data.documenttype_name}}</td>
+                                            <td title="Document Name">{{data.file_name}}</td>
+                                            <td title="Submitted by / On">{{data.created_by}} / {{data.created_date}} </td>
+                                            <td> <p ng-if="data.replacementdocument_code!=''">Replacement of {{data.replacementdocument_code}}</p></td>
+                                            <td data-title="Action">
+                                                <button title="Download" class="btn btn-green btn-sm"
+                                                        ng-click="download_doc(data.file_path,data.file_name)">
+                                                    <em class="fa fa-download"></em>
+                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.file_path,data.file_name)">
+                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/TagToDefferalEdit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px"></em>&nbsp;<label style="font-size:16px"><em class="icon-tag"></em> Softcopy Vetting	 </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="tagdefferaledit" autocomplete="off" class="form-validate">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Document Type</label><br /><span>{{txtdocumenttype}}</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Document Name</label> <br /><span>{{txtdocumenttype_name}}</span>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Criticality</label><br /><span>{{txtdocumentseverity_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div>
+                                <table class="table table-responsive">
+                                    <thead class="bg-gray text-white">
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Check Point</th>
+                                            <th width="15%">Satisfied</th>
+                                            <th width="15%">Not Satisfied</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in deferraltaggedchecklist">
+                                            <td data-title="'S.No'"> {{$index+1}}</td>
+                                            <td data-title="'Check Point'">{{data.checklist_name}}</td>
+                                            <td style="text-align:center">
+                                                <div class="mb">
+                                                    <label class="mda-radio">
+                                                        <input type="radio" name="radiodata{{$index}}" id="Yesdocumentverified{{$index}}" ng-click="documentverifiededitcheck($index)" ng-model="data.documentverified" value="true" checked="" disabled="" required />
+                                                        <em class="bg-indigo-500"></em>
+                                                    </label>
+                                                </div>
+                                                <!--<label class="mda-radio">
+                                                    <input type="radio" name="radiodata{{$index}}" id="Yesdocumentverified{{$index}}" ng-click="documentverifiededitcheck($index)" ng-model="data.documentverified" value="true" class="form-control" required />
+                                                    <em class="bg-teal-500"></em>
+                                                </label>-->
+                                                
+
+                                            </td>
+                                            
+                                            <td style="text-align:center">
+                                                <div class="mb">
+                                                    <label class="mda-radio">
+                                                        <input type="radio" name="radiodata{{$index}}" id="Nodocumentverified{{$index}}" ng-click="deferraltaggededitcheck($index)" ng-model="data.deferraltagged" value="true" checked="" required disabled="" />
+                                                        <em class="bg-teal-500"></em>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<br />-->
+                    <!--<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label">Remarks by CAD </label>
+                            <textarea style="resize:vertical;" ng-model="txtcad_remarks" maxlength="5000" rows="3" class="form-control" disabled="disabled"
+                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                        </div>
+                    </div>-->
+                    <br />
+                    <div class="text-center">
+
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/defferal_docmultipleupload.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Document Upload </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    <label>Document Title <span style="color:red;">*</span></label>
+                                    <input type="text" ng-model="txtdocument_name" tabindex="0" class="form-control" maxlength="50" />
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <div class="float-label">
+                                        <strong> Upload Documents </strong>
+                                        <br /><br />
+                                        <input type="file" id="scannedmultiplefile" tabindex="5" multiple onchange="angular.element(this).scope().scannedDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               ng-model="cbodocumentname" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive table-bordered">
+                                        <div style="max-height:200px;overflow:auto;">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Softcopy Code</th>
+                                                        <th>Document Title</th>
+                                                        <th>Document Name</th>
+                                                        <th>Status</th>
+                                                        <th align="center" scope="col">
+                                                            Action&nbsp;&nbsp;&nbsp;
+                                                            <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall()">
+                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="list in scanneduploaddocumentlist">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{list.scanneddocument_code}}</td>
+                                                        <td>{{list.documenttype_name}}</td>
+                                                        <td>{{list.file_name}}</td>
+                                                        <td>  <p ng-if="list.replacementdocument_code!=''">Replacement of {{list.replacementdocument_code}}</p></td>
+                                                        <td class="text-nowrap">
+                                                            <a class="btn btn-xs btn-info" ng-click="downloads(list.file_path,list.file_name)">
+                                                                <em class="fa fa-download"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                            </a>
+                                                            <button title="View" class="btn btn-info btn-xs " ng-click="documentviewer(list.file_path,list.file_name">
+                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                            </button>
+                                                            <button title="Delete" ng-click="defdoc_delete(list.scanneddocument_gid)"
+                                                                    class="btn btn-danger btn-xs ">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/PhysicalTagToDefferalEdit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px"></em>&nbsp;<label style="font-size:16px"><em class="icon-tag"></em> Tag to deferral </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="tagdefferaledit" autocomplete="off" class="form-validate">
+                    <div class="row text-center">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <p style="font-size:14px;"><b>Criticality :</b> <span>{{txtdocumentseverity_name}}</span></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div>
+                                <table class="table table-responsive">
+                                    <thead class="bg-gray text-white">
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Check Point</th>
+                                            <th width="15%">Satisfied</th>
+                                            <th width="15%">Not Satisfied</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in deferraltaggedchecklist">
+                                            <td data-title="'S.No'"> {{$index+1}}</td>
+                                            <td data-title="'Check Point'">{{data.checklist_name}}</td>
+                                            <td style="text-align:center">
+                                                <div class="mb">
+                                                    <label class="mda-radio">
+                                                        <input type="radio" name="radiodata{{$index}}" id="Yesdocumentverified{{$index}}" ng-click="documentverifiededitcheck($index)" ng-model="data.documentverified" value="true" checked="" disabled="" required />
+                                                        <em class="bg-teal-500"></em>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td style="text-align:center">
+                                                <div class="mb">
+                                                    <label class="mda-radio">
+                                                        <input type="radio" name="radiodata{{$index}}" id="Nodocumentverified{{$index}}" ng-click="deferraltaggededitcheck($index)" ng-model="data.deferraltagged" value="true" checked="" disabled="" required />
+                                                        <em class="bg-teal-500"></em>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label">Remarks by CAD </label>
+                            <textarea style="resize:vertical;" ng-model="txtcad_remarks" maxlength="5000" rows="3" class="form-control" disabled="disabled"
+                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/defferal_docupload.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Document Upload </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                    <label>Document Title </label>
+                                    <input type="text" ng-model="txtdocument_name" tabindex="0" class="form-control" maxlength="50" disabled />
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <div class="float-label">
+                                        <strong> Upload Documents </strong>
+                                        <br /><br />
+                                        <input type="file" id="scannedfile" tabindex="5" multiple onchange="angular.element(this).scope().scannedDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               ng-model="cbodocumentname" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="table-responsive table-bordered">
+                                        <div style="max-height:200px;overflow:auto;">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Softcopy Code</th>
+                                                        <th>Document Title</th>
+                                                        <th>Document Name</th>
+                                                        <th>Status</th>
+                                                        <th align="center" scope="col">
+                                                            Action&nbsp;&nbsp;&nbsp;
+                                                            <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall()">
+                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                            </a>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="list in scanneduploaddocumentlist">
+                                                        <td>{{$index+1}}</td>
+                                                        <td>{{list.scanneddocument_code}}</td>
+                                                        <td>{{list.documenttype_name}}</td>
+                                                        <td>{{list.file_name}}</td>
+                                                        <td> <p ng-if="list.replacementdocument_code!=''">Replacement of {{list.replacementdocument_code}}</p></td>
+                                                        <td class="text-nowrap">
+                                                            <a class="btn btn-xs btn-info" ng-click="downloads(list.file_path,list.file_name)">
+                                                                <em class="fa fa-download"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                            </a>
+                                                            <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(list.file_path,list.file_name)">
+                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                            </button>
+                                                            <button title="Delete" ng-click="defdoc_delete(list.scanneddocument_gid)"
+                                                                    class="btn btn-danger btn-xs ">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/covenantperiod_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px"> Covenant Periods</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Document Name</label>
+                                <br />
+                                <p>{{lbldocumentname}}</p>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Covenant Periods</label>
+                                <br />
+                                <p>{{lblcovenantperiods}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">Covenant Periods</th>
+                                            <th scope="col">Start Date</th>
+                                            <th scope="col">End Date</th>
+                                            <th scope="col">Submission Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="max-height:300px;overflow:auto;">
+                                        <tr ng-repeat="data in scannedcovenantperiodlist">
+                                            <td title="Covenant Periods">{{data.covenant_periods}}</td>
+                                            <td title="Start Date">{{data.covenant_startdate}}</td>
+                                            <td title="End Date">{{data.covenant_enddate}} </td>
+                                            <td data-title="Submission Date">{{data.covenant_submissiondate}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/MovedtosignedDoc.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-arrow-right"></em>&nbsp;&nbsp;<label style="font-size:16px"> Moved to Softcopy Documents</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th>
+                                                <input type="checkbox" id="c3" ng-model="covenantall" ng-change="checkall(covenantall,true);">
+                                                Check All
+                                            </th>
+                                            <th scope="col">Document Title</th>
+                                            <th scope="col">Document Name</th>
+                                            <th scope="col">Uploaded By / On </th>
+                                            <th align="center" scope="col">
+                                                Action&nbsp;&nbsp;&nbsp;
+                                                <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadallsca()">
+                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="max-height:300px;overflow:auto;">
+                                        <tr ng-repeat="data in scanneduploaddocumentlist">
+                                            <td>
+                                                &nbsp;
+                                                <input type="checkbox" id="checkbox_{{$index}}" ng-change="checkboxchange()"
+                                                       value={{data.checked}} ng-checked="{{data.checked}}" ng-model="data.checked">
+                                            </td>
+                                            <td title="Document Title">{{data.documenttype_name}}</td>
+                                            <td title="Document Name">{{data.file_name}}</td>
+                                            <td title="Uploaded By / On">{{data.created_by}} / {{data.created_date}} </td>
+                                            <td data-title="Action">
+                                                <button title="Download" class="btn btn-green btn-sm"
+                                                        ng-click="download_doc(data.file_path,data.file_name)">
+                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                    <em class="fa fa-download"></em>
+                                                </button>
+                                                <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.file_path,data.file_name)">
+                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="yesmovedtosigned()" ng-disabled="showsubmitbtn" class="btn btn-success"><i class="fa icon-check"></i>&nbsp;&nbsp;Submit</button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

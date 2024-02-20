@@ -1,0 +1,282 @@
+﻿<h3>
+    BRE Master
+</h3>
+<div ng-controller="MstRERuleController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Rule" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="addrule()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Rule
+            </button>
+        </div>
+    </div>
+    <br />
+    <!--Summary-->
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th>One API Code </th>
+                                    <th>Rule ID </th>
+                                    <th>Rule Title </th>
+                                    <th>Function</th>
+                                    <th>Parameter Name</th>
+                                    <th>Parameter Value</th>
+                                    <th>Remarks</th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'"> Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in rule_list ">
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'Rule ID'">{{data.rule_id}}</td>
+                                    <td data-title="'Rule Title'">{{data.rule_title}}</td>
+                                    <td data-title="'Function'">{{data.rule_function}}</td>
+                                    <td data-title="'param_name'" ng-switch="data.param_name">
+                                       {{data.param_name}}
+                                        <label class="label label-warning" ng-switch-when='' style="font-size:10px;">Yet to Configure</label>
+                                    </td>
+                                    <td data-title="'param_value'" ng-switch="data.param_value">
+                                        {{data.param_value}}
+                                        <label class="label label-warning" ng-switch-when='' style="font-size:10px;">Yet to Configure</label>
+                                    </td>
+                                    <td data-title="'param_remarks'" ng-switch="data.param_remarks">
+                                        {{data.param_remarks}}
+                                        <label class="label label-warning" ng-switch-when='' style="font-size:10px;">Yet to Configure</label>
+                                    </td>                                 
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" ng-switch="data.status">
+                                        <button title="Rule configuration" ng-hide="lsoneapipage=='OneApi'"ng-hide="data.param_name !== ''" ng-click="config(data.ruleenginemaster_gid)" class="btn btn-sm btn-primary">
+                                            <em class="fa fa-plus"></em>
+                                        </button>
+                                        <button title="Edit configuration" ng-hide="lsoneapipage=='OneApi'"ng-hide="data.param_name == ''" ng-click="EditConfig(data.ruleenginemaster_gid)" class="btn btn-sm btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+    <script type="text/ng-template" id="/addrule.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Rule
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addrule" ng-submit="form.addrule()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="rule_id" maxlength="255" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <label>Rule ID <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="rule_title" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true"  class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <label>Rule Tilte <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="rule_function" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true"  class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <label>Function <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <input ng-model="rule_category" maxlength="255" tabindex="0" aria-required="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <label>Category </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="row ">
+                                <div class="col-sm-8 col-sm-6 col-sm-8 ">
+                                    <label class="mda-form-group float-label">Data Type </label>
+
+                                    <select id="Vtype" name="Vtype" ng-model="rule_datatype" required ng-change="TypeChange(V_type)" class="chosen-select form-control ng-pristine ng-invalid ng-invalid-required ng-touched ">
+                                        <option value=""> -----Select Data Type-----</option>
+                                        <option value="Text">Text</option>
+                                        <option value="List">List</option>
+                                        <option value="Number">Number</option>
+                                        <option value="Radio_Button">Radio Button</option>
+                                        <option></option>
+                                    </select>
+                                </div>
+                                </div>-->
+                            </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addrule.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    <!--Add Configuration-->
+    <script type="text/ng-template" id="/myModaladdconfiguration.html">
+        <div class="modal-header bg-primary">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+             Rule Configuration
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="pd-sm-10">
+                <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+                                <input ng-model="param_name" required="" maxlength="20" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                <label>Parameter Name <span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+                                <input ng-model="param_value" required="" maxlength="20" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                <label>Parameter value <span style="color:red">*</span></label>
+                            </div>
+                            <!--<div class="mda-form-group" ng-switch="rule_datatype" >
+                                <label >Parameter Value <span style="color:red">*</span> </label>
+                                <br />
+                                <input type="text" ng-model="param_value" ng-show="rule_datatype == 'Text'" tabindex="0" class="form-control" required ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" maxlength="25" />-->
+                                <!--<input ng-model="param_valung-switch-whene" required="" maxlength="10" ng-pattern="/^[a-zA-Z0-9 ]+$/" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">-->                                                                                
+                                <!--<input ng-model="param_value" ng-show="rule_datatype == 'Number'" type="number" id="points" name="points" min="0" max="100">                                                                            
+                                <div class="radio c-radio" ng-show="rule_datatype == 'Radio_Button'">
+                                    <label>
+                                        <input type="radio" id="SA" name="SA" value="Yes" ng-model="param_value" ng-change="onselectedsa_yes()" required />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="SA" name="SA" value="No" ng-model="param_value" ng-change="onselectedsa_yes()" required />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>-->                     
+                            <!--<input ng-model="rule_datatype" name="audit_typeedit" required="" maxlength="255" ng-pattern="/^[a-zA-Z0-9 ]+$/" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">-->
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+                                <input ng-model="param_remarks" name="paramremarks" required="" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                <label>Remarks <span style="color:red">*</span> </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />        
+            <div class="text-center">
+                <button type="button" ng-click="configsubmit()" class="btn btn-success btn-md" ng-disabled="userform.$invalid">
+                    <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Submit
+                </button>&nbsp;&nbsp;
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </script>
+<!--edit popup-->
+<script type="text/ng-template" id="/myModaledit.html">
+    <div class="modal-header bg-primary">
+        <h4 id="myModalLabel" class="modal-title">
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit"></i>
+            </span>Edit Configuration
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="pd-sm-10">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group">
+                            <input ng-model="param_name" required="" maxlength="20" tabindex="0" aria-required="true" aria-invalid="true" readonly class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <label>Parameter Name <span style="color:red">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group">
+                            <input ng-model="param_value" required="" maxlength="20" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <label>Parameter value <span style="color:red">*</span></label>
+                        </div>
+                        <!--<div class="mda-form-group" ng-switch="rule_datatype" >
+                <label >Parameter Value <span style="color:red">*</span> </label>
+                <br />
+                <input type="text" ng-model="param_value" ng-show="rule_datatype == 'Text'" tabindex="0" class="form-control" required ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" maxlength="25" />-->
+                        <!--<input ng-model="param_valung-switch-whene" required="" maxlength="10" ng-pattern="/^[a-zA-Z0-9 ]+$/" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">-->
+                        <!--<input ng-model="param_value" ng-show="rule_datatype == 'Number'" type="number" id="points" name="points" min="0" max="100">
+                <div class="radio c-radio" ng-show="rule_datatype == 'Radio_Button'">
+                    <label>
+                        <input type="radio" id="SA" name="SA" value="Yes" ng-model="param_value" ng-change="onselectedsa_yes()" required />
+                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                    </label>
+                    <label>
+                        <input type="radio" id="SA" name="SA" value="No" ng-model="param_value" ng-change="onselectedsa_yes()" required />
+                        <span class="fa fa-circle"></span>No
+                    </label>
+                </div>
+            </div>-->
+                        <!--<input ng-model="rule_datatype" name="audit_typeedit" required="" maxlength="255" ng-pattern="/^[a-zA-Z0-9 ]+$/" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">-->
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group">
+                            <input ng-model="param_remarks" name="param_remarksedit" required="" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <label>Remarks <span style="color:red">*</span> </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+        <div>
+            <div class="text-center">
+                <button type="button" ng-click="UpdateConfiguration(data.ruleenginemaster_gid)" class="btn btn-success btn-md" ng-disabled="userform.$invalid">
+                    <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update 
+                </button>&nbsp;&nbsp;
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+            </div>
+        </div>
+    </div>
+</script>

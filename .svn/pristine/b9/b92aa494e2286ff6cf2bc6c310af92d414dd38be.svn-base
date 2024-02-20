@@ -1,0 +1,91 @@
+﻿
+<h3>
+    BRE Execution
+</h3>
+<div ng-controller="MstBREExecutionController">
+    <div class="panel-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                &nbsp;  BRE Execution
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="row ">
+                    <div class="panel">
+                        <br />
+                        <div class="col-lg-12 col-md-8 col-sm-12">                         
+                            <div class="col-sm-4 col-lg-3 col-md-4">
+                                    <label class="col-form-label"> Application Code <span style="color:red"> *</span></label>
+                                     <br />
+                                    <select name="ApplicationNumber" id="ApplicationNumber" chosen="" ng-options="n.application_no for n in Application_DropDown"
+                                     ng-model="cboApplicationNumber" class="chosen-select form-control">
+                                            <option value="">----- Application Code ----</option>
+                                    </select>
+                            </div>
+                            <div class="col-sm-4 col-lg-3 col-md-4">
+                                <label class="col-form-label">Template Name <span style="color:red"> *</span></label>
+                                <br />   
+                                <select name="Templatename" id="Templatename" chosen="" ng-options="m.template_name for m in Template_DropDown"
+                                        ng-model="cboTemplateName" class="chosen-select form-control">
+                                    <option value="">----- Template Name ----</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 col-lg-3 col-md-3">
+                                <label class="col-form-label"><span style="color:red"> </span></label>
+                                <br />
+                                <button title="Execute Rule Engine" class="btn btn-info btn-sm"
+                                        ng-click="processdata()" >
+                                    <em class="fa fa-cog"></em>
+                                </button>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="panel panel-default">
+                            <div class="panel-body">                            
+                                <div class="row">                                
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <br />
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="table-responsive">
+                                                            <table datatable="ng" class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#09385f;">
+                                                                        <th style="display:none;"> S.No </th>
+                                                                        <th> Application Number </th>
+                                                                        <th> Template Name</th>                                                                      
+                                                                        <th> Executed Date </th>
+                                                                        <th> Executed By </th>
+                                                                        <th class="text-center"> Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in postexecute_list ">
+                                                                        <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>
+                                                                        <td data-title="'Application Number'">{{data.application_no}}</td>
+                                                                        <td data-title="'Template Name'">{{data.template_name}}</td>                          
+                                                                        <td data-title="'Executed Date'">{{data.created_date}}</td>
+                                                                        <td data-title="'Executed By'">{{data.created_by}}</td>
+                                                                        <td class="nowrap" data-title="'Action'" style="text-align: center;" >
+                                                                            <button title="View Result"  ng-click="viewresult(data.postruleenginerun_gid)" class="btn btn-sm btn-info">
+                                                                                <em class="fa fa-eye"></em>
+                                                                            </button>                                                                        
+                                                                        </td>
+                                                                    </tr>                                                             
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                   </div>                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

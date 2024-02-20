@@ -1,0 +1,102 @@
+﻿<h3>
+    LSA Management
+</h3>
+<div ng-controller="lsaManagementController">
+    <div>
+
+        <button title="Create LSA" class="btn btn-info btn-sm"
+                ng-click="createlsa()">
+            <em class="fa fa-plus"></em>&nbsp;Create LSA
+        </button>
+
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table ng-table="tableParams2" class="table hover table-striped ">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th style="display:none;">S.NO</th>
+                            <th>LSA Ref No</th>
+                            <th>Created Date</th>
+                            <th>URN </th>
+                            <th>Customer Name</th>
+                            <th class="text-nowrap">Sanction Ref No</th>
+                            <th>Created By</th>
+                            <th>Approval Status</th>
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in list | filter : searchtxt | limitTo:totalDisplayed"  ng-switch="data.approval_status">
+                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                            <td data-title="LSA Ref No">{{data.lsaref_no}}</td>
+                            <td data-title="LSA Created Date">{{data.lsacreated_date}}</td>
+                            <td data-title="URN">{{data.customer_urn}}</td>
+                            <td data-title="Customer Name">{{data.customer_name}}</td>                         
+                            <td data-title="Sanction Ref No" class="text-nowrap">{{data.sanctionref_no}}</td>
+                            <td data-title="Created by">{{data.created_by}}</td>
+                            <td data-title="Approval Status">
+                                <label class="label label-primary" ng-switch-when="-" style="font-size:10px;">Not Initiated</label>
+                            <label class="label label-danger" ng-switch-when="Pending" style="font-size:10px;">{{data.approval_status}}</label>
+                            <label class="label label-green" ng-switch-when="Approved" style="font-size:10px;">{{data.approval_status}}</label>
+                            
+                            <td data-title="Action" class="text-nowrap" >
+                                <button title="Add LSA" ng-switch-when="Pending" ng-click="clickadd(data.lsacreate_gid)" class="btn bg-green-600">
+                                    <em class="fa fa-plus-square-o"></em>
+                                </button>
+                                <button title="Add LSA" ng-switch-when="-" ng-click="clickadd(data.lsacreate_gid)" class="btn bg-green-600">
+                                    <em class="fa fa-plus-square-o"></em>
+                                </button>
+                                <button title="Add LSA" ng-switch-when="Approved" ng-click="clickadd(data.lsacreate_gid)" class="btn bg-green-600">
+                                    <em class="fa fa-plus-square-o"></em>
+                                </button>
+                               
+                                <button title="View LSA" ng-click="clickView(data.lsacreate_gid)" class="btn bg-light-blue-600">
+                                    <em class="fa fa-eye"></em>
+                                </button>
+                                <button title="PDF" class="btn bg-brown-200 btn-sm" ng-switch-when="Pending" ng-disabled="true">
+                                    <em class="fa fa-file-pdf-o"></em>
+                                </button>
+                                <button title="PDF" class="btn bg-brown-200 btn-sm" ng-switch-when="-" ng-disabled="true">
+                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                </button>
+                                <button title="PDF" class="btn bg-brown-400 btn-sm"  ng-switch-when="Approved" ng-click="LSApdf(data.lsacreate_gid)">
+                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                </button>
+                              </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,283 @@
+﻿<h3>
+    Audit Query
+</h3>
+<div ng-controller="AtmTrnAuditRaiseQueryController">
+    <div id="panelDemo9" class="panel panel-primary">
+        <br /><br />
+
+        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">
+            <div id="panelDemo9" class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #5454b9;">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <b>Chat</b>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <button type="button" class="btn btn-primary btn-md" style="color:#FFFFFF;background-color:#5454b9;font-size: 11px;" title="TagUser" ng-click="tagemployee()">
+                                <i class="fa fa-tag"></i>
+                            </button>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <button type="button" class="btn btn-primary btn-md" style="color:#FFFFFF;background-color:#5454b9;font-size: 11px;" title="Refresh" ng-click="refresh()">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div ui-scroll-viewport="" style="height:500px; overflow-y: auto;overflow-x: hidden;" class="row">
+                        <div ng-repeat="data in Querydetaillist">
+                            <div ng-switch="data.session_user">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        &nbsp;<div style="padding-left:400px;" ng-switch-when="Y" class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">{{data.created_date}}</small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong>{{data.sender_name}}</strong>
+                                                        </p>
+                                                        <p class="m0 ">{{data.remarks}}</p>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding-right:400px;" ng-switch-when="N" class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">
+                                                    {{data.created_date}}
+                                                </small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong>{{data.sender_name}}</strong>
+                                                        </p>
+                                                        <p class="m0">{{data.remarks}}</p>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br /><br /><br /><br /><br />
+                    </div>
+
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="row" style="border-radius:20px;">
+                            <div class="col-lg-11 col-sm-11 col-md-11 text-center">
+                                <textarea id="txtqueries" name="txtremarks" rows="3" ng-model="txtqueries"
+                                     ng-hide="auditraisequery_status =='Closed'" placeholder="Type a new message..." class="form-control" style="border-radius:25px; resize:vertical; height:50px; "></textarea>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                <button id="response_send" ng-hide="auditraisequery_status =='Closed'" ng-disabled="!txtqueries" style="border-radius:50%; height:50px; width:50px;" class="btn btn-success" ng-click="replytoquery()">
+                                    <i class="fa fa-send">&nbsp;</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">
+            <div id="panelDemo9" class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #5454b9;">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <b>Tagged Employee List</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" ng-show="audittaguser_list">
+                        <div style="max-height:300px;overflow:auto;">
+                            <table class="table table-striped table-secondary">
+                                <thead class="bg-gray text-white">
+                                    <tr width="100%">
+                                        <th>S.No</th>
+                                        <th>Tagged by</th>
+                                        <th>Tagged to</th>
+                                        <th>Tagged Date</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in audittaguser_list" width="100%">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Tagged by'">{{data.created_by}}</td>
+                                        <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                            <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                   ng-click="showPopover(data.auditcreation_gid)">
+                                                <em class="fa fa-info-circle" style="font-size:24px;align-content:center;"></em>
+                                            </label>
+                                        </td>
+
+                                        <!--<td align="left" scope="col" title="'Tagged to'">{{data.employee_name}}</td>-->
+                                        <td data-title="'Tagged Date'">{{data.created_date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panelDemo9" class="panel panel-primary">
+                <div class="panel-heading" style="background-color: #5454b9;">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10">
+                            <b>Close The Query Here</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body ng-scope">
+                    <form novalidate="" name="closequery" ng-submit="form.closequery()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtdescription" style="resize:vertical;" ng-hide="auditraisequery_status =='Closed'" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Description<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-hide="auditraisequery_status =='Closed'" ng-disabled="closequery.$invalid" ng-click="close_query()"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>&nbsp;&nbsp;
+                            <!--<button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>-->
+                        </div>
+                        <br />
+                        <div class="panel-body">
+                            <div class="table-responsive" ng-show="closequery_list">
+                                <div style="max-height:300px;overflow:auto;">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th>S.No</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Query Closed by</th>
+                                                <th>Closed Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in closequery_list" width="100%">
+                                                <td data-title="'S.No'">{{$index+1}}</td>
+                                                <td data-title="'Description'">{{data.closing_description}}</td>
+                                                <td data-title="'Status'">{{data.auditraisequery_status}}</td>
+                                                <td data-title="'Closed by'">{{data.updated_by}}</td>
+                                                <td data-title="'Closed Date'">{{data.updated_date}}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="text-center">
+                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br /><br />
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="/tagemployee.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-bolt"></em>&nbsp;Tag User</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form name="tagemployee" id="tagemployee" novalidate="" class="form-validate mb-lg" autocomplete="off">
+            <div class="pd-sm-10">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-sm-4 col-sm-4 col-sm-4">
+                            <label>Audit Name: </label>
+                        </div>
+                        <div class="col-sm-8 col-sm-8 col-sm-8">
+                            {{txtaudit_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label>Select User <span style="color:red">*</span></label>
+                        <select name="cboemployees" chosen="" tabindex="2" multiple="multiple"
+                                ng-options="m.employee_name for m in employee_list" required=""
+                                ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                    </div>
+                </div>
+                <br />
+
+                <div class="class">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="btnconfirm()" ng-disabled="tagemployee.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Confirm</span>
+                        </a>
+                        <a class="btn btn-danger" ng-click="ok()">
+                            <em class="fa fa-close"></em>
+                            <span>Cancel</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</script>
+
+<script type="text/ng-template" id="/showemployee.html">
+
+    <div class="panel-body text-center">
+        <div class="table-responsive">
+            <table class="table hover table-striped row-border">
+
+                <tbody>
+                    <tr>
+
+                        <td style="width:2%; text-align:left"><b> Employee Name : </b> <br /></td>
+                    </tr>
+                    <tr style="text-align: left;height:20px;">
+                        <td data-title="'Credit head'" style="width:2%; text-align:left"> {{employee_name}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div>
+            <div class="text-center">
+
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+
+
+
+
+
+

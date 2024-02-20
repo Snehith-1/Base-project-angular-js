@@ -1,0 +1,305 @@
+﻿<h3>
+    Region Head
+</h3>
+<div ng-controller="SysMstRegionHeadController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Region Head" ng-hide="lsoneapipage=='OneApi'" class="btn btn-info btn-sm" ng-click="addRegionHead()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Region Head
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th> One API Code</th>
+                                    <th> Region Name </th>
+                                    <th> Vertical Name </th>
+                                    <th> Program Name </th>
+                                    <th> Region Head </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th> Status </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in regionhead_list ">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'Region Name'">{{data.region_name}}</td>
+                                    <td data-title="'Vertical Name'">{{data.vertical_name}}</td>
+                                    <td data-title="'Program Name'">{{data.program_name}}</td>
+                                    <td data-title="'Region Head'">{{data.employee_name}}</td>
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Active' ng-click="editregionhead(data.regionhead_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Edit" ng-switch-when='Inactive' disabled class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Active' ng-click="Status_update(data.regionhead_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Inactive' ng-click="Status_update(data.regionhead_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addregionhead.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Region Head
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addregionhead" ng-submit="form.addregionhead()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Region Name <span style="color:red">*</span></label>
+                                <select name="cboclusters" id="cbovertical" ng-options="m.region_gid as m.region_name for m in region_list" chosen="" ng-change="OnchangeVertical(cbovertical,cboregion)"
+                                        ng-model="cboregion" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Region -----</option>
+                                </select>   
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Vertical Name <span style="color:red">*</span></label>
+                                <select name="cbovertical" id="cbovertical" ng-options="m.vertical_gid as m.vertical_name for m in vertical_list" chosen=""
+                                         ng-change="OnchangeVertical(cbovertical, cboregion)"
+                                        ng-model="cbovertical" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Vertical -----</option>
+                                </select>
+                            </div>  
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Program <span style="color:red">*</span></label>
+                                <select name="cboprogram" chosen="" tabindex="2"
+                                        ng-options="m.program_name for m in program_list" required=""
+                                        ng-model="cboprogram" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Employee Name <span style="color:red">*</span></label>
+                                <select name="location" chosen="" tabindex="2"
+                                        ng-options="m.employee_name for m in employee_list" required=""
+                                        ng-model="cboemployee" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+
+                    </div>
+                </div>
+                <div class="row">
+
+                </div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addregionhead.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/editregionhead.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Region Head
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editregionhead" ng-submit="form.editregionhead()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label>Region Name <span style="color:red">*</span></label>
+                                <select name="cboregionedit" id="cboregionedit" ng-options="m.region_gid as m.region_name for m in region_list" chosen=""
+                                        ng-model="cboregionedit" ng-change="OnchangeVertical(cboverticaledit,cboregionedit)" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Region -----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Vertical Name <span style="color:red">*</span></label>
+                                <select name="cboverticaledit" id="cboverticaledit" ng-options="m.vertical_gid as m.vertical_name for m in vertical_list" chosen=""
+                                        ng-model="cboverticaledit" class="chosen-select form-control" ng-change="OnchangeVertical(cboverticaledit,cboregionedit)" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Vertical -----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Program Name <span style="color:red">*</span></label>
+                                <select name="cboprogramedit" id="cboprogramedit" ng-options="m.program_gid as m.program_name for m in program_list" chosen=""
+                                        ng-model="cboprogramedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Program -----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Employee Name <span style="color:red">*</span></label>
+                                <select name="cboemployeeedit" id="cboemployeeedit" ng-options="m.employee_gid as m.employee_name for m in employee_list" chosen=""
+                                        ng-model="cboemployeeedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Employee Name -----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="editregionhead.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/regionheadstatus.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusregionhead" ng-submit="form.statusregionhead()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Region Head</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                {{txtemployee_name}}
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>Status  </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                        <span class="fa fa-circle"></span> Inactive
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statusregionhead.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="regionheadinactivelog_list!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in regionheadinactivelog_list" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}}</td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>   

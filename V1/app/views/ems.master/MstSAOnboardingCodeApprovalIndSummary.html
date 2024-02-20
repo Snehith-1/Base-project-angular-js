@@ -1,0 +1,143 @@
+﻿
+<h3>
+    SA Code Creation
+</h3>
+<div ng-controller="MstSAOnboardingCodeApprovalIndSummaryController">
+
+    
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel panel-default">
+
+
+                </div>
+                <div id="Code creation pending">
+                    <p style="color:#09385f;font-size: 17px;"><b>Individual Summary</b></p>
+                    <hr />
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="institution_pending()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label"
+                                 style="background-color:#838383;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    {{institution_count}}
+                                </b>
+                            </div>
+                            <b style="font-size: 14px;">Institution Pending</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="institution_completed()"
+                                style="width: 200px; height: 50px; border: 1px solid rgb(179, 177, 177); ">
+                            <div class="pull-right label"
+                                 style="background-color:#838383;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    {{institutioninitiated_count}}
+                                </b>
+                            </div>
+                            <b style="font-size: 14px;">Institution Completed</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+
+                        <button type="button" class="btn btn-labeled" ng-click="individual_pending()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                            <div class="pull-right label"
+                                 style="background-color:#838383;padding-top:5px;">
+                                <b>
+                                    {{individual_count}}
+                                </b>
+                            </div>
+                            <b style="font-size: 14px;">Individual Pending</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+
+                        <button type="button" class="btn btn-labeled" ng-click="individual_completed()"
+                                style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label"
+                                 style="background-color:#838383;padding-top:5px;padding-bottom:5px;">
+                                <b>
+                                    {{individualinitiated_count}}
+                                </b>
+                            </div>
+                            <b style="font-size: 14px;">Individual Completed</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-sm-6 col-md-12 " style="text-align:right;padding-top:20px;padding-right:80px;float:right">
+                        <button type="button" class="btn btn-success btn-xs" ng-click="IndividualCodePendingReport()" title="Export Excel"><i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <br /><br /><label style="background-color:white;left:90%;"> Export Excel </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th>SA Application ID </th>
+                                    <th>Samunnati Associate Name </th>
+                                    <th>SA Type</th>
+                                    <th>SA Entity Type</th>
+                                    <th> Referred By</th>
+                                    <th> Status</th>
+                                    <th> Renewal Status</th>
+                                    <th> Origination</th>
+                                    <th> RM Name</th>
+                                    <th>Approval By</th>
+                                    <th>Approval Date</th>
+                                    <th>Allocated By</th>
+                                    <th>Submitted Date</th>
+                                    <th> TAT </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in saOnboardSummary_list">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{data.sa_autogeneratedid}}</td>
+                                    <td>{{data.sa_firstname}} {{data.sa_middlename}} {{data.sa_lastname}}</td>
+                                    <td>{{data.satype_name}}</td>
+                                    <td>{{data.saentitytype_name}}</td>
+                                    <td>{{data.referred_by}}</td>
+                                    <td>{{data.approvalstatus}}</td>
+                                    <td>{{data.renewal_status}}</td>
+                                    <td>{{data.recordsource}}</td>
+                                    <td>{{data.created_by}}</td>
+                                    <td>{{data.approved_by}}</td>
+                                    <td>{{data.approved_date}}</td>
+                                    <td>{{data.sa_updated_by}}</td>
+                                    <td>{{data.sa_updated_date}}</td>
+                                    <td>{{data.sa_tat}}</td>
+
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="Edit" ng-click="saonboardingverification(data.sacontact_gid)" ng-show="data.code_created_flag == 'N'"
+                                                style="text-align: center;" class="btn btn-green">
+                                            <em class="fa fa-check-square-o"></em>
+                                        </button>
+                                        <button title="View" ng-click="viewIndividual(data.sacontact_gid)" ng-show="data.code_created_flag == 'Y'" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

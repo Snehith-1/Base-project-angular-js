@@ -1,0 +1,633 @@
+<h3>
+    Document Tagging
+    <a href="#/app/idasTrnDocumentTagging">
+        <button type="button" title="Back to Home" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="idasTrnDocumentTaggingViewController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Customer & Sanction Details
+        </div>
+        <div class="panel-body">
+            <br />
+            <div class="text-center text-primary" style="font-size: 20px;">
+                <label>{{customerName}}/{{Customerurn}}</label>
+            </div>
+            <br />
+            <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                <div class="row ">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <br />
+                        <p class="text-primary" style="font-size:16px;"><b>Customer Details</b></p>
+                        <hr />
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Contact Person</label>
+                            <br />
+                            <p style="font-size:14px;">{{ContactPerson}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label"> Mobile No </label>
+                            <br />
+                            <p style="font-size:14px;">{{mobileno}}/{{contactno}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label"> Constitution </label>
+                            <br />
+                            <p style="font-size:14px;">{{Constitution}}</p>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Cluster Manager</label>
+                            <br />
+                            <p ng-model="ClusterMgr" style="font-size:14px;">{{clusterManager}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Relationship Manager</label>
+                            <br />
+                            <p style="font-size:14px;">{{relationshipmgmt}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Vertical Code</label>
+                            <br />
+                            <p style="font-size:14px;">{{VerticalCode}}</p>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Credit Manager</label>
+                            <br />
+                            <p style="font-size:14px;">{{creditManager}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Zonal Head</label>
+                            <br />
+                            <p ng-model="zonalHeadName" style="font-size:14px;">{{zonalHeadName}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Business Head</label>
+                            <br />
+                            <p style="font-size:14px;">{{businessHeadName}}</p>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Email Address</label>
+                            <br />
+                            <p style="font-size:14px;">{{emailaddress}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Address Line1</label>
+                            <br />
+                            <p style="font-size:14px;">{{Address1}}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="col-form-label">Address Line 2</label>
+                            <br />
+                            <p style="font-size:14px;">{{Address2}}</p>
+                        </div>
+                        <div class="col-lg-4">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <p class="text-primary" style="font-size:16px;"><b>Credit Underwriting Document Upload</b></p>
+            <hr />
+            <div class="row dd-handle ng-scope">
+                <div class="row" ng-if="creditteam_flag=='Y'">
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="col-lg-3">
+                            <button type="button" ng-click="CreditFolder()" class="btn btn-warning btn-xs">
+                                <span class="fa fa-plus"></span>&nbsp;&nbsp;&nbsp;New Folder
+                            </button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" ng-click="CreditpopFileShow()" class="btn btn-info btn-xs">
+                                <span class="fa fa-plus"></span>&nbsp;&nbsp;New File
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <br />
+                    <div>
+                        <div>
+                            <table class="table m0">
+                                <thead>
+                                    <tr class="bg-gray-light text-white">
+                                        <th>Type</th>
+                                        <th>Name</th>
+                                        <th>Document Label</th>
+                                        <th style="width:30%;">Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th class="text-nowrap" style="width:8%;" ng-if="creditteam_flag=='Y'">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in CreditDocumentDtls_list|filter:searchtxt">
+                                        <td>
+                                            <em class="fa fa-folder text-warning fa-2x" ng-if="data.directory_type=='Folder'"></em>
+                                            <em class="fa fa-file text-info fa-2x" ng-if="data.directory_type=='File'"></em>
+                                        </td>
+                                        <td>
+                                            <a ng-if="data.directory_type=='Folder'"
+                                               ng-click="goCreditChild(data.creditfileupload_gid)">{{data.folder_name}}</a>
+                                            <a ng-if="data.directory_type=='File'" download="" href="" id="btnpdf" 
+                                               ng-click="downloadcreditdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                        </td>
+                                        <td>
+                                            {{data.documentlabel_name}}
+                                        </td>
+                                        <td style="width:30%;">
+                                           {{data.remarks}}
+                                        </td>
+                                        <td>
+                                            {{data.created_by}}
+                                        </td>
+                                        <td>
+                                            {{data.created_date}}
+                                        </td>
+                                        <td class="text-nowrap" ng-if="creditteam_flag=='Y'">
+                                            <button title="Rename" ng-if="data.directory_type=='File'" class="btn btn-green btn-sm"
+                                                    ng-click="RenameCreditFolder(data.creditfileupload_gid,data.directory_type,data.document_name)">
+                                                <em class="icon icon-pencil"></em>
+                                            </button>
+                                            <button title="Rename" ng-if="data.directory_type=='Folder'"
+                                                    class="btn btn-green btn-sm"
+                                                    ng-click="RenameCreditFolder(data.creditfileupload_gid,data.directory_type,data.folder_name)">
+                                                <em class="icon icon-pencil"></em>
+                                            </button>
+                                            <button title="Delete" class="btn btn-danger btn-sm"
+                                                    ng-click="DeleteCreditDocument(data.creditfileupload_gid)">
+                                                <em class="fa fa-trash"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <p class="text-primary" style="font-size:16px;"><b>Credit Operations Document Upload</b></p>
+            <hr />
+            <div class="row dd-handle ng-scope">
+                <div class="row" ng-if="creditoperationteam_flag=='Y'">
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="col-lg-3">
+                            <button type="button" ng-click="CreditOperationsFolder()" class="btn btn-warning btn-xs">
+                                <span class="fa fa-plus"></span>&nbsp;&nbsp;&nbsp;New Folder
+                            </button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" ng-click="CreditOperationspopFileShow()" class="btn btn-info btn-xs">
+                                <span class="fa fa-plus"></span>&nbsp;&nbsp;New File
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <br />
+                    <div>
+                        <div>
+                            <table class="table m0">
+                                <thead>
+                                    <tr class="bg-gray-light text-white">
+                                        <th>Type</th>
+                                        <th>Name</th>
+                                        <th>Document Label</th>
+                                        <th style="width:30%;">Remarks</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th class="text-nowrap" style="width:8%;" ng-if="creditoperationteam_flag=='Y'">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in CreditOperationsDocumentDtls_list|filter:searchtxt">
+                                        <td>
+                                            <em class="fa fa-folder text-warning fa-2x" ng-if="data.directory_type=='Folder'"></em>
+                                            <em class="fa fa-file text-info fa-2x" ng-if="data.directory_type=='File'"></em>
+                                        </td>
+                                        <td>
+                                            <a ng-if="data.directory_type=='Folder'"
+                                               ng-click="goCreditOperationsChild(data.creditoperationsfileupload_gid)">{{data.folder_name}}</a>
+                                            <a ng-if="data.directory_type=='File'" download="" href="" id="btnpdf" 
+                                               ng-click="downloadcreditoperationsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                        </td>
+                                        <td>
+                                            {{data.documentlabel_name}}
+                                        </td>
+                                        <td style="width:30%;">
+                                           {{data.remarks}}
+                                        </td>
+                                        <td>
+                                            {{data.created_by}}
+                                        </td>
+                                        <td>
+                                            {{data.created_date}}
+                                        </td>
+                                        <td class="text-nowrap" ng-if="creditoperationteam_flag=='Y'">
+                                            <button title="Rename" ng-if="data.directory_type=='File'" class="btn btn-green btn-sm"
+                                                    ng-click="RenameCreditOperationsFolder(data.creditoperationsfileupload_gid,data.directory_type,data.document_name)">
+                                                <em class="icon icon-pencil"></em>
+                                            </button>
+                                            <button title="Rename" ng-if="data.directory_type=='Folder'"
+                                                    class="btn btn-green btn-sm"
+                                                    ng-click="RenameCreditOperationsFolder(data.creditoperationsfileupload_gid,data.directory_type,data.folder_name)">
+                                                <em class="icon icon-pencil"></em>
+                                            </button>
+                                            <button title="Delete" class="btn btn-danger btn-sm"
+                                                    ng-click="DeleteCreditOperationsDocument(data.creditoperationsfileupload_gid)">
+                                                <em class="fa fa-trash"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p class="text-primary" style="font-size:16px;"><b>Archival Details</b></p>
+                    <hr />
+
+                    <table class="table m0">
+                        <thead>
+                            <tr class="bg-gray-light text-white">
+                                <th class="col-lg-1 text-center">S.No</th>
+                                <th class="col-lg-1">WorkItem Ref No.</th>
+                                <th class="col-lg-2">Mail Details</th>
+                                <th class="col-lg-2">Archival By</th>
+                                <th class="col-lg-2">Archival Date</th>
+                                <th class="col-lg-3">Remarks</th>
+                                <th class="col-lg-1">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <div class="dd-handle ng-scope" ng-repeat="data in Documentcustomer_list">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-1 text-center">
+                                    {{$index+1}}
+
+                                </div>
+                                <div class="col-lg-1">
+                                    {{data.workitemref_no}}
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+
+                                    {{data.email_from}}<br />
+                                    {{data.email_subject}}<br />
+                                    {{data.email_date}}
+
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    {{data.archival_by}}
+
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    {{data.archival_date}}
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <textarea name="specificcondition"
+                                              ng-model="data.remarks" class="form-control"
+                                              rows="3" disabled></textarea>
+                                </div>
+                                <div class="col-lg-1">
+
+                                    <br />
+                                    <a ng-hide="data.hide" ng-click="data.hide=true">
+                                        <button class="text-info" title="Click to View Mail Details"
+                                                ng-click="maildetails(data.email_gid,$index)">
+                                            <em class="fa fa-chevron-circle-down" style="font-size:14px;"></em>
+                                        </button>
+                                    </a>
+                                    <a ng-show="data.hide" ng-click="data.hide=false">
+                                        <button class="text-info" title="Click to Hide Mail Details">
+                                            <em class="fa fa-chevron-circle-up" style="font-size:14px;"></em>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div ng-show="data.hide" class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                <p ng-bind-html=trustAsHtml(data.email_content)></p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+                </div>
+            </div>
+            <br />
+            <div class="panel">
+                <div class="panel-body">
+                    <p class="text-primary" style="font-size:16px;"><b>General Document Upload</b></p>
+                    <hr />
+
+                    <div class="row dd-handle ng-scope">
+                        <div class="row" ng-if="cadteam_flag=='Y'">
+                            <br>
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    <!--  <button type="button" ng-click="PopupFolder()" class="btn btn-warning btn-xs">
+                                        <span class="fa fa-plus"></span>&nbsp;&nbsp;&nbsp;New Folder</button>
+                                     &nbsp;&nbsp;&nbsp;&nbsp; -->
+                                    <button type="button" ng-click="popFileShow()" class="btn btn-info btn-xs">
+                                        <span class="fa fa-plus"></span>&nbsp;&nbsp;New File
+                                    </button>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div>
+
+                            <!--  <ul class="breadcrumb">
+                                <li><a ui-sref="app.idasTrnDocumentUploadMain">Home</a>
+                                </li>
+                                <li ng-repeat="data in BreadCrumb_list| orderBy : '-serial_no'" ng-class="{active: $last}">
+                                   <a ng-click="goChild(data.fileupload_gid)">{{data.folder_name}}</a>
+
+                                </li>
+                             </ul> -->
+                        </div>
+                        <br />
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <br />
+                            <div>
+                                <div>
+                                    <table class="table m0">
+                                        <thead>
+                                            <tr class="bg-gray-light text-white">
+                                                <th>Type</th>
+                                                <th>Name</th>
+                                                <th>Document Label</th>
+                                                <th style="width:30%;">Remarks</th>
+                                                <th>Created By</th>
+                                                <th>Created Date</th>
+                                                <th class="text-nowrap" style="width:8%;" ng-if="cadteam_flag=='Y'">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in DocumentDtls_list|filter:searchtxt">
+                                                <td>
+                                                    <em class="fa fa-folder text-warning fa-2x" ng-if="data.directory_type=='Folder'"></em>
+                                                    <em class="fa fa-file text-info fa-2x" ng-if="data.directory_type=='File'"></em>
+                                                </td>
+                                                <td>
+
+                                                    <a ng-if="data.directory_type=='Folder'"
+                                                       ng-click="goChild(data.customerfileupload_gid)">{{data.folder_name}}</a>
+                                                    <a ng-if="data.directory_type=='File'" download="" href="" id="btnpdf" 
+                                                       ng-click="downloadsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                                </td>
+                                                <td>
+                                                    {{data.documentlabel_name}}
+                                                </td>
+                                                <td style="width:30%;">
+                                                    <textarea name="specificcondition"
+                                                              ng-model="data.remarks" class="form-control"
+                                                              rows="3" disabled></textarea>
+                                                </td>
+                                                <td>
+                                                    {{data.created_by}}
+                                                </td>
+                                                <td>
+                                                    {{data.created_date}}
+                                                </td>
+                                                <td class="text-nowrap" ng-if="cadteam_flag=='Y'">
+                                                    <button title="Rename" ng-if="data.directory_type=='File'" class="btn btn-green btn-sm"
+                                                            ng-click="RenameFolder(data.customerfileupload_gid,data.directory_type,data.document_name)">
+                                                        <em class="icon icon-pencil"></em>
+                                                    </button>
+                                                    <button title="Rename" ng-if="data.directory_type=='Folder'"
+                                                            class="btn btn-green btn-sm"
+                                                            ng-click="RenameFolder(data.customerfileupload_gid,data.directory_type,data.folder_name)">
+                                                        <em class="icon icon-pencil"></em>
+                                                    </button>
+                                                    <button title="Delete" class="btn btn-danger btn-sm"
+                                                            ng-click="deleteDocument(data.customerfileupload_gid)">
+                                                        <em class="fa fa-trash"></em>
+                                                    </button>
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <p class="text-primary" style="font-size:16px;"><b>Sanction Details</b></p>
+                    <hr />
+                    <div class="row dd-handle ng-scope">
+                        <div class="col-lg-12">
+                            <table class="table m0">
+                                <thead>
+                                    <tr class="bg-gray-light text-white">
+                                        <th class="col-sm-1">Type</th>
+                                        <th class="col-sm-2">Sanction Ref.No</th>
+                                        <th class="col-sm-2">Sanction Date</th>
+                                        <th class="col-sm-2">Sanction Amount</th>
+                                        <th class="col-sm-2">Created By</th>
+                                        <th class="col-sm-2">Created Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in sanction_list|filter:searchtxt">
+                                        <td>
+                                            <em class="fa fa-folder text-warning fa-2x"></em>
+
+                                        </td>
+                                        <td>
+                                            <a ng-click="viewcustomersancdocument(data.customer2sanction_gid)">{{data.sanctionref_no}}</a>
+                                        </td>
+
+                                        <td>
+                                            {{data.sanction_date}}
+                                        </td>
+                                        <td>
+                                            {{data.sanction_amount}}
+                                        </td>
+                                        <td>
+                                            {{data.created_by}}
+                                        </td>
+                                        <td>
+                                            {{data.created_date}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <br /><br />
+
+                </div>
+            </div>
+            <br />
+            <div class="text-center">
+                <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+            <script type="text/ng-template" id="/myModalContent.html">
+                <md-toolbar>
+                    <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                        <h2><em class="fa fa-plus"></em>&nbsp;Create Folder</h2>
+                        <span flex></span>
+                    </div>
+                </md-toolbar>
+                <div class="modal-body ng-scope">
+                    <form name="createfolderform" ng-submit="form.submitForm1()" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="controls">
+                            <input type="text" name="folder_name" ng-model="folderName" ng-keyup="foldername(folderName)" maxlength="130" placeholder="Enter the Folder Name" class="form-control" />
+                            <label style="color:red;">{{message}}</label>
+                        </div>
+
+                        <div class="row text-center">
+                            <button type="button" ng-click="createFolder()" ng-disabled="!folderName" class="btn btn-primary">Create</button>&nbsp;
+                            <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                        </div>
+
+                    </form>
+                </div>
+            </script>
+            <script type="text/ng-template" id="/myModalContent1.html">
+                <md-toolbar>
+                    <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                        <h2><em class="fa fa-pencil"></em>&nbsp;Rename</h2>
+                        <span flex></span>
+                    </div>
+                </md-toolbar>
+                <div class="modal-body ng-scope">
+                    <!-- <strong>
+                       <h3 class="mt0">Rename</h3>
+                    </strong> -->
+                    <div class="controls">
+                        <input type="text" name="renameFolder" ng-model="renameFolder" ng-keyup="folderrename(renameFolder)" maxlength="130" class="form-control" />
+                        <label style="color:red;">{{message1}}</label>
+                    </div>
+                    <br>
+                    <div class="row text-center">
+                        <button type="button" ng-click="renameSave()" ng-disabled="!renameFolder" class="btn btn-primary">Save</button>&nbsp;
+                        <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="/Documentuploadcontent.html">
+                <md-toolbar>
+                    <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                        <h2><em class="fa fa-plus"></em>&nbsp;Document Upload</h2>
+                        <span flex></span>
+
+                    </div>
+                </md-toolbar>
+
+                <div class="modal-body ng-scope">
+                    <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <label>Document Label <span style="color:red"> * </span></label>
+                                <select id="documentlabelname" name="document_lblname" chosen="" ng-options="m.documentlabel_name for m in document_labellist"
+                                        ng-model="documentlabel_gid" class="chosen-select form-control" required>
+                                    <option value=""> -------- Select Document Label --------</option>
+                                </select>
+                            </div>
+                            <br /> <br /> <br /><br />
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <label>Remarks</label>
+                                <textarea ng-model="remarks" id="remarks" placeholder="Enter the Remarks" rows="4" class="form-control"
+                                          ng-trim="false" aria-multiline="true" aria-invalid="true"></textarea>
+                            </div>
+                            <br /><br /> <br /><br /><br /><br /><br /><br />
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <p>
+                                    <input type="file" id="file" multiple />
+                                </p>
+                                <p id="fp"></p>
+                            </div>
+                        </div>
+                        <br />
+                        <div clas="row">
+                            <div class="text-center">
+                                <button type="button" ng-click="uploadfile()" class="btn btn-info" ng-disabled="documentAddform.$invalid">
+                                    <span class="fa fa-upload"></span>&nbsp;&nbsp;Upload
+                                </button>
+                                <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                                <br /><br />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </script>
+        </div>
+    </div>
+</div>

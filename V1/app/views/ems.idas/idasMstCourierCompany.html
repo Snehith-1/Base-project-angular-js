@@ -1,0 +1,204 @@
+<h3>
+   Courier Company
+</h3>
+<div ng-controller="IdasMstCourierCompanyController">
+    <div>
+
+        <button title="Add Courier Company" class="btn btn-info btn-sm"
+                ng-click="addCourier()">
+            <em class="fa fa-plus"></em>&nbsp;Add Courier Company
+        </button>
+
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+    
+                            Show <input ng-model="pagecount" id="pagecount" type="number" />
+                            <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+    
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <table ng-table="tableParams2" class="table hover table-striped ">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                           <th style="display:none" width="5%">S.No</th>
+                         <th width="10%">Courier Company Code</th>
+                          <th width="15%" align="left">Courier Company Name</th>
+                           <th width="20%" align="left">Description</th>
+                         
+                          <th width="5%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in couriercompany_list| filter : searchtxt | limitTo:totalDisplayed">
+                           <td style="display:none">{{$index+1}}</td>
+                            <td data-title="Courier Company Code" align="center">{{data.couriercompany_code}}</td>
+                            <td data-title="Courier Company Name">{{data.couriercompany_name}}</td>
+                           <td data-title="Description">{{data.description}}</td>
+                          
+                            <td>
+                                <button title="Edit" class="btn btn-green btn-sm"
+                                        ng-click="edit(data.couriercompany_gid,data.couriercompany_name,data.description)">
+                                    <em class="icon icon-pencil"></em>
+                                </button>
+                                <button title="Delete" class="btn btn-danger btn-sm"
+                                        ng-click="delete(data.couriercompany_gid)">
+                                    <em class="fa fa-trash"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/addDocumentModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Add Courier Company</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="mda-form-group float-label">
+                                      
+                                        <label>Courier Company Name * </label>
+                                        <input type="text" ng-model="couriercompany_name" maxlength="512" tabindex="0" class="form-control" required />
+        
+                                    </div>
+                               
+                                </div>
+
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="mda-form-group float-label">
+                                       
+                                        <label>Description </label>
+                                        <textarea ng-model="description" placeholder="Enter the Description" rows="4" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="Submit()" ng-disabled="documentAddform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Submit</span>
+                                </a>
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+   
+    <script type="text/ng-template" id="/editDocumentModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Edit Courier Company</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="documentEditform" id="documentEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                      
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="mda-form-group">
+                                        <label>Courier Company Name * </label>
+                                        <input type="text" ng-model="courierNameEdit" maxlength="512" tabindex="0" class="form-control" required />
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="mda-form-group">
+                                       
+                                        <label>Description </label>
+                                        <textarea ng-model="descriptionEdit" placeholder="Enter the Description" rows="4" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="text-center">
+                                <a class="btn btn-success" ng-click="Update()" ng-disabled="documentEditform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Update</span>
+                                </a>
+                                <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>    
+    
+</div>

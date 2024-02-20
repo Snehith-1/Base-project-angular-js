@@ -1,0 +1,140 @@
+﻿<h3>
+    Deployment
+</h3>
+<div ng-controller="sdcTrnDeploymentSummaryController">
+
+    <div class="row">
+        <div class="col-lg-11 col-sm-11 col-md-11">
+            <button title="Add Deployment" class="btn btn-info btn-sm"
+                    ng-click="addDeployment()">
+                <em class="fa fa-plus"></em>&nbsp;Add Deployment
+            </button>
+        </div>
+        <div class="col-lg-1 col-sm-1 col-md-1">
+            <button title="Move to UAT" class="btn btn-info btn-sm"
+                    ng-click="movetoUATAll()">
+                <em class="fa fa-arrow-circle-right"></em>&nbsp;UAT
+                <!--<em class="fa fa-plus"></em>&nbsp;UAT-->
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+
+                        <table datatable="ng" class="table table-striped row-border hover">
+                            <thead >
+                                <tr class="bg-indigo-300">
+                                    <th style="color:white; width:10%"><input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);"> Check All</th>
+                                    <th style="color:white;">S.No</th>
+                                    <th style="color:white;">Module Prefix</th>
+                                    <th style="color:white;">Objective</th>
+                                    <th style="color:white;">Version</th>
+                                    <th style="color:white;">Description</th>
+                                    <th style="color:white;">Created By</th>
+                                    <th style="color:white;">Status</th>
+                                    <th style="color:white;">Deployed By</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="data in testsummary_list" ng-switch on="(data.uat_flag=='N')&&(data.testdeploy_flag=='Y')" >
+                                    
+                                    <td style="text-align:center;" ng-switch-when="true">
+                                        <input style="width:20%" type="checkbox" id="c1" ng-click="demo(data.checked)"
+                                               value={{data.checked}} ng-model="data.checked">
+                                    </td>
+                                    <td style="text-align:center;" ng-switch-when="false" >      
+                                        <input ng-disabled="true" style="width:20%" type="checkbox" id="c1">
+                                    </td>
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'CustomerCode'">{{data.module_prefix}}</td>
+                                    <td data-title="'CustomerName'">{{data.test_objective}}</td>
+                                    <td data-title="'CustomerCity'">{{data.version_major}}.{{data.version_enhancement}}.{{data.version_patch}}.{{data.version_bug}}</td>
+                                    <td data-title="'Test_description'">{{data.test_description}}</td>
+                                    <td data-title="'created_by'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="'CustomerState'">{{data.test_status}}</td>
+                                    <td data-title="'created_by'">{{data.deployed_by}}</td>
+                                    <td ng-switch="data.testinprogress_flag" style="white-space:nowrap;">
+                                        <button title="View" ng-click="testview(data.test_gid)" class="btn btn-info" tabindex="0">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <button ng-switch-when="N" title="Delete" class="btn btn-danger" ng-click="delete(data.test_gid)" tabindex="0">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                        <label ng-switch on="(data.uat_flag =='N') && (data.testdeploy_flag =='Y')">
+                                            <button ng-switch-when="true" type="button" title="Move to UAT" class="btn btn-sm btn-info" style="font-size:10px;"
+                                                    ng-click="movetoUAT(data.test_gid)">
+                                                <b>UAT</b>
+                                            </button>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+              
+                <br />
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/updateUatStatus.html">
+        <div class="modal-header text-center bg-info">
+            <h4 id="myModalLabel" class="modal-title">Deployment Status</h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form name="updateformsubmit" ng-submit="form.updateformsubmit()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+
+                <br />
+                <div class="row text-center">
+                    Before update the status...
+                    <br />
+                    Please be confirm that, all files has been included such as new pages and new reports. And scripts were executed on the respected servers.
+                </div>
+                <br /><br />
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="mb">
+                            <label class="mda-radio">
+                                <input type="radio" name="statusDep" ng-model="statusDeployed" ng-value="'Deployed'" required />
+                                <em class="bg-indigo-500"></em>Deployed
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <label class="mda-checkbox ">
+                            <input type="checkbox" checked="" ng-model="mail" />
+                            <em class="bg-purple-500"></em>Send mail to the requester
+                        </label>
+                    </div>
+                </div>
+
+                <br />
+                <div class="modal-footer">
+                    <button type="button" ng-disabled="updateformsubmit.$invalid" class="btn btn-success" ng-click="TestStatus()">Submit</button>
+                    <button ng-click="cancel()" class="btn btn-danger">Close</button>
+                </div>
+
+            </form>
+        </div>
+    </script>
+   </div>
+
+
+
+

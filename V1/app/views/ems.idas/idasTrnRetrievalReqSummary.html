@@ -1,0 +1,610 @@
+<h3>
+    Record Retrieval
+</h3>
+<div ng-controller="idasTrnRetrievalReqSummary as dp">
+    <div class="widget">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-indigo-700">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-indigo-900 pv-lg">
+
+                            <em class="fa fa-dropbox fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger">{{ReqCount}}</div>
+                            <div style="font-size:14px;">Retrieval Request</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-teal-500 ">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-teal-700  pv-lg">
+
+                            <em class="icon icon-doc  fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger">{{PermanentCount}}</div>
+                            <div style="font-size:14px;">Retrieved - Permanent</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-blue-400">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-blue-700 pv-lg">
+
+                            <em class="fa fa-share-square-o fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger">{{TempCount}}</div>
+                            <div style="font-size:14px;">Retrieved - Temporary</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <!-- START date widget-->
+                <div class="panel widget">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-gray-dark pv-lg">
+                            <em class="fa fa-clock-o fa-3x"></em>
+
+                        </div>
+                        <div class="col-xs-8 pv-lg bg-grey-200">
+
+
+                            <now format="EEEE" class="text-sm"></now>
+
+                            <now format="h:mm" class="h4 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-sm-3 col-md-3">
+                <div >
+                    <div>
+                        <!-- <div class="pull-left">
+                            <span class="fa-stack">
+                                <em class="fa fa-circle fa-stack-2x text-info"></em>
+                                <em class="fa fa-plus fa-stack-1x fa-inverse text-white"></em>
+                            </span>
+                        </div> -->
+                        <button title="Create Retrieval Request" class="btn btn-info btn-sm" ng-click="createRetrievalReq()">
+                            <em class="fa fa-plus"></em>&nbsp;Create Retrieval Request
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <!-- <div class="media-box-body clearfix" ng-click="createRetrievalReq()">
+
+                            <div class="media-box-heading">
+                                <div class="text-info m0">Create Retrieval Request</div>
+                            </div>
+
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <tabset justified="true">
+                <tab id="id1" select="tab.activeTabId = 'req'" active="tabreq">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Retrieval Request
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedReq}} of {{ReqCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="$parent.pagecountReq" id="pagecountreq" type="number" />
+                                <button class="btn" id="loadmorereq" ng-click="loadMoreReq(pagecountReq)">Load More</button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtReq" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="1%" style="display: none;">
+                                        S.No
+                                    </th>
+                                    <th width="10%">Request Ref No</th>
+                                    <th width="18%">Request Created By/On</th>
+                                    <th width="10%">Requested Date</th>
+                                    <th width="10%">Approval Date</th>
+                                    <th width="10%">Retrieval Type</th>
+                                    <th width="15%">Retrieval Reason</th>
+                                    <!-- <th width="10%" style>File Count</th> -->
+                                    <th width="10%">
+                                        Status
+                                    </th>
+                                    <th width="10%" align="center">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in reqsummary_list| filter : searchtxtReq | limitTo:totalDisplayedReq">
+                                    <td style="display: none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        {{data.retrievalrequest_gid}}
+                                    </td>
+                                    <td>
+                                        {{data.user_name}} /<br>
+                                        {{data.created_date}}
+                                    </td>
+                                    <td data-title="Requested Date">{{data.requested_date}}</td>
+
+                                    <td data-title="Approval Date">{{data.approved_date}}</td>
+
+                                    <td data-title="Retrived Type" width="5px">{{data.retrieval_type}}</td>
+                                    <td data-title="Request For">{{data.requested_for}}</td>
+
+                                    <!-- <td data-title="File Count" align="center">
+                                        {{data.total_count}}
+                                    </td> -->
+                                    <td align="center">
+                                        <label title="File Status"
+                                            class="label label-success " ng-if="data.documentretrieved_status!='Pending'">{{data.documentretrieved_status}}</label>
+                                            <label title="File Status"
+                                            class="label label-danger " ng-if="data.documentretrieved_status=='Pending'">{{data.documentretrieved_status}}</label>
+                                    </td>
+                                    <td data-title="'Action'" align="center">
+                                        <button title="Document Received"
+                                            ng-click="Docdtlsview(data.retrievalrequest_gid)" class="btn btn-pink">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                </tab>
+                <tab id="id2" select="tab.activeTabId = 'permanent'" active="tabpermanent">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Retrieved - Permanent
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedPermanent}} of {{PermanentCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecountperm" id="pagecountperm" type="number" />
+                                <button class="btn" id="loadmoreperm" ng-click="loadMorePermanent(pagecountperm)">Load More</button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtPerm" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2"class="table hover table-striped ">
+
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <tr class="bg-primary-light text-white">
+                                        
+                                        <th width="1%" style="display: none;">
+                                            S.No
+                                        </th>
+                                        <th width="10%">Request Ref No</th>
+                                        <th width="10%">Request On/By</th>
+                                        <th width="10%">Received On/By</th>
+                                        <th width="15%">Vendor / Contact Person</th>
+                                        <th width="15%">URN/Customer Name</th>
+                                        <th width="10%">File Stamp Ref No.</th>
+                                        <th width="10%">Box Stamp Ref No</th>
+                                        <th  width="10%" align="center">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in permanent_list| filter : searchtxtPerm | limitTo:totalDisplayedPermanent">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    
+                                    <td>
+                                        {{data.retrievalrequest_gid}}
+                                    </td>
+                                    <td>
+                                        {{data.requested_date}}/{{data.requestedby_name}}
+                                    </td>
+                                    <td>
+                                        {{data.documentreceived_date}}/
+                                       {{data.documentreceivedto_name}}
+                                    </td>
+                                   
+                                    <td data-title="Vendor/Contact Person">
+                                        Crown/{{data.contactperson_name}}
+                                    </td>
+                                    <td data-title="URN/Customer Name">{{data.customer_name}}</td>
+                                   
+                                    <td >
+                                     {{data.filestampref_no}}
+                                    </td>
+                                    <td>
+                                        {{data.boxstampref_no}}
+                                    </td>
+                                    <td data-title="Action" align="center">
+                                      
+                                        <button title="Document Received"
+                                        ng-click="Docdtlsview(data.retrievalrequest_gid)" class="btn btn-pink">
+                                        <em class="fa fa-retweet"></em>
+                                    </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </tab>
+                <tab id="id3" select="tab.activeTabId = 'temporary'" active="tabtemporary">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Retrieved - Temporary
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                  
+                                    <button title="Create Re-Despatch" class="btn btn-info btn-sm"
+                                            ng-click="createDespatch()">
+                                        <em class="fa fa-plus"></em>&nbsp;Create Re-Despatch
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div >
+                        <div class="row" ng-show="IsCreate">
+                            <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span>Create Re-Despatch
+
+                                        <div class="pull-right ">
+                                            <span class="btn-label btn-danger">
+                                                <i class="fa fa-close" title="Close" ng-click="close()"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body bg-gray-lighter">
+                                        <div class="pd-sm-10">
+                                            <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Re-Despatch Ref No. &nbsp;<span style="color:red">*</span></label>
+                                                            <br />
+                                                            <label ng-model="user.vendorName" style="color:brown;">Auto Generated</label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Vendor </label>
+                                                            <br />
+                                                          <label ng-model="user.vendorName" style="color:brown;">Crown</label>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <label class="col-form-label">Re-Despatched Date &nbsp;<span style="color:red">*</span></label>
+                                                            <p class="input-group">
+                                                                <input type="text" datepicker-popup="{{dp.format}}" ng-model="user.txtDespatchDate" is-open="dp.openDespatch"
+                                                                       datepicker-options="dp.dateOptions" ng-required="true"
+                                                                       close-text="Close" class="form-control" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="dp.calenderDespatch($event)" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                       
+                                                     
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                                        <div class="col-lg-4 ">
+                                                            <label class="col-form-label">Vendor Contact Person &nbsp;<span style="color:red">*</span></label>
+                                                            <br />
+                                                            <input ng-model="user.contactPerson" tabindex="0" maxlength="128"
+                                                                   required aria-required="true" aria-invalid="true"
+                                                                   class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" >
+                                                        </div>
+                                                       <div class="col-lg-4  form-group float-label">
+                                                            <label class="col-form-label">Re-Despatched By &nbsp;<span style="color:red">*</span></label>
+                                                            <br />
+                                                            <input ng-model="user.DespatchedBy" tabindex="0" maxlength="128"
+                                                            required aria-required="true" aria-invalid="true"
+                                                            class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"> 
+                                                  
+                                                            <!-- <select id="employee" name="employee" chosen=""
+                                                            ng-options="m.employee_name for m in employee_data"
+                                                            ng-model="$parent.cboemployeegid" class="chosen-select form-control" required>
+                                                            <option value=""> ---Select Re-Despatched By--- </option>
+                                                        </select> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                              
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                                        <div class="col-lg-12">
+                                                            <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                                                            <textarea ng-model="user.despatchRemarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea></div>
+
+                                                    </div>
+                                                </div>
+                                               
+                                                <br />
+                                                <div>
+                                                    <div class="text-center">
+                                                        <a class="btn btn-success" ng-click="DespatchSubmit()" ng-disabled="documentAddform.$invalid">
+                                                            <em class="fa fa-check"></em>
+                                                            <span>Submit</span>
+                                                        </a>
+                                                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedTemp}} of {{TempCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecounttemp" id="pagecounttemp" type="number" />
+                                <button class="btn" id="loadmoretemp" ng-click="loadMoreTemp(pagecounttemp)">Load More</button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtTemp" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="8%">Check All <br /> 
+                                        <input type="checkbox" id="c4" ng-model="allRedespatch" ng-change="checkallRedespatch(allRedespatch);" /></th>
+
+                                    <th width="1%" style="display: none;">
+                                        S.No
+                                    </th>
+                                    <th width="10%">Request Ref No</th>
+                                    <th width="10%">Request On/By</th>
+                                    <th width="10%">Received On/By</th>
+                                    <th width="15%">Vendor / Contact Person</th>
+                                    <th width="15%">URN/Customer Name</th>
+                                    <th width="10%">File Stamp Ref No.</th>
+                                    <th width="10%">Box Stamp Ref No</th>
+                                    <th  width="10%" align="center">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in temp_list| filter : searchtxtTemp | limitTo:totalDisplayedTemp">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="c3" ng-disabled="data.ensure_flag=='N'"
+                                        value={{data.checked}} ng-model="data.checked">
+                                    </td>
+                                    <td>
+                                        {{data.retrievalrequest_gid}}
+                                    </td>
+                                    <td>
+                                        {{data.requested_date}}/{{data.requestedby_name}}
+                                    </td>
+                                    <td>
+                                        {{data.documentreceived_date}}/
+                                       {{data.documentreceivedto_name}}
+                                    </td>
+                                   
+                                    <td data-title="Vendor/Contact Person">
+                                        Crown/{{data.contactperson_name}}
+                                    </td>
+                                    <td data-title="URN/Customer Name">{{data.customer_name}}</td>
+                                   
+                                    <td >
+                                     {{data.filestampref_no}}
+                                    </td>
+                                    <td>
+                                        {{data.boxstampref_no}}
+                                    </td>
+                                    <td data-title="'Action'" align="center">
+                                        <button title="Ensure"
+                                            ng-click="ensure(data.retrievalrequestdtls_gid)" ng-if="data.ensure_flag=='N'" class="btn btn-primary">
+                                            <em class="icon icon-check"></em>
+                                        </button>
+                                        <button title="Document Received"
+                                        ng-click="Docdtlsview(data.retrievalrequest_gid)" class="btn btn-pink">
+                                        <em class="fa fa-retweet"></em>
+                                    </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </tab>
+                <tab id="id4" select="tab.activeTabId = 'redespatch'" active="tabredespatch">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Re-Despatch
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedDespath}} of {{DespatchCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecountdespatch" id="pagecountdespatch" type="number" />
+                                <button class="btn" id="loadmoredespatch" ng-click="loadMoredespatch(pagecountdespatch)">Load More</button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtDespatch" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                   
+                                    <th width="1%" style="display: none;">
+                                        S.No
+                                    </th>
+                                    <th width="10%">Re-Despatch Ref No</th>
+                                    <th width="10%">Re-Despatch Date</th>
+                                    <th width="10%">Created On/By</th>
+                                    <th width="15%">Vendor / Contact Person</th>
+                                    <th  width="10%" align="center">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in redespatch_list| filter : searchtxtDespatch | limitTo:totalDisplayedDespatch">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    
+                                    <td>
+                                        {{data.redespatch_gid}}
+                                    </td>
+                                    <td>
+                                        {{data.redespatched_date}}
+                                    </td>
+                                    <td>
+                                        {{data.created_date}}/{{data.created_by}}
+                                    </td>
+                                    
+                                    <td data-title="Vendor/Contact Person">
+                                        Crown/{{data.contact_person}}
+                                    </td>
+                                   
+                                    <td data-title="'Action'" align="center">
+                                       
+                                        <button title="Re-Despatch"
+                                        ng-click="ReDespatchdtlsview(data.redespatch_gid)" class="btn btn-pink">
+                                        <em class="fa fa-retweet"></em>
+                                    </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </tab>
+                   
+            </tabset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+﻿<h3>
+    Submitted to AC
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 48px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 56px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="AgrMstSuprApplSubmittedtoCCSummaryController">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            <div class="tab nowrap">
+                <button class="tablinks" ng-click="pending_applications()" style="color:#141478;font-size:13px">
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 15px;"></em> &nbsp;  Pending Assignment
+                    &nbsp; <div class="pull-right label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{pending_count}}</div>
+                </button>
+                <button class="tablinks" ng-click="assigned_applications()" style="color:#871490;font-size:13px">
+                    <em class="fa fa-group fa-x" style="color:#871490;font-size: 15px;"></em> &nbsp;  Assigned Application
+                    &nbsp; <div class="pull-right label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{assigned_count}}</div>
+                </button>
+                <button class="tablinks" onclick="openApplication(event, 'Submitted to CC')" id="defaultOpen" ng-click="submittedto_cc()" style="color:#00796b;font-size:13px">
+                    <em class="fa fa-file-text fa-x" style="color:#00796b;font-size: 15px;"></em> &nbsp; Submitted to AC
+                    &nbsp; <div class="pull-right label" style="background-color:#00796b;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{submittedtocc_count}}</div>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:50px;">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:6px;">
+                            <div class="pull-right label" style="background-color:#C10B68;padding-top:6px;padding-bottom:4px;font-size:8px;">{{lstotalcount}}</div>
+                            <div style="font-size:14px;color:#C10B68;"><b> Total Applications </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel" id="Submitted to CC">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;" class="text-center"> S.No</th>
+                                    <th> Submitted Date </th>
+                                    <th> Submitted By </th>
+                                    <th> Reference Number</th>
+                                    <!--<th> Applicant Name </th>-->
+                                    <th> Customer/Supplier Name </th>
+                                    <<!--th> Vertical</th>-->
+                                    <th> Region</th>
+                                    <!--<th> Credit Group</th>-->
+                                    <th> AC Submitted By</th>
+                                    <th> AC Submitted Date</th>
+                                    <!--<th> Overall Limit </th>-->
+                                    <th> Approved Date</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in submittedtocc_list">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Submitted Date'">{{data.created_date}}</td>
+                                    <td data-title="'Submitted By'"> {{data.created_by}} </td>
+                                    <td data-title="'Reference Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.customer_name}} </td>
+                                    <!--<td data-title="'Vertical'"> {{data.vertical_name}} </td>-->
+                                    <td data-title="'Region'"> {{data.region}} </td>
+                                    <!--<td data-title="'Credit Group'"> {{data.creditgroup_name}} </td>-->
+                                    <td data-title="'AC Submitted By'"> {{data.creditassigned_by}} </td>
+                                    <td data-title="'AC Submitted Date'"> {{data.creditassigned_date}} </td>
+                                    <!--<td data-title="'Overall Limit'"> {{data.overalllimit_amount}} </td>-->
+                                    <td data-title="'Approved Date'"> {{data.headapproval_date}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="applcreation_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <!--<button title="Assessed Score" ng-click="GradingTool_add(data.application_gid)" class="btn btn-primary">
+                                            <em class="fa fa-asterisk"></em>
+                                        </button>
+                                        <button title="Visit Updates" ng-click="VisitReport_add(data.application_gid)" class="btn btn-danger">
+                                            <em class="fa fa-file-pdf-o"></em>
+                                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+    <script type="text/ng-template" id="/assign.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="icon-user-follow"></em>&nbsp;<label style="font-size:16px">Assign Application</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="assignform" ng-submit="form.submitassign()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>Product Credit Group <span style="color:red"> *</span> </label>
+                                        <select name="creditgroup" id="creditgroup" ng-options="m.creditgroup_gid as m.creditgroup_name for m in creditgrouplist" ng-change="creditgroup_change(cbocreditgroup)"
+                                                ng-model="cbocreditgroup" class="form-control " chosen="">
+                                            <option value=""> </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> Credit Manager - CM (L1) <span style="color:red"> *</span> </label>
+                                        <select name="creditmanager" id="creditmanager" chosen="" ng-options="m as m.employee_name for m in creditmanagerlist track by m.credit2creditmanager_gid"
+                                                ng-model="cbocreditmanager" class="form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> Regional Credit Manger - RCM (L2) <span style="color:red"> *</span> </label>
+                                        <select name="regionalcredit" id="regionalcredit" chosen="" ng-options="m as m.employee_name for m in regionalcreditlist track by m.creditr2regionalmanager_gid"
+                                                ng-model="cboregionalcredit" class="form-control" required></select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> National Credit Manager - NCM (L3) <span style="color:red"> *</span> </label>
+                                        <select name="nationalcredit" id="nationalcredit" chosen="" ng-options="m as m.employee_name for m in nationalcreditlist track by m.credit2nationalmanager_gid"
+                                                ng-model="cbonationalcredit" class="form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> Credit Head - CH (L4) <span style="color:red"> *</span> </label>
+                                        <select name="credithead" id="credithead" chosen="" ng-options="m as m.employee_name for m in creditheadlist track by m.credit2credithead_gid"
+                                                ng-model="cbocredithead" class="form-control" required></select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> Remarks </label>
+                                        <textarea ng-model="txtremarks" rows="2" class="form-control" style="resize:vertical;"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="assignform.$invalid" ng-click="assign_application()"><i class="fa fa-check"></i>&nbsp;&nbsp;Assign</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

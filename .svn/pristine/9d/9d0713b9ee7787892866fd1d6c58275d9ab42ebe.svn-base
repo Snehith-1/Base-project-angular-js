@@ -1,0 +1,383 @@
+﻿<h3>
+    Deferral Management
+</h3>
+<div id="defid" ng-controller="deferralManagement">
+    <div>
+        <button type="button" title="Create Deferral" class="btn btn-success btn-sm" ng-click="popupdeferral()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE DEFERRAL
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>ENTITY</th>
+                                    <th>BRANCH</th>
+                                    <th>CUSTOMER</th>
+                                    <th>VERTICAL</th>
+                                    <th>LOAN REF NO</th>
+                                    <th>RECORD ID</th>
+                                    <th>TRACKING TYPE</th>
+                                    <th>DEFERRAL TYPE</th>
+                                    <th>CREATED BY</th>
+                                    <th>CREATED DATE</th>
+                                    <th >DUE DATE</th>
+                                    <th>EXTENDED DATE</th>
+                                    <th>DEFERRAL STAGE</th>
+                                    <th>CHECKER STATUS</th>
+                                    <th>DEFERRAL STATUS</th>
+                                   
+                                    <th>AGING</th>
+                                  
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.checker_status" ng-repeat="data in deferral_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Entity'">{{data.entity_name}}</td>
+                                    <td data-title="'Branch'">{{data.branch_name}}</td>
+                                    <td data-title="'Customer'">{{data.customername}}</td>
+                                    <td data-title="'Customer'">{{data.vertical_code}}</td>
+                                    <td class="nowrap" data-title="'Loan Ref No'" >{{data.loanTitle}}</td>
+                                    <td data-title="'Record Id'">{{data.record_id}}</td>
+                                    <!--<td data-title="'Deferral Name'">{{data.deferral_name}}</td>-->
+                                    <!--<td data-title="'Catagory'">{{data.deferral_catagory}}</td>-->
+                                    <td data-title="'Tracking Type'">{{data.tracking_type}}</td>
+                                    <td data-title="'Deferral Type'">{{data.deferral_name}}</td>
+                                    <td data-title="'Created Date'">{{data.Created_by}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.duedate}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.extended_date}}</td>
+                                    <td data-title="'Deferral Status'">{{data.approval_status}}</td>
+                                    <td ng-switch-when="Pending" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="Approved" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="Closed"  data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="N/A" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="PushBack" style="color:orangered;font-weight:bold;" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td data-title="'Deferral Status'">{{data.deferral_status}}</td>
+                                   
+                                    <td data-title="'Deferral Status'">{{data.aging}}</td>
+                             
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Edit" ng-click="edit(data.deferral_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button title="View Details" ng-click="popupView(data.deferral_gid)" class="btn bg-light-blue-600">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.deferral_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END panel-->
+            </div>
+        </div>
+        <script type="text/ng-template" id="/myModalContentCreate.html">
+            <div class="modal-header bg-green-200">
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-green-200">
+                        <i class="fa fa-plus"></i>
+                    </span>CREATE DEFERRAL
+                </h4>
+            </div>
+            <form novalidate="" id="userform" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">
+                <div class="modal-body" style="padding-right:40px;">
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                    <div class="col-lg-12">
+                                        <label>Customer *</label>
+                                        <select name="customer" dropzone="" ng-model="customer" class="mda-form-control" ng-change="onselectedchangecustomer(customer)" required="">
+                                            <option value="">-----Select Customer----</option>
+                                            <option data-ng-repeat="data in customer_list" value="{{data.customer_gid}}">{{data.customername}} </option>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label"><strong>Tracking Type *</strong></label>
+                                        <div class="col">
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" required="" name="trackingtype" value="Deferral" ng-click="isShowHide('hide')" ng-model="trackingtype" />
+                                                    <span class="fa fa-circle"></span>Deferral
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" required="" name="trackingtype" value="Covenant" ng-click="isShowHide('show')" ng-model="trackingtype" />
+                                                    <span class="fa fa-circle"></span>Covenant
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                    <div class="col-lg-12">
+                                        <div class="col" ng-show="hideval">
+                                            <select name="deferralname" id="deferral_name" style="width:255px;" dropzone="" ng-model="deferralname" class="mda-form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched" size="1">
+                                                <option value="">Select Deferral</option>
+                                                <option data-ng-repeat="data in deferral_list" value="{{data.deferral_gid}}">{{data.deferral_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                    <div class="col-lg-6">
+                                        <div class="col" ng-show="showval">
+                                            <select id="covenanttype_name" name="covenanttype" style="width:255px;" dropzone="" ng-model="covenanttype"
+                                                    size="1" class="mda-form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched">
+                                                <option value="">Select Covenant Type</option>
+                                                <option ng-repeat="data in covenanttype_list" value="{{data.covenanttype_gid}}">{{data.covenanttype_name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                    <div class="col-lg-12">
+                                        <label class="col-form-label control-label"><strong>Category *</strong></label>
+                                        <select name="deferral" dropzone="" ng-model="deferralcategory" required="" class="mda-form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched" size="1">
+                                            <option value="">-----Select Category----</option>
+                                            <option value="Credit Deferral">Credit Deferral</option>
+                                            <option value="Sanction Item">Sanction Item</option>
+                                            <option value="CAD Internal">CAD Internal</option>
+                                            <option value="RM Internal">RM Internal</option>
+                                            <option value="CMD Internal">CMD Internal</option>
+                                            <option value="Credit deferral – Others">Credit deferral – Others</option>
+                                             <option value="Sanction Item – Others">Sanction Item – Others</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12 ">
+                                    <div class="col-lg-12">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Due date * </label>
+                                            <input type="date" id="due_date" name="due_date" ng-model="due_date" required>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12 " style="overflow: auto; height:270px;width:300px;">
+                                    <div class="col-lg-12">
+                                        <label>Loan *</label>
+                                        <table ng-table="IssueTable" id="tabletest" class="table table-borderless">
+                                            <thead class="bg-blue text-white">
+                                                <tr width="100%">
+                                                    <th><input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);"> </th>
+
+                                                    <th scope="col">Loan Facility Type</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in loandata" width="100%">
+                                                    <td>
+                                                        <input type="checkbox" id="c1"
+                                                               value={{data.checked}} ng-model="data.checked">
+                                                    </td>
+
+                                                    <td title="'Issue Ref no">{{data.loanTitle}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      
+                                    </div>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="col-lg-12">
+                                <div class="mda-form-group float-label">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Remarks </label>
+                                        <textarea ng-model="remarks" rows="3" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="deferralSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </script>
+        <script type="text/ng-template" id="/UploadDocument.html">
+            <div class="modal-header bg-green-200">
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-green-200">
+                        <i class="fa fa-upload"></i>
+                    </span>UPLOAD DOCUMENTS
+                </h4>
+            </div>
+            <form novalidate="" id="userform" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">
+                <div class="modal-body" style="padding-left:50px;">
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label>Loan Ref No</label>
+                        </div>
+
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            {{UploadDocumentname.loanref_no}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label>Loan Title</label>
+                        </div>
+
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            {{UploadDocumentname.loan_title}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label>Deferral Ref No</label>
+                        </div>
+
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            {{UploadDocumentname.record_id}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label>Deferral</label>
+                        </div>
+
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            {{UploadDocumentname.deferral_name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label>Upload Documents</label>
+                        </div>
+
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            <input type="file" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" required />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-header " style="margin: auto;text-align:center;padding:1px;background-color:#9ebfda;">
+                    <h4 id="myModalLabel" class="modal-title">
+                        &emsp;
+                        Deferral Documents
+                    </h4>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-condensed" style="width:100%">
+                        <thead class="header">
+                            <tr class="text-center">
+                                <td style="width:10%;">S.No</td>
+                                <td style="width:30%;">Document Name</td>
+                                <td style="width:30%;">Uploaded Date</td>
+                                <td style="width:30%">Download</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in filename_list">
+                                <td class="text-center">{{$index +1}}</td>
+                                <td style="padding-left:20px;">{{data.filename}}</td>
+                                <td style="padding-left:20px;">{{data.created_date}}</td>
+                                <td class="text-center"><em class="fa fa-download" ng-click="downloads(data.path,data.filename)"></em></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer ng-scope">
+                    <div class="text-center">
+
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+
+            </form>
+        </script>
+
+
+    </div>
+</div>
+
+
+
+

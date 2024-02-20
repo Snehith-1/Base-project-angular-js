@@ -1,0 +1,347 @@
+﻿<h3>
+    Create Tier 2
+</h3>
+<div ng-controller="tier2Createcontroller">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-plus"></em>&nbsp; Create Tier 2
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form name="tier2Addform" id="tier2Addform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <label class="text-inverse text-bold" style="font-size:15px;">Zonal : <span class="text-primary text-bold">{{zonal_name}}</span></label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-md-4 form-group float-label">
+                                <label>Month <span style="color:red">*</span></label>
+                                <select id="cbostatename" name="cbostatename" ng-model="cbomonth" required="" ng-change="monthchange(cbomonth)"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value=""> Select Month </option>
+                                    <option data-ng-repeat="data in monthname_list" value="{{data.month}}"
+                                            style="width:250px;">{{data.month_name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4 form-group float-label">
+                                <label>Vertical <span style="color:red">*</span></label>
+                                <select id="cboverticalname" name="cboverticalname" ng-model="cbovertical_gid" required="" ng-change="verticalchange(cbovertical_gid)"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value=""> Select Vertical </option>
+                                    <option data-ng-repeat="data in vertical_list" value="{{data.vertical_gid}}"
+                                            style="width:250px;">{{data.vertical_code}}</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4 form-group float-label">
+                                <label>Head RMD <span style="color:red">*</span></label>
+                                <select id="cboemployeename" name="subcategory" ng-model="cboemployeegid" required=""
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value=""> Select Head RMD </option>
+                                    <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}"
+                                            style="width:250px;">{{data.employee_name}} </option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" ng-show="tier2dtl">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="table-responsive table-striped table-bordered table-hover">
+                                    <table class="table">
+                                        <thead class="bg-indigo-100">
+                                            <tr>
+                                                <th>Tier 1 Approved Date</th>
+                                                <th>URN</th>
+                                                <th>Customer Name</th>
+                                                <th>Tier 1 Code</th>
+                                                <th>Risk Manager</th>
+                                                <!--<th>Tier 2-Code Change</th>-->
+                                                <th>Edit Risk Code</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in tierallocationdtl">
+                                                <td>{{data.tier1_approveddate}}</td>
+                                                <td>{{data.customer_urn}}</td>
+                                                <td>{{data.customer_name}}</td>
+                                                <td>{{data.tier1_code}}</td>
+                                                <td>{{data.riskmanager}}</td>
+                                                <!--<td>{{data.tier2_code}}</td>-->
+                                                <td>
+                                                    <button title="Edit Risk Code" class="btn btn-primary btn-sm"
+                                                            ng-click="riskcodechange(data.allocationdtl_gid,data.tier1format_gid,data.customer_name,data.customer_urn,data.tier1_code)">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button title="Allocation 360" class="btn btn-primary btn-sm"
+                                                            ng-click="viewcustomerdtl(data.allocationdtl_gid,data.tier1format_gid)">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label> Remarks: <span style="color:red">*</span></label>
+                                <textarea name="remarks" placeholder="Enter Remarks..." required
+                                          ng-model="txttier2_remarks" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="lead text-primary text-bold">
+                            &nbsp;  <em class="fa fa-file-powerpoint-o  text-danger fa-md"></em>   &nbsp;
+                            <label class="text-primary" style="font-size:16px;">Document Upload</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                        <div class="form-group float-label">
+                                            <label>Document Title <span style="color:red">*</span></label>
+                                            <input ng-model="txtdocument_title" class="form-control ng-pristine ng-valid ng-touched">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label> Document Upload <span style="color:red">*</span></label>
+                                        <input type="file" id="addExternalupload" ng-model="test_document" multiple
+                                               onchange="angular.element(this).scope().uploaddocument(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                                               accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <br />
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div ui-scroll-viewport="" style="height:245px; overflow-y: auto;" class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="table-responsive table-striped table-bordered table-hover">
+                                                    <table class="table">
+                                                        <thead class="bg-indigo-100">
+                                                            <tr>
+                                                                <th>Document Title</th>
+                                                                <th>Document Name</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="upload in uploaddocument_list">
+                                                                <td>{{upload.document_title}}</td>
+                                                                <td>{{upload.document_name}}</td>
+                                                                <td>
+                                                                    <button title="Cancel" class="btn btn-danger btn-sm"
+                                                                            ng-click="uploadcancel(upload.tmp_documentGid)">
+                                                                        <em class="fa fa-close"></em>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+
+                        <div class="class">
+                            <div class="text-center">
+                                <button class="btn btn-success" ng-click="submittier2()" ng-disabled="tier2Addform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Submit</span>
+                                </button>
+                                <a class="btn btn-danger" href="#/app/tier2Preparation">
+                                    <em class="fa fa-close"></em>
+                                    <span>Cancel</span>
+                                </a>
+                                <a class="btn btn-info" href="#/app/tier2Preparation">
+                                    <em class="fa fa-arrow-left"></em>
+                                    <span>Back</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="/riskcodechangeModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Edit Risk Code </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="criticalobservationadd" id="criticalobservationadd" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                    <label class="text-primary">{{customer_name}} / {{customer_urn}}</label>
+                                </div>
+                            </div>
+                            <div class="row text-center" ng-show="tmpcodevisible">
+
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="form-group">
+
+                                        <div class="col">
+                                            <label>Risk Code <span style="color:red">*</span></label> &emsp;
+                                            <p class="mda-radio">
+                                                <input ng-model="cboriskcode" type="radio" name="radio_status"
+                                                       value="Green" required ng-change="cboriskcodechange(cboriskcode)">
+                                                <em class="bg-teal-500"></em><span class="label label-success">Green</span>
+                                            </p>
+                                        </div>
+                                        <div class="col">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <div class="col">
+                                            <p class="mda-radio">
+                                                <input ng-model="cboriskcode" type="radio" name="radio_status"
+                                                       value="Amber" required ng-change="cboriskcodechange(cboriskcode)">
+                                                <em class="bg-teal-500"></em><span class="label label-warning">Amber</span>
+                                            </p>
+                                        </div>
+                                        <div class="col">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <div class="col">
+                                            <p class="mda-radio">
+                                                <input ng-model="cboriskcode" type="radio" name="radio_status"
+                                                       value="Red" required ng-change="cboriskcodechange(cboriskcode)">
+                                                <em class="bg-teal-500"></em><span class="label label-danger">Red</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Risk Code Classification  <span style="color:red">*</span></label>
+                                    <select name="classification_riskcode" ng-model="$parent.cboriskcode_classification" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Risk Code Classification </option>
+                                        <option value="Green-eligible"> Green-eligible</option>
+                                        <option value="Amber-possible"> Amber-possible</option>
+                                        <option value="Red-not eligible"> Red-not eligible</option>
+                                    </select>
+                                </div>-->
+
+                            </div>
+                            <div class="row" ng-show="codechangereasonshow">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="form-group float-label">
+                                        <label>Risk Code - Change Reason <span style="color:red">*</span></label>
+                                        <textarea name="specificcondition" placeholder="Enter Reason..."
+                                                  ng-model="txtcode_changereason" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-center">
+                                        <button class="btn btn-success" ng-click="riskcodechangesubmit()" ng-disabled="criticalobservationadd.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Submit</span>
+                                        </button>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Cancel</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="list-group-item" ng-show="tmpdata">
+                                        <div class="media-box-body clearfix">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="popover-title">
+                                                        <p><span class="text-bold" style="font-size:15px;">Risk Code : {{tmptier_code}} </span></p>
+
+                                                        <p>Reason For Change : {{tmptiercode_changereason}}</p>
+                                                        <button title="Delete" class="btn btn-danger btn-sm"
+                                                                ng-click="riskcodechangecancel(tmptier2_codechange)">
+                                                            <em class="fa fa-close"></em>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <label>Risk Code History</label>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive table-striped table-bordered table-hover">
+                                        <table class="table">
+                                            <thead class="bg-indigo-100">
+                                                <tr>
+                                                    <th>Stage</th>
+                                                    <th>Risk Code</th>
+                                                    <th>Risk Code - Change Reason</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in tiercodedtl">
+                                                    <td>{{data.tier_stage}}</td>
+                                                    <td>{{data.tier_code}}</td>
+                                                    <td>{{data.tiercode_changereason}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="text-center">
+
+                                    <a class="btn btn-info" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

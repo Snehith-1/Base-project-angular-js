@@ -1,0 +1,172 @@
+<h3>
+    Document Label
+</h3>
+<div ng-controller="idasMstDocLabelSummaryController">
+    <div>
+        <button title="Create Document Label" class="btn btn-info btn-sm"
+                ng-click="createlabel()">
+            <em class="fa fa-plus"></em>&nbsp;&nbsp; Create Document Label
+        </button>
+
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" ng-pattern="/^\d+$/" />
+                            <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                            <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                                <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                       class="form-control input-sm" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table hover table-striped row-border">
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>S.No</th>
+                                <th>DOCUMENT NAME</th>
+                                <th>DEPARTMENT NAME</th>
+                                <th>DESCRIPTION</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in label_list | filter : searchtxt | limitTo:totalDisplayed">
+                                <td data-title="'S.No'">{{$index+1}}</td>
+                                <td data-title="'Document Label Name'">{{data.documentlabel_name}}</td>
+                                <td data-title="'Department Name'">{{data.department_name}}</td>
+                                <td data-title="'Description'">{{data.documentlabel_desc}}</td>
+                                <td class="nowrap text-center">
+                                    <button title="Edit" class="btn btn-green btn-sm"
+                                            ng-click="editlabel(data.documentlabel_gid)">
+                                        <em class="icon icon-pencil"></em>
+                                    </button>
+                                    <button title="Delete" class="btn btn-danger btn-sm"
+                                            ng-click="deletelabel(data.documentlabel_gid)">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/createDocumentLabelModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Create Document Label</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Document Name <span style="color:red;"> * </span> </label>
+                        <input type="text" ng-model="document_label" name="document_label" ng-keyup="documenttname(document_label)" ng-maxlength="130" tabindex="0" class="form-control" required />
+                        <label style="color:red;">{{message}}</label>
+                    </div>
+                    <br /> <br /> <br /><br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Department Name <span style="color:red;"> * </span> </label>
+                        <select name="department_name" id="department_name" ng-options="m.department_name for m in department_list"
+                                ng-model="cbodepartment" class="form-control " style="height:37px;" chosen="" size="1">
+                            <option value=""> ----- Select Department Name -----</option>
+                        </select>
+                    </div>
+                    <br /> <br /> <br /><br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Description</label>
+                        <textarea ng-model="label_description" placeholder="Enter the Description" rows="4" class="form-control"
+                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br /> <br />
+                <div clas="row">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="documentlabelSubmit()" ng-disabled="documentAddform.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Submit</span>
+                        </a>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editDocumentLabelModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Edit Document Label</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form name="documentEditform" id="documentEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Document Name <span style="color:red;"> * </span> </label>
+                        <input type="text" ng-model="editdocument_label" name="editdocumentlabel" ng-keyup="documentretname(editdocument_label)" maxlength="130" tabindex="0" class="form-control" required />
+                        <label style="color:red;">{{message1}}</label>
+                    </div>
+                    <br /> <br /> <br /><br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Department List <span style="color:red;"> * </span> </label>
+                        <select name="department_name" id="department_name" ng-options="m.department_gid as m.department_name for m in department_list"
+                                ng-model="cbodepartment" class="form-control " style="height:37px;" chosen="" size="1">
+                            <option value=""> ----- Select Department Name -----</option>
+                        </select>
+                    </div>
+                    <br /> <br /> <br /><br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Description</label>
+                        <textarea ng-model="editlabel_description" placeholder="Enter the Description" rows="4" class="form-control"
+                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br /> <br />
+                <div clas="row">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="update_documentlabel()" ng-disabled="documentEditform.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Update</span>
+                        </a>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+</div>.,;

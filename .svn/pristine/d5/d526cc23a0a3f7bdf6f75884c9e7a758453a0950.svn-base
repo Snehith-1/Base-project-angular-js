@@ -1,0 +1,215 @@
+﻿<h3>
+    Samunnati Associate Master
+</h3>
+<div ng-controller="AssociateMastercontroller as dp">
+    <div>
+        <button type="button" title="Add Associate Master" class="btn btn-info btn-sm"  ng-hide="lsoneapipage=='OneApi'" ng-click="popupassociatemaster()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>Add Samunnati Associate Master
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <!-- <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <br>
+
+                    <div class="table-responsive">
+                        <table datatable="ng"class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th class="text-center">S.No</th>
+                                    <th> One API Code</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Associate Code</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in associate_master |filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td class="text-center" data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'name'">{{data.name}}</td>
+                                    <td data-title="'associate code'">{{data.associate_code}}</td>
+                                    <td data-title="'Status'" ng-switch="data.rdbstatus">
+                                        <label class="label label-success" ng-switch-when='Yes' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='No' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td data-title="'Action'" class="text-center" ng-hide="lsoneapipage=='OneApi'">
+                                        <button title="Edit" ng-click="edit(data.associatemaster_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.associatemaster_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--add popup-->
+    <script type="text/ng-template" id="/myModalContent.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-plus "></i>
+                </span>Add Samunnati Associate Master
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="associatemasterformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="name" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Name *</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="associate_code" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Associate Code *</label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="mda-form-group float-label">
+                                <label>Status <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rdbstatus" value="Yes" ng-model="rdbstatus" required ng-click="rdbstatus_Yes()" />
+                                        <span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdbstatus" value="No" ng-model="rdbstatus" required ng-click="rdbstatus_No()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="associatemasterformsubmit.$invalid" ng-click="associatemasterSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <!--edit popup-->
+    <script type="text/ng-template" id="/myModaledit.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-edit"></i>
+                </span>Edit Samunnati Associate Master
+            </h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="pd-sm-10">
+                <div class="row" style="display:none">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                        <div class="mda-form-group">
+                            <input ng-model="associatemaster_gid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>Associate Code *</label>
+                        </div>
+                    </div>
+                </div>
+                <form novalidate="" name="associatemasterform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                            <div class="mda-form-group">
+                                <input ng-model="nameedit" name="nameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Name * </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group ">
+                                <input ng-model="associatecodeedit" name="associatecodeedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Associate Code * </label>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="mda-form-group float-label">
+                                <label>Status <span style="color:red">*</span></label>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rdbstatusedit" value="Yes" ng-model="rdbstatusedit" required ng-click="rdbstatus_Yes()" />
+                                        <span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rdbstatusedit" value="No" ng-model="rdbstatusedit" required ng-click="rdbstatus_No()" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+            <div>
+                <div class="text-center">
+                    <button type="button" ng-click="associatemasterUpdate(data.associatemaster_gid)" class="btn btn-success btn-md" ng-disabled="associatemasterform.$invalid">
+                        <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

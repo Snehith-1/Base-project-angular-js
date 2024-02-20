@@ -1,0 +1,419 @@
+<h3>
+    Schedule Meeting
+</h3>
+<div ng-controller="MstCreditCommitteeSummaryController">
+
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>CC Pending Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="pending_summary()" style="width:190px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b> {{lblpending_count}}</b></div>
+                        <b style="font-size: 14px;">Pending Summary</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="scheduled_summary()" style="width:190px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b> {{lblscheduled_count}}</b></div>
+                        <b style="font-size: 14px;">Scheduled Summary</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="completed_summary()" style="width:190px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b>{{lblcompleted_count}} </b></div>
+                        <b style="font-size: 14px;"> CC Completed </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="sentbackto_credit()" style="width:190px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b>{{lblsentbackcc_count}} </b></div>
+                        <b style="font-size: 14px;"> Sent Back to Credit</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <button type="button" class="btn btn-labeled" ng-click="ccmeeting_skiptab()" style="width:190px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b>{{lblccmeetingskip_count}} </b></div>
+                        <b style="font-size: 14px;"> CC Meeting Skip </b>
+                    </button>
+                    <br />
+                </div>               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-9 col-md-12 col-sm-12">
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a style="background-color:#edb9b9;" class="ng-binding ng-scope label label-pink">
+                        <em class="fa"></em>
+                    </a>&nbsp;<label> - Color Indicates Sent Back CAD to CC </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th class="text-center" style="display:none"> S.No</th>
+                                    <!--<th class="text-center"> S.No</th>-->
+                                    <th class="nowrap"> Submitted Date </th>
+                                    <th class="nowrap"> Application Number </th>
+                                    <th class="nowrap"> Customer Name </th>
+                                    <th class="nowrap"> Applicant Region </th>
+                                    <th class="nowrap"> Vertical </th>
+                                    <th class="nowrap"> Overall Limit </th>
+                                    <th class="nowrap"> Status </th>
+                                    <th class="nowrap"> Sent Back Log </th>
+                                    <th class="nowrap"> Type </th>
+                                    <th class="text-center nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in applicationadd_list" ng-style="data.approval_status == 'Sent Back to CC'?{'background-color':'#edb9b9'}:{}">
+                                    <!--<td data-title="'S.No'" class="text-center"> {{$index+1}}</td>-->
+                                    <td data-title="'S.No'" class="text-center" style="display:none"> {{$index+1}}</td>
+                                    <td data-title="'Underwritten by'"> {{data.ccsubmitted_date}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Customer Name"> {{data.customer_name}} </td>
+                                    <td data-title="'Applicant Region" style="width:10%;"> {{data.region}} </td>
+                                    <td data-title="'Vertical"> {{data.vertical_name}} </td>
+                                    <td data-title="'Overall Limit'"> {{data.overalllimit_amount}} </td>
+                                    <td data-title="'Status'"> {{data.approval_status}} </td>
+                                    <td data-title="'Sent Back Log'" class="text-center">                                        
+                                        <button ng-show="data.history_flag =='Y'" ng-click="reverse_log(data.application_gid)" class="btn btn-inverse">
+                                            <em class="icon-question"></em>
+                                        </button>
+                                        <button ng-show="data.history_flag =='N'" disabled class="btn btn-inverse">
+                                            <em class="icon-question"></em>
+                                        </button>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                        <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.enhancement_flag=='Y'">
+                                        <label class="label label-success" style="font-size:10px;">Enhancement </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.enhancement_flag=='N'">
+                                        <label class="label label-primary" style="font-size:10px;"> New </label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="application_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Schedule Meeting" ng-click="schedule_meeting(data.application_gid)" class="btn btn-pink">
+                                            <em class="fa fa-calendar-o"></em>
+                                        </button>
+                                        <button title="Sent Back to Credit Underwriting" style="background-color:#706710;" ng-click="sentback_credit(data.application_gid)" class="btn btn-pink">
+                                            <em class="fa fa-arrow-circle-left"></em>
+                                        </button>
+                                        <button title="History" ng-show="data.history_flag =='Y'" ng-click="history(data.application_gid)" class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <button title="History"  ng-show="data.history_flag =='N'" disabled class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <!--<button title="CC Meeting Skip" ng-show="data.ccmeetingskip_flag =='Y'" ng-click="ccmeeting_skip(data.application_gid)" class="btn btn-purple" style="background-color:#CE1F1F;">
+                                            <em class="fa fa-forward"></em>
+                                        </button>
+                                        <button title="CC Meeting Skip" ng-show="data.ccmeetingskip_flag =='N'" disabled class="btn btn-purple" style="background-color:#AC4545;">
+                                            <em class="fa fa-forward"></em>
+                                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+    <script type="text/ng-template" id="/assignapplication.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-check-square "></i>
+                </span> Assign Application
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="assignapplication" ng-submit="form.assignapplication()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Applicant Name</label>
+                                        <p>LIMKA PRIVATE LIMITED</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Credit Vertical Head *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="creditverticalhead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Credit Head *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Maker *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Checker *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="assignapplication.$invalid" ng-click="assign()"><i class="fa fa-check-square"></i>&nbsp;&nbsp;Assign</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/sentbacktounderwriting.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h5 id="myModalLabel" class="modal-title">
+                <span class="bg-primary">
+                    <em class="fa fa-arrow-circle-left"></em>
+                </span><b>Sent Back to Credit Underwriting</b> 
+            </h5>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="sentbacktocredit" ng-submit="form.sentbacktocredit()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="float-label">
+                                <label>Reason</label><span style="color:red;"> *</span>
+                                <textarea class="form-control" rows="3" tabindex="0" required ng-model="txtreason" style="resize:vertical;" placeholder="Enter Reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="sentbacktocredit.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/reverselogpopup.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h5 id="myModalLabel" class="modal-title">
+                <span class="bg-primary">
+                    <em class="icon-question"></em>
+                </span> <b>Reverse Log</b>
+            </h5>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="reverselog" ng-submit="form.reverselog()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="label label-pink" style="font-size:12px;padding-top:3px;"> CC Meeting to Credit Log : </label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr style="font-size: 13px;">
+                                                        <th class="text-center">S.No</th>
+                                                        <th>Sent Back By</th>
+                                                        <th>Sent Back Date</th>
+                                                        <th>Reason </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in cctocreditlog_list">
+                                                        <td class="text-center">{{$index+1}}</td>
+                                                        <td>{{data.sentbacktocc_by}}</td>
+                                                        <td>{{data.sentbacktocc_date}}</td>
+                                                        <td>{{data.cctocredit_reason}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="label label-pink" style="font-size:12px;padding-top:3px;"> CAD to CC Meeting Log : </label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr style="font-size: 13px;">
+                                                        <th class="text-center">S.No</th>
+                                                        <th>Sent Back By</th>
+                                                        <th>Sent Back Date</th>
+                                                        <th>Reason </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in cadtoccmeetinglog_list">
+                                                        <td class="text-center">{{$index+1}}</td>
+                                                        <td>{{data.sentbackcadtocc_by}}</td>
+                                                        <td>{{data.sentbackcadtocc_date}}</td>
+                                                        <td>{{data.cadtoccmeeting_reason}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="label label-pink" style="font-size:12px;padding-top:3px;"> CAD to Credit Log : </label>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr style="font-size: 13px;">
+                                                        <th class="text-center">S.No</th>
+                                                        <th>Sent Back By</th>
+                                                        <th>Sent Back Date</th>
+                                                        <th>Reason </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in cadtocreditlog_list">
+                                                        <td class="text-center">{{$index+1}}</td>
+                                                        <td>{{data.sentbackcadtocredit_by}}</td>
+                                                        <td>{{data.sentbackcadtocredit_date}}</td>
+                                                        <td>{{data.cadtocredit_reason}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <br />
+                            <div class="text-center">
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ccmeetingskip.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h5 id="myModalLabel" class="modal-title">
+                <span class="bg-primary">
+                    <em class="fa fa-forward"></em>
+                </span> <b>CC Meeting Skip</b>
+            </h5>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="ccmeetingskip" ng-submit="form.ccmeetingskip()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="float-label">
+                                <label>Reason</label><span style="color:red;"> *</span>
+                                <textarea class="form-control" rows="3" tabindex="0" required ng-model="txtccmeetingskip_reason" style="resize:vertical;" placeholder="Enter Reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="ccmeetingskip.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

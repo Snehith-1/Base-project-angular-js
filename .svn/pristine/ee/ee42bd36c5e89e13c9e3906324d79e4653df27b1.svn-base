@@ -1,0 +1,125 @@
+﻿<h3>
+    PreFil Management
+</h3>
+<style type="text/css">
+    .list-group-item:hover {
+        color: #000000;
+        background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .panel-scroll {
+        max-height: 120px;
+        overflow: auto;
+    }
+</style>
+<div ng-controller="idasTrnPreFilManagementController">
+    <div class="row" ng-show="GeneratedPrefilDoc">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <button title="Generate Document" class="btn btn-info btn-sm"
+                    ng-click="generatedocument()">
+                <em class="fa fa-plus"></em>&nbsp;Generate Document
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <!-- START panel-->
+    <div class="panel" ng-show="GeneratedPrefilDoc">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="table table-striped row-border hover">
+                    <thead>
+                        <tr class="text-white column" style="background-color:#09385f;">
+                            <th style="display:none"> S.No</th>
+                            <th class="nowrap">Customer URN</th>
+                            <th class="nowrap">Customer Name</th>
+                            <th class="nowrap">Sanction Ref No</th>
+                            <th class="nowrap">Sanction Date</th>
+                            <th class="nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in generateddoc_list">
+                            <td style="display:none">{{$index+1}}</td>
+                            <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                            <td data-title="'Sanction Ref No'">{{data.sanction_refno}}</td>
+                            <td data-title="'Sanction Date'">{{data.sanction_date}}</td>
+                            <td data-title="Action" class="text-nowrap">
+                                <button title="Generate Prefil Document" class="btn btn-info btn-sm"
+                                        ng-click="generate(data.sanction_gid)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                    <em class="fa fa-reorder "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel" ng-show="PrefilGenerateDocument">
+        <br/>
+        <div class="row ">
+            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                    <label class="col-form-label control-label">Customer </label>
+                    <input type="text" name="customer" id="customer" ng-model="customer" required
+                           ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+
+                    <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                        <li class="list-group-item" ng-repeat="m in customer_list"
+                            ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                    </ul>
+
+                    <label style="color:red;">{{message}}</label>
+                </div>
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <label><strong>Sanction Ref No</strong> </label>
+                    <select name="sanction" required="" ng-options="m.sanctionref_no for m in customer2sanction_list"
+                            ng-model="cbocustomer2sanction_gid" class="form-control ng-valid ng-touched ng-valid-parse"
+                            size="1" ng-change="onselectedchangesanction(sanction)">
+                        <option value="">---Select Sanction Ref No--- </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="table table-striped row-border hover">
+                    <thead>
+                        <tr class="text-white column" style="background-color:#09385f;">
+                            <th style="display:none"> S.No</th>
+                            <th class="nowrap">Document Record Id</th>
+                            <th class="nowrap">Document Code</th>
+                            <th class="nowrap">Document Name</th>
+                            <th class="nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in document2sanction_list">
+                            <td style="display:none">{{$index+1}}</td>
+                            <td data-title="'Document Record Id'">{{data.documentrecord_id}}</td>
+                            <td data-title="'Document Code'">{{data.documentlist_gid}}</td>
+                            <td data-title="'Document Name'" class="nowrap">{{data.document_name}}</td>
+                            <td data-title="Action" class="text-nowrap" ng-switch="data.doctemplate_status">
+                                <button title="Generate" class="btn btn-info btn-sm" ng-if="data.template_content != ''"
+                                        ng-click="generate(data.documentlist_gid, data.sanction_gid, data.document_code, data.doctemplate_flag)">
+                                    <em class="fa fa-reorder "></em>
+                                </button>
+                                <button title="Word" class="btn bg-pink" ng-click="WordGenerate(data.documentlist_gid,data.sanction_gid)" ng-switch-when="Generated">
+                                    <em class="fa fa-file-word-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+        </div>
+    </div>
+</div>

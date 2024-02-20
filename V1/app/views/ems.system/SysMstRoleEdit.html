@@ -1,0 +1,95 @@
+<script type="text/ng-template" id="required-field">
+    <ng-message class="text-danger" when="required">This field is required</ng-message>
+</script>
+<h3>
+    Role Management
+</h3>
+
+<div ng-controller="SysMstRoleEditController as dpick" class="row">
+    <ng-form name="roleform"  ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal" >
+    <div id="panelDemo8" class="panel panel-primary ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>
+            Edit Role
+        </div> 
+
+               <div class="panel">
+                   <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="col-lg-2 col-sm-2 col-sm-2">
+                                    <label style="padding-top: 10px;">Role Code</label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <input name="txtrolecode" ng-readonly="true" ng-model="txtrolecode" type="text" id="rolid" class="form-control"
+                                      maxlength="68">
+                                </div> 
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label style="padding-top: 10px;">Role Title <span style="color:red;"> * </span></label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <input name="txtroletitle"  ng-model="txtroletitle" type="text" id="roleid" class="form-control"
+                                    ng-pattern="/^[a-zA-Z\s.]+$/" maxlength="68" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label style="padding-top: 10px;"> Reporting To Role</label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <select name="txtreportingto" ng-model="txtreportingto" class="form-control">
+                                        <option value="">----- Select Reporting To ----</option>
+                                        <option data-ng-repeat="reportingtoroleedit in reportingtoListedit" value="{{reportingtoroleedit.rolereporting_to_gid}}">{{reportingtoroleedit.rolereporting_to_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label style="padding-top: 10px;">Probation Period <span style="color:red;"> * </span></label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input name="txtprobation" ng-pattern="/^\d+$/" ng-model="txtprobationperiod" type="text" id="probationid" class="form-control"
+                                    maxlength="68" required="">
+                                </div>
+                                <span>
+                                    <label style="padding-top: 10px;padding-right: 10px;" >Month(s)</label>
+                                </span>   
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label style="padding-top: 16px;"  required="" >Job Description <span style="color:red;"> * </span></label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">  
+                                    <textarea ng-model="txtjobdescription" required="" rows="3" cols="44"></textarea>
+                                </div> 
+                                <div style="padding-top: 8px;"> 
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label style="padding-top: 10px;">Role Responsible</label>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <textarea ng-model="txtroleresponsible" rows="3" cols="44"></textarea>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                     
+                    </div>
+                </div>
+    </div>
+          
+    <div class="text-center">
+        <button type="button" class="btn btn-info btn-md" ng-disabled="roleform.$invalid" ng-click="role_update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+        <button ng-click="roleedit_cancel()" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+    </div>
+    <br/>                          
+</ng-form>
+</div>
+ 
+

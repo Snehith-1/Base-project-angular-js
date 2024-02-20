@@ -1,0 +1,231 @@
+﻿<h3>
+    Limit Information for setting in system
+</h3>
+<div ng-controller="limitInfoEditController as dp">
+    <div id="panelDemo8" class="panel panel-primary">
+        <div class="panel-heading ">
+            <span class="btn-label">
+              
+                Edit Limit Information - {{limitref_no}}
+            </span>
+        </div>
+        <div class="panel-body">
+
+            <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>ODLIM (in Rs)</strong><span style="color:red">*</span></label>
+                            <input id="txtInput3" type="text" ng-model="txtodlim" ng-change="amountschange3()" class="form-control" style="text-align:right;" required />
+                            <span style="font-style:italic;">Number in words:</span>
+                            <span id="odlim_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                            </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>Nature of Facility </strong><span style="color:red">*</span></label>
+                            <select id="loan_title" name="cboloanmaster_gid" chosen="" ng-options="m.loanmaster_gid as m.loan_title for m in loanfacility_list"
+                                    ng-model="cboloanmaster_gid" class="chosen-select form-control" required ng-change="facilityamount()">
+                                <option value="">---Select Facility--- </option>
+                            </select>
+                           
+                        </div>
+
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>Loan Facility Amount (in Rs)</strong><span style="color:red">*</span></label>
+                            <input id="txtInputloanfacility_type" type="text" ng-model="txtloanfacility_amount" ng-change="facilitytype_amount()" style="text-align:right;" class="form-control" required />
+                            <span style="font-style:italic;">Number in words:</span>
+                            <span id="loanfacilityamount_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                               <div ng-hide="panel1">
+                                <label style="color:red;"> Amount is Exceeded from ODLIM</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label>Interchangeability (If Applicable) <span style="color:red">*</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rdbinterchangeability" value="Yes" ng-model="rdbinterchangeability" ng-click="interchangeability_yes()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" name="rdbinterchangeability" value="No" ng-model="rdbinterchangeability" ng-click="interchangeability_no()" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                            <div ng-show="interchangeabilityyes">
+                                <label><strong>Report Structure</strong> <span style="color:red">*</span></label>
+                                <select id="report_structure" name="report_structure" dropzone="" ng-model="cboreport_structureedit"
+                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                        tabindex="0" aria-label="report_structure" aria-expanded="false" size="1">
+                                    <option value=""> ---Select Report Structure--- </option>
+                                    <option value="ODLIM">ODLIM </option>
+                                    <option data-ng-repeat="data in loanfacilityref_list">
+                                        {{data.loanfacilityref_no}}
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>Margin </strong></label>
+                            <input type="text" ng-model="txtmargin_edit" class="form-control" />
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>Tenure </strong></label>
+                            <input type="text" ng-model="txttenure_edit" class="form-control" />
+                        </div>
+
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>Documented Limit (in Rs)</strong><span style="color:red">*</span></label>
+                            <input id="txtInput1" type="text" ng-model="txtdocument_limit_edit" ng-change="amountschange1()" style="text-align:right;" class="form-control" required />
+                            <span style="font-style:italic;">Number in words:</span>
+                            <span id="documentlimit_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                            <div ng-hide="panel2">
+                                <label style="color:red;"> Amount is Exceeded from ODLIM</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>Revolving Type </strong><span style="color:red">*</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rdbrevolving_edit" value="Revolving" ng-model="rdbrevolving_edit" required />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Revolving
+                                </label>
+                                <label>
+                                    <input type="radio" name="rdbrevolving_edit" value="Non-revolving" ng-model="rdbrevolving_edit" required />
+                                    <span class="fa fa-circle"></span>Non Revolving
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label>
+                                <strong>
+                                    Date of Expiry <span style="color:red">*</span>
+
+                                </strong>
+                            </label>
+                            <md-input-container flex="" class="md-default-theme" style="height: auto;">
+
+                                <input type="date" id="fromDate" name="fromdate" ng-model="txtexpiry_date_edit" required>
+                            </md-input-container>
+
+
+                        </div>
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <label><strong>ROI in % P.A</strong><span style="color:red">*</span></label>
+                            <input type="text" ng-model="txtrate_interest_edit" required class="form-control" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label><strong>Existing Limit (in Rs)</strong><span style="color:red">*</span></label>
+                            <input id="txtInput" type="text" ng-model="txtexistinglimit_edit"
+                                   class="form-control ng-pristine ng-valid ng-touched fa-align-right" ng-change="amountschange()" style="text-align:right;" required />
+                            <span style="font-style:italic;">Number in words:</span>
+                            <span id="existinglimit_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label><strong>Limit to be Released</strong><span style="color:red">*</span></label>
+                            <input id="txtInput2" type="text" ng-model="txtlimit_released_edit"
+                                   ng-change="amountschange2()" style="text-align:right;" class="form-control" required />
+                            <span style="font-style:italic;">Number in words:</span>
+                            <span id="limitreleased_words" style="color:#003c96fc;" class="text-bold"></span>
+
+                             <div ng-hide="panel">
+                                <label style="color:red;"> Amount is Exceeded from Document Limit</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label>Change Request <span style="color:red">*</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    &nbsp;&nbsp; <input type="radio" name="rdbchangerequest" value="Yes" ng-model="rdbchangerequest" required />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" name="rdbchangerequest" value="No" ng-model="rdbchangerequest" required />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+
+
+                       
+                    </div>
+                </div>
+                <div class="row" >
+                    <br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div  class="col-sm-4 col-md-4 col-lg-4" ng-show="document">
+                            <label>Upload Document <span style="color:red">*</span></label>
+    <input type="file" id="addupload" filestyle="" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+           class="form-control" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                        </div>
+                        <div ng-show="document_name!=null">
+                            <div class="col-sm-4 col-md-4 col-lg-4" ng-show="document_name!=''">
+                                   <label>Document Name</label>
+                                <br />
+                                {{document_name}} <a class="btn"  download="" href="" id="btnpdf" ng-click="downloads(document_path,document_name)">
+                                    <span class="fa fa-download"></span> 
+                                </a>
+                                <!--<a class="btn" ng-click="cancel(limitinfodtl_gid)">
+                                    <span class="fa fa-close"></span>
+                                </a>-->
+                            </div>
+                        </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label><strong>Remarks </strong></label>
+                                <textarea rows="2" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                          ng-model="txtremarks_edit" class="form-control"></textarea>
+
+                            </div>
+                        </div>
+                </div>
+                <div class="row" ng-show="document_panel">
+                    <br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                       
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label><strong>Remarks </strong></label>
+                            <textarea rows="2" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                      ng-model="txtremarks_edit" class="form-control"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="limitinfo_update(limitinfodtl_gid)" class="btn btn-success" ng-disabled="userform.$invalid">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="lsaback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

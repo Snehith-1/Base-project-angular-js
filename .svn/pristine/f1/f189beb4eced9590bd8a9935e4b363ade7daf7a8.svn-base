@@ -1,0 +1,370 @@
+<h3>
+   Archival Management
+</h3>
+<style>
+  
+
+.info {color: dodgerblue;}
+
+.list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .panel-scroll {max-height:120px;overflow: auto;}
+</style>
+<div ng-controller="iasnTrnArchivalSummary">
+    <div class="widget">
+       
+        <div class="card">
+            <tabset justified="true">
+                <tab  ng-click=workitem()>
+                    <tab-heading style="color:#AE1151;font-size:14px;">
+                        <em class="fa fa-calendar fa-1x"></em> &nbsp;&nbsp;
+                       <b> Work Item </b> &nbsp;&nbsp;
+                    <label class="label label-primary">{{workitem_count}}</label>
+                    </tab-heading>
+                    <br>
+                    <div class="row">
+                      
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group">
+                                  
+                                    <button title="Create Archival" class="btn btn-sm" style="background-color:#1976d2;color:#ffffff;"
+                                            ng-click="createArchival()">
+                                        <em class="fa fa-plus"></em>&nbsp;Create Archival
+                                    </button>
+
+                                </div>
+                            </div>
+
+                    </div>
+                    <br>
+                    <div class="row" ng-show="IsCreate">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <span class="btn-label">
+                                        <i class="fa fa-plus"></i>
+                                    </span>Create Archival
+
+                                    <div class="pull-right ">
+                                        <span class="btn-label btn-danger">
+                                            <i class="fa fa-close" title="Close" ng-click="close()"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="panel-body bg-gray-lighter" style="z-index: 1;">
+                                    <div class="pd-sm-10">
+                                        <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                           
+
+                                                <div class="row" >
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                      
+                                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                                            <label ><strong>Archival Type </strong></label><br>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio"  name="types_of_archival" value="Customer"  ng-click="onclickcustomer()"
+                                                                     ng-model="archival.types_of_archival" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Customer 
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio"  name="types_of_archival" 
+                                                                     value="Specific" ng-model="archival.types_of_archival" ng-click="onclickspecific()" />
+                                                                    <span class="fa fa-circle"></span>Specific
+                                                                </label>
+                                                
+                                                            </div>
+                                    
+                                                        </div>
+                                                       
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <label class="col-form-label control-label"><strong>Customer <span style="color:red">*</span></strong></label>
+                                                           <input type="text" name="archival.customer" id="archival.customer" ng-model="archival.customer" required
+                                                            ng-keyup="complete(archival.customer)"  class="form-control" placeholder="Search Customer Name Here..." />
+                                                           
+                                                            <ul  class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                                                <li  class="list-group-item" ng-repeat="m in customer_list"
+                                                                    ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                                                            </ul>
+                                                     
+                                                        <label style="color:red;">{{message}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row" ng-show="PnlSpecific">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                           
+                                                                <label class="col-form-label control-label"><strong>Sanction Ref No.
+                                                                    <span style="color:red">*</span></strong>
+                                                                </label>
+                            
+                                                                <select id="archival.sanction" name="archival.sanction" chosen=""
+                                                                    ng-options="m.sanctionrefno for m in sanctiondtl"
+                                                                    ng-model="archival.cbosanctionrefno" class="form-control">
+                                                                    <option value="">---Select Sanction Ref No.---</option>
+                                                                </select>
+                            
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                                        <div class="col-lg-12">
+                                                            <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                                                            <textarea ng-model="archival.Remarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                
+                                            <div>
+                                                <div class="text-center">
+                                                    <a class="btn btn-success" ng-click="ArchivalSubmit()" ng-disabled="documentAddform.$invalid">
+                                                        <em class="fa fa-check"></em>
+                                                        <span>Submit</span>
+                                                    </a>
+                                                    <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                  
+                   
+                    <!--<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="$parent.pagecountci" id="pagecountci" type="number" />
+                                <button class="btn btn-info" id="loadmoreci" ng-disabled="!$parent.pagecountci" ng-click="loadMore($parent.pagecountci)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped mb-mails">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    
+                                    <th width="8%">
+                                        Check All &nbsp;
+                                        <input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);"></th>
+                                    <th width="15%" class="text-center">WorkItem Ref No.</th>
+                                    <th width="20%" class="text-center">Mail Sent By</th>
+                                    <th width="15%" class="text-center">Mail Sent Date</th>
+                                    <th width="15%" class="text-center">Status</th>
+                                    <th width="10%" class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in WorkItem_List">
+                                    <td align="center">
+                                        <input type="checkbox" id="c1"
+                                               value={{data.checked}}  ng-model="data.checked">
+                                    </td>
+                                    <td class="text-center">{{data.workitemref_no}}</td>
+                                    <td class="text-center">{{data.rmemployee_name}}</td>
+                                    <td class="text-center">{{data.email_date}}</td>
+                                    <td style="text-align:center;" ng-switch="data.status">
+                                        <label class="label label-primary" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                                        <label class="label label-success" ng-switch-when='Forward' style="font-size:10px;">Forward</label>
+                                        <label class="label label-pink" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                        <label class="label label-purple" ng-switch-when='Sent Mail' style="font-size:10px;">Sent Mail</label>
+                                    </td>
+                                    <td class="text-center">
+                                            <button type="button" class="btn  btn-sm"
+                                                ng-click="WorkItem360(data.email_gid)" title="WorkItem 360">
+                                                <em class="fa fa-retweet">
+                                                </em>
+                                            </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+        
+                    </div>
+
+                </tab>
+                <tab ng-click=archivalcustomer()>
+                    <tab-heading style="color:#871490;font-size:14px;">
+                        <em class="fa fa-calendar fa-1x"></em> &nbsp;&nbsp;
+                       <b> Archival - Customer </b> &nbsp;&nbsp;
+                        <label class="label label-primary">{{archivalcustomer_count}}</label>
+                    </tab-heading>
+                    <!--<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="$parent.pagecountci" id="pagecountci" type="number" />
+                                <button class="btn btn-info" id="loadmoreci" ng-disabled="!$parent.pagecountci" ng-click="loadMore($parent.pagecountci)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <br>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped mb-mails">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th width="5%" class="text-center">S.No</th>
+                                    <th width="25%">URN/Customer</th>
+                                    <th width="10%">Vertical</th>
+                                    <th width="10%" class="text-center">No.of Work Item</th>
+                                     <th width="5%">Action</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in ArchivalCustomer_list">
+                                    <td class="text-center">{{$index+1}}</td>
+                                    <td>
+                                      {{data.customer_name}}
+                                    </td>
+                                    <td >{{data.vertical_code}}</td>
+                                   
+                                    <td class="text-center">{{data.no_of_workitem}}</td>
+                                    
+                                     <td class="text-center">
+                                            <button type="button" class="btn  btn-sm"
+                                                ng-click="WorkItemSummary(data.customer_gid,'Customer')" title="Work Item Summary">
+                                                <em class="fa fa-retweet">
+                                                </em>
+                                            </button>
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+        
+                    </div>
+
+                </tab>
+                <tab ng-click=archivalspecific()>
+                    <tab-heading style="color:#1976d2;font-size:14px;">
+                        <em class="fa fa-calendar fa-1x"></em> &nbsp;&nbsp;
+                       <b> Archival - Specific </b> &nbsp;&nbsp;
+                        <label class="label" style="background-color:#1976d2;">{{archivalspecific_count}}</label>
+                    </tab-heading>
+                    <!--<div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="$parent.pagecountci" id="pagecountci" type="number" />
+                                <button class="btn btn-info" id="loadmoreci" ng-disabled="!$parent.pagecountci" ng-click="loadMore($parent.pagecountci)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <br>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped mb-mails">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th width="5%" class="text-center">S.No</th>
+                                    <th width="20%">URN/Customer</th>
+                                    <th width="10%">
+                                        Sanction Ref No
+                                    </th>
+                                    <th width="10%">Vertical</th>
+                                
+                                    <th width="10%" class="text-center">No.of Work Item</th>
+                                   
+                                     <th width="5%">Action</th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in SpecificArchival_List|filter:searchtxt">
+                                    <td class="text-center">{{$index+1}}</td>
+                                    <td>
+                                      {{data.customer_name}}
+                                    </td>
+                                    <td>
+                                        {{data.sanctionref_no}}
+                                      </td>
+                                    <td >{{data.vertical_code}}</td>
+
+                                    <td class="text-center">{{data.no_of_workitem}}</td>
+                                    
+                                     <td class="text-center">
+                                            <button type="button" class="btn  btn-sm"
+                                                ng-click="WorkItemSummary(data.customer_gid,'Specific')"  title="Work Item Summary">
+                                                <em class="fa fa-retweet">
+                                                </em>
+                                            </button>
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+        
+                    </div>
+                </tab>
+                
+                   
+            </tabset>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,250 @@
+<h3>
+    Employee
+</h3>
+<div ng-controller="SysMstEmployeeSummaryController">
+    <div>
+        <button type="button" title="Add Employee" ng-hide="lsoneapipage=='OneApi'" class="btn btn-primary bt-sm" ng-click="employee_add()" >
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+                Add Employee          
+            </span>
+        </button>
+     
+        
+    </div>
+    <br/>
+    <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="text-white" style="background-color:#09385f;"> 
+                             
+                                   <th >S.No</th>
+                                   <th>One API Code</th>
+                                    <th>Entity</th>
+                                    <th>Branch</th>
+                                    <th>Employee Code</th>
+                                    <th>Employee Name</th>
+                                    <th>Base Location</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>Reporting To</th>
+                                    <th>Status</th>
+                                    <th ng-hide="lsoneapipage=='OneApi'">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  ng-switch="data.user_status"ng-repeat="data in employeelist">
+                              
+                                 <td data-title="'S.No'"> {{$index+1}} </td>
+                                 <td data-title="'One API Code'"> {{data.api_code}} </td>
+                                <td data-title="'Entity'">{{data.company_name}}</td>
+                                <td data-title="'Branch'">{{data.branch_name}}</td>
+                                <td data-title="'Employee Code'">{{data.user_code}}</td>
+                                <td data-title="'Employee Name'">{{data.employee_name}}</td>
+                                <td data-title="'Base Location'">{{data.baselocation_name}}</td>
+                                <td data-title="'Department'">{{data.department_name}}</td>
+                                <td data-title="'Designation'">{{data.designation_name}}</td>
+                                <td data-title="'Reporting TO'">{{data.employeereporting_to}}</td>
+                                          
+                                <td data-title="'Status'">{{data.user_status}}</td>
+                                <td data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"class="nowrap">
+                                    <button type="button" class="btn btn-green"  ng-click="employee_edit(data.employee_gid)" title="Edit">
+                                        <em class="fa fa-edit"></em>
+                                       
+                                    </button>
+                                    <button type="button" class="btn btn-info"  ng-click="employee_view(data.employee_gid)" title="View">
+                                        <em class="fa fa-eye"></em>
+                                       
+                                    </button>
+                                    <button type="button" class="btn btn-pink" ng-click="employee_resetpwd(data.employee_gid)" title="Reset Password">
+                                        <em class="fa fa-lock"></em>
+
+                                    </button>
+                                    <button type="button" class="btn btn-primary" ng-click="employee_updatecode(data.employee_gid)" title="Update Employee Code">
+                                        <em class="fa fa-user"></em>
+
+                                    </button>
+                                    <button ng-switch-when="Active" type="button" class="btn btn-green" style="background-color: red;" ng-click="employee_deactive(data.employee_gid)" title="User Deactive">
+                                        <em class="fa fa-thumbs-o-down"></em>
+                                       
+                                    </button>
+                                    <button ng-switch-when="Inactive" type="button" class="btn btn-green" style="background-color:rgb(9, 73, 9);" ng-click="employee_active(data.employee_gid)" title="User Active">
+                                        <em class="fa fa-thumbs-o-up" ></em>
+                                       
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        </div>
+                      </div>
+    <!--reset password popup-->
+    <script type="text/ng-template" id="/empresetpassowrd.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-lock "></i>
+                </span>RESET PASSWORD
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_code" maxlength="20" name="productgroupcode" tabindex="0" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Name</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_name" maxlength="30" name="productgroupname" tabindex="1" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Password</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="password" name="Password" required="" maxlength="20" placeholder="Enter Password"
+                                       ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\W])/" ng-model="Password" class="form-control" />
+                                <span ng-show="userform.Password.$dirty &amp;&amp; userform.Password.$error.required" class="text-danger">This field is required</span>
+                                <span ng-show="userform.Password.$dirty &amp;&amp; userform.Password.$error.pattern" class="text-danger">Password should contain: "Atleast one upper case letter, one lower case letter, one special character, one number and minimum eight characters."</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Confirm Password</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="password" name="retypepassword" required="" maxlength="20" placeholder="Confirm Password"
+                                       ui-validate="'$value==Password'" ui-validate-watch="'Password'" ng-model="retypepassword" class="form-control" />
+                                <span ng-show="userform.retypepassword.$dirty &amp;&amp; userform.retypepassword.$error.validator" class="text-danger">Password does Not match</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="passwordSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </script>
+
+    <!--reset password popup-->
+    <script type="text/ng-template" id="/empcodeupdate.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-user "></i>
+                </span>UPDATE EMPLOYEE CODE
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Employee Name</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_name" maxlength="30" name="productgroupname" tabindex="1" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Current Employee Code</strong>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="employee_code" maxlength="20" name="productgroupcode" tabindex="0" readonly />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">New Employee Code</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input class="form-control" type="text" ng-model="newemp_code" maxlength="20" name="newemp_code" placeholder="New Employee Code" tabindex="0" required="" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-sm-1"></div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <strong class="mt0">Confirm Employee Code</strong><span class="text-danger">*</span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <input type="text" name="confirmemp_code" required="" maxlength="225" placeholder="Confirm Employee Code"
+                                       ui-validate="'$value==newemp_code'" ui-validate-watch="'newemp_code'" ng-model="confirmemp_code" class="form-control" />
+                                <span ng-show="userform.confirmemp_code.$dirty &amp;&amp; userform.confirmemp_code.$error.validator" class="text-danger">Employee Code does Not match</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="passwordSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </script>
+                </div>
+
+            
+   
+   
+        

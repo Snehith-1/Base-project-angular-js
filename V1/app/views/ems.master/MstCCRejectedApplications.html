@@ -1,0 +1,180 @@
+﻿<h3>
+    CAD Management
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 68px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 70px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="MstCCRejectedApplicationsController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="tab">
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="pendincad_review()" style="color:#141478;font-size:12px">
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 18px;"></em>
+                    Pending CAD Review
+                    <br />
+                    <div class="label" style="padding-top:4px;font-size: 14px;padding-bottom:4px;color:#141478;">{{cadreview_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="cadaccepted_customers()" style="color:#00796b;font-size:12px">
+                    <em class="fa fa-check-square-o" style="color:#00796b;font-size: 18px;"></em>
+                    CAD Accepted Customers
+                    <br />
+                    <div class="label" style="font-size: 14px;padding-top:4px;padding-bottom:4px;color:#00796b;">{{accept_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="urn_grouping()" style="color:#C10B68;font-size:12px">
+                    <em class="fa fa-users" style="color:#C10B68;font-size: 18px;"></em>
+                    URN Grouping
+                    <br />
+                    <div class="label" style="padding-top:4px;padding-bottom:4px;color:#C10B68;font-size: 14px;">{{urngrouping_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="sendback_underwriting()" style="color:#871490;font-size:12px">
+                    <em class="fa fa-file-text" style="color:#871490;font-size: 18px;"></em>
+                    Sent Back to Underwriting
+                    <br />
+                    <div class="label" style="color:#871490;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{backtounderwriting_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="sendback_cc()" style="color:#706710;font-size:12px">
+                    <em class="fa fa-arrow-circle-left" style="color:#706710;font-size: 18px;"></em>
+                    Sent Back to CC
+                    <br />
+                    <div class="label" style="color:#706710;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{sentbackcc_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" onclick="openApplication(event, 'CC Rejected Applications')" id="defaultOpen" ng-click="cc_rejected()" style="color:#FF0000;font-size:12px">
+                    <em class="fa icon-close fa-x" style="color:#FF0000;font-size: 18px;"></em>
+                    CC Rejected
+                    <br />
+                    <div class="label" style="color:#FF0000;font-size: 14px;padding-top:4px;padding-bottom:4px;">{{ccrejected_count}}</div>
+                </button>
+                <!--<button class="col-lg-2 col-md-2 col-sm-2" style="font-size:12px;text-decoration: none;background-color: rgb(226, 221, 221);">
+                    Total Applications
+                    <br />
+                    <div class="label" style="background-color:#c1c1c1;padding-top:4px;font-size:8px;padding-bottom:4px;font-size:11px;color:black;">{{lstotalcount}}</div>
+                </button>-->
+            </div>
+        </div>
+    </div>    
+    <br />
+    <div class="panel" id="CC Rejected Applications">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <!--<th class="text-center"> S.No</th>-->
+                                    <th class="nowrap"> Application Number</th>
+                                    <th class="nowrap"> Customer Name </th>
+                                    <th class="nowrap"> CC Rejected Date </th>
+                                    <th class="nowrap"> Approval Status </th>
+                                    <th class="nowrap"> CC Group </th>
+                                    <th class="nowrap"> Rejected Date </th>
+                                    <th class="nowrap"> Rejected By </th>
+                                    <th class="nowrap"> Type </th>
+                                    <th class="text-center nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in CCRejected_list">
+                                    <!--<td data-title="'S.No'" class="text-center"> {{$index+1}} </td>-->
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'CC Rejected Date'"> {{data.ccapproved_date}} </td>
+                                    <td data-title="'Approval Status'"> {{data.approval_status}} </td>
+                                    <td data-title="'CC Group'"> {{data.ccgroup_name}} </td>
+                                    <td data-title="'Rejected Date'"> {{data.ccrejected_date}} </td>
+                                    <td data-title="'Rejected By'"> {{data.ccrejected_by}} </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                        <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.enhancement_flag=='Y'">
+                                        <label class="label label-success" style="font-size:10px;">Enhancement </label>
+                                    </td>
+                                    <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.enhancement_flag=='N'">
+                                        <label class="label label-primary" style="font-size:10px;"> New </label>
+                                    </td>
+
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="view(data.application_gid,data.created_by)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

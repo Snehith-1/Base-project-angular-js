@@ -1,0 +1,224 @@
+﻿<h3>
+   Work Item Summary
+</h3>
+
+<div ng-controller="iasnTrnCustomerWrkSummary">
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .panel-scroll {
+            max-height: 120px;
+            overflow: auto;
+        }
+    </style>
+   
+    <div class="panel panel-default">
+        <!--<div class="card">
+            <br>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div id="bordersty" style="background-color: #FAF8F8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+    
+                                        <label style="font-size:14px;" class="text-primary">
+                                           WorkItem Reference No:
+                                        </label>
+                                        <br>
+                                        <span style="font-size:13px;">
+                                           {{workitemref_no}}
+                                        </span>
+    
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+    
+                                        <label style="font-size:14px;" class="text-primary">
+                                            Acrchived By/On
+                                        </label>
+    
+                                        <br>
+                                        <span style="font-size:13px;">
+                                            {{updatedby_on}}
+                                        </span>
+    
+                                    </div>                                   
+                                </div>
+                            </div>
+                            <br>
+                           
+                        </div>
+                        <br>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+           
+            <br>
+        </div>-->
+        <div class="panel-body"> 
+            <!-- <div ng-if= "lstype=='Customer'">
+                <h3>Customer Name</h3>{{ $scope.CustomerName}} <h4></h4> 
+
+            </div>  
+            <div ng-if= "lstype=='Specific'">
+                <h3>Customer Name</h3>{{ $scope.CustomerName}} <h4></h4> 
+                <h3>Sanction Ref No</h3>{{ $scope.SanctionRefNo}} <h4></h4> 
+            </div>       -->
+            
+            
+            <br />
+            <table class="table m0">
+                <thead>
+                    <tr>
+                        <th class="col-lg-1">
+                            S.No
+                        </th>
+                        <th class="col-lg-1 text-nowrap">
+                            WorkItem Ref No.
+                        </th>
+                        <th class="col-lg-2 text-center">
+                            Employee Profile
+                        </th>
+                        <th class="col-lg-3">Mail Details</th>  
+                        <th class="col-lg-2">Remarks</th> 
+                        <th class="col-lg-2">Archived By / On</th>                    
+                        <th class="col-lg-1">Action</th>
+                    </tr>
+                </thead>
+            </table>
+
+            <div class="dd-handle ng-scope" ng-repeat="data in TaggedWI_List">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            {{$index+1}}
+
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            {{data.workitemref_no}}
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <ul>
+                                <div dropdown="" class="dropdown dropdown-list" title="User Profile">
+
+                                    <a dropdown-toggle="" ng-click="EmployeeProfile(data.rmemployee_gid)" class="btn btn-info btn-circle btn-sm">
+                                        <strong>
+                                            {{data.rmemployee_name}}
+                                        </strong>
+                                    </a>
+                                    <!-- START Dropdown menu-->
+                                    <ul class="dropdown-menu animated flipInX" style="width:300px;">
+                                        <li>
+                                            <!-- START list group-->
+                                            <div class="list-group">
+                                                <!-- list item-->
+                                                <div class="list-group-item"
+                                                     style="border: 1px solid grey;border-radius: 5px;background-color:#ffffff;">
+                                                    <div class="item user-block">
+                                                        <div class="user-block-picture">
+                                                            <div class="user-block-status" ng-switch="user_photo">
+                                                                <img ng-src="{{user_photo}}"
+                                                                     alt="Avatar"
+                                                                     class="img-thumbnail img-circle"
+                                                                     src="app/img/user/user-avatar.png" ng-switch-default>
+                                                                <img ng-src="app/img/user/user-avatar.png"
+                                                                     alt="Avatar"
+                                                                     class="img-thumbnail img-circle"
+                                                                     src="app/img/user/user-avatar.png" ng-switch-when="N">
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="media-box-body clearfix">
+                                                            <br />
+                                                            <p>
+                                                                <b>Name:</b> <span class="user-block-name">
+                                                                    {{user_name}}
+                                                                </span>
+                                                            </p>
+                                                            <p>
+                                                                <b>User Code :</b> <span class="user-block-name">{{user_code}}</span>
+                                                            </p>
+                                                            <p>
+                                                                <b>Designation :</b> <span class="user-block-role">{{user_designation}}</span>
+                                                            </p>
+                                                            <p>
+                                                                <b>Department : </b><span class="user-block-role">{{user_department}}</span>
+                                                            </p>
+                                                            <p><b>Contact No : </b><span
+                                                                class="user-block-role">{{user_mobileno}}</span>
+                                                        </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- END list group-->
+                                        </li>
+                                    </ul>
+                                    <!-- END Dropdown menu-->
+                                </div>
+                            </ul>
+
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            {{data.email_from}}<br>
+                            {{data.email_subject}}<br/>
+                            {{data.email_date}}
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            {{data.remarks}}
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            {{data.updatedby_on}}
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <a ng-hide="data.hide" ng-click="data.hide=true">
+                                <button class="text-info" title="Click to View Mail Details"
+                                        ng-click="maildetails(data.email_gid,$index)">
+                                    <em class="fa fa-chevron-circle-down" style="font-size:14px;"></em>
+                                </button>
+                            </a>
+                            <a ng-show="data.hide" ng-click="data.hide=false">
+                                <button class="text-info" title="Click to Hide Mail Details">
+                                    <em class="fa fa-chevron-circle-up" style="font-size:14px;"></em>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+
+                <div ng-show="data.hide" class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+
+                        <p ng-bind-html=trustAsHtml(data.email_content)></p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="back()" class="btn btn-info">
+                        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

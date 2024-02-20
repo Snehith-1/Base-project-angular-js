@@ -1,0 +1,218 @@
+﻿<h3>
+    Audit Creation     
+    </h3> 
+<div ng-controller="AtmMstChecklistMasterSummaryController">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <button type="button" title="Create Audit " class="btn btn-info btn-sm" ng-click="addchecklist()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>Create Audit  
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="panel panel-default ">
+            <br />
+            <div class="table-responsive">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table datatable="ng" class="table table-hover table-striped">
+                        <thead>
+                            <tr class="text-white" style="background-color:#09385f;">                              
+                                <th class="text-center"> S.No </th>
+                                <th class="text-center"> Checklist Ref No</th>
+                                <th class="text-center"> Audit Name</th>
+                                <th class="text-center"> Entity</th>
+                                <th class="text-center"> Department</th>
+                                <!--<th class="text-center"> Audit Type </th>-->
+                                <th class="text-center"> Checklist </th>
+                                <th class="text-center"> Audit Description </th>
+                                <th class="text-center"> Created By </th>
+                                <th class="text-center"> Created Date </th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                                 <tr ng-repeat="data in checklistmaster_list">                               
+                                <td class="text-center"> {{$index+1}} </td>
+                                <td data-title="'Checklist UniqueNO'" style="text-align:center;">{{data.checklist_uniqueno}}</td>
+                                <td data-title="'Entity Name'" style="text-align:center;">{{data.audit_name}}</td>
+                                <td data-title="'Entity Name'" style="text-align:center;">{{data.entity_name}}</td>
+                                <td data-title="'Audit Department Name'" style="text-align:center;">{{data.auditdepartment_name}}</td>
+                                <!--<td data-title="'Audit Type'" style="text-align:center;">{{data.audittype_name}}</td>-->
+                                <td data-title="'Checkpoint Name '" style="text-align:center;">{{data.checkpointgroup_name}}</td>
+                                <td align="center">
+                                    <em class="fa fa-info-circle" ng-click=auditname(data.checklistmaster_gid,data.audit_description) style="font-size:24px;align-content:center;"></em>
+                                </td>
+                                <td data-title="'Audit Checker'" style="text-align:center;">{{data.created_by}}</td>
+                                <td data-title="'Audit Checker'" style="text-align:center;">{{data.created_date}}</td>
+                                <td data-title="'Action'" class="nowrap">
+                                    <div>
+                                        <!--<button type="button" class="btn btn-sm" title="Add Checkpoint"
+                                                ng-click="createchecklist(data.checklistmaster_gid)">
+                                            <em class="icon icon-plus text-gray-dark"></em>
+                                        </button>-->
+                                        <button title="Edit" ng-disabled="data.auditdelete_flag == 'Y'" ng-click="Edit(data.checklistmaster_gid,data.checkpointgroup_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <!--<button type="button" class="btn btn-primary" title="Checkpoint Upload Excel"
+                                                ng-click="importexcel(data.checklistmaster_gid)">
+                                            <em class="fa fa-upload"></em>
+                                        </button>-->
+                                        <button title="Delete" ng-disabled="data.auditdelete_flag == 'Y'" ng-click="delete(data.checklistmaster_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                         
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+           
+            <!--Showpopover-->
+
+            <script type="text/ng-template" id="/checkpointintent.html">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">
+                        <span class="btn-label bg-primary">
+                            <i class="fa fa-edit "></i>
+                        </span> Check Point Intent
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <br>
+                    <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+                        {{txtcheckpointintent}}
+                    </div>
+                    <div align="center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </script>
+
+            <script type="text/ng-template" id="/checkpointdescription.html">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">
+                        <span class="btn-label bg-primary">
+                            <i class="fa fa-edit "></i>
+                        </span> Check Point Description
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <br>
+
+                    <div style="white-space: pre-wrap;width:100%; word-wrap: break-word;display: inline-block;">
+                        {{txtcheckpointdescription}}
+                    </div>
+
+                    <div align="center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </script>
+            <script type="text/ng-template" id="/notetoauditor.html">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">
+                        <span class="btn-label bg-primary">
+                            <i class="fa fa-edit "></i>
+                        </span> Note To Auditor
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <br>
+                    <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+                        {{txtnotetoauditor}}
+                    </div>
+                    <div align="center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </script>
+            <script type="text/ng-template" id="/auditname.html">
+                <div class="modal-header bg-primary">
+                    <h4 class="modal-title">
+                        <span class="btn-label bg-primary">
+                            <i class="fa fa-edit "></i>
+                        </span> Audit Description
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <br>
+                    <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+                        {{txtaudit_description}}
+                    </div>
+                    <div align="center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </script>
+        <script type="text/ng-template" id="/importexcel.html">
+            <div class="modal-header bg-blue-600 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-blue-600">
+                        <em class="fa fa-plus"></em>
+                        Checklist Import Excel
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px;">
+                                            <b> Click here to download Template </b>
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label> Upload Excel : </label>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4 col-sm-4">
+                                        <input type="file" id="fileimport" ng-model="test_document"
+                                               onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-2 col-lg-2 col-sm-2">
+                                        <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                            <em class="icon-cloud-upload"></em>
+                                        </button>
+                                        <span>
+                                            <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                                <i class="fa icon-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+
+                        <div class="class">
+                            <br />
+                            <div class="text-center">
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>

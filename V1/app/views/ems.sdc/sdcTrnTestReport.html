@@ -1,0 +1,74 @@
+﻿<h3>
+    Test Report
+</h3>
+<div ng-controller="sdcTrnTestReportController">
+
+    <div class="row">
+        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-11 col-md-11 col-sm-11">
+                </div>
+                <div class="col-lg-1  col-sm-1 col-md-1">
+
+                    <!--<button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="userform.$invalid" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="userform.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;-->
+                    <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="userform.$invalid" ng-click="export()" title="Export Excel"><i class="fa fa-file"></i></button>&nbsp;&nbsp;
+                </div>
+
+            </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+
+                        <table datatable="ng" class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-indigo-300">
+
+                                    <th style="color:white;">S.No</th>
+                                    <th style="color:white;">Module Prefix</th>
+                                    <th style="color:white;">Objective</th>
+                                    <th style="color:white;">Version</th>
+                                    <th style="color:white;">Description</th>
+                                    <th style="color:white;">Created By</th>
+                                    <th style="color:white;">Status</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="data in testsummary_list" ng-switch on="(data.uat_flag=='N')&&(data.testdeploy_flag=='Y')">
+
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'CustomerCode'">{{data.module_prefix}}</td>
+                                    <td data-title="'CustomerName'">{{data.test_objective}}</td>
+                                    <td data-title="'CustomerCity'">{{data.version_major}}.{{data.version_enhancement}}.{{data.version_patch}}.{{data.version_bug}}</td>
+                                    <td data-title="'Test_description'">{{data.test_description}}</td>
+                                    <td data-title="'created_by'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="'CustomerState'">{{data.test_status}}</td>
+                                    <td ng-switch="data.testinprogress_flag" style="white-space:nowrap;">
+                                        <button title="View" ng-click="view(data.test_gid)" class="btn btn-info" tabindex="0">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <button ng-switch-when="N" type="button" title="Update Status" class="btn btn-sm btn-purple" ng-click="updateInProgressStatus(data.test_gid)"><i class="fa fa-rocket"></i></button>
+                                        <button ng-switch-when="Y" ng-hide="(data.testdeploy_flag == 'Y')||(data.test_status=='Rejected')" type="button" title="Update Status" class="btn btn-sm btn-purple" ng-click="updateDeployStatus(data.test_gid)"><i class="fa fa-rocket"></i></button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <br />
+            </div>
+        </div>
+    </div>
+</div>

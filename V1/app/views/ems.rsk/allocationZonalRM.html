@@ -1,0 +1,1854 @@
+﻿
+
+<h3>
+    ZRM Dashboard
+</h3>
+<div ng-controller="allocationZonalRMcontroller" class="calendar-app">
+    <div class="row">
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-indigo-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-500 pv-lg">
+                        <div class="h4 mt0">{{count_qualified}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Qualified Allocation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-info">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-info-dark pv-lg">
+                        <div class="h4 mt0">{{count_currentallo}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div> Current Allocation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-success">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                        <div class="h4 mt0">{{count_upcoming}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Upcoming Allocation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-purple-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-purple-500 pv-lg">
+                        <div class="h4 mt0">
+                            {{count_completedallo}}
+                        </div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div> Completed Allocation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+
+            <div class="panel widget bg-pink">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-pink-dark pv-lg">
+                        <div class="h4 mt0">{{count_external}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>
+                            External Allocation
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+            <!-- START widget-->
+            <div class="panel widget bg-teal-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-teal-700 pv-lg">
+
+                        <div class="h4 mt0"> {{count_reportcancel}} </div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>
+                            Report- Cancel
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-info"></em>
+                            <em class="fa fa-plus fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix" ng-click="createDirectAllocation()">
+
+                        <div class="media-box-heading">
+                            <div class="text-info m0">Create Allocation</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-danger"></em>
+                            <em class="fa fa-user-times fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <!--<div class="pull-right"><span class="blinking">Pending!</span></div>-->
+                            <a href="#/app/exclusionZonalCustomerList" title="Go To Exclusion List" class="text-danger m0">Exclusion List</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-success"></em>
+                            <em class="fa fa-thumbs-up fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <!--<div class="pull-right"><span class="blinking">Pending!</span></div>-->
+                            <a href="#/app/tier1Summary" title="Go To Tier 1 Approval" class="text-success m0">Tier 1 Approval</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-purple"></em>
+                            <em class="fa fa-file-powerpoint-o fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <a href="#/app/tier2Preparation" title="Go To Tier 2 Preparation" class="text-purple m0">Tier 2 Preparation</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-gray-darker"></em>
+                            <em class="fa fa-calendar-o fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <span class="text-inverse m0"> ADM - Last Updated by <span class="text-bold">{{ADM_updatedby}}</span> On <span class="text-bold">{{ADM_updateddate}}</span></span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <tabset justified="true">
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    Zonal Schedule
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <label>Zonal : &emsp;<span class="text-primary" style="font-size:16px;">{{zonal_name}}</span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <!-- START panel-->
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <!-- START calendar-->
+                                        <div calendar=""></div>
+                                        <!-- END calendar-->
+                                    </div>
+                                </div>
+                                <!-- END panel-->
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <h4 align="center" class="text-pink">
+                                    RMD wise - My Zonal Allocation Pending
+                                </h4>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table table-striped" style="padding: 0px 0px">
+                                                <thead class="bg-indigo-400">
+                                                    <tr>
+                                                        <th>S.No</th>
+                                                        <th>Risk Manager</th>
+                                                        <th>Overall Pending</th>
+                                                        <th>Fresh </th>
+                                                        <th>Re-Visit </th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in zonalpendingcount" ng-style="data.count_status == 'Y'?{'background-color':'#FACCBF'}:{}">
+                                                        <td>{{$index+1}}</td>
+                                                        <td width="40%">{{data.riskmanager_name}}</td>
+                                                        <td>{{data.pending_count}}</td>
+                                                        <td>
+                                                            {{data.count_fresh}}
+                                                            <!--<div>
+
+                                                                <ul class="list-unstyled">
+                                                                    <li>
+                                                                        <a data-placement="left" data-toggle="popover" data-container="body" popover-placement="bottom"
+                                                                           data-html="true" data-title="{{data.riskmanager_name}}" style="display: block; left: 800.5px; top: 679px;"
+                                                                           ng-click="showPopover(data.assigned_RM,$index)" id="login">
+                                                                            {{data.count_fresh}}
+                                                                        </a>
+                                                                    </li>
+                                                                    <div id="popover-content" class="hide">
+                                                                        <table class='table'>
+                                                                            <thead>
+                                                                                <tr class="bg-info-light text-white">
+                                                                                    <th>#</th>
+                                                                                    <th colspan="3">Customer Name </th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr  ng-repeat="subdata in data[data.assigned_RM]">
+                                                                                    <td>{{index+1}}</td>
+                                                                                    <td colspan="3">{{subdata.customer_name}}</td>
+
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>-->
+                                                        </td>
+                                                        <td>
+                                                            {{data.count_revisit}}
+                                                            <!--<div>
+                                                                <ul class="list-unstyled">
+                                                                    <li>
+                                                                        <a data-placement="left" data-toggle="revisitpopover" data-container="body" popover-placement="bottom"
+                                                                           data-html="true" data-title="{{data.riskmanager_name}}"
+                                                                           ng-click="showRevisitPopover(data.assigned_RM,data)" id="login">
+                                                                            {{data.count_revisit}}
+                                                                        </a>
+                                                                    </li>
+                                                                    <div id="popover-Revisitcontent" class="hide">
+                                                                        <table class='table'>
+                                                                            <thead>
+                                                                                <tr class="bg-info-light text-white">
+                                                                                    <th>#</th>
+                                                                                    <th colspan="3">Customer Name</th>
+                                                                                    <th colspan="3">Last Visit</th>
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="popup in customerrevisitdtl">
+                                                                                    <td>{{index+1}}</td>
+                                                                                    <td colspan="3">{{popup.customer_name}}</td>
+                                                                                    <td colspan="3">{{popup.lastvisit_date}}</td>
+
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </ul>
+                                                            </div>-->
+                                                        </td>
+                                                        <td ng-switch="data.count_status">
+                                                            <label ng-switch-when="Y" class="label label-danger">OVERLOAD</label>
+                                                            <label ng-switch-when="N">-</label>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <h4 align="center" class="text-pink">
+                                    Current Month Zonal Schedule - <now format="MMMM" class="text-primary"></now> <now format="yyyy" class="text-primary"></now>
+                                </h4>
+
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                    <div ui-scroll-viewport="" style="height:505px; overflow-y: auto;" class="row">
+                                        <div class="col-lg-12" ng-repeat="data in monthlyactivity">
+                                            <div class="list-group-item">
+                                                <div class="media-box-body clearfix">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <h4 class="popover-title">Scheduled on {{data.scheduled_date}} / {{data.scheduled_time}} by {{data.VisitRM}}</h4>
+                                                            <div class="popover-content">
+                                                                <p>Cutomer: <span class="text-primary">{{data.customer_name}}</span></p>
+                                                                <p>{{data.remarks}}</p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <h4 align="center" class="text-pink">
+                                    Today Zonal Activity
+                                </h4>
+                                <div>
+                                    <div class="panel-body">
+                                        <ul ng-class="timelineAlt ? 'timeline-alt' : 'timeline'" ng-init="timelineAlt=false">
+                                            <li data-datetime="Today" class="timeline-separator"></li>
+                                            <li ng-repeat="data in todayactivity">
+                                                <div class="timeline-badge primary">
+                                                    <em class="fa fa-users"></em>
+                                                </div>
+                                                <div class="timeline-panel">
+                                                    <div ng-class="timelineAlt ? 'right' : 'left'" class="popover">
+                                                        <h4 class="popover-title">Scheduled on {{data.scheduled_date}} / {{data.scheduled_time}} by {{data.VisitRM}}</h4>
+                                                        <div class="arrow"></div>
+                                                        <div class="popover-content">
+                                                            <p style="font-size:12px;"><span class="text-primary">{{data.customer_name}}</span></p>
+                                                            <p>{{data.remarks}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="timeline-end">
+                                                <a class="timeline-badge">
+                                                    <em class="fa fa-ellipsis-v"></em>
+                                                </a>
+                                            </li>
+                                            <!-- END timeline item-->
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- END panel-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="qualified()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em> Qualified &nbsp;
+                    <label class="label label-primary" ng-if="count_qualified != '0'">{{count_qualified}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label>Qualified Status </label>
+                                <div class="col">
+                                    <p class="mda-radio">
+                                        <input ng-model="cboQualifiedStatus" type="radio" ng-change="Fresh()" name="radio_status" value="Fresh">
+                                        <em class="bg-teal-500"></em>Fresh
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    &nbsp; &nbsp;
+                                </div>
+                                <div class="col">
+                                    <p class="mda-radio">
+                                        <input ng-model="cboQualifiedStatus" type="radio" ng-change="ReVisit()" name="radio_status" value="Re-Visit">
+                                        <em class="bg-teal-500"></em>Re-Visit
+                                    </p>
+                                </div>
+                                <div class="col">
+                                    &nbsp; &nbsp;
+                                </div>
+                                <div class="col">
+                                    <p class="mda-radio">
+                                        <input ng-model="cboQualifiedStatus" ng-change="allcase()" type="radio" name="radio_status">
+                                        <em class="bg-teal-500"></em>All
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <h4 class="text-primary">{{cboQualifiedStatus}} Qualified Case</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalQualifiedDisplayed}} of {{totalQualified}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pageQualifiedcount" id="pagecount" type="number" />
+                                <button class="btn" id="loadmore" ng-click="loadQualifiedMore($parent.pageQualifiedcount)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchQualifiedtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table hover table-striped row-border">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th class="text-nowrap">URN No.</th>
+                                    <th class="text-nowrap">Customer</th>
+                                    <th>Sanction Amount</th>
+                                    <th>Loan Disbursement Date</th>
+                                    <th>Days Passed Disbursement</th>
+                                    <th>Last Visited Date</th>
+                                    <th>Days Passed Visit</th>
+                                    <th>Qualified Status</th>
+                                    <th class="text-nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in qualifiedallocationList|filter :searchQualifiedtxt|limitTo:totalQualifiedDisplayed"
+                                    ng-switch="data.qualified_status">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer'">{{data.customer_name}}</td>
+                                    <td data-title="'Sanction Amount'">{{data.total_sanction}}</td>
+                                    <td data-title="'Loan Disbursement Date'">{{data.disbursement_date}}</td>
+                                    <td data-title="Days Passed Disbursement'">{{data.daypassed_disbursement}}</td>
+                                    <td data-title="'Last Visited Date'">{{data.lastvisit_date}}</td>
+                                    <td data-title="Days Passed Visit'">{{data.daypassed_visit}}</td>
+                                    <td data-title="'Qualified Status'" class="text-nowrap">
+                                        <label ng-switch-when="Fresh" class="label label-info" style="font-size:11px;">Fresh</label>
+                                        <label ng-switch-when="Re-Visit" class="label label-purple" style="font-size:11px;">Re-visit</label>
+                                    </td>
+                                    <td class="text-nowrap">
+                                        <button title="Create" class="btn btn-success btn-sm"
+                                                ng-click="createAllocation(data.customer_urn,data.qualified_status)">
+
+                                            <em class="fa fa-plus"></em>
+                                        </button>
+                                        <button title="Exclusion" class="btn btn-danger btn-sm"
+                                                ng-click="exclusioncustomer(data.customer_urn,data.customer_name,data.qualified_status)">
+                                            <em class="fa fa-user-times"></em>
+                                        </button>
+                                        
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="current()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em> Current &nbsp;
+                    <label class="label label-primary" ng-if="count_currentallo!= '0'">{{count_currentallo}}</label>
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalCurrentDisplayed}} of {{totalCurrent}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageCurrentcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadCurrentMore($parent.pageCurrentcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchCurrenttxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table hover table-striped row-border">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th class="text-nowrap">Visit Month</th>
+                                        <th>Allocated Date</th>
+                                        <th>Cut-Off Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th>Zonal Risk Manager</th>
+                                        <th>Risk Manager</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in currentallocationList|filter :searchCurrenttxt|limitTo:totalCurrentDisplayed" ng-switch="data.allocation_flag">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Visit Month'">{{data.visit_allocatemonth}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'Cut-Off Date'">{{data.cutoff_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                                        <td data-title="'Assigned RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                            <label class="label label-success" ng-switch-when=Allocated>Allocated</label>
+                                            <label class="label label-primary bg-purple-400" ng-switch-when=Completed>Completed</label>
+                                            <label class="label label-pink" ng-switch-when=External>External</label>
+                                            <label ng-switch-default>-</label>
+                                        </td>
+                                        <td class="text-nowrap">
+
+                                            <button title="Hold" class="btn btn-warning btn-sm"
+                                                    ng-click="holdAllocation(data.allocationdtl_gid,data.customer_urn,data.customername)">
+                                                <em class="fa fa-pause"></em>
+                                            </button>
+                                            <button title="External" class="btn bg-pink-400 btn-sm"
+                                                    ng-click="exteralAllocate(data.allocationdtl_gid)" ng-switch-when="Y">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="External" class="btn bg-blue-grey-100 btn-sm"
+                                                    ng-switch-default disabled>
+                                                <em class="fa fa-external-link"></em>
+                                            </button>
+                                            <button title="External Assigned" class="btn bg-pink-300 btn-sm"
+                                                    ng-click="externalAssigned(data.allocationdtl_gid)" ng-switch-when="E">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="Allocation 360" class="btn btn-info btn-sm" ng-switch-when="Y"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Allocation 360" class="btn btn-info btn-sm" ng-switch-when="P"
+                                                    ng-click="viewallocation(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Allocation 360" disabled class="btn bg-blue-grey-100 btn-sm" ng-switch-when="C">
+
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button class="btn bg-blue-grey-100 btn-sm" disabled ng-switch-default>
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </tab>
+
+            <tab ng-click="upcoming()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em> Upcoming &nbsp;
+                    <label class="label label-primary" ng-if="count_upcoming!= '0'">{{count_upcoming}}</label>
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalUpcomingDisplayed}} of {{totalUpcoming}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageUpcomingcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadUpcomingMore($parent.pageUpcomingcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchUpcomingtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table hover table-striped row-border">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th class="text-nowrap">Visit Month</th>
+                                        <th>Allocated Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th>Zonal Risk Manager</th>
+                                        <th>Risk Manager</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in upcomingallocationList|filter :searchUpcomingtxt|limitTo:totalUpcomingDisplayed" ng-switch="data.allocation_flag">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Visit Month'">{{data.visit_allocatemonth}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                                        <td data-title="'Assigned RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                            <label class="label label-success" ng-switch-when=Allocated>Allocated</label>
+                                            <label class="label label-primary bg-purple-400" ng-switch-when=Completed>Completed</label>
+                                            <label class="label label-pink" ng-switch-when=External>External</label>
+                                            <label ng-switch-default>-</label>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <button title="Hold" class="btn btn-warning btn-sm"
+                                                    ng-click="holdAllocation(data.allocationdtl_gid,data.customer_urn,data.customername)">
+                                                <em class="fa fa-pause"></em>
+                                            </button>
+                                            <button title="Move to Current" class="btn btn-green btn-sm"
+                                                    ng-click="movetocurrentallocation(data.allocationdtl_gid,data.customer_urn,data.customername)">
+                                                <em class="fa fa-backward"></em>
+                                            </button>
+                                            <button title="External" class="btn bg-pink-400 btn-sm"
+                                                    ng-click="exteralAllocate(data.allocationdtl_gid)" ng-switch-when="Y">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="External" class="btn bg-blue-grey-100 btn-sm"
+                                                    ng-switch-default disabled>
+                                                <em class="fa fa-external-link"></em>
+                                            </button>
+                                            <button title="External Assigned" class="btn bg-pink-300 btn-sm"
+                                                    ng-click="externalAssigned(data.allocationdtl_gid)" ng-switch-when="E">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="Allocation 360" class="btn btn-info btn-sm"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </tab>
+
+            <tab ng-click="breached()">
+                <tab-heading>
+                    <em class="fa fa-user  fa-1x"></em> Breached &nbsp;
+                    <label class="label label-primary" ng-if="count_breached!= '0'">{{count_breached}}</label>
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalBreachedDisplayed}} of {{totalBreached}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageBreachedcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadBreachedMore($parent.pageBreachedcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchBreachedtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table hover table-striped row-border">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th class="text-nowrap">Visit Month</th>
+                                        <th>Allocated Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th>Zonal Risk Manager</th>
+                                        <th>Risk Manager</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in breachedallocationList|filter :searchBreachedtxt|limitTo:totalBreachedDisplayed">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Visit Month'">{{data.visit_allocatemonth}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                                        <td data-title="'Assigned RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-danger">Breached</label>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <button title="Allocation 360" class="btn btn-info btn-sm"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+
+            <tab ng-click="completed()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em> Completed &nbsp;
+                    <label class="label label-primary" ng-if="count_completedallo!= '0'">{{count_completedallo}}</label>
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalCompletedDisplayed}} of {{totalCompleted}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageCompletedcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadCompletedMore($parent.pageCompletedcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchCompletedtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table hover table-striped row-border">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th class="text-nowrap">Visit Month</th>
+                                        <th>Allocated Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th>Zonal Risk Manager</th>
+                                        <th>Risk Manager</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in completedallocationList|filter :searchCompletedtxt|limitTo:totalCompletedDisplayed" ng-switch="data.allocation_flag">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Visit Month'">{{data.visit_allocatemonth}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                                        <td data-title="'Assigned RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                            <label class="label label-success" ng-switch-when=Allocated>Allocated</label>
+                                            <label class="label label-primary bg-purple-400" ng-switch-when=Completed>Completed</label>
+                                            <label class="label label-pink" ng-switch-when=External>External</label>
+                                            <label ng-switch-default>-</label>
+                                        </td>
+                                        <td class="text-nowrap">
+
+                                            <button title="Create" class="btn btn-success btn-sm" ng-switch-default
+                                                    ng-click="createAllocation(data.customer_gid)">
+                                                <em class="fa fa-plus"></em>
+                                            </button>
+                                            <button class="btn bg-blue-grey-100 btn-sm" disabled ng-switch-when="Y">
+                                                <em class="fa fa-plus"></em>
+                                            </button>
+                                            <button class="btn bg-blue-grey-100 btn-sm" disabled ng-switch-when="P">
+                                                <em class="fa fa-plus"></em>
+                                            </button>
+                                            <button class="btn bg-blue-grey-100 btn-sm" disabled ng-switch-when="E">
+                                                <em class="fa fa-plus"></em>
+                                            </button>
+
+                                            <button title="External" class="btn bg-pink-400 btn-sm"
+                                                    ng-click="exteralAllocate(data.allocationdtl_gid)" ng-switch-when="Y">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="External" class="btn bg-blue-grey-100 btn-sm"
+                                                    ng-switch-default disabled>
+                                                <em class="fa fa-external-link"></em>
+                                            </button>
+
+                                            <button title="Allocation 360" class="btn btn-info btn-sm" ng-switch-when="Y"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Allocation 360" class="btn btn-info btn-sm" ng-switch-when="P"
+                                                    ng-click="viewallocation(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Allocation 360" disabled class="btn bg-blue-grey-100 btn-sm" ng-switch-when="C">
+
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button class="btn bg-blue-grey-100 btn-sm" disabled ng-switch-default>
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+
+            <tab ng-click="external()">
+                <tab-heading>
+                    <em class="fa fa-user  fa-1x"></em> External &nbsp;
+                    <label class="label label-primary" ng-if="count_external!= '0'">{{count_external}}</label>
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalExternalDisplayed}} of {{totalExternal}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageExternalcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadExternalMore($parent.pageExternalcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchExternaltxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table class="table hover table-striped row-border">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th>Allocated Date</th>
+                                        <th>Target Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th class="text-nowrap">External Name</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in externalallocationList|filter :searchExternaltxt|limitTo:totalExternalDisplayed"  ng-switch="data.allocation_flag">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'Target Date'">{{data.target_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'External'" class="text-nowrap">{{data.allocate_externalname}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                            <label class="label label-success" ng-switch-when=Allocated>Allocated</label>
+                                            <label class="label label-primary bg-purple-400" ng-switch-when=Completed>Completed</label>
+                                            <label class="label label-pink" ng-switch-when=External>External</label>
+                                            <label ng-switch-default>-</label>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <button title="External Assigned" class="btn bg-pink-300 btn-sm"
+                                                    ng-click="externalAssigned(data.allocationdtl_gid)" ng-switch-when="E">
+                                                <em class="fa fa-external-link text-white"></em>
+                                            </button>
+                                            <button title="Allocation 360" class="btn btn-info btn-sm"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+
+            <tab ng-click="reportcancel()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em> Report- Cancel &nbsp;
+                    <label class="label label-primary" ng-if="count_reportcancel!= '0'">{{count_reportcancel}}</label>
+
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalReportDisplayed}} of {{totalReport}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="$parent.pageReportcount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadReportMore($parent.pageReportcount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchReporttxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="table-responsive">
+                            <table datatable="ng" class="row-border hover">
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th>S.No</th>
+                                        <th>Allocated Date</th>
+                                        <th class="text-nowrap">URN No.</th>
+                                        <th class="text-nowrap">Customer</th>
+                                        <th>Sanction Amount</th>
+                                        <th class="text-nowrap">Vertical</th>
+                                        <th class="text-nowrap">Zonal/State/District</th>
+                                        <th>Zonal Risk Manager</th>
+                                        <th>Risk Manager</th>
+                                        <th>Last Visited Date</th>
+                                        <th>Days passed Visit</th>
+                                        <th>Loan Disbursement Date</th>
+                                        <th>Days Passed Disbursement</th>
+                                        <th>Allocation Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in reportcancelList|filter :searchReporttxt|limitTo:totalReportDisplayed">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Allocated Date'">{{data.allocated_date}}</td>
+                                        <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Amount'" class="text-nowrap">{{data.sanction_amount}}</td>
+                                        <td data-title="'Vertical'">{{data.vertical}}</td>
+                                        <td data-title="'Location'">{{data.location}}</td>
+                                        <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                                        <td data-title="'Assigned RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                                        <td data-title="'Last Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                                        <td data-title="'Days passed Visit'" class="text-nowrap">{{data.count_lastvisit}}</td>
+                                        <td data-title="'Loan Disbursement Date'" class="text-nowrap">{{data.disbursement_date}}</td>
+                                        <td data-title="'Days Passed Disbursement'" class="text-nowrap">{{data.daypassed_disbursement}}</td>
+                                        <td ng-switch="data.allocation_status">
+                                            <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                            <label class="label label-success" ng-switch-when=Allocated>Allocated</label>
+                                            <label class="label label-primary bg-purple-400" ng-switch-when=Completed>Completed</label>
+                                            <label class="label label-pink" ng-switch-when=External>External</label>
+                                            <label ng-switch-default>-</label>
+                                        </td>
+                                        <td class="text-nowrap">
+
+                                            <button title="Allocation 360" class="btn btn-info btn-sm"
+                                                    ng-click="viewallocateddetails(data.allocationdtl_gid,data.customer_gid)">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+
+                                            <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                    ng-click="historyallocation(data.customer_gid)">
+                                                <em class="fa fa-history text-white"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+
+    </div>
+    
+    <script type="text/ng-template" id="/RMTransfer.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-exchange"></em>&nbsp; RM Transfer</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name / URN </label>
+                                    <input ng-model="customerdtl" class="form-control ng-pristine ng-valid ng-touched text-pink" disabled>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Transfer From </label>
+                                    <select id="transferFrom" name="transferFrom" dropzone="" ng-model="transferFrom" required=""
+                                            ng-options="data.employee_id as data.employee_name for data in employee_list" disabled
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Employee Name </option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Transfer To <span style="color:red">*</span></label>
+                                    <select id="employee_id" name="employee_id" dropzone="" ng-model="employee_id" required=""
+                                            ng-options="transferTo.employee_id as transferTo.employee_name for transferTo in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Employee Name </option>
+
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submittransfer()" ng-disabled="mappingEditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/holdAllocationpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-pause"></em>&nbsp; Hold Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <h4>Do you want to Hold this Allocation ?</h4>
+
+                                    <label class="text-center text-primary">{{customer_urn}} / {{customername}}</label>
+                                </div>
+
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Allocation Hold Reason: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Allocation Hold Reason..."  
+                                              ng-model="txthold_reason" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="class">
+                                <div class="text-center">
+
+                                    <button class="btn btn-success" ng-click="confirmHoldAllocation()" ng-disabled="!txthold_reason">
+                                        <em class="fa fa-check"></em>
+                                        <span>Confirm</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/movetocurrentallocationpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-backward"></em>&nbsp; Move to Current Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <h4>Do you want to Move this Allocation to Current ?</h4>
+
+                                    <label class="text-center text-primary">{{customer_urn}} / {{customername}}</label>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Allocation Move Reason: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Allocation Move Reason..."
+                                              ng-model="txtmove_reason" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="class">
+                                <div class="text-center">
+
+                                    <button class="btn btn-success" ng-click="confirmmoveAllocation()" ng-disabled="!txtmove_reason">
+                                        <em class="fa fa-check"></em>
+                                        <span>Confirm</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/exclusionpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-user-times"></em>&nbsp;  Exclusion </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <h4>Do you want to Exclude this Customer ?</h4>
+
+                                    <label class="text-center text-bold">Customer Name : </label> <span>{{customer_urn}} / {{customername}}</span>
+                                    <br />
+                                    <label class="text-center text-bold">Qualified Status : </label> <span>{{customer_status}}</span>
+                                </div>
+                                <br />
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Exclusion Reason: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Exclusion Reason..."
+                                              ng-model="txtexclusion_reason" class="form-control" rows="3"></textarea>
+                                </div>
+                                <br/>
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <label>Exclusion History : </label>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12" ng-repeat="data in exclusioncustomerHistory" ng-show="historyexclusion">
+
+                                    <div class="list-group-item">
+                                        <div class="media-box-body clearfix">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <h4 class="popover-title">{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}} from {{data.excluded_stage}}</h4>
+                                                    <div class="popover-content">
+                                                        <!--<p>{{data.excluded_status}} On {{data.excluded_date}} by {{data.excluded_by}}</p>-->
+                                                        <p><span class="text-bold">Reason :</span> {{data.exclusion_reason}}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12" ng-show="Nohistoryexclusion">
+
+                                    <div class="list-group-item">
+                                        <div class="media-box-body clearfix">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="popover-title">
+                                                        <p><span class="text-bold" style="font-size:15px;">No History</span></p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="class">
+                                <div class="text-center">
+
+                                    <button class="btn btn-success" ng-click="confirmExclusioncustomer()" ng-disabled="!txtexclusion_reason">
+                                        <em class="fa fa-check"></em>
+                                        <span>Confirm</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/AllocateExternal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp; Case Allocation - External</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Customer Name / URN </label>
+                                    <input ng-model="customerdtl" class="form-control ng-pristine ng-valid ng-touched text-pink" disabled>
+                                </div>
+
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Vendor Name </label>
+                                    <select id="transferFrom" name="transferFrom" dropzone="" ng-model="external_usergid" required=""
+                                            ng-options="data.external_usergid as data.external_username for data in externaldtl"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Vendor Name </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Target Date</label>
+                                        <input type="date" id="fromDate" name="fromdate" ng-model="targetdate" required>
+                                    </md-input-container>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Document Upload</label>
+
+                                    <div class="dd-handle ng-scope" style="height:405px;">
+                                        <div class="row">
+                                            <div class="col-lg-10 col-sm-12 col-md-12">
+                                                <input type="file" id="addExternalupload" ng-model="test_document" multiple
+                                                       onchange="angular.element(this).scope().uploadallocation(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                                                       accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <br />
+                                            <div class="col-lg-11 col-sm-12 col-md-12">
+                                                <div ui-scroll-viewport="" style="height:345px; overflow-y: auto;" class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive table-bordered bg-teal-100">
+                                                            <table class="table">
+                                                                <thead class="bg-teal-500">
+                                                                    <tr>
+                                                                        <th>Document Name</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="upload in uploadallocation_list">
+
+                                                                        <td>{{upload.document_name}}</td>
+                                                                        <td>
+                                                                            <button title="Cancel" class="btn btn-default btn-sm"
+                                                                                    ng-click="uploadcancel(upload.tmp_documentGid)">
+                                                                                <em class="fa fa-close"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Remarks</label>
+
+                                    <div text-angular="" ng-model="$parent.AllocationExtRemarks"
+                                         placeholder="Enter Remarks..." name="wysiswyg-editor" class="btn-group-justified"></div>
+                                </div>
+                            </div>
+                            <br />
+                            <div>
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submitAllocateExternal()" ng-disabled="!external_usergid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/AssignedExternal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp; Case Allocation - External View</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Customer Name / URN </label>
+                                    <br />
+                                    <p>{{customerdtl}}</p>
+
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Vendor Name </label>
+                                    <br />
+                                    <p>{{externalname}}</p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Assigned By </label>
+                                    <br />
+                                    <p>{{assigned_by}}</p>
+
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3 form-group float-label">
+                                    <label>Assigned Date </label>
+                                    <br />
+                                    <p>{{assigned_date}}</p>
+
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3 form-group float-label">
+                                    <label>Target Date </label>
+                                    <br />
+                                    <p>{{target_date}}</p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Document Upload</label>
+
+                                    <div class="dd-handle ng-scope" style="height:355px;">
+
+                                        <div class="row">
+                                            <br />
+                                            <div class="col-lg-11 col-sm-12 col-md-12">
+                                                <div ui-scroll-viewport="" style="height:345px; overflow-y: auto;" class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive table-bordered bg-teal-100">
+                                                            <table class="table">
+                                                                <thead class="bg-teal-500">
+                                                                    <tr>
+                                                                        <th>Document Name</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="upload in upload_list">
+
+                                                                        <td>{{upload.document_name}}</td>
+                                                                        <td>
+                                                                            <button title="Download" class="btn btn-default btn-sm"
+                                                                                    ng-click="downloads(upload.document_path,upload.document_name)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a> <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Remarks</label>
+
+                                    <div class="dd-handle ng-scope" style="height:355px;">
+                                        <p ng-bind-html="AllocateExtRemarks"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="text-center">
+
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Close</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="/lastVisitDate.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-calendar"></em>&nbsp; Last Visit Date</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name / URN </label>
+                                    <br />
+                                    <p>{{customername}} / {{customer_urn}}</p>
+                                </div>
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    ro
+                                    <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                        <label for="input_13">Date of the Visit</label>
+                                        <input type="date" id="fromDate" name="fromdate" ng-model="$parent.visitdate" required>
+                                    </md-input-container>
+                                </div>
+
+                            </div>
+
+                            <br />
+
+                            <br />
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submitlastvisit()" ng-disabled="mappingEditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <!--<div class="row">
+        <div class="col-lg-3 col-sm-6">
+
+            <div class="panel widget bg-indigo-300" ng-click="Overalllist()" title="Click to View Overall Allocation List">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-500 pv-lg">
+                        <div class="h3 mt0">{{count_totalallocate}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>My Zonal Allocation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="panel widget bg-purple-300" ng-click="pendinglist()" title="Click to Sort Allocation Pending List">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-purple-500 pv-lg">
+                        <div class="h3 mt0">{{count_allocate}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Zonal Pending </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+
+            <div class="panel widget  bg-success" ng-click="Completedlist()"  title="Click to Sort Allocation Completed List">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                        <div class="h3 mt0">
+                            {{count_completed}}
+                        </div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Zonal Completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-12">
+
+            <div class="panel widget">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-gray-dark pv-lg">
+
+                        <now format="MMMM" class="text-sm"></now>
+
+                        <now format="d" class="h4 mt0"></now>
+                    </div>
+                    <div class="col-xs-8 pv-lg bg-gray-500">
+                        <now format="EEEE" class="text-sm"></now>
+
+                        <now format="h:mm" class="h4 mt0"></now>
+                        <now format="a" class="text-sm"></now>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel">
+
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">URN No.</th>
+                            <th class="text-nowrap">Customer</th>
+                            <th>State/District</th>
+                            <th class="text-nowrap">Risk Manager</th>
+                            <th class="text-nowrap">Allocated By</th>
+                            <th class="text-nowrap">Allocated Date</th>
+                            <th class="text-nowrap">Allocation Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in allocatedList">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer'">{{data.customername}}</td>
+                            <td data-title="'State/District'">{{data.location}}</td>
+                            <td data-title="'Risk Manager'">{{data.assigned_RM}}</td>
+                            <td data-title="'Allocated By'">{{data.created_by}}</td>
+                            <td data-title="'Allocated Date'">{{data.created_date}}</td>
+                            <td data-title="'Allocation Status'" ng-switch="data.allocation_status">
+                                <label class="label label-primary bg-purple-400" ng-switch-when=Allocated>Allocated</label>
+                                <label class="label label-success" ng-switch-when=Completed>Completed</label>
+                                <label ng-switch-default>-</label>
+                            </td>
+                            <td class="text-nowrap" ng-switch="data.completed_flag">
+                                <button title="360 - Visit Information" class="btn btn-info btn-sm"
+                                        ng-click="viewZonalallocation(data.allocationdtl_gid,data.customer_gid)">
+                                    <em class="fa fa-retweet"></em>
+                                </button>
+                                <!--<button title="RM Transfer" class="btn bg-purple-400 btn-sm"
+                                        ng-click="transferRM(data.allocationdtl_gid)" ng-switch-default>
+                                    <em class="fa fa-exchange text-white"></em>
+                                </button>
+                                <button title="RM Transfer" class="btn btn-default btn-sm" disabled
+                                        ng-click="transferRM(data.allocationdtl_gid)" ng-switch-when="Y">
+                                    <em class="fa fa-exchange text-white text-purple"></em>
+                                </button>
+                                <button title="PDF" class="btn btn-danger btn-sm" ng-switch-when="Y"
+                                        ng-click="generetePDF(data.allocationdtl_gid)">
+                                    <em class="fa fa-file-pdf-o"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>-->
+</div>

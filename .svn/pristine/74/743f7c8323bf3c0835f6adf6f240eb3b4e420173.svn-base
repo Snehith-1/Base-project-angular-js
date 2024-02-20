@@ -1,0 +1,438 @@
+﻿<script>
+    var hosts = window.location.origin; 
+    var imgurl = hosts+ '/WebApplication1/home/UploadImage'; 
+    $('div#froala-editor-p').on('froalaEditor.image.inserted', function (e, editor, $img, response) {
+        $img.after("<p></p>");
+    });
+
+</script> 
+<h3>
+    Sanction Letter Generate
+</h3>
+<div ng-controller="MstAppSanctionLetterGenerationController">
+    <div id="panelDemo8" class="panel panel-primary ">
+        <div class="panel-heading">
+            <span class="btn-label">
+            <i class="fa fa-file"></i>
+            </span>Sanction Letter Generate
+        </div>
+        <div class="panel-body">
+            <div class="row dd-handle" id="sanctionlettertopview">
+                <label class="text-primary" style="font-size:14px;">Basic Details</label>
+                <hr />
+                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <label><strong>Customer</strong></label>
+                        <p> {{customerNameEdit}}</p>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <label><strong>Sanction Ref No</strong></label>
+                        <p> {{sanctionrefnoEdit}}</p>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <label><strong>Sanction Amount</strong></label>
+                        <p> {{SanctionAmountEdit}}</p>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <label><strong>Sanction Date</strong></label>
+                        <p> {{sanction_date}}</p>
+                    </div>
+                </div>
+
+                <!--<div class="col-sm-12 col-sm-12 col-sm-12" ng-show="sanction_template_bind">
+            <br />
+            <div class="col-sm-8 col-md-8 col-lg-8" ng-if="checkerpushback_remarks!=''">
+                <label class="label label-info" style="font-size:11px;">Checker Pushback Remarks</label>
+                <br /><br />
+                {{checkerpushback_remarks}}
+            </div>
+        </div>-->
+            </div>
+            <br />
+            <div class="table-responsive dd-handle" ng-if="sanctionletter_flag=='Y' || checkerpushback_remarks!=''">
+                <label class="text-primary" style="font-size:14px;">Approval Log</label>
+                <hr />
+                <table class="table hover table-striped ">
+                    <thead>
+                        <tr class="text-white bg-gray-light">
+                            <th>S.No</th>
+                            <th align="center">Submitted Date</th>
+                            <th align="center">Status</th>
+                            <th align="center">Submitted By</th>
+                            <th align="center">Remarks</th>
+                            <th align="center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in sanctiontocheckerlist">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Submitted Date'" class="text-nowrap">{{data.created_date}}</td>
+                            <td data-title="'Status'">{{data.sanction_status}}</td>
+                            <td data-title="'Submitted By'">{{data.created_by}}</td>
+                            <td data-title="'Remarks'">{{data.remarks}}</td>
+                            <td class="text-nowrap">
+                                <button type="button" class="btn btn-primary" ng-click="sanctiontocheckerview(data.sanctionapprovallog_gid, data.application2sanction_gid)"
+                                        title="Word View">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="row" style="margin-bottom:-10px;">
+                <div class="col-lg-12 col-md-12 col-sm-12">  
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <label class="text-primary" style="font-size:14px;"><b> Sanction Letter Document - Upload </b></label>
+                                    <hr />
+                                    <div class="col-lg-12 col-md-12 col-sm-12" ng-show="sanctionletter_flag =='N'">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="mda-form-group float-label">
+                                                <label>Document Title </label>
+                                                <input ng-model="$parent.txtsanctiondocument_title" tabindex="0" maxlength="120" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <div class="mda-form-group float-label">
+                                                <strong>Upload Documents</strong>
+                                                <input type="file" id="sanctiondocument" tabindex="5" multiple onchange="angular.element(this).scope().sanctiondocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       ng-model="sanctiondocument" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Document Title</th>
+                                                            <th scope="col">Document Name</th>
+                                                            <th align="center" scope="col">
+                                                                Action&nbsp;&nbsp;&nbsp;
+                                                                <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadall()">
+                                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                                </a>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in sanctionuploaddocument_list">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Document Name">{{data.document_title}}</td>
+                                                            <td title="Document Title">{{data.document_name}}</td>
+                                                            <td data-title="Action" class="nowrap">
+                                                                <button title="Download" class="btn btn-green btn-xs"
+                                                                        ng-click="downloads(data.document_path,data.document_name)">
+                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                    <em class="fa fa-download"></em>
+                                                                </button>
+                                                                <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                </button>
+                                                                <a title="Delete" ng-show="sanctionletter_flag =='N'" class="btn btn-xs btn-danger" ng-click="deletesanction(data.application2sanctiondoc_gid)">
+                                                                    <span class="fa fa-trash-o"></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                </div>
+                            </div>
+                        </div> 
+                </div>
+            </div>
+            <!--<div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label>Sanction Template</label>
+                <br />
+                {{template_name}}
+            </div>
+        </div>
+
+    </div>-->
+            <!--<div class="row" ng-hide="sanction_template">
+        <form novalidate="" name="sanction" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+            <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <label>Sanction Template </label>
+                    <select name="template" required=""
+                            ng-model="cbotemplate" class="form-control ng-valid ng-touched ng-valid-parse"
+                            size="1" ng-options="m.template_name for m in template_list">
+                        <option value="">---Select Template Type--- </option>
+
+                    </select>
+                </div>
+            </div>
+            &nbsp;
+            <div class="row text-center">
+                <button type="button" class="btn btn-success btn-md" ng-disabled="sanction.$invalid" ng-click="sanctiontemplatesubmit()"
+                        title="Update Sanction Details">
+                    <i class="fa fa-share-square-o  fa-lg"></i> &nbsp;&nbsp;Update
+                </button>
+                <button ng-click="sanctionletterback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+
+            </div>
+        </form>
+    </div>-->
+            <!--<button ng-click="refrehtemplate()" class="btn btn-info"> &nbsp;&nbsp;Refresh</button>-->
+            <br />
+            <div class="row text-right" ng-if="sanctionletter_flag!='Y'" ng-show="sanctionletter_status=='Generated' && lspage!='SanctionApprovalCompleted'">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <!--<div ng-show="sanctionletter_status=='Generated'">-->
+                    <a download="" href="" id="btnpdf" ng-click="download_signature(lspath,lsname)"><b><em class="icon-arrow-down"></em> Click Here to Download Document </b></a>&nbsp;&nbsp;
+                    <!--</div>-->
+                    <button ng-click="proceedtochecker()" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Proceed To Checker</button>
+                </div>
+
+            </div>
+            <div class="row text-right" ng-if="sanctionletter_flag=='Y'" ng-show="sanctionletter_status=='Generated' && lspage!='SanctionApprovalCompleted'">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <!--<div ng-show="sanctionletter_status=='Generated'">-->
+                    <a download="" href="" id="btnpdf" ng-click="download_signature(lspath,lsname)"><b><em class="icon-arrow-down"></em> Click Here to Download Document </b></a>&nbsp;&nbsp;
+                    <!--</div>-->
+
+                </div>
+
+            </div>
+            <div class="row text-right" ng-show="(sanctionletter_status=='Generated' && lspage=='SanctionApprovalCompleted')">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <!--<div ng-show="sanctionletter_status=='Generated'">-->
+                    <a download="" href="" id="btnpdf" ng-click="download_signature(lspath,lsname)"><b><em class="icon-arrow-down"></em> Click Here to Download Document </b></a>&nbsp;&nbsp;
+                    <!--</div>-->
+
+                </div>
+
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-12" ng-show="showmstcontent=='Y'">   
+                <div class="col-lg-5 col-sm-5 col-md-5">
+                <label class="col-form-label"> Template <span style="color:red"> *</span></label>
+                <br />
+                <select name="template" id="template" chosen=""  ng-options="m.template_name for m in MdlTemplatelist" 
+                        ng-model="cbotemplate" ng-change="changeTemplate()" class="chosen-select form-control" required>
+                    <option value=""></option>
+                </select>
+               </div>
+               <div class="col-lg-7 col-md-7 col-sm-7">
+                <br/> <br/>
+                <button ng-click="TemplateConfirm(content)" ng-disabled="!cbotemplate" class="btn btn-success">
+                    <i class="fa fa-check"></i>&nbsp;&nbsp;Confirm
+                </button>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-12" ng-show="showmstcontent=='N'">   
+                <div class="col-lg-5 col-sm-5 col-md-5">
+                <label class="col-form-label"> Template Name</label>
+                <br />
+                <p>{{template_name}}</p>
+               </div>
+               
+            </div>
+            <div class="row" ng-show="sanction_template_bind && ( lspage=='SanctionMaker' || lspage=='SanctionApprovalCompleted')">
+                <br />  
+                <div class="col-lg-12 col-md-12 col-sm-12"  ng-show="sanctionletter_flag!='Y'">
+                       <br/>
+                    <div class="col-lg-9 col-md-9 col-sm-9"  ng-show="showmstcontent=='N'">
+                        <label class="text-primary" style="font-size:14px;">
+                            <span ng-show="showdefaulttemplate">Default</span>
+                            <span ng-show="showedittemplate">Edit</span>
+                            <span ng-show="showpreviewtemplate">Preview</span>
+                        </label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3"  ng-show="showmstcontent=='N'">
+                        <button ng-click="closetemplate(content)"
+                                ng-class="(showdefaulttemplate==true) ? 'btn btn-grey' : 'btn btn-primary'">
+                            <i class="fa fa-file"></i>&nbsp;&nbsp;Default
+                        </button> &nbsp;
+                        <button ng-click="editfielddetail(content)" ng-class="(showedittemplate==true) ? 'btn btn-grey' : 'btn btn-success'">
+                            <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit
+                        </button> &nbsp;
+                        <button ng-click="previewcontent(content)" ng-class="(showpreviewtemplate==true) ? 'btn btn-grey' : 'btn btn-info'">
+                            <i class="fa fa-eye"></i>&nbsp;&nbsp;Preview
+                        </button> &nbsp;
+                        <br />
+                    </div>
+                </div>
+                <hr />
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showdefaulttemplate">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="simple">
+                            <textarea id="sanctiontemplate" ng-show="editMode" froala ng-model="content" class="nw-editor__src"> </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showedittemplate">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div id="froala-editor">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Fill the Details </b></p>
+                                    <hr />
+                                    <form novalidate="" name="editinputtextbox" ng-submit="form.editinputtextbox()" autocomplete="off" class="form-validate form-horizontal">
+                                        <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="m in inputlist">
+                                            <label>{{m.input_fieldname}} <span ng-show="{{m.input_mandatory}}" style="color:red;">*</span></label>
+                                            <br />
+                                            <div ng-if="m.input_type=='text'">
+                                                <input class="form-control" id="{{m.index}}" name="{{m.input_placeholder}}"
+                                                       placeholder="{{m.input_placeholder}}" type="text" ng-model="m.input_givendata" ng-required="{{m.input_mandatory}}"
+                                                       maxlength="{{m.inputmax_length}}" /> <span class="text-info"> Allow only {{m.inputmax_length}} characters</span>
+                                            </div>
+                                            <div ng-if="m.input_type=='textarea'">
+                                                <textarea class="form-control" id={{m.index}} name="{{m.input_placeholder}}"
+                                                          placeholder="{{m.input_placeholder}}" ng-required="{{m.input_mandatory}}"
+                                                          ng-model="m.input_givendata" type="textarea"></textarea>
+                                            </div> 
+                                            <div ng-if="m.input_type=='select-one' && m.DBInput==false"> 
+                                                <select chosen="" name="{{m.input_placeholder}}" required="" id={{m.index}}
+                                                        ng-options="k.trntemplateinputlistdtl_gid as k.preview_text for k in m.MdlInputlistDtls"
+                                                        ng-model="m.input_givendata" class="chosen-select form-control" style="height:37px;" ng-required="{{m.input_mandatory}}"
+                                                        size="1">
+                                                    <option value="">----{{m.input_placeholder}}----</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="m.input_type=='select-one' && m.DBInput==true">  
+                                                <select chosen="" name="{{m.input_type}}" required="" id={{m.index}} 
+                                                        ng-options="k.input_fieldvalue as k.input_fieldvalue for k in m.MdlInputGivenList"
+                                                        ng-model="m.input_givendata" class="chosen-select form-control" style="height:37px;" ng-required="{{m.input_mandatory}}"
+                                                        size="1">
+                                                    <option value="">----{{m.input_placeholder}}----</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if="m.input_type=='radio'">
+                                                <div class="radio c-radio">
+                                                    <label ng-repeat="data in m.MdlInputlistDtls">
+                                                        <input type="radio" id={{m.index}} ng-required="{{m.input_mandatory}}" name="{{data.preview_text}}" value="{{data.trntemplateinputlistdtl_gid}}" ng-model="m.input_givendata" />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>{{data.preview_text}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div ng-if="m.input_type=='checkbox'">
+                                                
+                                                <div class="mb">
+                                                    <span class="mda-checkbox">
+                                                       <input type="checkbox"  ng-model="m.input_givendata" ng-required="{{m.input_mandatory}}" />
+                                                       <em class="bg-indigo-500"></em> {{m.input_previewtext}}</span>
+                                                 </div>
+                                                
+                                            </div>
+                                            <br />
+                                        </div>
+                                        
+                                        <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                            <br />
+                                            <button ng-click="updateinputTemplate()" ng-disabled="editinputtextbox.$invalid" class="btn btn-success">
+                                                <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                                            </button>
+                                            <button ng-click="closetemplate()" class="btn btn-danger">
+                                                <i class="icon icon-close"></i>&nbsp;&nbsp;Close
+                                            </button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showpreviewtemplate">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div id="froala-editorpreview">
+                        </div>
+                    </div>
+
+                    <!-- <div id="new" contenteditable="false">
+                <p id="sanctiontemplatepreview" froala ng-model="txtpreviewcontent" class="nw-editor__src"> </textarea>
+            </div> -->
+                </div>
+                <br />
+            </div>
+            <div class="row text-center" ng-show="sanction_template_bind && sanctionletter_flag!='Y'">
+                <br />
+                <button type="button" class="btn btn-info" ng-click="sanctionletterSave()"
+                        title="Save">
+                    <i class="fa fa-save"></i> &nbsp;&nbsp;Save
+                </button>
+                <button type="button" class="btn btn-success" ng-click="sanctionletterSubmit()"
+                        title="Generate">
+                    <i class="fa fa-check"></i> &nbsp;&nbsp;Generate
+                </button>
+                <button ng-click="sanctionletterback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+
+            <div class="row text-center" ng-if="sanctionletter_flag=='Y'">
+                <br />
+                <button ng-click="sanctionletterback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="/templatefield.html">
+        <div class="modal-header bg-primary ng-scope">
+    
+            <h4 id="myModalLabel" class="modal-title"> 
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit ">&nbsp; Fill the Details</i>
+                </span> 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="dd-handle ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12"> 
+                         
+                        <form novalidate="" name="editinputtextbox" ng-submit="form.editinputtextbox()" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="m in inputlist">
+                                <label>{{m.inputgroup_name}} <span ng-show="{{m.input_mandatory}}" style="color:red;">*</span></label>
+                                <br/>
+                                <div ng-if="m.input_type=='text'">
+                                    <input class="form-control" id="{{m.index}}" name="{{m.input_placeholder}}"
+                                    placeholder="{{m.input_placeholder}}" type="text" ng-model="m.inputgivendata" ng-required="{{m.input_mandatory}}" 
+                                    maxlength="{{m.inputmax_length}}"/>
+                                </div>
+                                <div ng-if="m.input_type=='textarea'">
+                                    <textarea class="form-control"  id={{m.index}} name="{{m.input_placeholder}}"
+                                    placeholder="{{m.input_placeholder}}" ng-required="{{m.input_mandatory}}"
+                                     ng-model="m.inputgivendata" type="textarea"></textarea>  
+                                </div>
+                                <br/>
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <br/>
+                                <button ng-click="updatetemplate()" ng-disabled="editinputtextbox.$invalid" class="btn btn-success">
+                                    <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                                </button>
+                                <button ng-click="ok()"  class="btn btn-danger">
+                                    <i class="icon icon-close"></i>&nbsp;&nbsp;Close
+                                </button>
+                            </div>
+                           
+                        </form>
+                       
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,268 @@
+﻿<h3>
+    Tier 1 Approval
+</h3>
+<div ng-controller="tier1Approvalcontroller">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-star"></em>&nbsp; Tier 1 - Report
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <a title="Go To Allocation360" style="font-weight:bold;" class="text-danger"
+                    ng-click="viewcustomerdtl()">Click to View Allocation 360</a>&nbsp;&nbsp;
+                
+                <div class="media-box-body clearfix">
+                    <div class="row col-lg-12 col-sm-12 col-md-12  text-center">
+                        <label class="text-primary" style="font-size:16px;">TIER-1 REPORT</label>
+                        <br />
+                        <p class="text-bold" style="font-size:16px;">{{customer_name}} / {{customer_urn}}</p>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" ng-switch="tier1_code">
+                            <label>Risk Code : </label>
+                            <label ng-switch-when="Green" class="label label-success" style="font-size:12px;">Green</label>
+                            <label ng-switch-when="Amber" class="label label-warning">Amber</label>
+                            <label ng-switch-when="Red" class="label label-danger">Red</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        </div>
+
+                    </div>
+                    <div class="row" ng-show="disablecodechangereasonshow">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group float-label">
+                                <label>Risk Code - Change Reason <span style="color:red">*</span></label>
+                                <textarea name="specificcondition" placeholder="Enter Reason..." disabled
+                                          ng-model="txtcode_changereason" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="form-group float-label">
+                                <label>Observations </label>
+                                <textarea name="specificcondition" disabled
+                                          ng-model="tier1_observations" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>Rationale/Justification </label>
+                                <textarea name="specificcondition"
+                                          disabled ng-model="tier1_justification" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>Process Gap </label>
+                                <textarea name="specificcondition" disabled
+                                          ng-model="tier1_processgap" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>Process Improvement Recommendation</label>
+                                <textarea name="specificcondition"
+                                          disabled ng-model="tier1_processrecommendation" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>Management Comments/ Action Plan </label>
+                                <textarea name="specificcondition"
+                                          disabled ng-model="tier1_managementcomments" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>Chief Business Officer / Business Head Reverts and Action Plan </label>
+                                <textarea name="specificcondition"
+                                          disabled ng-model="tier1_reverts_actionplan" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <div class="form-group float-label">
+                                <label>ATR Completion Date </label>
+                                <br />
+                                <p>{{tier1_atrdate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label> Uploaded Document</label>
+                            <div ng-repeat="document in uploaddocument_list">
+                                <div class="list-group-item">
+                                    <div class="media-box-body clearfix">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                            <div class="row">
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label>Document Type </label>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                                    {{document.document_title}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label>Document Name </label>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                                    {{document.document_name}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label>Uploaded By</label>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                                    {{document.created_by}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label>Uploaded Date</label>
+                                                </div>
+                                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                                    {{document.created_date}}
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <a title="Download" class="btn btn-green btn-sm" download="" href="" id="btnpdf"
+                                                           ng-click="downloads(document.document_path,document.document_name)">
+                                                            <em class="fa fa-download"></em>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="text-primary" style="font-size:16px;">Tier 1 - Approval History </label>
+                        </div>
+                        <br />
+                        <div class="col-lg-12" ng-repeat="data in tier1approvallog" ng-show="historyapproval">
+
+                            <div class="list-group-item">
+                                <div class="media-box-body clearfix">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <h4 class="popover-title">{{data.approval_status}} On {{data.created_date}} by {{data.created_by}}</h4>
+                                            <div class="popover-content">
+                                                <p><span class="text-bold">Approval Remarks:</span> {{data.approval_remarks}}</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" ng-show="nohistoryapproval">
+
+                            <div class="list-group-item">
+                                <div class="media-box-body clearfix">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <h4 class="popover-title">No Approval History</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+               <!--RM Rejected Remarks History-->
+                        <div class="row" ng-show="rejecthistory">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label class="text-primary" style="font-size:16px;">Risk Manager Comments </label>
+                                </div>
+                                <br />
+                                <div class="col-lg-12" ng-repeat="data in tier1rejectlog">
+                                    <div class="list-group-item">
+                                        <div class="media-box-body clearfix">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <h4 class="popover-title">Reply On {{data.created_date}} by {{data.created_by}}</h4>
+                                                    <div class="popover-content">
+                                                        <p><span class="text-bold">Rejected Remarks:</span> {{data.reject_remarks}}</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+          
+            <div ng-show="editenable">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <br />
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="form-group float-label">
+                                <label>Approval Remarks <span class="text-danger">*</span></label>
+                                <textarea name="specificcondition"
+                                          ng-model="txttier1_approvalremarks" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="text-center">
+                        <button class="btn btn-success" ng-disabled="!txttier1_approvalremarks" ng-click="tier1approve()">
+                            <em class="fa fa-check"></em>
+                            <span>Approve</span>
+                        </button>
+                        <a class="btn btn-danger" ng-click="tier1reject()" ng-disabled="!txttier1_approvalremarks">
+                            <em class="fa fa-close"></em>
+                            <span>Reject</span>
+                        </a>
+
+                        <a class="btn btn-info" href="#/app/tier1Summary">
+                            <em class="fa fa-arrow-left"></em>
+                            <span>Back</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div ng-show="editdisable">
+               
+                <div class="row">
+                    <br />
+                    <div class="text-center">
+                        <a class="btn btn-info" href="#/app/tier1Summary">
+                            <em class="fa fa-arrow-left"></em>
+                            <span>Back</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

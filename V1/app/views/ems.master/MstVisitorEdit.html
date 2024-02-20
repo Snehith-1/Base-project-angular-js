@@ -1,0 +1,560 @@
+<h3>
+    Visitor Management
+</h3>
+<div ng-controller="MstVisitorEditController as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span>Edit Visitor
+        </div>
+        <div>
+            <br>
+            <form name="form.formValidate" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="panel" style="background-color:#f9f8f8">
+                                <div class="panel-heading">
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                                    <hr />
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>Visitor ID</label>
+                                                <input type="text" disabled ng-model="txtvisitorid" class="form-control" tabindex="0">
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>Branch Name</label><span style="color:red">&nbsp;*</span>
+                                                <select class="chosen-select form-control" id="branch_name" chosen="" tabindex="0" ng-model="cbobranch_name" required
+                                                        ng-options="m.branch_gid as m.branch_name for m in branch_list" style="height:37px;" size="1">
+                                                    <option value="">----- Branch Name -----</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label> Visit Date</label>
+                                                <input type="text" ng-model="txtvisit_date" tabindex="0" class="form-control" disabled>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Visit Type</label><span style="color:red">&nbsp;*</span>
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" id="visit_type" required tabindex="0" name="visit_type" value="Official" ng-model="rbovisittype" />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Official
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" id="visit_type" required tabindex="0" name="visit_type" value="Personal" ng-model="rbovisittype" />
+                                                        <span class="fa fa-circle"></span>Personal
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label>Visiting Official Name </label><span style="color:red">&nbsp;*</span>
+                                                <select name="visitorofficer" chosen="" multiple="multiple" tabindex="2"
+                                                        ng-options="m.employee_name for m in cbovisitingofficer_editlist" required=""
+                                                        ng-model="cbovisitingofficer_edit" class="chosen-select form-control"></select>
+                                            </div>
+
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>In Time</label><span style="color:red">&nbsp;*</span>
+
+                                                <input type="time" id="in_time" name="in_time" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required
+                                                       ng-model="txtin_time"><span>hh:mm</span>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>Tentative Out Time</label><span style="color:red">&nbsp;*</span>
+                                                <input type="time" id="out_time" name="out_time" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required
+                                                       ng-model="tentative_out_time" ng-change="onchangetime()"><span>hh:mm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label> Actual Out Time</label>
+                                                <input type="time" id="actualout_time" name="actualout_time" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" required
+                                                       ng-model="txtactualouttime"><span>hh:mm</span>
+                                            </div>
+                                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                                <label>Purpose of Visit</label><span style="color:red">&nbsp;*</span>
+                                                <textarea ng-model="txtpurposeofvisit" tabindex="0" required maxlength="2000" class="form-control" cols="1" rows="2"></textarea>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label>Enter OTP </label>
+                            <input type="text" ng-model="txtenter_otp" class="form-control">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3"><br>
+                            <button type="button" class="btn btn-primary" >Send OTP/ Resend OTP</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>-->
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Visitor Details </b></p>
+                                <hr />
+                            </div>
+                            <div class="panel-body">
+                                <form novalidate="" name="editvisitordtl" ng-submit="form.editvisitordtl()" autocomplete="off" class="form-validate">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label><strong>Visitor Name </strong><span style="color:red">*</span></label>
+                                                <input type="text" ng-model="txtvisitor_name" ng-maxlength="150" class="form-control" required>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label><strong>Visitor Company Name </strong><span style="color:red">*</span></label>
+                                                <input type="text" ng-model="txtvisitorcompany_name" ng-maxlength="150" class="form-control" maxlength="128" required>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>Visitor ID Proof</label>
+                                                <select name="idproof" ng-model="cbovisitoridproof" class="form-control  ng-valid ng-touched ng-valid-parse" style="height:35px;" size="1">
+                                                    <option value="">---- Visitor ID Proof ----</option>
+                                                    <option value="Pan Number">Pan Number</option>
+                                                    <option value="Aadhar Number">Aadhar Number</option>
+                                                    <option value="Driving License">Driving License</option>
+                                                    <option value="Voter ID">Voter ID</option>
+                                                    <option value="Company ID proof">Company ID proof</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label><strong>Visitor ID Proof Number </strong></label>
+                                                <input type="text" ng-model="txtvisitoridproof_no" ng-maxlength="20" class="form-control">
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label> Temperature </label>
+                                                <input type="text" ng-model="txttemperature" ng-pattern="/^[0-9.]*$/" placeholder="&#8451;" maxlength="6" tabindex="0" class="form-control">
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label><strong>SPO2 </strong></label>
+                                                <input type="text" ng-model="txt_spo2" ng-maxlength="20" class="form-control" placeholder="%">
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label>Vaccination Status</label><span style="color:red">&nbsp;*</span>
+                                                <select name="vaccinationstatus" required ng-model="cbovacciantion_status" class="form-control  ng-valid ng-touched ng-valid-parse" style="height:35px;" size="1">
+                                                    <option value="">---- Vaccination Status ----</option>
+                                                    <option value="1st Dose">1st Dose</option>
+                                                    <option value="2nd Dose">2nd Dose</option>
+                                                    <option value="Booster">Booster</option>
+                                                    <option value="Not Vaccinated">Not Vaccinated</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label><strong> Visitor Email Address </strong></label>
+                                                <input type="text" ng-model="txtvisitoremail_address" ng-maxlength="150" ng-pattern="appemail_pattern" class="form-control">
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label><strong> Visitor Mobile Number </strong></label> <span style="color:red">*</span>
+                                                <input ng-model="txtvisitormobile_no" type="text" minlength="10" tabindex="0" maxlength="12" ng-pattern="/^[0-9+]*$/" required
+                                                       aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br />
+                                <!--<div class="row">
+                                    <div class="col-md-6 col-lg-6 col-sm-6">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Visitor Email Address(s) </b></p>
+                                                <hr />
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                                            <label><strong>Visitor Email Address </strong><span style="color:red">*</span></label>
+                                                            <input type="text" ng-model="txtemail_address" ng-maxlength="150" ng-pattern="appemail_pattern" class="form-control">
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>Primary Status <span style="color:red">*</span></label>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" id="emailaddress" name="primaryemail_address" value="Yes" ng-model="rdbprimaryemail_address" ng-change="ngchange()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" id="emailaddress" name="primaryemail_address" value="No" ng-model="rdbprimaryemail_address" ng-change="ngchange()" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1 col-md-1 col-lg-1"></div>
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 align-top">
+                                                            <br>
+                                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="add_emailaddress()"><span class="fa fa-plus"> </span> Add</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="table-responsive table-bordered">
+                                                                <table class="table">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Email Address</th>
+                                                                            <th>Primary Status</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="list in visitoremailaddress_list">
+                                                                            <td>{{$index+1}}</td>
+                                                                            <td>{{list.email_address}}</td>
+                                                                            <td>{{list.primary_emailaddress}}</td>
+                                                                            <td class="text-nowrap">
+                                                                                <a class="btn btn-xs  btn-danger" ng-click="delete_emailaddress(list.visitor2email_gid)"><span class="fa fa-trash-o"></span></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6 col-sm-6">
+                                        <div class="panel">
+                                            <div class="panel-heading">
+                                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Visitor Mobile Number(s)  </b></p>
+                                                <hr />
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                                            <label><strong>Mobile Number </strong></label> <span style="color:red">*</span>
+                                                            <input ng-model="txtmobile_no" type="text" minlength="10" tabindex="0" maxlength="12" ng-pattern="/^[0-9+]*$/"
+                                                                   aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                                        </div>
+                                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                                            <label>Primary Status </label> <span style="color:red">*</span>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" id="primarymobileno" name="primarymobile_no" value="Yes" ng-model="rdbprimarymobile_no" ng-change="ngchange()" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" id="primarymobileno" name="primarymobile_no" value="No" ng-model="rdbprimarymobile_no" ng-change="ngchange()" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-1 col-md-1 col-lg-1"></div>
+                                                        <div class="col-lg-2 col-md-2 col-sm-2 align-top">
+                                                            <br>
+                                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="add_mobileno()"><span class="fa fa-plus"></span> Add</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="table-responsive table-bordered">
+                                                                <div style="max-height:200px;overflow:auto;">
+                                                                    <table class="table">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Mobile No</th>
+                                                                                <th>Primary Status</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="list in visitormobilenumber_list">
+                                                                                <td>{{$index+1}}</td>
+                                                                                <td>{{list.mobile_no}}</td>
+                                                                                <td>{{list.primary_mobileno}}</td>
+                                                                                <td class="text-nowrap">
+                                                                                    <button title="Delete" ng-click="delete_mobileno(list.visitor2contact_gid)"
+                                                                                            class="btn btn-danger btn-xs ">
+                                                                                        <em class="fa fa-trash-o"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <div>
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Upload Photo </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                                <div class="form-group float-label">
+                                                                    <label>Photo Name <span style="color:red">*</span></label>
+                                                                    <input ng-model="txtphoto_name" maxlength="200" class="form-control ng-pristine ng-valid ng-touched">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                                                <label>Upload Photo <span style="color:red">*</span></label>
+                                                                <input type="file" id="photo" tabindex="5" multiple onchange="angular.element(this).scope().document_upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                       ng-model="txtVisit_Photo" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                                                <span class="text-danger">* Allow only jpg,png format</span>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                <div class="text-center">
+                                                                    <br />
+                                                                    <button type="button" class="btn btn-success btn-md" ng-click="VisitReportPhotoUpload()"
+                                                                            ng-disabled="!txtphoto_name">
+                                                                        <span class="icon icon-cloud-upload"></span>&nbsp;&nbsp;Upload Photo
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div ui-scroll-viewport="" style="max-height:200px;overflow-y: auto;" class="row">
+                                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                        <div class="table-responsive table-bordered">
+                                                                            <table class="table">
+                                                                                <thead class="bg-gray text-white">
+                                                                                    <tr>
+                                                                                        <th>Photo Name</th>
+                                                                                        <th>Uploaded Photo Name</th>                                                                           
+                                                                                        <th align="center" scope="col">
+                                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                                            <a download="" href="" title="Download All" id="btnpdf3" ng-click="downloadall()">
+                                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                                            </a>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr ng-repeat="data in UploadphotoList">
+                                                                                        <td>{{data.photo_name}}</td>
+                                                                                        <td>{{data.filename}}</td>
+                                                                                        <td class="nowrap" data-title="'Action'">
+
+                                                                                            <button title="Cancel" class="btn btn-danger btn-sm"
+                                                                                                    ng-click="uploadphotocancel(data.visitor2photo_gid)">
+                                                                                                <em class="icon icon-trash"></em>
+                                                                                            </button>                                                                              
+                                                                                            <button title="Download" class="btn btn-green btn-sm"
+                                                                                                    ng-click="photo_downloads(data.document_path,data.filename)">
+                                                                                                <em class="fa fa-download"></em>
+                                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                            </button>
+                                                                                            <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.filename)">
+                                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="text-center">
+                                            <button class="btn btn-sm" ng-disabled="editvisitordtl.$invalid" style="background-color:#09385f;color:white;" ng-click="add_visitordtl()"><span class="fa fa-plus"></span> Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Visitor Details Summary </b></p>
+                                                        <hr />
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="table-responsive table-bordered">
+                                                                <table class="table">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr>
+                                                                            <th class="text-center">S.No</th>
+                                                                            <th class="text-center">Visitor Name</th>
+                                                                            <th class="text-center">Visitor ID Proof</th>
+                                                                            <th class="text-center">Visitor ID Proof Number </th>   
+                                                                            <th class="text-center">Tag Status</th>                                                                       
+                                                                            <th class="text-center">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in visitorlist">
+                                                                            <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                                                            <td class="text-center">{{data.visitor_name}}</td>
+                                                                            <td class="text-center">{{data.visitoridproof}}</td>
+                                                                            <td class="text-center">{{data.visitoridproof_no}}</td>
+                                                                            <td  class="text-center" data-title="'Tag Status'"  ng-switch="data.generate_status">
+                                                                                <label class="label label-success" ng-switch-when='Y' style="font-size:10px;">Generated</label>
+                                                                                <label class="label label-warning" ng-switch-when='N' style="font-size:10px;">Pending</label>
+                                                                            </td>
+                                                                            <td class="text-nowrap text-center">
+                                                                                <button title="Tag" ng-click="TagGenereation(data.visitorname_gid)" class="btn btn-primary">
+                                                                                    <em class="fa fa-tag "></em>
+                                                                                </button>
+                                                                                <button title="Delete" ng-click="delete_visitordtl(data.visitorname_gid)"
+                                                                                        class="btn btn-danger btn-xs ">
+                                                                                    <em class="fa fa-trash-o"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                      
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <br>
+        <div>
+            <div class="row text-center">
+                <button type="submit" class="btn btn-success btn-md"  ng-click="update(visitor_gid)"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                <button type="button" ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br>
+            <br>
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/generatevisitortag.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-tag"></em>&nbsp;<label style="font-size:16px">Generate Visitor Tag</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="generate" ng-submit="form.generatetag()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label> Tag ID</label><span style="color:red">&nbsp;*</span>
+                                <input type="text" maxlenght="5" minlength="5" required ng-model="txttag_id"  class="form-control">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>Tag Validity Date - From </label><span style="color:red">&nbsp;*</span>
+                                <p class="input-group">
+                                    <input type="date" id="validatefrom" name="SAO" ng-model="txtvalidity_from" ng-change="onchangetime()" required
+                                           style="height:35px;width:260px;" class="form-control">
+
+                                </p>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label>Tag Validity Date  - To</label><span style="color:red">&nbsp;*</span>
+                                <p class="input-group">
+                                    <input type="date" id="validateto" name="validateto" ng-model="txtvalidity_to" ng-change="onchangetime()" required
+                                           style="height:35px;width:260px;" class="form-control">
+
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary btn-md" ng-disabled="generate.$invalid" ng-click="generatetags()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Generate Visitor Tag</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+</div>

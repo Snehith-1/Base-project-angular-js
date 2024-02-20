@@ -1,0 +1,171 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Credit Underwriting
+</h3>
+<div ng-controller="AgrTrnSuprCreditIndividualBureauEditController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit Bureau Details </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <form name="bureauDtl" ng-submit="form.submitForm2()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="dd-handle ng-scope">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <p class="text-primary" style="font-size:14px;"><b> Bureau Details </b></p>
+                                                        <hr />
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label><strong> Bureau Name  </strong> <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <select name="BureauName" id="BureauName" chosen="" ng-options="m.bureauname_gid as m.bureauname_name for m in bureau_list"
+                                                                    ng-model="bureau_gid" class="chosen-select form-control" ng-change="bureauname_change()" required>
+                                                                <option value=""></option>
+                                                            </select>
+                                                            <a ng-show="reportbureauselected" title="Generate Report" ng-click="generateDetails()" style="color:darkblue;font-weight:bold">
+                                                                Generate Details
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label> Bureau Score <span style="color:red"> *</span> </label>
+                                                            <input type="text" ng-model="txtbureau_score" maxlength="10" tabindex="0" class="form-control" required ng-disabled="bureauscore_disabled" />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label> Score As On <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <p class="input-group">
+                                                                <input type="text" id="SAO" name="date" ng-model="txtbureauscore_date" datepicker-popup="{{dp.format}}"
+                                                                       style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                       close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <label> Bureau Response <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <textarea rows="6" placeholder="Enter Bureau Response ..." maxlength="5000" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                      ng-model="txtbureau_response" class="form-control" ng-disabled="bureauresponse_disabled" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <label> Observations<span style="color:red"> *</span> </label>
+                                                            <br />
+                                                            <textarea rows="6" placeholder="Enter Observations..." maxlength="5000" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                                                      ng-model="txtobservations" class="form-control" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12 dd-handle ng-scope">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                        <p class="text-primary" style="font-size:14px;"><b> Upload Report </b></p>
+                                                                        <hr />
+                                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                            <div class="float-label">
+                                                                                <label> Document Upload  : </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-9 col-sm-9 col-md-9">
+                                                                            <input type="file" id="file" tabindex="5" onchange="angular.element(this).scope().CICDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                                   ng-model="txtbureau_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                        <br />
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-striped table-secondary">
+                                                                                <thead class="bg-gray text-white">
+                                                                                    <tr width="100%">
+                                                                                        <th scope="col">S.No</th>
+                                                                                        <th scope="col">Document Name</th>
+                                                                                        <!-- <th scope="col">Action</th> -->
+                                                                                        <th align="center" scope="col">
+                                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                                            <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall()">
+                                                                                                <em style="font-size: 1.5em;" class="icon-arrow-down"></em>&nbsp;
+                                                                                            </a>
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr ng-repeat="data in cicuploaddoc_list">
+                                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                                                        <td data-title="Action">
+                                                                                            <button title="View Report" ng-click="report_View(data.tmpcicdocument_gid)" ng-show="data.document_content!=''" class="btn btn-info btn-xs">
+                                                                                                <em class="fa fa-eye"></em>
+                                                                                            </button>
+                                                                                            <button title="Download" class="btn btn-green btn-xs" ng-show="data.document_content==''"
+                                                                                                    ng-click="downloads(data.document_path,data.document_name)">
+                                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                                <em class="fa fa-download"></em>
+                                                                                            </button>
+                                                                                            <a title="Delete" class="btn btn-xs btn-danger" ng-click="uploaddocumentcancel(data.tmpcicdocument_gid)">
+                                                                                                <span class="fa fa-trash-o"></span>
+                                                                                            </a>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br /> <br />
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success btn-md" ng-disabled="bureauDtl.$invalid" ng-click="update_CICUploads()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                <button ng-click="CICUploads_Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

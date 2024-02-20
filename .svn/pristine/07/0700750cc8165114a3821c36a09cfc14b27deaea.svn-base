@@ -1,0 +1,329 @@
+﻿<h3>
+    Batch View
+</h3>
+<div ng-controller="IdasTrnBatchView">
+    <div id="panelDemo13" class="panel panel-default">
+        <div class="panel-body table-responsive">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 ">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Customer Details</p>
+                    <div class="col-lg-12">
+                        <label class="col-form-label">Address</label>
+                        <br />
+                        <p style="font-size:14px;">
+                            {{contactperson}}<br />{{addressline1}}<br />
+                            {{addressline2}}
+                            <br />{{mobileno}}
+                        </p>
+
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label"> URN No :</label>
+                        <br />
+                        <p style="font-size:14px;">{{Customerurn}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Cluster Manager</label>
+                        <br />
+                        <p ng-model="ClusterMgr" style="font-size:14px;">{{clusterManager}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Relationship Manager</label>
+                        <br />
+                        <p style="font-size:14px;">{{relationshipmgmt}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Credit Manager</label>
+                        <br />
+                        <p style="font-size:14px;">{{creditManager}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Zonal Head</label>
+                        <br />
+                        <p ng-model="zonalHeadName" style="font-size:14px;">{{zonalHeadName}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Business Head</label>
+                        <br />
+                        <p style="font-size:14px;">{{businessHeadName}}</p>
+                    </div>
+                </div>
+            </div>
+            <p class="lead bb text-purple text-bold" style="font-size:16px;">Sanction Details</p>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Ref No.</label>
+                        <br />
+                        <p ng-model="sanctionref_no" style="font-size:14px;">{{sanctionrefno}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sancion Date</label>
+                        <br />
+                        <p style="font-size:14px;">{{SanctionDate}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Amount</label>
+                        <br />
+                        <p ng-model="sanction_amount" style="font-size:14px;">{{SanctionAmount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Facility </label>
+                        <br />
+                        <p ng-model="facility_type" style="font-size:14px;">{{FacilityType}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Vertical</label>
+                        <br />
+                        <p style="font-size:14px;">{{verticalCode}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Collateral Details</label>
+                        <br />
+                        <p ng-model="collateral_security" style="font-size:14px;">{{collateral_security}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Upload Common Document</p>
+                </div>
+            </div>
+            
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="text-center">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th align="center" scope="col">S.No</th>
+                                                        <th align="center" scope="col">Document Name</th>
+                                                        <th align="center" scope="col">Upload By/On</th>
+                                                        <th align="center" scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in commondocument" width="100%">
+                                                        <td scope="col" title="'S.No'">{{$index+1}}</td>
+                                                        <td align="left" scope="col" title="'Document Name'">{{data.document_name}}</td>
+                                                        <td align="left" scope="col" title="'Upload By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                                        <td align="left" scope="col" data-title="'Action'">
+                                                            <button title="Download Document" ng-click="downloadsdocument(data.document_path,data.document_name)" class="btn btn-info">
+                                                                <em class="fa fa-download"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                            </button>
+                                                           
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Mail Management</p>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+
+
+                     
+
+                        <button title="Export Excel" ng-click="export()" class="btn btn-success ">
+                            <em class="fa fa-file-excel-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                        </button>
+                        &nbsp;&nbsp;
+
+
+                      
+                    </div>
+
+
+
+                </div>
+            </div>
+           
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                        <div class="table-responsive">
+                            <table class="row-border hover" id="statictable">
+
+                                <thead>
+                                    <tr class="bg-success text-white">
+                                        <th width="3%">S.No</th>
+                                        <th width="10%">Sent On</th>
+                                        <th width="10%">Sent By</th>
+                                        <th width="10%">Subject</th>
+                                        <th width="10%">Sent To</th>
+                                        <th width="10%">Sent From</th>
+                                        <th width="10%">Attachment</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in senddata">
+                                        <td class="text-center">
+                                            {{$index+1}}
+                                        </td>
+                                        <td>
+                                            {{data.created_date}}
+                                        </td>
+                                        <td>
+                                            {{data.created_by}}
+                                        </td>
+
+                                        <td>
+                                            {{data.subject}}
+                                        </td>
+                                        <td>
+                                            {{data.to_mail}}
+                                        </td>
+                                        <td>
+                                            {{data.from_mail}}
+                                        </td>
+                                        <td>
+                                            <a ng-click="exportattach(data.document_path,data.document_name)">IDAS Document Check List.xls</a>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <br />
+            <p class="lead bb text-purple text-bold" style="font-size:16px;">Physical Document Details</p>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <input type="text" ng-model="search" class="mb form-control ng-valid ng-dirty ng-valid-parse ng-touched"
+                               placeholder="Enter text to search..." />
+                        <div class="table-responsive table-bordered">
+                            <table class="table">
+
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th width="5%">
+                                            S.No
+                                        </th>
+                                        <th width="10%">Document Record ID</th>
+                                        <th width="15%">Document Code/Name</th>
+                                        <th width="10%">Scan Document Status</th>
+                                        <th width="15%">Verified Date/By</th>
+                                        <th width="10%">Status</th>
+                                        <th width="5%">Action</th>
+                                    </tr>
+                                </thead>
+
+                            </table>
+                            <div style="max-height:300px;overflow:auto;">
+                                <table class="table">
+                                    <tbody>
+                                        <tr ng-repeat="data in documentation_list| filter:search"
+                                            ng-style="data.maker_status=='Maker Pending'?{'background-color':'#F1BCB1'}:{}&&data.checker_status=='Checker Pending'?{'background-color':'#F1BCB1'}:{}">
+                                            <td width="5%">
+                                                {{$index+1}}
+
+                                            </td>
+
+                                            <td data-title="Document Record ID" width="10%">{{data.documentrecord_id}}</td>
+                                            <td data-title="Document Code/Name" width="15%">{{data.document_code}}/{{data.document_name}}</td>
+                                            <td data-title="Status" width="10%">
+                                                <div ng-switch="data.maker_status">
+                                                    <label ng-switch-when="Maker Confirmed" class="label label-success">Maker Confirmed</label>
+                                                    <label ng-switch-when="Maker Pending" class="label label-warning">Maker Pending</label>
+                                                </div>
+                                                <div ng-switch="data.checker_status">
+                                                    <label ng-switch-when="Checker Confirmed" class="label label-success">Checker Confirmed</label>
+                                                    <label ng-switch-when="Checker Pending" class="label label-warning">Checker Pending</label>
+                                                </div>
+
+                                            </td>
+                                            <td data-title="Verified Date/By" width="15%">
+                                                {{data.phydocverifier_name}}/{{data.Phydocverified_on}}
+                                            </td>
+                                            <td data-title="Status" width="10%">
+                                                <div ng-switch="data.phydoc_status">
+                                                    <label ng-switch-when="Pending" class="label label-warning">Pending</label>
+                                                    <label ng-switch-when="Verified" class="label label-success">Verified</label>
+                                                </div>
+                                            </td>
+                                            <td data-title="Action" width="5%">
+                                                <div ng-switch="data.phydoc_status">
+
+                                                    <button title="Document Conversation" ng-switch-when="Pending" ng-disabled="data.maker_status=='Maker Pending' && data.checker_status=='Checker Pending'" ng-click="docConMkr(data.sanctiondocument_gid)" class="btn btn-pink">
+                                                        <em class="icon icon-directions"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                    </button>
+                                                    <button title="Document Conversation" ng-switch-when="Verified" ng-click="docConMkr(data.sanctiondocument_gid)" class="btn btn-success">
+                                                        <em class="icon icon-directions"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                    </button>
+                                                    <span ng-if="data.phyconversation_count != '0'" class="badge bg-gray-light ">{{data.phyconversation_count}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div>
+
+
+
+                <br />
+                <div class="ng-scope">
+                    <div class="text-center">
+                        <button ng-click="batchviewback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>

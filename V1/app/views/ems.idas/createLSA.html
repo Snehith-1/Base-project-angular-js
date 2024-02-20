@@ -1,0 +1,398 @@
+﻿<h3>
+    Create LSA
+</h3>
+<div ng-controller="createLSAController as dp" class="ball-clip-rotate">
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .panel-scroll {
+            max-height: 120px;
+            overflow: auto;
+        }
+    </style>
+    <div id="panelDemo8" class="panel panel-primary">
+        <div class="panel-heading ">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+                Create LSA
+            </span>
+        </div>
+
+        <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
+                        <label class="" style="font-size:15px;">
+                            <br />
+                            Date :  &nbsp;  &nbsp;
+                            <strong style="font-size:15px;color:brown;">  {{txtdate}}</strong>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset>
+
+                <div class="row ">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label>Customer Name </label> <span style="color:red">*</span>
+                             <input type="text" name="customer" id="customer" ng-model="customer" required
+                                   ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+
+                            <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                <li class="list-group-item" ng-repeat="m in customer_list"
+                                    ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                            </ul>
+
+                            <label style="color:red;">{{message}}</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset ng-hide="customer_pnl">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>URN / Customer Location</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p>{{txtcustomer_urn}} /{{txtcustomer_location}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Address of the Borrower</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{lbladdress1}}<br/>{{txtaddress}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>RM Name</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtrelationshipMgmt}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Cluster Head</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtclustermanager}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Zonal Head </strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtzonalHead}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Business Head</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtbusinessHead}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Credit Manager</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtcreditmgmt_name}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>Vertical </strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtvertical}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>GST No</strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtgst_no}}</p>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                        <label><strong>PAN No </strong></label>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <p> {{txtpan_no}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                    <label><strong>Constitution / Sector</strong></label>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <p> {{txtconstitution}} / {{txtvertical}}</p>
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                    <label><strong>Major Corporate/Group Company Name </strong></label>
+                                </div>
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <p> {{txtmajor_corporate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>SA Code (If Applicable) </strong></label>
+                            <input type="text" ng-model="txtsa_code" class="form-control" placeholder="Enter SA Code..." />
+                        </div>
+
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>Sanction Ref No</strong> <span style="color:red">*</span></label>
+                            <select name="sanction" required="" ng-options="m.sanctionref_no for m in customer2sanction_list"
+                                    ng-model="cbocustomer2sanction_gid" class="form-control ng-valid ng-touched ng-valid-parse"
+                                    size="1" ng-change="onselectedchangesanction(sanction)">
+                                <option value="">---Select Sanction Ref No--- </option>
+                            </select>
+
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset ng-hide="sanction_pnl">
+                <div class="row">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        
+                        <div class="row" ng-show="customer2sanction_flag=='Y'">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <h5><b>Previous LSA Information :</b></h5>
+                                </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-lg-1 col-sm-1 col-md-1">
+                                    </div>
+                                    <div class="col-lg-10 col-sm-10 col-md-10">
+
+                                        <div class="table-responsive">
+                                            <div class="bb  l12">
+
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ODLIM</th>
+                                                        <th>Facility Type</th>
+                                                        <th>Documented Limit to be set in System </th>
+                                                        <th>Existing Limit</th>
+                                                        <th>Limit To be Released to be set in System </th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in limitinfo_limit ">
+                                                        <td data-title="ODLIM" style="text-align:center;">{{data.odlim}}</td>
+                                                        <td data-title="Facility" style="text-align:center;">{{data.facility_type}}</td>
+                                                        <td data-title="Document Limit" style="text-align:center;">{{data.document_limit}}</td>
+                                                        <td data-title="Existing Limit" style="text-align:center;">{{data.existing_limit}}</td>
+                                                        <td data-title="Limit Released" style="text-align:center;">{{data.limit_released}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        <br/>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>Sanction Date</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p>{{txtsanctiondate}}</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>Purpose of Lending</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{txtpurpose_lending}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>Sanction Type</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{lblsanction_type}} {{lblnatureof_proposal}}</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>State</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{lblsanction_state_name}} /{{lblsanction_branch_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>Facility</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{txtfacility}}</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>Major Intervention</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{txtmajor_intervention}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>CC Approved By</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{lblccapproved_by}}</p>
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label><strong>CC Approved Date</strong></label>
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <p> {{lblccapproved_date}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <label><strong>Primary Value Chain </strong></label>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <p> {{txtprimaryvalue_chain}}</p>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <label><strong>Secondary Value Chain</strong></label>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <p> {{txtsecondaryvalue_chain}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                </div>
+            </fieldset>
+           
+
+            <fieldset>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>Deed of Hypothecation </strong></label>
+                            <p class="input-group">
+                                <input type="text" id="hypothecation" name="date" ng-model="txthypothecation_date" datepicker-popup="{{dp.format}}"
+                                       style="height:30px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                       close-text="Close" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="dp.calender1($event)" style="height:30px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-6">
+                            <label><strong>Mortgage Deed </strong></label>
+                            <p class="input-group">
+                                <input type="text" id="mortage" name="date" ng-model="txtmortgage_date" datepicker-popup="{{dp.format}}"
+                                       style="height:30px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                       close-text="Close" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="dp.calender2($event)" style="height:30px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <fieldset>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label><strong>Remarks </strong></label>
+                            <textarea rows="3" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false"
+                                      ng-model="txtremarks" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <div>
+            <br />
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="lsasubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                <button ng-click="lsaback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+            <br />
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,176 @@
+﻿ 
+<h3>
+    Scheduled Log Details
+</h3>
+<div ng-controller="rmScheduleLogDetails">
+    <div class="card">
+
+        <div class="row">
+            <div class="card-heading bg-primary">
+                <div class="card-title">{{customer_name}} - {{customer_urn}}</div>
+
+            </div>
+            <md-content class="md-padding">
+                <md-tabs md-dynamic-height="" md-border-bottom="">
+
+                    <md-tab label="Schedule">
+                        <md-content class="md-padding">
+
+                            <div class="">
+                                <h4>
+                                    <label>Allocated Date : <span>{{allocated_date}}</span></label>
+                                </h4>
+                                <div class="panel-body">
+                                     
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.NO</th>
+                                                    <th>Appointment Date</th>
+                                                    <th>Appointment Time</th>
+                                                    <th>Appointment Status</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in scheduleList" ng-switch="data.reschedule_flag">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Appointment Date'">{{data.appointment_date}}</td>
+                                                    <td data-title="'Appointment Time'">{{data.appointment_time}}</td>
+                                                    <td data-title="'Appointment Status'">{{data.appointment_status}}</td>
+                                                    <td data-title="'Remarks'">{{data.appointment_remarks}}</td>
+                                                    <td>
+                                                        <button title="Schedule Log - History" class="btn bg-blue-grey-500 btn-sm" ng-switch-when="Y"
+                                                                ng-click="scheduleLoghistory(data.schedulelog_gid )">
+                                                            <em class="fa fa-history text-white"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+
+
+                    <md-tab label="Call Log">
+                        <md-content class="md-padding">
+
+                            <div class="">
+                                <h4>
+                                    <label>Allocated Date : <span>{{allocated_date}}</span></label>
+                                </h4>
+                                <div class="panel-body">
+                                     
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.NO</th>
+                                                    <th>Dialed Number</th>
+                                                    <th>Call Response</th>
+                                                    <th>Remarks</th>
+                                                     
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in calllogdtlList">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Dialed Number'">{{data.dialed_number}}</td>
+                                                    <td data-title="'Call Response'">{{data.call_response}}</td>
+                                                    <td data-title="'Remarks'">{{data.call_remarks}}</td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </md-content>
+                    </md-tab>
+
+
+                </md-tabs>
+            </md-content>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <a class="btn btn-info" href="#/app/rmVisitReport">
+                    <em class="fa fa-arrow-left"></em>
+                    <span>Back</span>
+                </a>
+
+            </div>
+            <br />
+        </div>
+    </div>
+    <script type="text/ng-template" id="/SchedulehistoryModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-history"></em>&nbsp;Schedule Log - History</h2>
+                <span flex></span>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="ok()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <div class="panel-body">
+
+                        <div class="table-responsive table-bordered">
+                            <table class="table" style="padding: 0px 0px">
+                                <thead>
+                                    <tr class="bg-gray-light text-white">
+                                        <th>S.No</th>
+                                        <th>Appointment Date</th>
+                                        <th>Appointment Time</th>
+                                        <th>Appointment Status</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in scheduleList">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Appointment Date'">{{data.appointment_date}}</td>
+                                        <td data-title="'Appointment Time'">{{data.appointment_time}}</td>
+                                        <td data-title="'Appointment Status'">{{data.appointment_status}}</td>
+                                        <td data-title="'Remarks'">{{data.appointment_remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <br />
+                        <div class="class">
+                            <div class="text-center">
+
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Close</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

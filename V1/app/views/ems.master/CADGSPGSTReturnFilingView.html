@@ -1,0 +1,170 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    GSP GST Return Filing
+</h3>
+<div ng-controller="CADGSPGSTReturnFilingViewController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <em class="fa fa-eye"></em>&nbsp; GSP GST Return Filing View
+            <button type="button" title="Window Close" class="pull-right btn btn-sm btn-default" ng-click="close()">
+                <em class="fa fa-close text-danger fa-1x">&nbsp;Close</em>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="overflow-x: hidden;">
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> GSTIN - {{txtgstin}}</b></div>
+                                        <div class="panel-body">
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                                    <div class="dd-handle ng-scope">
+                                                        <p class="text-primary" style="font-size:14px;"><b>&nbsp; Compliance Status </b></p>
+                                                        <hr />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                            <p style="font-weight:bold"> Delay in GST Return Filing: </p>
+                                                                        </div>
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2" ng-switch="is_any_delay">                                       
+                                                                            <p ng-switch-when="true"> Yes </p>
+                                                                            <p ng-switch-when="false"> No </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                            <p style="font-weight:bold"> Default in GST Return Filing: </p>
+                                                                        </div>
+                                                                        <div class="col-lg-2 col-md-2 col-sm-2" ng-switch="is_defaulter">
+                                                                            <p ng-switch-when="true"> Yes </p>
+                                                                            <p ng-switch-when="false"> No </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row" ng-repeat="data in yearly_list">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                                    <div class="dd-handle ng-scope">
+                                                        <p class="text-primary" style="font-size:14px;"><b>&nbsp; Year: {{data.financial_year}} </b></p>
+                                                        <hr />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <p class="text-primary" style="font-size:12px;"><b>&nbsp; Filing Frequency </b></p>
+                                                                        <div class="table-responsive">
+                                                                            <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                                <thead style="background-color:#dde6e9;">
+                                                                                    <tr>
+                                                                                        <th style="width:5%;text-align:center;">S.No</th>
+                                                                                        <th> Start Period </th>
+                                                                                        <th> End Period </th>
+                                                                                        <th> Frequency </th>
+                                                                                        <th> Quarter </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr ng-repeat="item in data.filing_frequency" width="100%">
+                                                                                        <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                        <td title="Start Period">{{item.startPeriod}} </td>
+                                                                                        <td title="End Period">{{item.endPeriod}} </td>
+                                                                                        <td title="Frequency">{{item.frequency}}</td>
+                                                                                        <td title="Quarter">{{item.quarter}} </td> 
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <p class="text-primary" style="font-size:12px;"><b>&nbsp; E-Filed Summary </b></p>
+                                                                        <div class="table-responsive">
+                                                                            <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                                <thead style="background-color:#dde6e9;">
+                                                                                    <tr>
+                                                                                        <th style="width:5%;text-align:center;">S.No</th>
+                                                                                        <th> Application Reference Number </th>
+                                                                                        <th> Return Period </th>
+                                                                                        <th> Return Type </th>
+                                                                                        <th> Filing Status </th>
+                                                                                        <th> Mode of Filing </th>
+                                                                                        <th> Validity </th>
+                                                                                        <th> Delay </th>
+                                                                                        <th> Date of Filing </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr ng-repeat="item in data.EFiledlist" width="100%">
+                                                                                        <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                        <td title="Application Reference Number">{{item.arn}} </td>
+                                                                                        <td title="Return Period">{{item.ret_prd}} </td>
+                                                                                        <td title="Return Type">{{item.rtntype}}</td>
+                                                                                        <td title="Filing Status">{{item.status}} </td>
+                                                                                        <td title="Mode of Filing">{{item.mof}} </td>                                                                                        
+                                                                                        <td data-title="Validity" ng-switch="item.valid">
+                                                                                            <p ng-switch-when='Y'>Yes</p>
+                                                                                            <p ng-switch-when='N'>No</p>
+                                                                                        </td>
+                                                                                        <td data-title="Delay" ng-switch="item.is_delay">
+                                                                                            <p ng-switch-when='true'>Yes</p>
+                                                                                            <p ng-switch-when='false'>No</p>
+                                                                                        </td>                                                     
+                                                                                        
+                                                                                        <td title="Date of Filing">{{item.dof}} </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

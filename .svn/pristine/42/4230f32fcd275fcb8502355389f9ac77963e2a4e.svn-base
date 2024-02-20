@@ -1,0 +1,323 @@
+﻿<h3>
+    Template - CAM Generate
+</h3>
+<script>
+    var hosts = window.location.origin; 
+    var imgurl = hosts+ '/WebApplication1/home/UploadImage'; 
+    $('div#froala-editor-p').on('froalaEditor.image.inserted', function (e, editor, $img, response) {
+        $img.after("<p></p>");
+    });
+
+</script> 
+<style>
+    #static {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #static td, #static th {
+            border: 1px solid #ddd;
+            padding: 4px;
+        }
+
+        #static tr:nth-child(even) {
+            background-color: #fff;
+        }
+
+        #static tr:hover {
+            background-color: #e4eaec;
+        }
+
+        #static th {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            text-align: center;
+            background-color: #e4eaec;
+            color: #656565 !important;
+        }
+</style>
+<style>
+    .vl {
+        border-left: 1.5px ridge;
+        border-right: 1.5px ridge;
+    }
+
+    .tabheight {
+        padding-top: 10px;
+    }
+</style>
+<style>
+    .v2 {
+        border-left: 1.5px ridge;
+        border-right: 1.5px ridge;
+        height: 36px;
+    }
+
+    .v3 {
+        border-right: 1.5px ridge;
+        height: 36px;
+    }
+
+    .v4 {
+        border-right: 1.5px ridge;
+        height: 150px;
+    }
+
+    .textboxstyle {
+        border-radius: 10px;
+        border-color: lightgray;
+        display: block;
+        width: 100%;
+        height: 30px;
+        padding: 6px 16px;
+        font-size: 14px;
+        line-height: 1.52857143;
+        color: #3a3f51;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #B0B8BA;
+    }
+</style>
+
+<div ng-controller="MstCAMGenerateController as dpick">
+    <div id="panelDemo8" class="panel panel-primary">
+        <div class="panel-heading ">
+            <span class="btn-label">
+                CAM Generate
+            </span>
+
+        </div>
+        <br />
+        <div>
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-lg-12 col-sm-12 col-md-12" ng-show="showmstcontent=='Y'">
+                    <div class="col-lg-5 col-sm-5 col-md-5">
+                        <label class="col-form-label"> Template <span style="color:red"> *</span></label>
+                        <br />
+                        <select name="template" id="template" chosen="" ng-options="m.template_name for m in MdlTemplatelist"
+                                ng-model="cbotemplate" ng-change="changeTemplate()" class="chosen-select form-control" required>
+                            <option value=""></option>
+                        </select>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-sm-7">
+                        <br /> <br />
+                        <button ng-click="TemplateConfirm(content)" ng-disabled="!cbotemplate" class="btn btn-success">
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;Confirm
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 col-md-12" ng-show="showmstcontent=='N'">
+                    <div class="col-lg-5 col-sm-5 col-md-5">
+                        <label class="col-form-label"> Template Name</label>
+                        <br />
+                        <p>{{template_name}}</p>
+                    </div>
+
+                </div>
+                <br />
+                <div>
+                    <div class="simple">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <br />
+                            <div class="col-lg-9 col-md-9 col-sm-9" ng-show="showmstcontent=='N'">
+                                <label class="text-primary" style="font-size:14px;">
+                                    <span ng-show="showdefaulttemplate">Default</span>
+                                    <span ng-show="showedittemplate">Edit</span>
+                                    <span ng-show="showpreviewtemplate">Preview</span>
+                                </label>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" ng-show="showmstcontent=='N'">
+                                <button ng-click="closetemplate(content)"
+                                        ng-class="(showdefaulttemplate==true) ? 'btn btn-grey' : 'btn btn-primary'">
+                                    <i class="fa fa-file"></i>&nbsp;&nbsp;Default
+                                </button> &nbsp;
+                                <button ng-click="editfielddetail(content)" ng-class="(showedittemplate==true) ? 'btn btn-grey' : 'btn btn-success'">
+                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit
+                                </button> &nbsp;
+                                <button ng-click="previewcontent(content)" ng-class="(showpreviewtemplate==true) ? 'btn btn-grey' : 'btn btn-info'">
+                                    <i class="fa fa-eye"></i>&nbsp;&nbsp;Preview
+                                </button> &nbsp;
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showdefaulttemplate">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="simple">
+                                    <textarea id="camtemplate" ng-show="editMode" froala ng-model="content" class="nw-editor__src"> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showedittemplate">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div id="froala-editor">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="dd-handle ng-scope">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Fill the Details </b></p>
+                                            <hr />
+                                            <form novalidate="" name="editinputtextbox" ng-submit="form.editinputtextbox()" autocomplete="off" class="form-validate form-horizontal">
+                                                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="m in inputlist">
+                                                    <label>{{m.input_fieldname}} <span ng-show="{{m.input_mandatory}}" style="color:red;">*</span></label>
+                                                    <br />
+                                                    <div ng-if="m.input_type=='text'">
+                                                        <input class="form-control" id="{{m.index}}" name="{{m.input_placeholder}}"
+                                                               placeholder="{{m.input_placeholder}}" type="text" ng-model="m.input_givendata" ng-required="{{m.input_mandatory}}"
+                                                               maxlength="{{m.inputmax_length}}" /> <span class="text-info"> Allow only {{m.inputmax_length}} characters</span>
+                                                    </div>
+                                                    <div ng-if="m.input_type=='textarea'">
+                                                        <textarea class="form-control" id={{m.index}} name="{{m.input_placeholder}}"
+                                                                  placeholder="{{m.input_placeholder}}" ng-required="{{m.input_mandatory}}"
+                                                                  ng-model="m.input_givendata" type="textarea"></textarea>
+                                                    </div>
+                                                    <div ng-if="m.input_type=='select-one' && m.DBInput==false">
+                                                        <select chosen="" name="{{m.input_placeholder}}" required="" id={{m.index}}
+                                                                ng-options="k.trntemplateinputlistdtl_gid as k.preview_text for k in m.MdlInputlistDtls"
+                                                                ng-model="m.input_givendata" class="chosen-select form-control" style="height:37px;" ng-required="{{m.input_mandatory}}"
+                                                                size="1">
+                                                            <option value="">----{{m.input_placeholder}}----</option>
+                                                        </select>
+                                                    </div>
+                                                    <div ng-if="m.input_type=='select-one' && m.DBInput==true">
+                                                        <select chosen="" name="{{m.input_type}}" required="" id={{m.index}}
+                                                                ng-options="k.input_fieldvalue as k.input_fieldvalue for k in m.MdlInputGivenList"
+                                                                ng-model="m.input_givendata" class="chosen-select form-control" style="height:37px;" ng-required="{{m.input_mandatory}}"
+                                                                size="1">
+                                                            <option value="">----{{m.input_placeholder}}----</option>
+                                                        </select>
+                                                    </div>
+                                                    <div ng-if="m.input_type=='radio'">
+                                                        <div class="radio c-radio">
+                                                            <label ng-repeat="data in m.MdlInputlistDtls">
+                                                                <input type="radio" id={{m.index}} ng-required="{{m.input_mandatory}}" name="{{data.preview_text}}" value="{{data.trntemplateinputlistdtl_gid}}" ng-model="m.input_givendata" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>{{data.preview_text}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="m.input_type=='checkbox'">
+
+                                                        <div class="mb">
+                                                            <span class="mda-checkbox">
+                                                                <input type="checkbox" ng-model="m.input_givendata" ng-required="{{m.input_mandatory}}" />
+                                                                <em class="bg-indigo-500"></em> {{m.input_previewtext}}
+                                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <br />
+                                                </div>
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                                    <br />
+                                                    <button ng-click="updateinputTemplate()" ng-disabled="editinputtextbox.$invalid" class="btn btn-success">
+                                                        <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                                                    </button>
+                                                    <button ng-click="closetemplate()" class="btn btn-danger">
+                                                        <i class="icon icon-close"></i>&nbsp;&nbsp;Close
+                                                    </button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12" ng-show="showpreviewtemplate">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div id="froala-editorpreview">
+                                </div>
+                            </div>
+
+                            <!-- <div id="new" contenteditable="false">
+                    <p id="sanctiontemplatepreview" froala ng-model="txtpreviewcontent" class="nw-editor__src"> </textarea>
+                </div> -->
+                        </div>
+                        <br />
+                        <!-- <div ng-show="cam_content!='' && cam_content!=null">
+                <div class="row">
+
+                <textarea id="test" ng-show="editMode" froala ng-model="cam_content" class="nw-editor__src" style="overflow-x: scroll;"> </textarea>
+            </div>
+            <div ng-hide="cam_content!='' && cam_content!=null">
+                <textarea id="test" ng-show="editMode" froala ng-model="content" class="nw-editor__src" style="overflow-x: scroll;"> </textarea>
+            </div> -->
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <br />
+
+
+        </div>
+        <br />
+        <div class="row">
+        </div>
+        <div class="row" ">
+            <div class="text-center">
+                <button ng-click="WordSave(content)" ng-show="showmstcontent=='N'" ng-disabled="" class="btn btn-primary">
+                    <i class="fa fa-save"></i>&nbsp;&nbsp;Save
+                </button>
+                <button ng-click="WordGenerate(content)" ng-show="showmstcontent=='N'" ng-disabled="" class="btn btn-success">
+                    <i class="fa fa-check"></i>&nbsp;&nbsp;Generate
+                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                </button>
+
+                <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left fa-1x"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/templatefield.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit ">&nbsp; Fill the Details</i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="dd-handle ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <form novalidate="" name="editinputtextbox" ng-submit="form.editinputtextbox()" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="m in inputlist">
+                                <label>{{m.inputgroup_name}} <span ng-show="{{m.input_mandatory}}" style="color:red;">*</span></label>
+                                <br />
+                                <div ng-if="m.input_type=='text'">
+                                    <input class="form-control" id="{{m.index}}" name="{{m.input_placeholder}}"
+                                           placeholder="{{m.input_placeholder}}" type="text" ng-model="m.inputgivendata" ng-required="{{m.input_mandatory}}"
+                                           maxlength="{{m.inputmax_length}}" />
+                                </div>
+                                <div ng-if="m.input_type=='textarea'">
+                                    <textarea class="form-control" id={{m.index}} name="{{m.input_placeholder}}"
+                                              placeholder="{{m.input_placeholder}}" ng-required="{{m.input_mandatory}}"
+                                              ng-model="m.inputgivendata" type="textarea"></textarea>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                                <br />
+                                <button ng-click="updatetemplate()" ng-disabled="editinputtextbox.$invalid" class="btn btn-success">
+                                    <i class="fa fa-check"></i>&nbsp;&nbsp;Update
+                                </button>
+                                <button ng-click="ok()" class="btn btn-danger">
+                                    <i class="icon icon-close"></i>&nbsp;&nbsp;Close
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

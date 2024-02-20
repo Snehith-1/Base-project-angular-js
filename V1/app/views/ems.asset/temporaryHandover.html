@@ -1,0 +1,226 @@
+﻿<h3>
+    Temporary Handover
+</h3>
+<div ng-controller="temporaryHandovercontroller">
+    <div class="panel">
+        <div class="panel-heading bg-cyan-700">
+            Temporary Handover
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="data in tmphandoversummary">
+                    <div class="card card-body bg-gray-200 text-center border_class picColor hover">
+                        <div class="container">
+                            <div class="row row-margin-bottom">
+                                <div class="row box-shadow col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        &nbsp;&nbsp;<h5>
+                                            <span>   Dear Sir/Madam,</span>
+                                            <span>  Transfer the Following Asset to <label class="text-primary">{{data.tmphandover_employeename}}</label></span>
+                                        </h5>
+                                    </div> 
+                                    <br />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <img style="height:70%;width:70%;" ng-src="{{data.asset_image}}">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <p style="text-align:left;font-size:13px;">Asset Name: <strong>{{data.asset_name}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;"> Asset ID : <strong> {{data.asset_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Issued By : <strong> {{data.issued_by}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Issued Date : <strong>{{data.issued_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Serial ID :<strong> {{data.assetserial_id}}</strong> </p>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <p style="text-align:left;font-size:13px;">Employee Name : <strong>{{data.tmphandover_employeename}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Employee ID :<strong> {{data.tmphandover_employeecode}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Department :<strong> {{data.tmphandover_employeedept}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Designation :<strong>{{data.tmphandover_employeedesg}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handover Date: <strong>{{data.tmphandover_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handover Location: <strong>{{data.branch_name}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handover Remarks: <strong>{{data.temporaryhandover_remarks}}</strong></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div align="center" ng-switch="data.tmphandover_status">
+                                        <button ng-switch-when="Temporary Handover Pending" class="btn btn-success" value="Submit" title="Submit"
+                                                ng-click="surrender_submit(data.asset_id)">
+                                            <span class="fa fa-check">  Submit</span>
+                                        </button>
+                                        <label ng-switch-when="Temporary Handover"><label style="color:red;">Temporary Handover Done !</label></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading bg-indigo-300">
+            Temporarily Holding Assets 
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="data in tempHoldersummary">
+                    <div class="card card-body bg-gray-200 text-center border_class picColor hover">
+                        <div class="container">
+                            <div class="row row-margin-bottom">
+                                <div class="row box-shadow col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row w3-center">
+                                        &nbsp;&nbsp;<h5 style="text-decoration-color :red">
+                                            <span>   Dear Sir/Madam,</span>
+                                            <span>  You are Temporarily Holding The following Assets </span>
+                                        </h5>
+                                    </div> <br/>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <img style="height:70%;width:70%;" ng-src="{{data.asset_image}}">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <p style="text-align:left;font-size:13px;">Asset Name: <strong>{{data.asset_name}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;"> Asset ID : <strong> {{data.asset_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Issued By : <strong> {{data.issued_by}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Issued Date : <strong>{{data.issued_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Date: <strong>{{data.tmphandover_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Location: <strong>{{data.branch_name}}</strong></p>
+                                       
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <div class="lib-row lib-desc">
+                                            <p style="text-align:left;font-size:13px;">Employee Name : <strong>{{data.prev_employeename}}</strong> </p>
+                                            <p style="text-align:left;font-size:13px;">Employee ID :<strong> {{data.prev_employeecode}}</strong> </p>
+                                            <p style="text-align:left;font-size:13px;">Department :<strong> {{data.prev_employeedept}}</strong></p>
+                                            <p style="text-align:left;font-size:13px;">Designation :<strong>{{data.prev_employeedesg}}</strong></p>
+                                            <p style="text-align:left;font-size:13px;">Handover Status: <strong>{{data.tmphandover_status}}</strong></p>
+                                            <p style="text-align:left;font-size:13px;">Handovered Remarks: <strong>{{data.temporaryhandover_remarks}}</strong></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row row-margin-bottom">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div align="center">
+                                        <div ng-switch="data.tmphandover_status">
+                                            <button type="button" ng-switch-when="Temporary Handover Surrender Pending" ng-click="surrenderitadminclick(data.asset_id)" value="Submit" title="Submit" class="btn btn-success buttonpadding">
+                                                <span class="">Surrender to IT Admin</span>
+                                            </button>
+                                            <button type="button" ng-click="holdingassetclick(data.asset_id)" value="Submit" title="Submit" class="btn btn-success buttonpadding">
+                                                <span class="">I'm Holding the Asset</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading bg-blue-500">
+            I am Holding the Asset
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="data in tempHoldinsassetsummary">
+                    <div class="card card-body bg-gray-200 text-center border_class picColor hover">
+                        <div class="container">
+                            <div class="row row-margin-bottom">
+                                <div class="row box-shadow col-lg-12 col-md-12 col-sm-12">
+                                   <br/>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <img style="height:70%;width:70%;" ng-src="{{data.asset_image}}">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <p style="text-align:left;font-size:13px;">Asset Name: <strong>{{data.asset_name}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;"> Asset ID : <strong> {{data.asset_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Issued By : <strong> {{data.issued_by}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Issued Date : <strong>{{data.issued_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Date: <strong>{{data.tmphandover_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Location: <strong>{{data.branch_name}}</strong></p>
+                                     
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <p style="text-align:left;font-size:13px;">Employee Name : <strong>{{data.prev_employeename}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Employee ID :<strong> {{data.prev_employeecode}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Department :<strong> {{data.prev_employeedept}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Designation :<strong>{{data.prev_employeedesg}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handover Status: <strong>{{data.tmphandover_status}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Remarks: <strong>{{data.temporaryhandover_remarks}}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-margin-bottom">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div align="center"  ng-switch="data.tmphandover_status">
+                                        <button type="button"  ng-switch-when="Temporary Handover Surrender Pending"  ng-click="surrenderitadminclick(data.asset_id)" value="Submit" title="Submit" class="btn btn-success buttonpadding">
+                                            <span class="">Surrender to IT Admin</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-heading bg-teal-500">
+            Surrender to IT Admin
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="data in tempadminsurrendersummary">
+                    <div class="card card-body bg-gray-200 text-center border_class picColor hover">
+                        <div class="container">
+                            <div class="row row-margin-bottom">
+                                <div class="row box-shadow col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <img style="height:70%;width:70%;" ng-src="{{data.asset_image}}">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <p style="text-align:left;font-size:13px;">Asset Name: <strong>{{data.asset_name}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;"> Asset ID : <strong> {{data.asset_id}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Issued By : <strong> {{data.issued_by}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Issued Date : <strong>{{data.issued_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Date: <strong>{{data.tmphandover_date}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Location: <strong>{{data.branch_name}}</strong></p>
+                                      
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <p style="text-align:left;font-size:13px;">Employee Name : <strong>{{data.prev_employeename}}</strong> </p>
+                                        <p style="text-align:left;font-size:13px;">Employee ID :<strong> {{data.prev_employeecode}}</strong> </p>
+                                         <p style="text-align:left;font-size:13px;">Department :<strong> {{data.prev_employeedept}}</strong></p>
+                                         <p style="text-align:left;font-size:13px;">Designation :<strong>{{data.prev_employeedesg}}</strong></p>
+                                         <p style="text-align:left;font-size:13px;">Handover Status: <strong>{{data.tmphandover_status}}</strong></p>
+                                        <p style="text-align:left;font-size:13px;">Handovered Remarks: <strong>{{data.temporaryhandover_remarks}}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-margin-bottom">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div align="center" ng-switch="data.tmphandover_status">
+                                        <label class="label label-success" ng-switch-when="Temporary Handover Surrender">Surrender Done !</label>
+                                        <label class="label label-danger " ng-switch-when="Temporary Handover Surrender" >IT Admin Not-confirm !</label>
+                                        <label class="label label-success " ng-switch-when="Confirmed">IT Admin Confirm !</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

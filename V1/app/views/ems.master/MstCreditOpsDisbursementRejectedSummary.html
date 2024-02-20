@@ -1,0 +1,147 @@
+﻿<h3>
+    Rejected Disbursement
+</h3>
+<div ng-controller="MstCreditOpsDisbursementRejectedSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <p style="color:#09385f;font-size: 17px;"><b>Maker Summary</b></p>
+                <hr />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="maker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{makerpending_count -- makerfollowup_count}}</b></div>
+                    <b style="font-size: 12px;"> Maker </b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="checker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{checker_count}}</b></div>
+                    <b style="font-size: 12px;"> Checker </b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="approvalcompleted()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>  {{approvedcompleted_count}}</b></div>
+                    <b style="font-size: 12px;"> Approved Disbursement </b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+                <button type="button" class="btn btn-labeled" ng-click="disbursementrejected()" style="width: 200px; height: 50px; border: 1px solid rgb(179, 177, 177); background-color: #84cbdb;">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>  {{rejected_count}}</b></div>
+                    <b style="font-size: 12px;"> Rejected Disbursement </b>
+                </button>
+                <br />
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12">
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th class="text-center"> S.No</th>
+                                    <!--<th> Submitted Date / By </th>-->
+                                    <th> Disbursement Request ID </th>
+                                    <th> Application Number</th>
+                                    <th> Customer Name </th>
+                                    <!--<th> Sanction Ref No </th>-->
+                                    <th> LSA Ref No</th>
+                                    <th> Product Type </th>
+                                    <th> Disbursement To </th>
+                                    <th> Rejected By </th>
+                                    <th> Rejected Date </th>
+                                    <th> Created By </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in disbursementrejected_list">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                    <!--<td data-title="'Submitted Date'">{{data.created_date}} / {{data.created_by}}</td>-->
+                                    <td data-title="'Disbursement Request ID'"> {{data.disbursementrequest_code}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <!--<td data-title="'Sanction Ref No'"> {{data.sanction_refno}} </td>-->
+                                    <td data-title="'LSA Ref No'"> {{data.lsareference_number}} </td>
+                                    <td data-title="'Product Type'"> {{data.product_type}} </td>
+                                    <td data-title="'Disbursement To'"> {{data.disbursement_to}} </td>
+                                    <td data-title="'Rejected By'"> {{data.rejected_by}} </td>
+                                    <td data-title="'Rejected Date'"> {{data.rejected_date}} </td>
+                                    <td data-title="'Created By'"> {{data.created_by}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Rejected View" ng-click="rejected_view(data.rmdisbursementrequest_gid)" class="btn btn-pink">
+                                            <em class="fa fa-file"></em>
+                                        </button>
+                                        <button title="Disbursement View" ng-click="completed_process(data.application_gid, data.application2sanction_gid, data.application2loan_gid,data.customer_urn,data.rmdisbursementrequest_gid,data.lsareference_gid)" style="background-color:#871490;" class="btn btn-pink">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+    <script type="text/ng-template" id="/DisbursementRejectedDetails.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Disbursement Rejected Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Rejected By</label>
+                                <p>{{rejected_by}}</p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Rejected Date</label>
+                                <p>{{rejected_date}}</p>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Approval Status</label>
+                                <p>{{approval_status}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label> Rejected Remarks</label>
+                                <p>{{rejected_remarks}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,57 @@
+﻿<h3>
+    Checker Approval Summary
+</h3>
+<div ng-controller="MstCheckerApprovalSummaryController">
+    <div class="panel">
+        <div class="panel-body">
+            <br />
+            <div class="table-responsive">
+                <table datatable="ng" class="table table-hover table-striped">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th style="display:none">S.No</th>
+                            <th align="center">Submitted Date</th>
+                            <th align="center">URN</th>
+                            <th align="center">Customer Name</th>
+                            <th align="center">Sanction Ref.No</th>
+                            <th align="center">Sanction Amount</th>
+                            <th align="center">Vertical</th>
+                            <th align="center">Submitted By</th>
+                            <th align="center">Status</th>
+                            <th align="center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in sanctionlist" ng-switch="data.sanction_status">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <td data-title="'created date.'" class="text-nowrap">{{data.created_date}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer Name'">{{data.customername}}</td>
+                            <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                            <td data-title="'Sanction Amount'" style="text-align:right;">{{data.sanction_amount}}</td>
+                            <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                            <td data-title="'Created By'">{{data.created_by}}</td>
+                            <td data-title="'Status'">
+                                <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                <label class="label label-warning" ng-switch-when='Approval Pending' style="font-size:10px;">Approval Pending</label>
+                                <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                            </td>
+                            <td class="text-nowrap">
+                                <button title="Checker Approval 360" ng-click="checkerapprovalview(data.customer2sanction_gid)" class="btn btn-green">
+                                    <em class="fa fa-eye"></em>
+                                </button>
+                                <button title="PDF" class="btn btn-danger" ng-if="data.checkerapproval_flag=='Y' && data.checkerreject_remarks==''" ng-click="SanctionletterPDF(data.customer2sanction_gid)">
+                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+       
+        <br />
+    </div>
+</div>

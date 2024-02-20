@@ -1,0 +1,241 @@
+﻿ <h3>
+    Schedule Meeting
+</h3>
+<div ng-controller="AgrTrnSuprSentbackcctoCreditcontroller">
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>Sent Back to Credit</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="pending_summary()" style="width:210px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b> {{lblpending_count}}</b></div>
+                        <b style="font-size: 14px;">Pending Summary</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="scheduled_summary()" style="width:210px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b> {{lblscheduled_count}}</b></div>
+                        <b style="font-size: 14px;">Scheduled Summary</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="completed_summary()" style="width:210px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b>{{lblcompleted_count}} </b></div>
+                        <b style="font-size: 14px;"> AC Completed </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="sentbackto_credit()" style="width:210px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#09385f;padding-top:5px;padding-bottom:5px;"> <b>{{lblsentbackcc_count}} </b></div>
+                        <b style="font-size: 14px;"> Sent Back to Credit</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                <br />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th class="text-center" style="display:none"> S.No</th>
+                                    <!--<th class="text-center"> S.No</th>-->
+                                    <th> Submitted Date </th>
+                                    <th> Application Number </th>
+                                    <th> Customer Name </th>
+                                    <th> Applicant Region </th>
+                                    <th> Vertical </th>
+                                    <th> Overall Limit </th>
+                                    <th class="text-center"> Reason </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in applicationadd_list">
+                                    <td data-title="'S.No'" class="text-center" style="display:none"> {{$index+1}}</td>
+                                    <!--<td data-title="'S.No'" class="text-center"> {{$index+1}}</td>-->
+                                    <td data-title="'Underwritten by'"> {{data.ccsubmitted_date}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Customer Name"> {{data.customer_name}} </td>
+                                    <td data-title="'Applicant Region" style="width:10%;"> {{data.region}} </td>
+                                    <td data-title="'Vertical"> {{data.vertical_name}} </td>
+                                    <td data-title="'Overall Limit'"> {{data.overalllimit_amount}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="Reason" style="background-color:#706710;" ng-click="view_reason(data.application_gid)" class="btn btn-pink">
+                                            <em class="fa fa-file"></em>
+                                        </button>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="application_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="History" ng-click="history(data.application_gid)" class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+    <script type="text/ng-template" id="/assignapplication.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-check-square "></i>
+                </span> Assign Application
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="assignapplication" ng-submit="form.assignapplication()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <!--<label>Applicant Name</label>-->
+                                        <label> Customer/Supplier Name </label>
+                                        <p>LIMKA PRIVATE LIMITED</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Credit Vertical Head *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="creditverticalhead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Credit Head *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Maker *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <label>Checker *</label>
+                                        <select chosen="" ng-options="m as m.entity_name for m in entitylist track by m.entity_gid"
+                                                ng-model="credithead" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="assignapplication.$invalid" ng-click="assign()"><i class="fa fa-check-square"></i>&nbsp;&nbsp;Assign</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/sentbacktounderwriting.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-arrow-circle-left"></i>
+                </span> Sent Back to Credit Underwriting
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="sentbacktocredit" ng-submit="form.sentbacktocredit()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="float-label">
+                                <label>Reason</label><span style="color:red;"> *</span>
+                                <textarea class="form-control" rows="3" tabindex="0" required ng-model="txtreason" style="resize:vertical;" placeholder="Enter Reason"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="sentbacktocredit.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/Reasonview.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Reason</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label> Reason </label>
+                                            <br />
+                                            <p>{{txtreason}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

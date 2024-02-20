@@ -1,0 +1,282 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<!-- <a href="#/app/MstApplicationCreationView">
+    <button type="button" title="Back" class="pull-right btn btn-sm btn-primary">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a> -->
+<h3>
+    Grading Tool
+</h3>
+<div ng-controller="MstCadGradingToolViewController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <em class="fa fa-eye"></em>&nbsp;  Grading Tool Details View
+            <button type="button" title="Window Close" class="pull-right btn btn-sm btn-default" ng-click="close()">
+                <em class="fa fa-close text-danger fa-1x">&nbsp;Close</em>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="overflow-x: hidden;">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Assessed Score Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Date of Survey </label>
+                                                        <br />
+                                                        <p>{{txtdate_survey}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Overall FPO Rating </label>
+                                                        <br />
+                                                        <p>{{txtoverall_fporating}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Overall FPO Grade </label>
+                                                        <br />
+                                                        <p>{{txtoverall_fpograde}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Major Crops </label>
+                                                        <br />
+                                                        <p>{{txtmajor_crops}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Alternative Source of Income </label>
+                                                        <br />
+                                                        <p>{{txtalternative_income}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Objective of the FPO </label>
+                                                        <br />
+                                                        <p>{{txtobjective_fpo}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Recommendation </label>
+                                                        <br />
+                                                        <p>{{txtreportrecommendation }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Assessment Criteria Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Assessment Criteria</th>
+                                                                    <th scope="col">Maximum Score</th>
+                                                                    <th scope="col">Actual Scored </th>
+                                                                    <th scope="col">In %</th>
+                                                                    <th scope="col">In Grade</th>
+                                                                    <th scope="col">Shareholders - Male %</th>
+                                                                    <th scope="col">Shareholders - Female %</th>
+                                                                    <th scope="col">BODs - Male %</th>
+                                                                    <th scope="col">BODs - Female %</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in assessment_list">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Assessment Criteria">{{data.assessmentcriteria}}</td>
+                                                                    <td title="Maximum Score">{{data.maximumscored}}</td>
+                                                                    <td title="Actual Scored">{{data.actualscored}}</td>
+                                                                    <td title="In %">{{data.assessmentcriteria_in}}</td>
+                                                                    <td title="In Grade">{{data.assessmentcriteria_ingrade}}</td>
+                                                                    <td title="Shareholders - Male %">{{data.shareholdermale_in}}</td>
+                                                                    <td title="Shareholders - Female %">{{data.shareholderfemale_in}}</td>
+                                                                    <td title="BODs - Male %">{{data.bodmale_in}}</td>
+                                                                    <td title="BODs - Female %">{{data.bodfemale_in}}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  FPO Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label>  FPO AC Score </label>
+                                                        <br />
+                                                        <p>{{txtfpo_acscore}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Number of Active FIGs </label>
+                                                        <br />
+                                                        <p>{{txtno_activefig}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Number of Existing Lending - Direct & Indirect</label>
+                                                        <br />
+                                                        <p>{{txtno_existingrate}}</p>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> All non-negotiable conditions met? </label>
+                                                        <br />
+                                                        <p>{{txtnon_negotiable}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Outstanding Portfolio with Members (Rs.in Lakhs) - Direct & Indirect </label>
+                                                        <br />
+                                                        <p>{{txtoutstanding_member}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>Does the Institution have Direct Borrowing or Indirect Borrowing </label>
+                                                        <br />
+                                                        <p>{{txtdoes_indirectborrowing}}</p>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label> Total Disbursements by other Direct Lenders in the last 12 months (Rs. in Lakhs)</label>
+                                                        <br />
+                                                        <p>{{txt_totallender}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> PAR 90 of groups managed by the Institution-Only Direct </label>
+                                                        <br />
+                                                        <p>{{txtpar90_group}}</p>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label> Recommendation  </label>
+                                                        <br />
+                                                        <p>{{txtrecommendation }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;   Geographic Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label>  Number of states </label>
+                                                        <br />
+                                                        <p>{{txtno_states}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Number of Districts </label>
+                                                        <br />
+                                                        <p>{{txtno_districts}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label>Number of Branches</label>
+                                                        <br />
+                                                        <p>{{txtno_branches}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Number of Members</label>
+                                                        <br />
+                                                        <p>{{txtno_members}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label>Number of Active Members</label>
+                                                        <br />
+                                                        <p>{{txtno_activemembers}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Number of Groups</label>
+                                                        <br />
+                                                        <p>{{txtno_groups}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Zonal Offices </label>
+                                                        <br />
+                                                        <p>{{txtzonal_offices}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Regional Offices </label>
+                                                        <br />
+                                                        <p>{{txtregional_offices}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label>Branches</label>
+                                                        <br />
+                                                        <p>{{txtbranches}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Admin Staff</label>
+                                                        <br />
+                                                        <p>{{txtadmin_staff}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label>Field Staff</label>
+                                                        <br />
+                                                        <p>{{txtfield_staff}}</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Field Staff to Group ratio</label>
+                                                        <br />
+                                                        <p>{{txtfield_groupratio}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>

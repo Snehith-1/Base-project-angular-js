@@ -1,0 +1,203 @@
+﻿<style>
+    .space {
+        margin: 10px 0px;
+    }
+</style>
+<h3>
+    Process
+</h3>
+<div ng-controller="AgrTrnSuprCADGroupProcessAssignController as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-spinner"></i>
+            </span>Process
+        </div>
+        <form novalidate="" name="addprocess" ng-submit="form.addinbound()" autocomplete="off" class="form-validate">
+            <br>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div ng-show="menu_list != null">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-4 col-lg-4 col-md-4" ng-show="processenabled">
+                                        <label> Process Type </label><span style="color:red;">&nbsp; *</span><br>
+                                        <select class="chosen-select form-control" id="processtype" name="processtype" tabindex="0" ng-model="cboprocesstype" required
+                                                style="height:37px;" size="1" ng-change="change_process(cboprocesstype)">
+                                            <option value=""> ------ Select Process Type ------ </option>
+                                            <option value="Accept">Accept</option>
+                                            <option value="Sendback to CC">Sendback to AC</option>
+                                            <option value="Sendback to Credit Underwriting">Sendback to Credit Underwriting</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-lg-4 col-md-4" ng-show="processautoenabled">
+                                        <label> Process Type </label><span style="color:red;">&nbsp; *</span><br>
+                                        <select class="chosen-select form-control" id="processtype" name="processtype" tabindex="0" ng-model="cboprocesstype" required
+                                                style="height:37px;" size="1" ng-change="change_process(cboprocesstype)">
+                                            <option value=""> ------ Select Process Type ------ </option>
+                                            <option value="Accept">Accept</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-lg-4 col-md-4" ng-show="processdisabled">
+                                        <label> Process Type </label><span style="color:red;">&nbsp; *</span><br>
+                                        <input type="text" ng-model="processtype_name" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-sm-4 col-lg-4 col-md-4" ng-show="processdisabled">
+                                        <label> CAD Group Name </label><span style="color:red;">&nbsp; *</span><br>
+                                        <input type="text" ng-model="cadgroup_name" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="cadgroupacceptshow">
+                                        <label> CAD Group Name</label><span style="color:red"> *</span>
+                                        <select class="chosen-select form-control" chosen="" id="cadgroup_name" tabindex="0" ng-model="cbocadgroup_name"
+                                                ng-options="m.cadgroup_name for m in cadgroup_list" style="height:37px;" size="1" ng-change="cadgroup_change()">
+                                            <option value="">----- CAD Group Name -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="acceptshow">
+                                        <label>Assign Type<span style="color:red"> *</span> </label>
+                                        <div class="radio c-radio">
+                                            <label>
+                                                &nbsp;&nbsp; <input type="radio" name="assignradiobutton" value="Menuselection" ng-model="rdbassign" ng-click="assign_selectmenu()" required="" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span> Menu Selection
+                                            </label>&nbsp;&nbsp;
+                                            <label>
+                                                <input type="radio" name="assignradiobutton" value="Applytoallmenu" ng-model="rdbassign" ng-click="assign_applyallmenu()" />
+                                                <span class="fa fa-circle"></span> Apply to all Menu
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="selectmenu_show">
+                                        <label>	Menu </label><span style="color:red"> *</span>
+                                        <select class="chosen-select form-control" chosen="" multiple id="menu_name" tabindex="0" ng-model="cbomenu_name"
+                                                ng-options="m.menu_name for m in menu_list" style="height:37px;" size="1">
+                                            <option value="">----- Menu Name -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="selectallmenu_show">
+                                        <label>	Menu </label>
+                                        <input type="text" ng-model="disabled_menu" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="acceptshow">
+                                        <label> Maker</label><span style="color:red"> *</span>
+                                        <select class="chosen-select form-control" chosen="" id="menu_name" tabindex="0" ng-model="cbomaker_name"
+                                                ng-options="m.employee_name for m in cadmembers_list" style="height:37px;" size="1">
+                                            <option value="">----- Maker Name -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="acceptshow">
+                                        <label> Checker</label><span style="color:red"> *</span>
+                                        <select class="chosen-select form-control" chosen="" id="checker_name" tabindex="0" ng-model="cbochecker_name"
+                                                ng-options="m.employee_name for m in cadmembers_list" style="height:37px;" size="1">
+                                            <option value="">----- Checker Name -----</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" ng-show="acceptshow">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label> Approver</label><span style="color:red"> *</span>
+                                        <select class="chosen-select form-control" chosen="" id="approver_name" tabindex="0" ng-model="cboapprover_name"
+                                                ng-options="m.employee_name for m in cadmembers_list" style="height:37px;" size="1">
+                                            <option value="">----- Approver Name -----</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-show="processshow">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <div class="col-sm-12 col-lg-12 col-md-12">
+                                        <label> Remarks </label><span style="color:red;">&nbsp; *</span><br>
+                                        <textarea ng-model="remarks" placeholder="Enter Remarks" rows="3" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" ng-show="rdbassign=='Applytoallmenu'">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success btn-md" ng-click="applytoall_add()" style="background-color:#09385f;color:white;"><i class="fa fa-check"></i>&nbsp;&nbsp; Apply to all Menu </button>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="row" ng-show="rdbassign=='Menuselection'">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success btn-md" ng-click="Process_add()" style="background-color:#09385f;color:white;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add</button>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div ng-show="menu_list == null">
+                            <p style="font-size:16px;text-align:center;"><b>  Maker, Checker and Approval users are assigned for all menu. </b></p>
+                        </div>
+                        <div class="dd-handle" ng-show="mdlprocesstype_list != null">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Process Summary </b></p>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr class="text-white" style="background-color:#d2d3d4;color:black;">
+                                                        <th> S.No </th>
+                                                        <th> Process Type </th>
+                                                        <th> CAD Group Name </th>
+                                                        <th> Menu </th>
+                                                        <th> Maker </th>
+                                                        <th> Checker </th>
+                                                        <th> Approver </th>
+                                                        <th style="text-align:center;width:8%;"> Action </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in mdlprocesstype_list">
+                                                        <td data-title="'S.No'" class="text-center"> {{$index+1}}</td>
+                                                        <td data-title="'Process Type'"> {{data.processtype_name}} </td>
+                                                        <td data-title="'CAD Group Name"> {{data.cadgroup_name}} </td>
+                                                        <td data-title="'Menu"> {{data.menu_name}} </td>
+                                                        <td data-title="'Maker"> {{data.maker_name}} </td>
+                                                        <td data-title="'Checker"> {{data.checker_name}} </td>
+                                                        <td data-title="'Approver"> {{data.approver_name}} </td>
+                                                        <td class="nowrap" data-title="'Action'" style="text-align:center;width:8%;">
+                                                            <button title="Delete" ng-click="delete(data.processtypeassign_gid)" class="btn btn-danger">
+                                                                <em class="icon icon-trash "></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-click="Submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>
+                    <button type="button" ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br>
+                <br>
+            </div>
+        </form>
+    </div>
+
+</div>

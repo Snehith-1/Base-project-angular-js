@@ -1,0 +1,397 @@
+<script type="text/ng-template" id="required-field">
+    <ng-message class="text-danger" when="required">This field is required</ng-message>
+</script>
+
+<h3>
+    Edit Employee
+</h3>
+
+<div ng-controller="SysMstEmployeeEditController as Ctrl" class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+        <div id="panelDemo8" class="panel panel-primary ">
+            <div class="panel-heading">
+                <h5>Employee Details</h5>
+            </div>
+
+            <div class="panel">
+                <div class="panel-body">
+                    <ng-form name="employeeformedit" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Office Details </b></p>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label style="padding-top: 10px;">Entity</label>
+                                        <input name="entity" ng-model="txtentity" ng-readonly="true" type="text" id="entityid" class="form-control"
+                                               maxlength="68">
+                                    </div>
+
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label style="padding-top: 10px;">Branch <span style="color:red;"> * </span></label>
+                                        <select name="branch" chosen="" ng-options="m.branch_gid as m.branch_name for m in branchList"
+                                                ng-model="txtbranch" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Branch ----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label style="padding-top: 10px;">Function <span style="color:red;"> * </span></label>
+                                        <select name="department" chosen="" ng-options="m.department_gid as m.department_name for m in departmentList"
+                                                ng-model="txtdepartment" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Function ----</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label style="padding-top: 10px;">Sub Function <span style="color:red;"> * </span></label>
+                                        <select name="subfunction" chosen="" ng-options="m.subfunction_gid as m.subfunction_name for m in subfunction_list"
+                                                ng-model="txtsubfunction" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Sub Function ----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Designation <span style="color:red;"> * </span></label>
+                                        <select name="designation" chosen="" ng-options="m.designation_gid as m.designation_name for m in designationList"
+                                                ng-model="txtdesignation" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Designation ----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Role <span style="color:red;"> * </span></label>
+                                        <select name="role" chosen="" ng-options="m.role_gid as m.role_name for m in roleList"
+                                                ng-model="txtrole" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Role ----</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                           
+                            <div class="row">
+                               
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Employee User Code <span style="color:red;"> * </span></label>
+                                        <input name="code" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="txtusercode" type="text" id="usercode" class="form-control"
+                                               maxlength="68" required="">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label">Employee Joining Date <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="employee_joining_date" name="employee_joining_date" ng-model="cboemployee_joining_date" datepicker-popup="{{Ctrl.format}}"
+                                                   style="height:36px;" is-open="Ctrl.open06" min-date="Ctrl.minDate" datepicker-options="Ctrl.dateOptions"
+                                                   close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="Ctrl.calender06($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Reporting To <span style="color:red;"> * </span></label>
+                                        <select name="reportingto" chosen="" ng-options="m.employee_gid as m.employee_name for m in reportingtoList"
+                                                ng-model="txtreportingto" class="chosen-select form-control" required="">
+                                            <option value="">----- Select Reporting To ----</option>
+                                        </select>
+                                    </div>
+
+
+                                    <!-- <div class="col-lg-4 col-md-4 col-sm-4">
+        <label>Upload Photo</label>
+        <input type="file" id="addupload" ng-model="txtuploadphoto" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+    </div> -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Base Location </label>&nbsp;<span style="color:red">*</span>
+                                        <select name="cbobaselocation" id="cbobaselocation" chosen="" ng-options="m.baselocation_gid as m.baselocation_name for m in location_list"
+                                                ng-model="cbobaselocation" class="chosen-select form-control" style="height:37px;" required size="1">
+                                            <option value=""> ----- Select Base Location -----</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Official Email Address</label>
+                                        <input type="email" name="useremail" maxlength="64" ng-change="email_check()" ng-pattern="appemail_pattern" ng-model="txtuseremail" class="form-control">
+                                        <div ng-messages="employeeform.useremail.$dirty && employeeform.useremail.$error">
+
+                                            <p class="text-danger" ng-message="pattern">This field must be a valid email address</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Official Mobile Number<span style="color:red;"> * </span></label>
+                                        <input type="text" name="txtmobile" id="txtmobile" ng-model="txtmobile" ng-minlength="10" maxlength="12" ng-pattern="/^[0-9+]*$/"
+                                               aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" />
+                                    </div>
+                                </div>
+                            </div>
+                         
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Personal Details </b></p>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>First Name <span style="color:red;"> * </span></label>
+                                        <input name="firstname" ng-model="txtfirstname" type="text" id="nameid" class="form-control"
+                                               maxlength="68" required="">
+                                    </div>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Last Name</label>
+                                        <input name="lastname" ng-model="txtlastname" type="text" id="lastnameid" class="form-control"
+                                               maxlength="68">
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Gender</label>
+                                        <div class="mda-form-group" style="padding:10px;">
+                                            <div class="col">
+                                                <label class="mda-radio">
+                                                    <input type="radio" name="txtgender" id="txtgender" ng-model="txtgender"  ng-change="onchange(txtgender)"
+                                                           ng-click="isShowHide('hide')" value="Male">
+                                                    <em class="bg-teal-500"></em> Male
+                                                </label>
+                                            </div>
+                                            <div class="col">
+                                                &nbsp; &nbsp;
+                                            </div>
+                                            <div class="col">
+                                                <label class="mda-radio">
+                                                    <input type="radio" name="txtgender" id="txtgender" ng-model="txtgender" ng-click="isShowHide('show')" ng-change="onchange(txtgender)"
+                                                           value="Female">
+                                                    <em class="bg-teal-500"></em> Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Blood Group</label>
+                                        <select name="blood_group" id="cbobloodgroup_gid" chosen="" ng-options="m.bloodgroup_gid as m.bloodgroup_name  for m in bloodgroup_list"
+                                        ng-model="cbobloodgroup_gid" class="chosen-select form-control">
+                                            <option value="">----- Select Blood Group ----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Marital Status</label>
+                                        <select name="marital_status" id="cbomarital_status_gid" chosen="" ng-options="m.maritalstatus_gid as m.maritalstatus_name for m in maritalstatus_data"
+                                        ng-model="cbomarital_status_gid" class="chosen-select form-control">
+                                        <option value="">----- Select Marital Status ----</option>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Personal Email Address</label>
+                                    <input type="email" name="userpersonalemail" maxlength="64" ng-change="email_check()" ng-pattern="appemail_pattern"
+                                    ng-model="txtpersonalemail" class="form-control">
+                                    <div ng-messages="employeeform.userpersonalemail.$dirty && employeeform.userpersonalemail.$error">
+
+                                        <p class="text-danger" ng-message="pattern">This field must be a valid email address</p>
+                                    </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>Personal Phone Number</label>
+                                        <input name="personal_number" ng-model="txtpersonalphone_number" type="text" id="personalphone_number" class="form-control"
+                                        ng-minlength="10" maxlength="10" ng-pattern="/^[0-9+]*$/">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12" style="padding-right:3px;">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Permanent Address </b></p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <label>Address Line 1</label>
+                                        <input name="permanentaddress" ng-model="txtperaddressline1" type="text" id="addressid1" class="form-control"
+                                               maxlength="225">
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Address Line 2</label>
+                                        <input name="permanentaddres" ng-model="txtperaddressline2" type="text" id="addressid2" class="form-control"
+                                               maxlength="225">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>Country</label>
+                                        <select name="country" chosen="" ng-options="m.country_gid as m.country_name for m in countryList"
+                                                ng-model="txtpermcountry" class="chosen-select form-control">
+                                            <option value="">----- Select Country ----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>State</label>
+                                        <input name="state" ng-model="txtpermstate" type="text" id="stateid" class="form-control"
+                                               maxlength="68">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>City</label>
+                                        <input name="city" ng-model="txtpermcity" type="text" id="cityid" class="form-control"
+                                               maxlength="68">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>Postal Code</label>
+                                        <input name="permpostalcode" ng-pattern="/^\d+$/" ng-model="txtpermpostalcode" type="text" id="postalid" class="form-control"
+                                               maxlength="68">
+                                        <div ng-messages="employeeform.permpostalcode.$dirty && employeeform.permpostalcode.$error">
+
+                                            <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left:3px;">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Temporary Address </b></label>
+                                        <button type="button" title="Click Here To Paste the Same Permenent Address Value In Temporary Address Field" ng-click="btncopy()">
+                                            <em class="fa fa-copy text-primary fa-sm"></em>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class="row" style="padding-top:4px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <label>Address Line 1</label>
+                                        <input name="temporaryaddress" ng-model="txttempaddressline1" type="text" id="peraddressid1" class="form-control"
+                                               maxlength="225">
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <label>Address Line 2</label>
+                                        <input name="temporaryaddres" ng-model="txttempaddressline2" type="text" id="peraddressid2" class="form-control"
+                                               maxlength="225">
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>Country</label>
+                                        <select name="tempcountry" chosen="" ng-options="m.country_gid as m.country_name for m in countryList"
+                                                ng-model="txttempcountry" class="chosen-select form-control">
+                                            <option value="">----- Select Country ----</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>State</label>
+                                        <input name="tempstate" ng-model="txttermstate" type="text" id="stateid1" class="form-control"
+                                               maxlength="68">
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                        <label>City</label>
+                                        <input name="tempcity" ng-model="txttermcity" type="text" id="cityid1" class="form-control"
+                                               maxlength="68">
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>Postal Code</label>
+                                        <input name="temppostalcode" ng-pattern="/^\d+$/" ng-model="txttermpostalcode" type="text" id="postalid1" class="form-control"
+                                               maxlength="68">
+                                        <div ng-messages="employeeform.temppostalcode.$dirty && employeeform.temppostalcode.$error">
+
+                                            <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-form>
+                    <br />
+                   
+                    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
+                        <br />
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="employeeformedit.$invalid" ng-click="editemployee_update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="edit_cancel()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        <br />
+                        <br>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

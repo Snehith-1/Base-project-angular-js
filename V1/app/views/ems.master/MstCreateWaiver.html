@@ -1,0 +1,266 @@
+﻿<h3>
+    Create Waiver
+</h3>
+<div ng-controller="MstCreateWaiverController">
+    <form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Create Waiver - {{txtbasiccustomer_name}}
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label> Waiver Category  <span style="color:red">*</span></label>
+                                        <select name="nature_proposal"
+                                                ng-model="cbowaivercategory" class="form-control ng-valid ng-touched ng-valid-parse"
+                                                size="1"  ng-change="change_waivercategory(cbowaivercategory)" required>
+                                            <option value=""> --- Select Waiver Category --- </option>
+                                            <option value="Sanction Waiver"> Sanction Waiver</option>
+                                            <option value="LAN Waiver"> LAN Waiver </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="sanctionview">
+                                        <label>Santion Reference Number  </label>
+                                        <input type="text" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="lanwaiver">
+                                        <label>LAN </label>
+                                        <input type="text" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="sanctionviewdrop">
+                                        <label>Santion Reference Number <span style="color:red"> *</span></label>
+                                        <select name="sanctionref_number" id="sanctionref_number" chosen="" ng-options="m.sanctionto_name for m in sanctionto_list"
+                                                ng-model="cbosanctionref_no" class="chosen-select form-control" ng-change="sanctionto_change(cbosanctionto)" required>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="lanwaiverdrop">
+                                        <label class="col-form-label control-label"><strong>LAN</strong> <span style="color:red"> *</span></label>
+                                        <select name="lan" id="lan" chosen="" multiple ng-options="m.vernacular_language for m in vernacularlang_list"
+                                                ng-model="cbolan" class="chosen-select form-control" required></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label class="col-form-label control-label"><strong>URN</strong> </label>
+                                        <select name="URN" id="URN" chosen="" ng-options="m.address for m in cadaddress_list"
+                                                ng-model="cbourn" class="chosen-select form-control">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label class="col-form-label control-label"><strong>Sanction Waiver Category</strong> <span style="color:red"> *</span></label>
+                                        <select name="lan" id="lan" chosen="" multiple ng-options="m.vernacular_language for m in vernacularlang_list"
+                                                ng-model="cbosanctionwaivercategory" class="chosen-select form-control" required></select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label class="col-form-label control-label"><strong>LAN Waiver Category</strong> <span style="color:red"> *</span></label>
+                                        <select name="cbolanwaivercategory" multiple id="cbolanwaivercategory" chosen="" ng-options="m.address for m in cadaddress_list"
+                                                ng-model="cbolanwaivercategory" class="chosen-select form-control" required>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label class="col-form-label control-label"><strong> Customer Info </strong></label>
+                                        <input type="text" ng-model="txtcustomer_info" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-sm-6 col-md-6 col-lg-6">
+                                        <label class="col-form-label control-label"><strong> Waiver Title </strong><span style="color:red"> *</span></label>
+                                        <input type="text" ng-model="txtwaiver_title" tabindex="0" class="form-control" required maxlength="1000"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Waiver Description <span style="color:red"> *</span></label>
+                                        <textarea rows="2" placeholder="Enter Waiver Description..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="10000"
+                                                  ng-model="txtwaiver_remarks" class="form-control" required ></textarea>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label><strong>Waiver Amount</strong><span style="color:red"> *</span></label>
+                                        <input type="text" id="words_Waiver" ng-model="txtwords_Waiver" tabindex="0" required ng-change="txtWaiveramount_change()" class="form-control" style="text-align:right;" />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="wordsWaiver" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>                                    
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <label class="col-form-label control-label"><strong>Waiver Group</strong> <span style="color:red"> *</span></label>
+                                        <select name="WaiverGroup" id="WaiverGroup" multiple chosen="" ng-options="m.address for m in cadaddress_list"
+                                                ng-model="cboWaiverGroup" class="chosen-select form-control" required>
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+
+                                        <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Document Upload </b></p>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label><strong>Document Title </strong> <span style="color:red">*</span></label>
+                                                    <input type="text" ng-model="txtdocument_title" tabindex="0" class="form-control" />
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                                    <div class="float-label">
+                                                        <strong>Upload Documents</strong>
+                                                        <br /><br />
+                                                        <input type="file" id="fileIndividuaDocument" tabindex="5" multiple onchange="angular.element(this).scope().document_upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                               ng-model="txtuploaddocument" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <br />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in uploadindividualdoc_list">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">{{data.document_title}}</td>
+                                                                    <td>{{data.document_name}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-green btn-sm"
+                                                                                ng-click="downloads(data.document_path,data.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <a title="Delete" class="btn btn-sm btn-danger" ng-click="individualdocument_delete(data.contact2document_gid)">
+                                                                            <span class="fa fa-trash-o"></span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 col-md-12">
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <br />
+                                        <label class="col-form-label"><strong>Get Approval &nbsp;<span style="color:red;">*</span></strong></label>
+                                        <div class="col">
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="approvaltype" required=""
+                                                           name="approvaltype" value="Sequence"
+                                                           ng-model="approval_type" />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Sequence
+                                                </label>
+                                                &nbsp;
+                                                <label>
+                                                    <input type="radio" id="approvaltype" required=""
+                                                           name="approval_type" value="Parallel"
+                                                           ng-model="approval_type" />
+                                                    <span class="fa fa-circle"></span>Parallel
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <br />
+                                        <label>Approval Person <span style="color:red">*</span></label>
+                                        <select name="approval_authority" id="approval_authority" chosen="" ng-options="m as m.employee_name for m in employee_list track by m.employee_gid"
+                                                ng-change="coreChanged(cboapproval_member)" required ng-model="cboapproval_member" class="chosen-select form-control"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="dd-handle ng-scope">
+                                <p class="text-primary" style="font-size:14px;"><b>Approval Members List</b></p>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Member Name</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-center" ng-repeat="data in approvalmember">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Member Name" align="left">{{data.employee_name}}</td>
+                                                        <td data-title="Action">
+
+                                                            <a title="Delete" class="btn btn-sm btn-danger" ng-click="ApprovalMembercancel(data.tmpapprovalmember_gid)">
+                                                                <span class="icon icon-trash "></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-click="Waiver_Submit()" ng-disabled="userform5.$invalid"><i class="fa fa-arrow-circle-right"></i> &nbsp;&nbsp;Submit</button>
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </div>
+        </div>
+    </form>
+    <br />
+</div>
+

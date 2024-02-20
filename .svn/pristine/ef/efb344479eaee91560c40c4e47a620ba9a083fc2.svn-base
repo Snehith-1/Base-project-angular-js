@@ -1,0 +1,183 @@
+﻿<h3>
+    Request Type
+</h3>
+<div ng-controller="requesttypecontroller">
+    <div>
+        <button type="button" title="Add Request Type" class="btn btn-default bg-grey-400 btn-sm" ng-click="popuprequesttype()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span><b>Add Request Type</b>
+        </button>
+    </div>
+    <br/>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="table-responsive">
+                <table ng-table="tableParams2"  class="table hover table-striped ">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th>Created Date</th>
+                            <th>Request Code</th>
+                            <th>Request Type</th>
+                            <th>Created By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in requesttype_list | filter : searchtxt | limitTo:totalDisplayed">
+                            <td data-title="'S.No'" style="text-align:center;">{{$index+1}}</td>
+                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                            <td data-title="'Request Code'" style="text-align:center;">{{data.request_code}}</td>
+                            <td data-title="'Request Type'">{{data.request_type}}</td>
+                            <td data-title="'Created By'" style="text-align:center;">{{data.created_by}}</td>
+                            <td data-title="'Action'" style="text-align:center;" class="nowrap" >
+                                <button title="Edit" ng-hide="data.request_type=='Others'" ng-click="edit(data.requesttype_gid)" class="btn btn-green">
+                                    <em class="fa fa-edit "></em>
+                                </button>
+                                <button title="Can't cable to Edit"  ng-hide="data.request_type!='Others'" ng-disabled="true" ng-click="edit(data.requesttype_gid)" class="btn btn-green">
+                                    <em class="fa fa-edit "></em>
+                                </button>
+                                <button title="Delete"  ng-hide="data.request_type=='Others'" ng-click="delete(data.requesttype_gid)" class="btn btn-danger">
+                                    <em class="icon icon-trash "></em>
+                                </button>
+                                <button title="Can't able to delete"  ng-hide="data.request_type!='Others'" ng-disabled="true"  class="btn btn-danger">
+                                    <em class="icon icon-trash "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/addrequesttype.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-plus "></i>
+                </span>ADD REQUEST TYPE
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+
+                                        <input ng-model="txtrequestcode" tabindex="0" maxlength="45" required="" aria-required="true" aria-invalid="true"
+                                               class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Request Code<span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+
+                                        <input ng-model="txtrequesttype" tabindex="0" maxlength="45" required="" aria-required="true" aria-invalid="true"
+                                               class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                        <label>Request Type <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="requestSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editrequesttype.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-edit"></i>
+                </span>EDIT REQUEST TYPE
+            </h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="pd-sm-10">
+
+                <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+
+                                <input ng-model="txtrequestcodeedit" tabindex="0" maxlength="45" required="" aria-required="true" aria-invalid="true"
+                                       class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Request Type <span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+
+                                <input ng-model="txtrequesttypeedit" tabindex="0" maxlength="45" required="" aria-required="true" aria-invalid="true"
+                                       class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Request Type <span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <!--</div>-->
+            <div>
+                <br />
+                <div class="text-center">
+                    <button type="button" ng-click="requestUpdate(data.requesttype_gid)" class="btn btn-success btn-md" ng-disabled="userform.$invalid">
+                        <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+
+        </div>
+    </script>
+</div>

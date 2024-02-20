@@ -1,0 +1,160 @@
+﻿<h3>
+  LSA Approval 
+</h3>
+<div ng-controller="lsaapprovalController">
+    
+    <div class="panel">
+        <div class="panel-body">
+
+            <tabset justified="true">
+                <tab id="id1" select="tab.activeTabId = 'pending'" active="tabpending">
+                    <tab-heading title="Pending">
+                        <em class="fa fa-clock-o fa-1x"></em>
+                        Pending <label class="label label-pink" ng-if="pendinglsa_count != '0'">{{pendinglsa_count}}</label>
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedpending}} of {{pendingCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountpending" id="pagecountpending" type="number" />
+                                <button class="btn" id="loadmorepending" ng-click="loadMorepending(pagecountpending)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th style="display:none;">S.NO</th>
+                                    <th>Created Date</th>
+                                    <th>URN </th>
+                                    <th>Customer Name</th>
+                                    <th class="text-nowrap">Sanction Ref No</th>
+                                    <th>Vertical</th>
+                                    <th>Created By</th>
+                                    <th>Verified Documents</th>
+                                    <th>Approval Status</th>
+                                    <th class="text-nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in pendinglist | filter : searchtxt | limitTo:totalDisplayedpending">
+                                    <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                    <td data-title="LSA Created Date">{{data.lsacreated_date}}</td>
+                                    <td data-title="URN">{{data.customer_urn}}</td>
+                                    <td data-title="Customer Name">{{data.customer_name}}</td>
+                                    <td data-title="Sanction Ref No" class="text-nowrap">{{data.sanctionref_no}}</td>
+                                    <td data-title="Vertical">{{data.vertical}}</td>
+                                    <td data-title="Created by">{{data.created_by}}</td>
+                                    <td data-title="'Verified Documents'" align="center">{{data.checkerconfirmed_count}}/{{data.tagged_document}}</td>
+                                    <td data-title="Approval Status">
+                                        <label class="label label-danger" style="font-size:10px;">Pending</label>
+
+                                    </td>
+                                    <td data-title="Action" class="text-nowrap">
+
+                                        <button title="LSA Approval" ng-click="lsaapproval(data.lsacreate_gid)" class="btn bg-green">
+                                            <em class="fa fa-thumbs-o-up"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </tab>
+                <tab id="id2" select="tab.activeTabId ='Approved'" active="tabapproved">
+                    <tab-heading title="Approved">
+                        <em class="fa fa-clock-o fa-1x"></em>
+                        Approved <label class="label label-pink" ng-if="approvedlsa_count != '0'">{{approvedlsa_count}}</label>
+                    </tab-heading>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayedapproved}} of {{approvedCount}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecountapproved" id="pagecountapproved" type="number" />
+                                <button class="btn" id="loadmoreapproved" ng-click="loadMoreapproved(pagecountapproved)">Load More</button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxtapproved" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                           <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary-light text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>URN </th>
+                                            <th>Customer Name</th>
+                                            <th class="text-nowrap">Sanction Ref No</th>
+                                            <th>Vertical</th>
+                                            <th>Created By</th>
+                                            <th>Approval Status</th>
+                                            <th class="text-nowrap">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in approvedlist | filter : searchtxtapproved | limitTo:totalDisplayedapproved">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+
+                                            <td data-title="LSA Created Date">{{data.lsacreated_date}}</td>
+                                            <td data-title="URN">{{data.customer_urn}}</td>
+                                            <td data-title="Customer Name">{{data.customer_name}}</td>
+                                            <td data-title="Sanction Ref No" class="text-nowrap">{{data.sanctionref_no}}</td>
+                                            <td data-title="Vertical">{{data.vertical}}</td>
+                                            <td data-title="Created by">{{data.created_by}}</td>
+                                            <td data-title="Approval Status">
+                                                <label class="label label-info" style="font-size:10px;">Approved</label>
+
+                                            </td>
+                                            <td data-title="Action" class="text-nowrap">
+
+                                                <button title="View LSA" ng-click="View(data.lsacreate_gid)" class="btn bg-green">
+                                                    <em class="fa icon-globe-alt "></em>
+                                                </button>
+                                                <button title="PDF" class="btn bg-brown-400 btn-sm" ng-click="LSApdf(data.lsacreate_gid)">
+                                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                      
+                </tab>
+               
+            </tabset>
+        </div>
+    </div>
+</div>

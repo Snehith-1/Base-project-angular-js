@@ -1,0 +1,168 @@
+﻿<h3>
+   Request Compliance
+</h3>
+<div ng-controller="requestCompliancecontroller as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+                Request Compliance
+            </span>
+        </div>
+
+        <div class="panel-body ">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row" style="display:none;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
+                                <label style="font-size:5px;" ng-model="compliance_gid" class="col-form-label w3-text-indigo"><strong></strong></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                <label><strong>Request Type <span style="color:red">*</span></strong></label>
+                                <select name="requesttype" id="requesttype" required dropzone="" ng-model="cborequest_type" ng-options="m.request_type for m in requesttype_list"
+                                        ng-change="onselectedrequsttype()" class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched" size="1">
+                                    <option value="">-----Select Request Type----</option>
+
+
+                                </select>
+                                <br />
+
+
+                            </div>
+                            <div>
+
+                            </div>
+                            <!--<div class="col-lg-4 col-md-4 col-sm-4">
+
+                        <label>Deadline Date <span style="color:red">*</span></label>
+                        <p class="input-group">
+                            <input type="text" required name="date" ng-model="txtdeadlinedate" datepicker-popup="{{dpick.format}}"
+                                   style="height:25px;" is-open="dpick.opened" min-date="dpick.minDate"
+                                   datepicker-options="dpick.dateOptions"
+                                   close-text="Close" class="form-control" />
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="dpick.open($event)" style="height:25px;" class="btn btn-default">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </span>
+                        </p>
+
+
+                </div>-->
+
+                            
+                            <div ng-show="others_title" class="col-lg-6 col-md-6 col-sm-6">
+                                <label>Title <span style="color:red">*</span></label>
+                                <input ng-model="txttitle" tabindex="0" mrequired="" aria-required="true" aria-invalid="true"
+                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div  class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <label><strong>Description </strong><span style="color:red">*</span></label>
+                                <textarea rows="5" aria-multiline="true" tabindex="0" aria-invalid="false" ng-model="txtremarks" required class="form-control"></textarea>
+                            </div>
+                        </div>
+                        </div>
+                            <br />
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <strong class="ng-binding w3-text-indigo">
+                                            <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                            Upload Documents
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dd-handle ng-scope">
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="mda-form-group float-label">
+                                                <input ng-model="document_type" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                <label>Document Title </label>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                        </div>
+                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="mda-form-group float-label">
+                                                <strong>Upload Documents</strong>
+                                                <td title="Document Title">{{data.document_type}}</td>
+                                                <input type="file" id="addupload" filestyle="" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Document Title</th>
+                                                            <th scope="col">Document Name</th>
+                                                            <th scope="col">Uploaded Details</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in filename_list" width="100%">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Document Title">{{data.document_type}}</td>
+                                                            <td title="Document Details">{{data.file_name}}</td>
+                                                            <td title="Uploaded Details">{{data.uploaded_details}} </td>
+                                                            <td data-title="Action">
+                                                                <a class="btn btn-xs btn-danger" title="Delete" ng-click="document_cancelclick(data.uploaddocument_gid)"><span class="fa fa-close"></span></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                </form>
+            </div>
+           
+
+        
+        </div>
+        <div>
+            <div class="text-center">
+                <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="requestSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                <button ng-click="requestback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>&nbsp;&nbsp;
+               
+            </div>
+        </div>
+        <br/>
+    </div>
+</div>

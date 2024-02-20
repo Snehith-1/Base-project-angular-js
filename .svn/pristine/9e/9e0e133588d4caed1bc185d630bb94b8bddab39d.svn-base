@@ -1,0 +1,197 @@
+﻿
+<h3>
+    Field Mapping Summary
+</h3>
+<div ng-controller="AgrMstFieldMappingSummaryController">
+    <button title="Add Field Mapping" class="btn btn-info btn-sm" ng-click="AddFieldMapping()">
+        <em class="fa fa-plus"></em>&nbsp;Add Field Mapping
+    </button>
+    <br>
+    <br>
+    <div class="panel">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                    <br />
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th>S.No</th>
+                                    <th>Field Mapping Code</th>
+                                    <th>Field Mapping Name</th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in FieldMappinglist">
+                                    <td data-title="'S.No'">{{$index+1}} </td>
+                                    <td data-title="'Field Mapping Code'">{{data.fieldmapping_code}}</td>
+                                    <td data-title="'Field Mapping Name'">{{data.fieldmapping_name}} </td>
+                                    <td data-title="'Created By'">{{data.created_by}} </td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="ViewFieldMapping(data.fieldmapping_gid)" class="btn btn-info btn-view btn-sm">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <!-- <button title="Delete" ng-click="edittemplatedtl(data.template_gid)" class="btn btn-danger btn-edit btn-sm">
+                                            <em class="fa fa-trash-o"></em>
+                                        </button> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/addFieldMappingPopup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus ">&nbsp; Add Field Mapping</i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addfieldmapping" ng-submit="form.addfieldmapping()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label class="col-form-label"> Field Mapping Name  <span style="color:red"> *</span></label>
+                                    <br />
+                                    <input type="text" ng-model="txtfieldmapping_name" tabindex="0" class="form-control" required />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label>Stage</label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department"
+                                            ng-options="m.stage_fieldname for m in stagelist" chosen="" ng-change="onchangestage()"
+                                            ng-model="cbostage" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Stage -----</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label>Menu</label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department"
+                                            ng-options="m.menu_fieldname for m in menulist" chosen="" ng-change="onchangemenu()"
+                                            ng-model="cbomenu" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Menu -----</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label>Field</label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department"
+                                            ng-options="m.fieldname for m in fieldlist" chosen="" ng-change="onchangefield()"
+                                            ng-model="cbofield" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""> ----- Select Field -----</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" ng-show="cbofield.sub_field=='Y'">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <label>Sub Field</label>&nbsp;<span style="color:red">*</span>
+                                    <select name="department" id="department"
+                                            ng-options="m.subfield_fieldname for m in subfieldlist" chosen=""
+                                            ng-model="cbosubfield" class="chosen-select form-control" style="height:37px;"
+                                            ng-required="cbofield.sub_field=='Y'" size="1">
+                                        <option value=""> ----- Select Sub Field -----</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="addfieldmapping.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/ViewFieldMappingPopup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-eye">&nbsp; View Field Mapping</i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addfieldmapping" ng-submit="form.addfieldmapping()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label class="col-form-label"> Field Mapping Code  </label>
+                                    <br />
+                                    <p>{{viewfield.fieldmapping_code}}</p>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label class="col-form-label"> Field Mapping Name </label>
+                                    <br />
+                                    <p>{{viewfield.fieldmapping_name}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label>Stage</label>
+                                    <br />
+                                    <p>{{viewfield.stage_fieldname}}</p>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label>Menu</label>
+                                    <br />
+                                    <p>{{viewfield.menu_fieldname}}</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+
+                                <div class="col-md-6 col-lg-6 col-sm-6">
+                                    <label>Field</label>
+                                    <br />
+                                    <p>{{viewfield.fieldname}}</p>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm-6" ng-show="viewfield.subfield_flag=='Y'">
+                                    <label>Sub Field</label>
+                                    <br />
+                                    <p>{{viewfield.subfield_fieldname}}</p>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,148 @@
+﻿<h3>
+    Customer Approval
+</h3>
+<div ng-controller="FndTrnCustomerApprovedController">
+
+
+    <style type="text/css">
+        .picColor:hover {
+            box-shadow: none;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-decoration: underline;
+        }
+    </style>
+
+
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-10 col-md-10 col-sm-10">
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <div style="text-align:right;">
+                    &nbsp;&nbsp;  <a href="#/app/FndTrnCustomerApproved" style="color:#141478;font-size:16px;">
+
+                    </a>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <button type="button" class="btn btn-labeled" ng-click="customersummary()" style="width:250px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{customerpending_count}}</b></div>
+                <b style="font-size: 14px;">Pending Customers Approval</b>
+            </button>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <button type="button" class="btn btn-labeled" ng-click="approvecustomer()" style="width:250px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{customerapproved_count}}</b></div>
+                <b style="font-size: 14px;">Approved Customer</b>
+            </button>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <button type="button" class="btn btn-labeled" ng-click="rejectcustomer()" style="width:250px;height:50px;border:1px solid rgb(179, 177, 177);">
+                <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{customerrejected_count}}</b></div>
+                <b style="font-size: 14px;">Rejected Customer</b>
+            </button>
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th class="text-center" style="display:none"> S.No </th>
+                                    <th> Customer Ref No </th>
+                                    <th> Customer Name </th>
+                                    <th> Created By</th>
+                                    <th> Created Date</th>
+                                    <th> Status </th>
+                                    <th>Remarks</th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in customerapprover_list">
+                                    <td data-title="'S.No'" style="display:none" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'Customer Code'">{{data.customer_gid}}</td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Created By'"> {{data.created_by}} </td>
+                                    <td data-title="'Created Date'">{{data.created_date}} </td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                               ng-click="showsPopover(data.customer_gid,data.customer_name)">
+                                            <em class="fa fa-info-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td> 
+
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="viewcustomer(data.customer_gid,data.fndmanagement2cheque_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                     
+                                    </td>
+                                  
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+    </div>
+    <script type="text/ng-template" id="/showremarks.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb; width:2%;text-align:center;"><i class="fa fa-info-circle" style="text-align: left;">&nbsp; Remarks</i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Remarks: </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'Credit head'" style="width:2%; text-align:left"> {{txteditremarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+
+
+

@@ -1,0 +1,318 @@
+﻿<h3>
+    Deferral Request / Extension / Waiver
+</h3>
+
+<div ng-controller="AgrTrnPMGDeferralStatusController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);color:#ffffff">
+            <h5> Deferral Request / Extension / Waiver </h5>
+        </div>
+        <div class="panel-body">
+            <form novalidate="" name="intiatextension" ng-submit="form.intiatextension()" autocomplete="off" class="form-validate">
+                <div ng-show="hideeditevent">
+                    <div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Activity Type</label>
+                                    <br />
+                                    <select name="cluster" chosen="" tabindex="2" ng-options="m.activitytype_name for m in activity_typelist track by m.id"
+                                            required="" ng-model="cboactivitytype" ng-change="change_activity(cboactivitytype)" class="chosen-select form-control"></select>
+
+                                    <!--<select class="chosen-select form-control" id="ActivityType" name="ActivityType" tabindex="0" ng-model="cboactivitytype"
+                                        style="height:37px;" size="1" ng-change="change_activity(cboactivitytype)">
+                                    <option value=""> ------ Select Activity Type ------ </option>
+                                    <option value="Extension">Extension</option>
+                                    <option value="Waiver">Waiver</option>-->
+                                    <!--<option value="Close">Close</option>-->
+                                    <!--</select>-->
+                                    <span style="color:red;" ng-show="showerrordiv">
+                                        <em class="fa fa-warning"></em>&nbsp;{{errormsg}}
+                                    </span>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="mda-form-group">
+                                        <label>National Credit Manager - NCM </label>
+                                        <br />
+                                        <p>{{txtcreditnationalmanager_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="mda-form-group">
+                                        <label>Regional Credit Manger - RCM </label>
+                                        <br />
+                                        <p>{{txtcreditregionalmanager_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8" ng-show="extensionshow || showdeferraltag">
+                                    <label>Title <span style="color:red">*</span></label>
+                                    <br />
+                                    <input type="text" ng-model="txttitle" tabindex="0" class="form-control" required />
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" ng-show="showdeferraltag">
+                                    <label>Due Date <span style="color:red">*</span></label>
+                                    <br />
+                                    <p class="input-group">
+                                        <input type="text" id="txtdue_date" name="txtdue_date" ng-model="txtdue_date" datepicker-popup="{{dp.format}}"
+                                               style="height:36px;" is-open="dp.open7" min-date="dp.minDate" datepicker-options="dp.dateOptions" ng-required="showdeferraltag"
+                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender7($event)" style="height:36px;" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" ng-show="waivershow">
+                                    <label>Extended Due Date <span style="color:red">*</span></label>
+                                    <br />
+                                    <p class="input-group">
+                                        <input type="text" id="extendeddate" name="extendeddate" ng-model="txtextendeddue_date" datepicker-popup="{{dp.format}}"
+                                               style="height:36px;" is-open="dp.open6" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                               close-text="Close" class="form-control" ng-required="waivershow" placeholder="DD-MM-YYYY" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender6($event)" style="height:36px;" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div class="row" ng-show="showdeferraltag">
+
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label class="col-form-label">Deferral Tag Reasons </label> <span style="color:red">*</span>
+                                            <textarea style="resize:vertical;" ng-model="txtreason" maxlength="5000" rows="3" class="form-control"
+                                                      ng-required="showdeferraltag" id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div ng-show="showdocumentupload">
+                                    <div class="row">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                                <label>Document Title </label>
+                                                <input type="text" ng-model="txtdocument_name" tabindex="0" class="form-control" maxlength="50" disabled />
+                                            </div>
+                                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                                <div class="float-label">
+                                                    <strong> Upload Documents </strong>
+                                                    <br /><br />
+                                                    <input type="file" id="scannedfile" tabindex="5" multiple onchange="angular.element(this).scope().scannedDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           ng-model="cbodocumentname" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="table-responsive table-bordered">
+                                                    <div style="max-height:200px;overflow:auto;">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Document Title</th>
+                                                                    <th>Document Name</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="list in scannedmyuploaddocumentlist">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{list.documenttype_name}}</td>
+                                                                    <td>{{list.file_name}}</td>
+                                                                    <td class="text-nowrap">
+                                                                        <button title="Delete" ng-click="defdoc_delete(list.scanneddocument_gid)"
+                                                                                class="btn btn-danger btn-xs ">
+                                                                            <em class="fa fa-trash-o"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>-->
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" ng-show="extensionshow">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Reason <span style="color:red">*</span></label>
+                                    <br />
+                                    <textarea ng-model="txtreason" rows="2" class="form-control" required style="resize:vertical;"
+                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="closeshow">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Remarks</label>
+                                <br />
+                                <textarea ng-model="txtremarks" rows="2" class="form-control" style="resize:vertical;"
+                                          id="input_13" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="intiatextension.$invalid" ng-click="intiatextension_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="Cancel()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Cancel</button>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <!--<p class="text-primary" style="font-size:13px;"><b>&nbsp;&nbsp; Deferral Request / Extension / Waiver Summary </b></p>
+                                        <hr />-->
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Initiated Date</th>
+                                                            <th>Initiated By</th>
+                                                            <th>Activity Type</th>
+                                                            <th>Title</th>
+                                                            <th>Due Date</th>
+                                                            <th>Extended Due Date</th>
+                                                            <th>Reason & Approval Details </th>
+                                                            <th>Approval Status</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in intiatextension_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.created_date}}</td>
+                                                            <td>{{data.created_by}}</td>
+                                                            <td>{{data.activity_type}}</td>
+                                                            <td>{{data.activity_title}}</td>
+                                                            <td>{{data.due_date}}</td>
+                                                            <td>{{data.extendeddue_date}}</td>
+                                                            <td>
+                                                                <button title="View" ng-click="reasonapproval_view(data.reason,data.approval_status, data.initiateextendorwaiver_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td ng-switch="data.approval_initiation">
+                                                                <p ng-switch-when="N">Initiation Pending</p>
+                                                                <p ng-switch-when="Y">{{data.approval_status}}</p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/remarksandreasondtl.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Reason & Approval Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Reason : </label>
+                                        <br />
+                                        <p>{{lblreason}}</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="row" ng-if="lblapproval_status!=''">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Approval : </label>
+                                        <br />
+                                        <p>{{lblapproval_status}}</p>
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-if="lblapproval_status== ''">
+                                    <div class="col-sm-12 col-lg-12 col-md-12">
+                                        <label>Approval Details </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead>
+                                                    <tr>
+                                                        <th align="center" scope="col">S.No</th>
+                                                        <th align="center" scope="col">Approval Initated to</th>
+                                                        <th align="center" scope="col">Approval Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in approvallist">
+                                                        <td align="left" scope="col" title="S.No">
+                                                            {{$index+1}}
+                                                        </td>
+                                                        <td align="left" scope="col" title="Approval Initated to">
+                                                            {{data.approval_name}}
+                                                        </td>
+                                                        <td align="left" scope="col" title="Approval Status">
+                                                            <p ng-if="data.approval_status!='Pending'"><b>{{data.approval_status}} </b>On {{data.approvedrejected_date}}</p>
+                                                            <p ng-if="data.approval_status!='Pending'"><b>Remarks -</b> {{data.approval_remarks}}</p>
+                                                            <p ng-if="data.approval_status=='Pending'">{{data.approval_status}}</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+</div>

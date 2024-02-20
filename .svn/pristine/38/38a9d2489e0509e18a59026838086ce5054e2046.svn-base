@@ -1,0 +1,203 @@
+<!-- <style>
+    #autoresizing {
+        display: block;
+        overflow: hidden;
+        resize: none;
+    }
+</style> -->
+<h3>
+     Initiate Onboarding
+</h3>
+
+<div ng-controller="SysMstTaskInitiateController">
+    <div class="panel panel-primary">
+        <!-- <div class="panel-heading">
+            &nbsp;<span class="btn-label bg-primary">
+                <i class="fa fa-plus "></i>
+            </span>  Initiate Task
+        </div> -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                    <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;">
+                        <h5>{{employee_details.user_firstname}} {{employee_details.user_lastname}}</h5>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3" style="background-color:#3646b8;color:white;padding-top:10px;padding-bottom:10px;">
+                        <h5>{{employee_details.user_code}}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addproduct" ng-submit="form.addproduct()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                       
+                      
+                        <div class="row ">
+                            <br />
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <div class="row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                          
+                                                <div class="col-sm-3 col-lg-3 col-md-3">
+                                                    <label class="col-form-label"> Task <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <select name="Task" id="Task" chosen="" ng-options="m.task_name for m in task_list"
+                                                     ng-model="cbotaskassign" class="chosen-select form-control" required>
+                                                    <option value=""></option>    
+                                                    </select>
+                                                </div>
+                        
+                                           
+                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                    <label>Remarks <span style="color:red"> *</span></label>
+                                                    <textarea  rows="1" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                                            ng-model="txttask_remarks" class="form-control"></textarea>
+                                                    <br />
+                                                </div>
+                                         
+                                            <div class="col-lg-1 col-md-1 col-sm-1" style="padding-top:7px;">
+                                                <br />
+                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;" ng-click="addtask()"><span class="fa fa-plus" /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <br />
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Task</th>
+                                                            <th>Remarks</th>   
+                                                            <th>Initiated by</th>                                                      
+                                                            <th>Initiated date</th>   
+                                                            <th>Completed Remarks</th>  
+                                                            <th>Completed by</th> 
+                                                            <th>Completed date</th>                                                 
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                        
+                                                        <tr ng-repeat="data in tasksummarylist">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.task_name}}</td>
+                                                            <td>{{data.task_remarks}}</td>    
+                                                            <td>{{data.created_by}}</td>
+                                                            <td>{{data.created_date}}</td>  
+                                                            <td align="center">
+                                                                <div ng-show="data.complete_flag=='Y'">
+                                                                   <em class="fa fa-question-circle"  ng-click=completedremarks(data.task_completeremarks) style="font-size:24px;align-content:center;"></em>
+                                                                </div>
+                                                            </td>
+                                                            <td>{{data.completed_by}}</td>   
+                                                            <td>{{data.completed_date}}</td>                                                     
+                                                            <td class="text-nowrap">
+
+                                                                <button title="Initiate task" ng-click="initiatetask(data.taskinitiate_gid,data.employee_gid)" ng-show="data.taskinitiate_flag=='N' " class="btn btn-green">
+                                                                    <em class="fa fa-thumbs-up"></em>
+                                                                </button>
+                                                                <button title="Cancel"   ng-click="canceltask(data.taskinitiate_gid,data.employee_gid)" ng-show="(data.taskinitiate_flag=='Y' && data.complete_flag == 'N') " class="btn btn-danger">
+                                                                    <em class="fa fa-times-circle text-white fa-lg"></em>
+                                                                </button>
+                                                                <button title="Delete" ng-click="task_delete(data.taskinitiate_gid)" ng-show="data.taskinitiate_flag!='Y'"
+                                                                        class="btn btn-danger  ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                              
+                                                            </td>
+                                                        </tr> 
+
+                                                
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />  
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">                   
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">    
+                               <!-- <label>Note : Initiate atleast one task to submit </label> -->
+                               <p style="font-size: 11px;"><i><b style="color: #c90707;">Note : Initiate at least one task to submit </b></i></p>
+                            </div>                                              
+                        </div>
+                    </div>                          
+                </div> 
+                <br />        
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md"  ng-click="submit(employee)" ng-disabled = "  initiate_flag == 'N' " ><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>         
+                <br />
+            </form>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/getReApprovalmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-thumbs-o-up"></em>&nbsp;Initiate Task</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">                   
+                            <div class="row ">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                   <label> Task </label>
+                                </div>
+                                 <div class="col-lg-8 col-md-8 col-sm-8">
+                                   {{lbltask_name}}
+                                 </div>                
+                            </div>
+                        </div>                          
+                    </div>                                   
+                    <br />                      
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="getreapprovalclick()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Initiate Task</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/completedremarks.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span> Completed Remarks
+            </h4>
+        </div>
+        <div class="modal-body">
+            <br>
+            &nbsp;&nbsp;{{task_completeremarks}}
+            <br>
+            <br>
+            <div align="center">
+            <button ng-click="back()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+        </div>
+    </script>
+</div>   

@@ -1,0 +1,121 @@
+<h3>
+    CAD Dashboard
+</h3>
+<div ng-controller="idasTrnCadDashboardController as dp">
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <label class="col-form-label" style="color:#09385f;font-size:16px;"><b><u> CAD Dashboard </u></b></label> 
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <select name="caddashboard" id="Dashboard" ng-model="cbocaddashboard" ng-change="changecaddashboard(cbocaddashboard)" class="form-control" style="height:32px;" size="1">
+                        <option value=""> Select an option</option>
+                        <option value="Customer master updation"> Customer master updation </option>
+                        <option value="Sanction Ref.No"> Sanction Ref.No </option>
+                        <option value="Sanction Master updation"> Sanction Master updation </option>
+                        <option value="Document Vetting Maker"> Document Vetting Maker </option>
+                        <option value="Document Vetting Checker"> Document Vetting Checker </option>
+                        <option value="LSA Maker"> LSA Maker </option>
+                        <option value="LSA Checker"> LSA Checker </option>
+                        <option value="Collateral Updation"> Collateral Updation </option>
+                        <option value="Deferrals Created"> Deferrals Created </option>
+                        <option value="Deferral Stage updated"> Deferral Stage updated </option>
+                        <option value="Deferral Checker Approval"> Deferral Checker Approval </option>
+                        <option value="CAD Compliance Certificate generated"> CAD Compliance Certificate generated </option>
+                        <option value="Document Tagged"> Document Tagged </option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label  style="padding-top: 10px;">From</label>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <p class="input-group">
+                            <input type="text" id="Date of incorporation" name="date" ng-model="txtfrom_date" datepicker-popup="{{dp.format}}"
+                                style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        <label style="padding-top: 10px;">To</label>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <p class="input-group">
+                            <input type="text" id="Date of incorporation" name="date" ng-model="txtto_date" datepicker-popup="{{dp.format}}"
+                                style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                                    <em class="fa fa-calendar"></em>
+                                </button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1"  style="padding-top: 5px;">
+                    <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-click="search()" title="Search"> Submit</button>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row " >
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-success">
+                            <thead class="text-white" style="background-color:#09385f;"> 
+                                <tr ng-switch="showvalue" ng-model="showvalue">
+                                    <th style="width:4%;"> S.No </th>
+                                    <th style="width:48%;"> Name of the Employee </th>
+                                    <th style="width:48%;" ng-switch-when='Customer master updation'> Customer master  updation </th>
+                                    <th style="width:48%;" ng-switch-when='Sanction Ref.No'> Sanction Ref.No </th>
+                                    <th style="width:48%;" ng-switch-when='Sanction Master updation'> Sanction Master updation </th>
+                                    <th style="width:48%;" ng-switch-when='Document Vetting Maker'> Document Vetting Maker </th>
+                                    <th style="width:48%;" ng-switch-when='Document Vetting Checker'> Document Vetting Checker </th>
+                                    <th style="width:48%;" ng-switch-when='LSA Maker'> LSA Maker </th>
+                                    <th style="width:48%;" ng-switch-when='LSA Checker'> LSA  Checker </th>
+                                    <th style="width:48%;" ng-switch-when='Collateral Updation'> Collateral Updation </th>
+                                    <th style="width:48%;" ng-switch-when='Deferrals Created'> Deferrals Created </th>
+                                    <th style="width:48%;" ng-switch-when='Deferral Stage updated'> Deferral Stage updated </th>
+                                    <th style="width:48%;" ng-switch-when='Deferral Checker Approval'> Deferral Checker Approval </th>
+                                    <th style="width:48%;" ng-switch-when='CAD Compliance Certificate generated'> CAD Compliance <br/> Certificate generated </th>
+                                    <th style="width:48%;" ng-switch-when='Document Tagged'> Document Tagged </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in caddashboard_list" ng-switch="showvalue">
+                                    <td data-title="'S.No'"  style="width:4%;"> {{$index+1}} </td>
+                                    <td data-title="'Name of the Employee'"> {{data.employee_name}} </td>
+                                    <td ng-switch-when='Customer master updation' data-title="'Customer master updation" > {{data.customer_count}} </td>
+                                    <td ng-switch-when='Sanction Ref.No' data-title="'SL Ref.No" > {{data.sanctioncreation_count}} </td>
+                                    <td ng-switch-when='Sanction Master updation' data-title="'Sanction Master updation" > {{data.sanctionupdation_count}} </td>
+                                    <td ng-switch-when='Document Vetting Maker' data-title="'Document Vetting Maker" > {{data.docvettingmaker_count}} </td>
+                                    <td ng-switch-when='Document Vetting Checker' data-title="'Document Vetting Checker'" > {{data.docvettingchecker_count}} </td>
+                                    <td ng-switch-when='LSA Maker'data-title="'LSA Maker'" > {{data.lsamaker_count}} </td>
+                                    <td ng-switch-when='LSA Checker'data-title="'LSA Checker" > {{data.lsachecker_count}} </td>
+                                    <td ng-switch-when='Collateral Updation'data-title="'Collateral Updation" > {{data.collateralupdation_count}} </td>
+                                    <td ng-switch-when='Deferrals Created'data-title="'Deferrals Created" > {{data.deferralcreate_count}} </td>
+                                    <td ng-switch-when='Deferral Stage updated'data-title="'Deferral Stage updated" > {{data.deferralstage_count}} </td>
+                                    <td ng-switch-when='Deferral Checker Approval'data-title="'Deferral Checker Approval'" > {{data.deferralapproval_count}} </td>
+                                    <td ng-switch-when='CAD Compliance Certificate generated'data-title="'CAD Compliance Certificate generated" > {{data.cadcompliance_count}} </td>
+                                    <td ng-switch-when='Document Tagged'data-title="'Document Tagged'" > {{data.doctagged_count}} </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

@@ -1,0 +1,167 @@
+﻿<h3>
+    Extension Approval
+</h3>
+<div ng-controller="extensionApprovalcontroller">
+   
+    <br />
+    <div class="col-md-12">
+       
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+
+                <div class="panel-body">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="bg-success text-white">
+                                <th>S.No</th>
+                                <th>CUSTOMER</th>
+                                <th>LOAN FACILITY TYPE</th>
+                                <th>DEFERRAL NAME</th>
+                                <th>STATUS</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in cadApproval">
+                                <td data-title="'S.No'">{{$index+1}}</td>
+                                <td data-title="'Customer'">{{data.customername}}</td>
+                                <td data-title="'Loan Title'">{{data.loanTitle}}</td>
+                                <td data-title="'Deferral Name'">{{data.deferral_name}}</td>
+                                <td data-title="'Status'">{{data.approval_status}}</td>
+                                <td data-title="'Action'">
+                                    <button title="Approval" ng-click="popupapproveExtension(data.deferral_gid,data.loan_gid)" class="btn bt-sm btn-info">
+                                        <em class="fa fa-check"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  
+                 
+                </div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+    <script type="text/ng-template" id="/extensionDetails.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-check"></i>
+                </span>EXTENSION APPROVAL
+            </h4>
+        </div>
+        <form novalidate="" id="userform" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">
+            <div class="modal-body" style="padding-left:50px;">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Loan Ref No</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.loanref_no}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Loan Title</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.loan_title}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Deferral Ref No</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.record_id}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Deferral</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.deferral_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label>Request Remarks</label>
+                    </div>
+
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                       {{UploadDocumentname.extensionapplied_remarks}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Due Date *</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        <input type="date" id="due_date" name="due_date" ng-model="due_date" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Remarks</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-9 col-md-9">       
+                        <div class="mda-form-group float-label">
+                            <input ng-model="extensionapproval_remarks" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>Remarks *</label>
+                        </div>            
+                        <!--<textarea id="textarea-input" name="extensionapproval_remarks" rows="2" ng-model="extensionapproval_remarks"
+                                  style="font-size:12px" placeholder="Enter Remarks" class="form-control"></textarea>-->
+                    </div>
+                   
+
+            </div>
+                </div>
+            <div class="modal-header " style="margin: auto;text-align:center;padding:1px;background-color:#9ebfda;">
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    Deferral Documents
+                </h4>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-condensed" style="width:100%">
+                    <thead class="header">
+                        <tr class="text-center">
+                            <td style="width:10%;">S.No</td>
+                            <td style="width:30%;">Document Name</td>
+                            <td style="width:30%;">Uploaded Date</td>
+                            <td style="width:30%">Download</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in filename_list">
+                            <td class="text-center">{{$index +1}}</td>
+                            <td style="padding-left:20px;">{{data.filename}}</td>
+                            <td style="padding-left:20px;">{{data.created_date}}</td>
+                            <td class="text-center"><em class="fa fa-download" ng-click="downloads(data.path,data.filename)"><a download="" href="" id="btnpdf"></a></em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer ng-scope">
+                <div class="text-center">
+                    <button type="button" id="getapprove" class="btn btn-info btn-sg" ng-click="getApprove()">&nbsp;&nbsp;<i class="fa fa-arrow-circle-right"></i> &nbsp;&nbsp;Approve Extension</button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </form>
+    </script>
+</div>
+
+
+
+

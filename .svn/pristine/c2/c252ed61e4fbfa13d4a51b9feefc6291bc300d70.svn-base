@@ -1,0 +1,432 @@
+﻿<h3>
+    I-Assign WorkItem 360
+
+</h3>
+<style>
+    #bordersty {
+        border: 1px solid #ebebeb;
+        padding: 10px;
+        border-radius: 25px;
+    }
+</style>
+<div ng-controller="isanconsolidatedview">
+
+    <div class="card">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="bordersty" style="background-color: #FAF8F8;">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Mail From & Date
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{rmemployee_name}}/ {{rmemployee_mailid}}<br>
+                                        {{email_date}}
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Zone
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{zone_name}}
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Workitem Owner
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{checkeremployee_name}}
+                                        <span ng-if="checkeremployee_name=='' || checkeremployee_name==null">
+                                            Not Assigned
+                                        </span>
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Allotted By & On
+                                    </label>
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{allottedby_on}}
+                                    </span>
+                                    <span ng-if="checkeremployee_name=='' || checkeremployee_name==null">
+                                        -
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Status Updated By & On
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{updatedby_on}}
+                                    </span>
+                                    <span ng-if="updatedby_on=='' || updatedby_on==null">
+                                        -
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Status
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;" ng-switch="status">
+                                        <label ng-switch-when="Pending" class="label label-warning">Pending</label>
+                                        <label ng-switch-when="Pushback" class="label label-info">Pushback</label>
+                                        <label ng-switch-when="Forward" class="label label-primary">Forward</label>
+                                        <label ng-switch-when="Merged" class="label label-pink">Merged</label>
+                                        <label ng-switch-when="Close" class="label label-danger">Close</label>
+                                        <label ng-switch-when="Archival" class="label label-green">Archival</label>
+                                        <label ng-switch-when="Sent Mail" class="label label-purple">Sent Mail</label>
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Aging
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        <span class="label label-info" title="Aging">{{aging}}</span>
+                                    </span>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label style="font-size:14px;" class="text-primary">
+                                        Log Details
+                                    </label>
+
+                                    <br>
+                                    <button class="btn btn-info" ng-click="logdetails()">
+                                        <em class="fa fa-history"></em>
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row"> 
+                            <div class="col-lg-12 col-md-12 col-sm-12" ng-show="closerem">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                    <label style="font-size:14px;" class="text-primary">
+                                       Closed Remarks
+                                    </label>
+
+                                    <br>
+                                    <span style="font-size:13px;">
+                                        {{closedremarks}}
+                                    </span>
+                              </div>
+                              <div class="col-lg-6 col-md-6 col-sm-6">
+                            </div>
+                          </div>
+                        </div>
+                          <br/>
+                          <div class="row"> 
+                          <div class="col-lg-12 col-md-12 col-sm-12" ng-show="archiverem">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label style="font-size:14px;" class="text-primary">
+                                Archived Remarks
+                             </label>
+
+                             <br>
+                             <span style="font-size:13px;">
+                                 {{archivalremarks}}
+                             </span>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            </div>
+                        </div>
+                       </div>
+                    
+                        <br/>
+                    </div>
+                    <br>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-12 col-md-12">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <div>
+                            <div class="btn-group pull-left">
+                                <h4 style="color:grey;"><b>Work Item Reference No:{{workitemref_no}}</b></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="IsLogShow">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="panel">
+
+                        <div class="panel-body ">
+                            <div class="pd-sm-10">
+                                <div class="row" ng-hide="transfershow">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12  ">
+                                                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Transfer Log</p>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <div style="max-height:300px;overflow:auto;">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th align="center" scope="col">S.No</th>
+                                                                <th align="center" scope="col">Transfer From</th>
+                                                                <th align="center" scope="col">Transfer To</th>
+                                                                <th align="center" scope="col">Allotted By/On</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in transferlog_list" width="100%">
+                                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                                <td align="left" scope="col" title="Transfer From">{{data.assignedby_name}}</td>
+                                                                <td align="left" scope="col" title="Transfer To'">{{data.transferby_name}}</td>
+                                                                <td align="left" scope="col" title="Allotted By/On'">{{data.created_by}}/{{data.created_date}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12  ">
+                                                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Audit Log</p>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive">
+                                                <div style="max-height:300px;overflow:auto;">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th align="center" scope="col">S.No</th>
+                                                                <th align="center" scope="col">Workitem Response</th>
+                                                                <th align="center" scope="col">Done By/On</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in auditlog_list" width="100%">
+                                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                                <td align="left" scope="col" title="Workitem Response">{{data.action_taken}}</td>
+                                                                <td align="left" scope="col" title="Done By/On">{{data.created_by}}/{{data.created_date}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        
+       
+    </div>
+
+
+    <div class="card" ng-repeat="data in referenceMail">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="table mb-mails mb-view">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="clearfix">
+
+                                        <a href="#" class="pull-left">
+                                            <img alt="" ng-src="{{user.picture}}"
+                                                 class="media-box-object img-rounded thumb32 mb-mail-avatar" />
+                                        </a>
+
+                                        <div class="media-box-body">
+                                            <span style="font-size:15px;">
+                                                {{data.email_from}}
+                                            </span><br>
+
+
+
+                                            <span>
+                                                <b>Sent:</b>
+                                            </span>
+                                            <span> {{data.email_date}} </span><br>
+                                            <span>
+                                                <b>To:</b> {{data.email_to}}
+                                            </span><br>
+                                            <span>
+                                                <b>Cc:</b> {{data.email_cc}}
+                                            </span><br>
+                                            <span>
+                                                <b>Bcc:</b> {{data.email_bcc}}
+                                            </span>
+                                        </div>
+
+
+                                        <!-- <img ng-src="{{mailview.mail.from.avatar}}" alt="Mail Avatar" class="mb-mail-avatar" /> -->
+
+
+
+                                    </div>
+
+                                    <div class="mb-mail-preview mt-lg">
+
+                                        <h5>Subject:{{data.email_subject[2]}}</h5>
+
+
+
+
+                                    </div>
+                                    <p ng-bind-html=trustAsHtml(data.email_content)></p>
+                                    <div class="mb-attachment">
+
+                                        <ul class="list-inline">
+                                            <li ng-repeat="att in data.MdlAttachmentList">
+                                                <a ng-click="export(att.document_path,att.document_name)">
+                                                    <em class="icon-arrow-down"></em>&nbsp;{{att.document_name}} 
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="table mb-mails mb-view">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="clearfix">
+
+                                        <a href="#" class="pull-left">
+                                            <img alt="" ng-src="{{user.picture}}"
+                                                 class="media-box-object img-rounded thumb32 mb-mail-avatar" />
+                                        </a>
+
+                                        <div class="media-box-body">
+                                            <span style="font-size:15px;">
+                                                {{email_from}}
+                                            </span><br>
+
+
+
+                                            <span>
+                                                <b>Sent:</b>
+                                            </span>
+                                            <span> {{email_date}} </span><br>
+                                            <span>
+                                                <b>To:</b> {{to_mail}}
+                                            </span><br>
+                                            <span>
+                                                <b>Cc:</b> {{cc_mail}}
+                                            </span><br>
+                                            <span>
+                                                <b>Bcc:</b> {{bcc_mail}}
+                                            </span>
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="mb-mail-preview mt-lg">
+
+                                        <h5>Subject:{{email_subject}}</h5>
+                                    </div>
+                                    <p ng-bind-html=trustAsHtml(email_content)></p>
+                                    <div class="mb-attachment">
+
+                                        <ul class="list-inline">
+                                            <li ng-repeat="att in attch_list">
+                                                <a ng-click="export(att.document_path,att.document_name)">
+                                                    <em class="icon-arrow-down"></em>&nbsp;{{att.document_name}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div>
+        <div class="text-center">
+
+            <button ng-click="back()" class="btn btn-info">
+                <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+            </button>
+        </div>
+    </div>
+
+</div>

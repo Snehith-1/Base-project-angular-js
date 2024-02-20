@@ -1,0 +1,1101 @@
+﻿<h3>
+    Service Request
+</h3>
+<div ng-controller="osdTrnServiceRequestView">
+    <div id="panelDemo8" class="panel panel-primary ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-eye"></i>
+            </span>View Service Request
+            <button type="button" title="Back" class="pull-right btn btn-sm btn-default" ng-click="requestback()">
+                <em class="fa fa-chevron-circle-left text-danger fa-1x">&nbsp;Back</em>
+            </button>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 ">
+                        <input name="servicerequest_gid" id="servicerequest_gid" style="font-size:12px"
+                               placeholder="Enter Service Request gid" ng-model="servicerequest_gid" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="requestform" ng-submit="form.submitLoan()" autocomplete="off"
+                      class="form-validate mb-lg">
+                    <!-- Closed details-->
+                    <div ng-show="closeddtls">
+                        <br />
+                        <h4 class="text-pink">
+                            <em class="fa fa-times-circle text-danger fa-lg"></em> Closed Details
+                        </h4>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>
+                                            Closed By
+                                        </label>
+                                        <br>
+                                        {{closed_by}}
+                                    </div>
+
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Closed Date</label>
+                                        <br>
+                                        {{closed_date}}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!--Completed Details-->
+                    <div ng-show="completeddtls">
+
+                        <br />
+                        <h4 class="text-pink">
+                            <em class="fa fa-folder-open text-danger fa-lg"></em> Completed Details
+                        </h4>
+                        <br />
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>
+                                        Completed By
+                                    </label>
+                                    <br>
+                                    {{completed_by}}
+                                </div>
+
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Completed Date</label>
+                                    <br>
+                                    {{completed_date}}
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <label><strong>Completed Remarks</strong> </label>
+                                    <br>
+                                    {{completed_remarks}}
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <p class="lead bb text-purple text-bold" style="font-size:16px;">Completed Document</p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <div class="dd-handle ng-scope">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th align="center" scope="col">S.No</th>
+                                                                <th align="center" scope="col">Document Name</th>
+                                                                <th align="center" scope="col">Created By</th>
+                                                                <th align="center" scope="col">Created Date</th>
+                                                                <th align="center" scope="col">
+                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                    <a download="" href="" title="Download All" id="btnpdf1" ng-click="COMdownloadall(comfilepath,comfilename)">
+                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                    </a>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in completerequestdocumentdtl" width="100%">
+                                                                <td align="left" scope="col" title="S.No">
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Document Name">
+                                                                    {{data.document_name}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Created By">
+                                                                    {{data.created_by}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Created Date">
+                                                                    {{data.created_date}}
+                                                                </td>
+
+                                                                <td align="left" scope="col" data-title="Action">
+                                                                    <button title="Download Document"
+                                                                            ng-click="downloads(data.document_path,data.document_name)"
+                                                                            class="btn btn-green">
+                                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                        <em class="fa fa-download"></em>
+                                                                    </button>
+                                                                    <button title="View" class="btn btn-info"  ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em> 
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <br />
+                    </div>
+                    <div ng-show="Rejectdtls">
+                        <h4 class="text-pink">
+                            <em class="fa fa-ban text-danger fa-lg"></em> Rejected Details
+                        </h4>
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-4 col-sm-4 col-md-4">
+                                            <label>
+                                                Rejected By
+                                            </label>
+                                            <br>
+                                            {{rejected_by}}
+                                        </div>
+
+                                        <div class="col-lg-4 col-sm-4 col-md-4">
+                                            <label>Rejected Date</label>
+                                            <br>
+                                            {{rejected_date}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <label><strong>Rejected Remarks</strong> </label>
+                                            <br>
+                                            {{rejected_remarks}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Cancelled Details-->
+                    <div ng-show="canceldtls">
+                        <h4 class="text-pink">
+                            <em class="fa fa-ban text-danger fa-lg"></em> Cancelled Details
+                        </h4>
+                        <div class="panel-body">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-4 col-sm-4 col-md-4">
+                                            <label>
+                                                Cancelled By
+                                            </label>
+                                            <br>
+                                            {{raised_by}}
+                                        </div>
+
+                                        <div class="col-lg-4 col-sm-4 col-md-4">
+                                            <label>Cancelled Date</label>
+                                            <br>
+                                            {{cancel_date}}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Reopen Details Starts-->
+                    <div ng-show="reopendetails">
+                        <h4 class="text-pink">
+                            <em class="fa fa-folder-open text-danger fa-lg"></em> Reopen Details
+                        </h4>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Request Ref.No</label>
+                                    <br>
+                                    {{request_refno}}
+                                </div>
+
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Reopened By</label>
+                                    <br>
+                                    {{raised_by}}
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Reopened By Number</label>
+                                    <br>
+                                    {{employee_mobileno}}
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Reopened Date/Time</label>
+                                    <br>
+                                    {{reopened_date}}
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Reopen Remarks : </label>
+                                    <br />
+                                    {{reopen_reason}}
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>
+                                        Reporting To
+                                    </label>
+                                    <br>
+                                    {{level_one}}
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Reporting To Number</label>
+                                    <br>
+                                    {{employee_number}}
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <p class="lead bb text-purple text-bold" style="font-size:16px;">Reopen Document</p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <div class="dd-handle ng-scope">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th align="center" scope="col">S.No</th>
+                                                                <th align="center" scope="col">Document Name</th>
+                                                                <th align="center" scope="col">Reopened By</th>
+                                                                <th align="center" scope="col">Reopened Date</th>
+                                                                <th align="center" scope="col">
+                                                                    Action&nbsp;&nbsp;&nbsp;
+                                                                    <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall(reopen1filepath,reopen1filename)">
+                                                                        <em class="icon-arrow-down"></em>&nbsp;
+                                                                    </a>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in reopenrequestdocumentdtl" width="100%">
+                                                                <td align="left" scope="col" title="S.No">
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Document Name">
+                                                                    {{data.document_name}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Reopened By">
+                                                                    {{data.created_by}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Reopened Date">
+                                                                    {{data.created_date}}
+                                                                </td>
+                                                                <td align="left" scope="col" data-title="Action">
+                                                                    <button title="Download Document"
+                                                                            ng-click="downloads(data.document_path,data.document_name)"
+                                                                            class="btn btn-green">
+                                                                        <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                        <em class="fa fa-download"></em>
+                                                                    </button>
+                                                                    <button title="View" class="btn btn-info"  ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                        <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em> 
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <!--Reopen Details End-->
+                        <!--History-->
+                        <p class="lead bb text-purple text-bold" style="font-size:16px;">History</p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-primary text-white">
+                                                        <tr width="100%">
+                                                            <th align="center">S.No</th>
+                                                            <th align="center" scope="col">Request Refno</th>
+                                                            <th align="center" scope="col">Request Title</th>
+                                                            <th align="center" scope="col">Raised By/On</th>
+                                                            <th align="center" scope="col">Completed By/On</th>
+                                                            <th align="center" scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr width="100%">
+                                                            <td align="left" scope="col" title="S.No">{{index+1}}</td>
+                                                            <td align="left" scope="col" title="Request Refno">
+                                                                {{request_refno}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Request Title">
+                                                                {{request_title}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Raised By/On">
+                                                                {{raised_by}}/{{raised_date}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Completed By/On">
+                                                                {{completed_by}}/{{completed_date}}
+                                                            </td>
+                                                            <td align="left" scope="col" data-title="Action">
+                                                                <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                                        ng-click="tickethistory(servicerequest_gid)">
+                                                                    <em class="fa fa-history text-white"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                        <p class="lead bb text-purple text-bold" style="font-size:16px;">Reopen History</p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-primary text-white">
+                                                        <tr width="100%">
+                                                            <th align="center">S.No</th>
+                                                            <th align="center" scope="col">Request Refno</th>
+                                                            <th align="center" scope="col">Request Title</th>
+                                                            <th align="center" scope="col">Reopened By</th>
+                                                            <th align="center" scope="col">Reopen Date</th>
+                                                            <th align="center" scope="col">Aging</th>
+                                                            <th align="center" scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in reopendtl" width="100%">
+                                                            <td align="left" scope="col" title="S.No">{{index+1}}</td>
+                                                            <td align="left" scope="col" title="Request Refno">
+                                                                {{data.request_refno}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Request Title">
+                                                                {{data.request_title}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Reopened By">
+                                                                {{data.reopened_by}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Reopen Date">
+                                                                {{data.reopened_date}}
+                                                            </td>
+                                                            <td align="left" scope="col" title="Reopen Aging">
+                                                                {{data.created_aging}}
+                                                            </td>
+                                                            <td align="left" scope="col" data-title="Action">
+                                                                <button title="History" class="btn bg-blue-grey-500 btn-sm"
+                                                                        ng-click="ticketreopenhistory(data.requestreopen_gid,data.servicerequest_gid)">
+                                                                    <em class="fa fa-history text-white"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+
+                    <div ng-show="reqdtls" class="">
+                        <h4 class="text-pink">
+                            <em class="fa fa-user  text-danger fa-lg"></em> Request Details
+                        </h4>
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Request Ref.No</label>
+                                        <br>
+                                        {{request_refno}}
+                                    </div>
+
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Request Raised By</label>
+                                        <br>
+                                        {{raised_by}}
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Request Raised Date</label>
+                                        <br>
+                                        {{raised_date}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Request Title</label>
+                                        <br>
+                                        {{request_title}}
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Assigned Team</label>
+                                        <br>
+                                        {{assigned_team}}
+                                    </div>
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Assigned Member</label>
+                                        <br>
+                                        {{assigned_to}}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                        <label>Request Status</label>
+                                        <br>
+                                        {{request_status}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <label>Request Description</label>
+                                        <br>
+                                        <!-- <div id="request_description" class="fr-view dd-handle" style="max-height:500px; overflow-y: auto;">
+                                            {{request_description}}</div> -->
+                                        {{request_description}}
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+                            <br />
+                            <p class="lead bb text-purple text-bold" style="font-size:16px;">&nbsp; Upload Document</p>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="text-center">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th align="center" scope="col">S.No</th>
+                                                                    <th align="center" scope="col">Document Name</th>
+                                                                    <th align="center" scope="col">Created By</th>
+                                                                    <th align="center" scope="col">Created Date</th>
+                                                                    <th align="center" scope="col">
+                                                                        Action&nbsp;&nbsp;&nbsp;
+                                                                        <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall(lblfilepath,lblfilename)">
+                                                                            <em class="icon-arrow-down"></em>&nbsp;
+                                                                        </a>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in alloteddocumentdtl" width="100%">
+                                                                    <td align="left" scope="col" title="S.No">
+                                                                        {{$index+1}}
+                                                                    </td>
+                                                                    <td align="left" scope="col" title="Document Name">
+                                                                        {{data.document_name}}
+                                                                    </td>
+                                                                    <td align="left" scope="col" title="Created By">
+                                                                        {{data.created_by}}
+                                                                    </td>
+                                                                    <td align="left" scope="col" title="Created Date">
+                                                                        {{data.created_date}}
+                                                                    </td>
+                                                                    <td align="left" scope="col" data-title="Action">
+                                                                        <button title="Download Document"
+                                                                                ng-click="downloads(data.document_path,data.document_name)"
+                                                                                class="btn btn-green">
+                                                                            <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <button title="View" class="btn btn-info"  ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                            <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em> 
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+
+                        </div>
+                    </div>
+                    <br />
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;"> &nbsp;&nbsp;&nbsp; Tagged Member List</p>
+
+                    <div class="row">
+                        <div class="panel-body">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <div class="dd-handle ng-scope">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-secondary">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr width="100%">
+                                                                <th align="center" scope="col">S.No</th>
+                                                                <th align="center" scope="col">Member Name</th>
+                                                                <th align="center" scope="col">Tagged Date/Time</th>
+                                                                <th align="center" scope="col">Tagged By</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in tagmemberdtl" width="100%">
+                                                                <td align="left" scope="col" title="S.No">
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Member Name">
+                                                                    {{data.employee_name}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Tagged Date/Time">
+                                                                    {{data.created_date}}
+                                                                </td>
+                                                                <td align="left" scope="col" title="Tagged By">
+                                                                    {{data.created_by}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Business Unit Status Details </b></p>
+                                    <hr />
+                                </div>
+                                <!--<div class="panel-body">
+                                <div class="row">-->
+                                <!--<div class="col-lg-5 col-md-5 col-sm-5">-->
+                                <!--<label>Business Unit Status</label>-->
+                                <!--<select name="business_status" ng-options="m.business_status for m in businessstatuslist "
+                                        ng-model="cbobusinessstatus" class="chosen-select form-control" required chosen="" style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Business Unit Status-----</option>
+                                </select>-->
+                                <!--<!--<select name="business_status" id="business_status" ng-options="m.business_status for m in businessstatuslist" chosen=""
+                                        ng-model="cbobusinessstatus" class="chosen-select form-control" required style="height:37px;">
+                                    <option value=""></option>
+                                </select>-->
+                                <!--<select name="businessstatus" id="businessstatus" ng-options="m.business_status for m in businessstatuslist"
+                                        ng-model="cbobusinessstatus" class="form-control" chosen="" style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Business Unit Status-----</option>
+                                </select>
+                                <br />-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-1 col-md-1 col-sm-1 align-top">
+                                    <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="businessstatus_add(data.servicerequest_gid)"><span class="fa fa-plus" /></a>
+                                </div>-->
+                                <!--</div>
+                                </div>
+                                <br />-->
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive table-bordered">
+                                                <div style="max-height:200px;overflow:auto;">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th>SNo</th>
+                                                                <th>Business Unit Status</th>
+                                                                <th>Created By</th>
+                                                                <th>Created Date </th>
+                                                                <!--<th>Action</th>-->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="list in businessstatusunitmyactivity_list">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{list.businessactivity_status}}</td>
+                                                                <td>{{list.created_by}}</td>
+                                                                <td>{{list.created_date}}</td>
+                                                                <!--<td class="text-nowrap">
+                                                                    <button title="Delete" ng-click="businessstatus_delete(list.businessstatusactivity_gid)"
+                                                                            class="btn btn-danger btn-xs ">
+                                                                        <em class="fa fa-trash-o"></em>
+                                                                    </button>
+                                                                </td>-->
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="panel">
+                                <div class="panel-heading">
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Activity Name Update Details </b></p>
+                                    <hr />
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive table-bordered">
+                                                <div style="max-height:200px;overflow:auto;">
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th>SNo</th>
+                                                                <th>Activity Name</th>
+                                                                <th>Created By</th>
+                                                                <th>Created Date </th>
+                                                                <!--<th>Action</th>-->
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="list in servicerequestactivityhistory_list">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{list.activity_name}}</td>
+                                                                <td>{{list.created_by}}</td>
+                                                                <td>{{list.created_date}}</td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <!--<p class="lead bb text-purple text-bold" style="font-size:16px;">&nbsp;&nbsp;&nbsp;Requestor Communication</p>-->
+                    <h4 class="text-pink">
+                        <em class="fa fa-wechat text-danger fa-lg"></em> Requestor Communication
+                    </h4>
+                    <div class="row panel-body">
+
+                        <div ng-repeat="data in requestorlist">
+                            <div ng-switch="data.document_attached">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        &nbsp;<div style="padding-left:200px;" ng-switch-when="Y/N" class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">{{data.created_date}}</small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong class="text-info">{{data.sender_name}}</strong>
+                                                        </p>
+                                                        <p class="m0 ">{{data.remarks}}</p>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding-left:200px;" ng-switch-when="Y/Y" class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">{{data.created_date}}</small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong class="text-info">{{data.sender_name}}</strong>
+                                                        </p>
+
+
+                                                        <a class="m0" style="font-weight:bold;" download="" href="" id="btnpdf" ng-click="downloadsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding-right:200px;" ng-switch-when="N/N" class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">
+                                                    {{data.created_date}}
+                                                </small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong class="text-info">{{data.sender_name}}</strong>
+                                                        </p>
+                                                        <p class="m0">{{data.remarks}}</p>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="padding-right:200px;" ng-switch-when="N/Y" class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                                <small class="pull-right text-bold">
+                                                    {{data.created_date}}
+                                                </small>
+                                                <div class="media-body">
+                                                    <span class="media-heading">
+                                                        <p class="m0">
+                                                            <strong class="text-info">{{data.sender_name}}</strong>
+                                                        </p>
+                                                        <!--<p class="m0 fa text-info fa-file fa-2x">{{data.document_name}}</p>-->
+
+                                                        <a class="m0" style="font-weight:bold;" download="" href="" id="btnpdf" ng-click="downloadsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="communicationdtls" class="col-lg-12 col-sm-12 col-md-12" ng-switch="completedflag">
+                        <br />
+                        <div class="row" ng-switch-when="N">
+                            <div class="row panel-body">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <label>File Upload</label>
+                                            <input type="file" id="addupload" ng-model="test_document"
+                                                   onchange="angular.element(this).scope().uploadallocation(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                                                   accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <br />
+                                            <button title="Tag Member" class="btn btn-info btn-sm"
+                                                    ng-click="TagMemberChat()">
+                                                <em class="fa fa-plus"></em>&nbsp;Tag Member
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                <textarea id="txtqueries" name="txtremarks" rows="5" cols="60" ng-model="$parent.txtqueries"
+                                          placeholder="Enter Remarks..." class="form-control" align="left"></textarea>
+                                <br />
+                                <button id="response_send" ng-disabled="!txtqueries" class="btn btn-success" ng-click="sendrequestorclick()">
+                                    <i class="fa fa-send">&nbsp;Send</i>
+                                </button>
+                                <button id="response_cancel" ng-disabled="!txtqueries" class="btn btn-danger" ng-click="cancelclick()">
+                                    <i class="fa fa-remove">&nbsp;Cancel</i>
+                                </button>
+                                <button ng-click="requestback()" class="btn btn-info">
+                                    <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row text-center" ng-switch-when="Y">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <!--  <button ng-click="requestReopen()" class="btn btn-success">
+                                     <i class="fa fa-folder-open"></i>&nbsp;&nbsp;Reopen
+                                 </button> -->
+
+                                <button ng-click="requestClosed()" class="btn btn-danger">
+                                    <em class="fa fa-times-circle text-white fa-lg"></em>&nbsp;&nbsp;Close
+                                </button>
+
+                                <button ng-click="requestback()" class="btn btn-info">
+                                    <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row text-center" ng-switch-when="C">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                <button ng-click="requestback()" class="btn btn-info">
+                                    <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+            <br />
+            <div class="row text-center" ng-switch-when="Y">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                    <button ng-click="requestback()" class="btn btn-info">
+                        <i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back
+                    </button>
+                </div>
+            </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!--Reopen Code Starts-->
+<script type="text/ng-template" id="/reopenrequestmodal.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa--folder-open"></em>&nbsp;Reopen Request</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="reopenformsubmit" ng-submit="form.reopenformsubmit()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Tag Member <span style="color:red"></span></label>
+                        <select name="tagmember_list" chosen="" multiple="multiple"
+                                ng-options="m.employee_name for m in employee_list"
+                                ng-model="tagmember_list" class="chosen-select form-control"></select>
+                    </div>
+                </div>
+                <br />
+
+                <!--Tagged Member View Code Starts-->
+                <p class="lead bb text-purple text-bold" style="font-size:16px;">Tagged Member List</p>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div id="statictable">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">Member Name</th>
+                                            <th scope="col">Tagged Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center" ng-repeat="data in tagmemberdtl">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="Member Name">{{data.employee_name}}</td>
+                                            <td title="Tagged Date/Time">{{data.created_date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Tagged Member View Code End-->
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Reopen Reason  &nbsp;<span style="color:red">*</span></label>
+                        <textarea ng-model="reopen_reason" placeholder="Enter Reopen Reason" rows="3" maxlength="1000" class="form-control"
+                                  required id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <em class="fa fa-file text-primary fa-lg"></em>&nbsp;&nbsp;<label> Document Upload</label>
+                        <div class="dd-handle ng-scope" style="height:285px;">
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-12 col-md-12">
+                                    <input type="file" id="file" multiple onchange="angular.element(this).scope().ReopenRequestDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div ui-scroll-viewport="" style="height:215px; overflow-y: auto;" class="row">
+                                            <div id="statictable">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Document Name</th>
+                                                            <th align="center" scope="col">
+                                                                Action&nbsp;&nbsp;&nbsp;
+                                                                <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall(lblfilepath,lblfilename)">
+                                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                                </a>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in upload_list">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Document Name">{{data.document_name}}</td>
+                                                            <td data-title="Action" style="width:100px">
+                                                                <button title="Download" class="btn btn-green btn-sm"
+                                                                        ng-click="downloads(data.document_path,data.document_name)">
+                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                    <em class="fa fa-download"></em>
+                                                                </button>
+                                                                <button title="View" class="btn btn-info btn-sm"  ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em> 
+                                                                </button>
+                                                                <a title="Delete" class="btn btn-sm btn-danger" ng-click="documentcancel(data.tmp_documentGid)">
+                                                                    <span class="icon icon-trash "></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="reopenformsubmit.$invalid" ng-click="reopenSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/tagmemberinchat.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <h2><em class="fa fa-tag"></em>&nbsp;Tag Member</h2>
+            <span flex></span>
+
+        </div>
+    </md-toolbar>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-12 col-md-12">
+                        <label>Tag Member <span style="color:red">*</span></label>
+                        <select name="tagmember_list" chosen="" multiple="multiple"
+                                ng-options="m.employee_name for m in employee_list" required=""
+                                ng-model="tagmember_list" class="chosen-select form-control"></select>
+                    </div>
+                </div>
+                <br />
+                <!--Tagged Member View Code Starts-->
+                <p class="lead bb text-purple text-bold" style="font-size:16px;">Tagged Member List</p>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div id="statictable">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">Member Name</th>
+                                            <th scope="col">Tagged Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center" ng-repeat="data in tagmemberdtl">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="Member Name">{{data.employee_name}}</td>
+                                            <td title="Tagged Date/Time">{{data.created_date}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Tagged Member View Code End-->
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="TagMemberSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+</div>

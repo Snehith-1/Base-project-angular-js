@@ -1,0 +1,598 @@
+<h3>Customer - Loan Details</h3>
+
+<div ng-controller="cboCustomer2loandetailscontroller as dpick">
+    <div class="panel">
+        <br />
+        <div class=" row">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+                <h4>
+                    <label style="color:brown;">
+
+                        Customer Name / URN :<b>
+                            &nbsp;&nbsp;{{customer_name}} /
+                            {{urn}}
+                        </b>
+                    </label>
+                </h4>
+            </div>
+        </div>
+        <div class="modal-body ">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <p class="bb text-green text-bold">DEMAND NOTICE ELIGIBLE LOAN DETAILS</p>
+                        <div class="table-responsive">
+                            <table  ng-table="usersTable" class="table table-striped table-bordered table-success">
+                                <thead>
+                                    <tr class="bg-primary text-white text-center">
+                                        <th style="width:10%;">ACCOUNT NO</th>
+                                        <th style="width:10%;">MATURITY DATE</th>
+                                        <th style="width:10%;">SCHEDULE PAYMENT</th>
+                                        <th style="width:10%;">FREQUENCY / TENURE</th>
+                                       <th style="width:04%;">OD DAYS</th>
+                                        <th style="width:10%;">RO NAME</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in mdlMisdataimport" class="text-center">
+                                        <td title="Account No">{{data.account_no}}</td>
+                                        <td title="Maturity Date">{{data.maturity_date}}</td>
+                                        <td title="Schedule Payment">{{data.schedulde_payment}}</td>
+                                        <td title="Duration">{{data.frequency}} / {{data.tenure}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="RO Name">{{data.RO_Name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-show="click">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h5 class="m0">
+                        <a class="" ng-click="otherloandetails()">
+                            <u>Click to View More Loan Details</u>
+                        </a>
+                    </h5>
+                </div>
+            </div>
+            <div ng-hide="otherloan" class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <div class="pull-right"><i class="fa fa-minus" ng-click="minimizeloan()"></i></div>
+
+                        <p class="bb text-green text-bold">OTHER LOAN DETAILS</p>
+                        <div class="table-responsive">
+                            <table ng-table="usersTable" class="table table-striped table-bordered table-success">
+                                <thead>
+                                    <tr class="bg-primary text-white text-center">
+                                        <th style="width:10%;">ACCOUNT NO</th>
+                                        <th style="width:10%;">MATURITY DATE</th>
+                                        <th style="width:10%;">SCHEDULE PAYMENT</th>
+                                        <th style="width:10%;">FREQUENCY / TENURE</th>
+                                        <th style="width:02%;">TENURE</th>
+                                        <th style="width:04%;">OD DAYS</th>
+                                        <th style="width:10%;">RO NAME</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in otherloan_list" class="text-center">
+                                        <td title="Account No">{{data.account_no}}</td>
+                                        <td title="Maturity Date">{{data.maturity_date}}</td>
+                                        <td title="Schedule Payment">{{data.schedulde_payment}}</td>
+                                        <td title="Loan Duration">{{data.frequency}} / {{data.tenure}}</td>
+                                        <td title="OD Days">{{data.od_days}}</td>
+                                        <td title="RO Name">{{data.RO_Name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-hide="revert">
+                <br />
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <p class="bb text-green text-bold">DEMAND NOTICE DETAILS</p>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                <div class="col-sm-1 col-md-1 col-lg-1 "></div>
+                                <b>
+                                    <label style="color:mediumvioletred">{{dn_status}} </label>
+                                    on {{updated_date}} updated by <i> {{updated_by}}  </i> - {{remarks}}
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-hide="sanctiondtl">
+                <br/>
+                <form novalidate="" name="sanction" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="col-sm-12 col-md-12 col-lg-12 ">
+                        <p class="bb text-green text-bold">SANCTION DETAILS</p>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>DN Ref No<span style="color:red">*</span></label>
+                            <input ng-model="txtdnCBOref_no" id="input-id-1" tabindex="0" required="" aria-required="true" aria-invalid="true" class="col-sm-12 form-control" style="">
+
+                        </div>
+                       
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>Sanction Ref No<span style="color:red">*</span></label>
+                            <input ng-model="txtdnCBOsanctionref_no" id="input-id-1" tabindex="0" required="" aria-required="true" aria-invalid="true" class="col-sm-12 form-control" style="">
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <div class="form-group float-label">
+                                <label>Sanction Amount <span style="color:red">*</span></label>
+                                <input id="txtInput" ng-model="txtdnCBOsanction_amount" required type="text" ng-change="amountschange()"
+                                       class="form-control ng-pristine ng-valid ng-touched fa-align-right" style="text-align:right;">
+
+                            </div>
+                           </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>Sanction Date <span style="color:red">*</span></label>
+                            <p class="input-group">
+                                <input type="text" id="dob" required name="date" tabindex="0" ng-model="txtdnCBOsanction_date" datepicker-popup="{{dpick.format}}"
+                                       style="height:30px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                       close-text="Close" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="dpick.open($event)" style="height:30px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-sm-12">
+                        <br />
+                    </div>
+                    <div class="text-center">
+                       
+                      
+                            <br /><br />
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="sanction.$invalid" ng-click="dnCBOsanctionsubmit()"
+                                    title="Update Sanction Details">
+                                <i class="fa fa-share-square-o  fa-lg"></i> &nbsp;&nbsp;Update
+                            </button>
+                            <button type="button" class="btn btn-danger btn-md" ng-click="dnCBOcancel()"
+                                    title="Cancel">
+                                <i class="fa fa-close fa-lg"></i> &nbsp;&nbsp;Cancel
+                            </button>
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="row" ng-hide="initiatedn">
+                <br />
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <p class="bb text-green text-bold">SANCTION DETAILS</p>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <strong class="mt0">DN Ref No</strong><br />
+                                <p>{{dnCBOref_no}}</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <strong class="mt0">Sanction Ref No</strong><br />
+                                <p>{{dnCBOsanctionref_no}}</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <strong class="mt0">Sanction Date</strong><br />
+                                <p>{{dnCBOsanction_date}}</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <strong class="mt0">Sanction Amount</strong><br />
+                                <p>{{dnCBOsanction_amount}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <br/>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="mb-editor">
+
+                            <script type="text/ng-template" id="ng-wig/views/ng-wig.html">
+                                <div class="ng-wig">
+                                    <div class="btn-group btn-group-sm">
+
+                                        <button type="button" title="Bold" ng-click="execCommand('bold')" class="btn btn-sm btn-default"><em class="fa fa-bold"></em></button>
+                                        <button type="button" title="Italic" ng-click="execCommand('italic')" class="btn btn-sm btn-default"><em class="fa fa-italic"></em></button>
+
+                                    </div>
+                                    <div class="nw-editor">
+                                        <textarea ng-show="editMode" ng-model="content" class="nw-editor__src"> </textarea>
+                                        <iframe scrolling="{{ autoexpand ? 'yes' : 'yes' }}" frameBorder="0" ng-hide="editMode" ng-model="content"
+                                                ng-wig-editable="" class="nw-editor__res"></iframe>
+                                    </div>
+                                </div>
+                            </script>
+                            <textarea ng-wig="content" ng-model="content"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-hide="initiatedn">
+                <div class="text-center">
+                    <br />
+                    <button type="button" class="btn btn-green btn-md" ng-click="cbogenerate()"
+                            title="Fill all Mandatory Fields">
+                        <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Generate
+                    </button>
+
+
+                    <button type="button" ng-click="cancel()" class="btn btn-danger ">
+                        <i class="fa fa-close"></i>&nbsp;&nbsp;Cancel
+                    </button>
+
+                </div>
+            </div>
+     
+            <div class="row" ng-hide="dn2format">
+                <br />
+
+                <div class="col-sm-12 col-md-12 col-lg-12 text-justify">
+                    <div class="lead bb text-primary text-bold">
+                        <label class="text-primary">Demand Notice</label>
+
+                    </div>
+
+                    <div class="col-sm-10 col-md-10 col-lg-10">
+                        <p id="test">
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+           
+
+            <div class="row" ng-hide="button">
+                <br />
+                <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12 ">
+                        <p class="bb text-green text-bold">COURIER DETAILS</p>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>Courier Ref No*</label>
+                            <input ng-model="txtcourierefno" id="input-id-1" tabindex="0" required="" aria-required="true" aria-invalid="true" class="col-sm-12 form-control" style="">
+
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>Courier Center *</label>
+                            <input ng-model="txtcouriercenter" id="input-id-1" tabindex="0" required="" aria-required="true" aria-invalid="true" class="col-sm-12 form-control" style="">
+
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                            <label>Courier Date *</label>
+                            <p class="input-group">
+                                <input type="text" id="dob" required name="date" ng-model="txtcourierdate" datepicker-popup="{{dpick.format}}"
+                                       style="height:25px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                       close-text="Close" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="dpick.open($event)" style="height:25px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-3 col-md-3 col-lg-3">
+                            <div class="mda-form-group float-label">
+                                <label>Couriered By *</label>
+                                <input ng-model="txtcourierby" id="input-id-1" tabindex="0" required="" aria-required="true" aria-invalid="true" class="col-sm-12 form-control" style="">
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                        </div>
+                        <div class="col-sm-7 col-md-7 col-lg-7">
+                            <div class="mda-form-group float-label">
+                                <label> Remarks </label>
+                                <textarea rows="2" aria-multiline="true" tabindex="0" aria-invalid="false" ng-model="txtcourieredremarks" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <div class="text-center" ng-switch="DN1_status">
+                        <!--DN1 Sent-->
+                        <button type="button" class="btn btn-green btn-md" ng-disabled="userform.$invalid" ng-click="DNsend()"
+                            title="Fill all Mandatory Fields" ng-switch-when="DN Generated" ng-disabled="false">
+                            <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Send DN
+                        </button>
+                        <button type="button" class="btn btn-danger btn-md"  ng-click="revert(urn)"  ng-switch-when="DN Generated" >
+                            <i class="fa fa-undo"></i> &nbsp;Revert
+                        </button>
+                        <button type="button" class="btn btn-primary btn-md"  ng-click="unhold(urn)" ng-switch-when="DN Hold" >
+                            <i class="fa icon-control-pause"></i> &nbsp;UnHold&nbsp;
+                        </button>
+                        <button type="button" class="btn btn-primary btn-md"   ng-click="hold(urn)" ng-switch-when="DN Generated">
+                            <i class="fa icon-control-pause"></i> &nbsp;Hold&nbsp;
+                        </button>
+                        <button type="button" class="btn btn-md bg-cyan-A700" ng-click="Dnback()">
+                            <i class="fa fa-arrow-left" style="color:white"> &nbsp;&nbsp;Back&nbsp;&nbsp;</i>
+                        </button>
+                   </div>
+                </div>
+            </div>
+            <div class="row" ng-show="skip">
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <p class="bb text-green text-bold">DEMAND NOTICE DETAILS</p>
+                        <div class="row" ng-repeat="CBO in CBOhistory_list ">
+                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                <div class="col-sm-1 col-md-1 col-lg-1 "></div>
+                                <b>
+                                    <label style="color:mediumvioletred">{{CBO.cbo_status}} </label> on {{CBO.cbocouriersent_date}} updated by
+                                    <i> {{CBO.cbostatus_created_by}}  </i>
+                                </b>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" ng-show="courierdetails">
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+
+                        <div class="row" ng-repeat="status in CBOhistory_list ">
+                            <div class="col-sm-12 col-md-12 col-lg-12 ">
+                                <div class="col-sm-1 col-md-1 col-lg-1 "></div>
+                                <b><label style="color:mediumvioletred">{{status.cbo_status}} </label> on {{status.cbo_courier_sentdate}} updated by <i> {{status.cbostatus_updatedby}}  </i>  </b>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 ">
+                    <div>
+                        <p class="bb text-green text-bold">COURIER DETAILS</p>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Courier Ref No</strong><br />
+                                <p>{{CBOcourier_refno}}</p>
+                            </div>
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Courier Date</strong><br />
+                                <p>{{CBOcourier_date}}</p>
+                            </div>
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Courier Center</strong><br />
+                                <p>{{CBOcourier_center}}</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Courier By</strong><br />
+                                <p>{{CBOcouriered_by}}</p>
+                            </div>
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Remarks</strong><br />
+                                <p>{{CBOremarks}}</p>
+                            </div>
+                            <div class="col-lg-4  col-sm-4 col-md-4">
+                                <strong class="mt0">Status</strong><br />
+                                <p>{{CBOcourier_status}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="info">
+                <div class="text-center" ng-switch="cbo_status">
+                    <button type="button" ng-switch-when="DN Sent" class="btn btn-green btn-md" ng-disabled="true" title="Already DN Status Updated">
+                        <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Send DN
+                    </button>
+                    <button type="button" ng-switch-when="DN Skip" class="btn btn-green btn-md" ng-disabled="true" title="Already DN status Updated">
+                        <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Send DN
+                    </button>              
+                    <button type="button" ng-switch-when="Pending" class="btn btn-green btn-md" ng-click="clickinitiatedn()">
+                        <i class="fa fa-paper-plane"></i> &nbsp;&nbsp;Initiate DN
+                    </button>
+                    <!--DN1 Skip-->
+                    <button type="button" ng-switch-when="Pending" class="btn btn-info btn-md" ng-disabled="userform3.$invalid" ng-click="DNskip()">
+                        <i class="fa fa-step-forward"></i> &nbsp;&nbsp;Skip DN 
+                    </button>
+                    <button type="button" class="btn btn-info btn-md" ng-switch-when="DN Sent" ng-disabled="true" title="Already DN status Updated">
+                        <i class="fa fa-step-forward"></i> &nbsp;&nbsp;Skip DN 
+                    </button>
+                    <button type="button" class="btn btn-info btn-md" ng-switch-when="DN Skip" ng-disabled="true" title="Already DNstatus Updated">
+                        <i class="fa fa-step-forward"></i> &nbsp;&nbsp; Skip DN
+                    </button>
+
+                    <!--<button ng-click="close()" class="btn btn-danger "><i class="fa fa-close"></i>&nbsp;&nbsp;Close</button>-->
+                    <button type="button" class="btn btn-md bg-cyan-A700" ng-disabled="userform3.$invalid" ng-click="Dnback()">
+                        <i class="fa fa-arrow-left" style="color:white"> &nbsp;&nbsp;Back</i>
+                    </button>               
+                </div>
+            </div>
+        </div>
+        <br />
+        <script type="text/ng-template" id="/revertdn.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa fa-undo"></em>
+                     REVERT DEMAND NOTICE 
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mda-form-group float-label">
+                                            <label>Do you want to revert the Demand Notice ?</label>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Remarks * </label>
+                                            <textarea ng-model="txtremarks" rows="3" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                               required id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </md-input-container>
+        
+                                    </div>
+
+                                    
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="revert_yes()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Yes</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>No</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/holddn.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa fa-undo"></em>
+                HOLD DEMAND NOTICE 
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mda-form-group float-label">
+                                            <label>Do you want to hold the Demand Notice ?</label>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Remarks * </label>
+                                            <textarea ng-model="txtremarks" rows="3" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                               required id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </md-input-container>
+        
+                                    </div>
+
+                                    
+                                </div>
+
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="hold_yes()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Yes</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>No</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        <script type="text/ng-template" id="/unholddn.html">
+            <div class="modal-header bg-green-200 ng-scope">
+                <h4 id="myModalLabel" class="modal-title">
+                    <span class="btn-label bg-green-200">
+                        <em class="fa fa-undo"></em>
+                     UNHOLD DEMAND NOTICE 
+                    </span>
+                </h4>
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <form name="customerfacilityform" id="customerfacilityform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="mda-form-group float-label">
+                                            <label>Do you want to unhold the Demand Notice ?</label>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="unhold_yes()" ng-disabled="customerfacilityform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Yes</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>No</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+        
+    </div>
+
+</div>
+

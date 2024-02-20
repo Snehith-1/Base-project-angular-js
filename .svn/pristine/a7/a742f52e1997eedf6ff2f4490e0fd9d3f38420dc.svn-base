@@ -1,0 +1,719 @@
+<script type="text/ng-template" id="required-field">
+    <ng-message class="text-danger" when="required">This field is required</ng-message>
+</script>
+
+<!--<h3>
+    Employee Deactive
+</h3>-->
+
+<div ng-controller="SysMstEmployeeDeactivateController as dpick">
+    <ng-form name="employeeform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+        <div id="panelDemo8" class="panel panel-primary ">
+            <div class="panel-heading">
+                <h5>Exit Clearance Details</h5>
+            </div>
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <h5><b class="text-primary">Employee Details</b></h5>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Employee Name</label>
+                                            <p>{{employee_details.user_firstname}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Employee User Code</label>
+                                            <p>{{employee_details.user_code}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Designation</label>
+                                            <p>{{employee_details.designation_name}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Department</label>
+                                            <p>{{employee_details.department_name}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Branch</label>
+                                            <p>{{employee_details.branch_name}}</p>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <label>Status</label>
+                                            <p>{{employee_details.user_access}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <label style="padding-top:10px;">Deactivation Date <span style="color:red"> *</span></label>
+                                            <div ng-controller="DatepickerDemoCtrl as dpick" class="form-group">
+                                                <p class="input-group">
+                                                    <input type="text" name="dob" ng-change="changedate(date)" datepicker-popup="dd/MM/yyyy"
+                                                           ng-model="$parent.receipt_date" is-open="dpick.opened" datepicker-options="dpick.dateOptions"
+                                                           date-disabled="false" close-text="Close" class="form-control" required />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" style="height:35px;" ng-click="dpick.open($event)" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-9">
+                                            <label>Remarks <span style="color:red"> *</span></label>
+                                            <br />
+                                            <textarea class="form-control" rows="2" tabindex="0" required ng-model="txtremarks" style="resize:vertical;" placeholder="Enter Reason"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-md" ng-show="lbsubmitbutton =='False'" ng-click="deactive_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Confirm</button>&nbsp;&nbsp
+                                        <button type="button" class="btn btn-success btn-md" disabled ng-show="lbsubmitbutton =='True'"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Confirm</button>&nbsp;&nbsp;
+                                        <button ng-click="deactive_cancel()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary text-center" style="font-size:16px;"><b> Exit Clearance Details  </b></p>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Asset</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Asset </td>
+                                                                        <td> Surrender Pending  </td>
+                                                                        <td ng-show="showasset_status == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showasset_status == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Asset </td>
+                                                                        <td> Temporary Asset Surrender  </td>
+                                                                        <td ng-show="showtempasset_status == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showtempasset_status == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Systems</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:25%"> Module Name </th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:8%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> {{lblmodule_name}}  </td>
+                                                                        <td> Reporting To </td>
+                                                                        <td> Employee tagged as Reporting To  </td>
+                                                                        <td ng-show="showmodule_name == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmodule_name == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Samfin</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> CAD Group Manager </td>
+                                                                        <td> Employee tagged as a Manager in CAD Group</td>
+                                                                        <td ng-show="showcadgroupmanager_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcadgroupmanager_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> CAD Group Member </td>
+                                                                        <td> Employee tagged as a Member in CAD Group</td>
+                                                                        <td ng-show="showcadgroupmembers_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcadgroupmembers_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> Credit Ops Maker </td>
+                                                                        <td> Employee tagged as a Maker in Credit Ops </td>
+                                                                        <td ng-show="showcreditops2maker_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcreditops2maker_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 4 </td>
+                                                                        <td> Credit Ops Checker </td>
+                                                                        <td> Employee tagged as a Checker in Credit Ops </td>
+                                                                        <td ng-show="showcreditops2checker_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcreditops2checker_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 5 </td>
+                                                                        <td> Credit Mapping </td>
+                                                                        <td> Employee tagged a in Credit Mapping </td>
+                                                                        <td ng-show="showcreditmapping_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcreditmapping_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 6 </td>
+                                                                        <td> CC Member </td>
+                                                                        <td> Employee tagged a in CC Member </td>
+                                                                        <td ng-show="showccmembermaster_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showccmembermaster_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 11 </td>
+                                                                        <td> Application </td>
+                                                                        <td> Application  </td>
+                                                                        <td ng-show="showapplication_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showapplication_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 7 </td>
+                                                                        <td> Business Approval </td>
+                                                                        <td> Pending Business Approval  </td>
+                                                                        <td ng-show="showapplicationapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showapplicationapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 8 </td>
+                                                                        <td> Credit Approval </td>
+                                                                        <td> Pending Credit Approval </td>
+                                                                        <td ng-show="showappcreditapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showappcreditapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 9 </td>
+                                                                        <td> CC Approval </td>
+                                                                        <td> Pending CC Approval </td>
+                                                                        <td ng-show="showccmeeting2members_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showccmeeting2members_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                 
+                                                                    <tr>
+                                                                        <td class="text-center"> 10 </td>
+                                                                        <td> CAD </td>
+                                                                        <td> CAD Approval </td>
+                                                                        <td ng-show="showprocesstype_assign == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showprocesstype_assign == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                  
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Samagro</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                   
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Credit Mapping </td>
+                                                                        <td> Employee tagged a in Credit Mapping </td>
+                                                                        <td ng-show="showagrcreditmapping_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrcreditmapping_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Product Desk Mapping </td>
+                                                                        <td> Employee tagged as a Manager in Product Desk Mapping</td>
+                                                                        <td ng-show="showproductdeskmanager_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showproductdeskmanager_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> Product Desk Mapping </td>
+                                                                        <td> Employee tagged as a Member in Product Desk Mapping</td>
+                                                                        <td ng-show="showproductdeskmember_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showproductdeskmember_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 4 </td>
+                                                                        <td> PMG Approval </td>
+                                                                        <td> Employee tagged in PMG Approval</td>
+                                                                        <td ng-show="showmstpmgapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmstpmgapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 5 </td>
+                                                                        <td> Product Approval </td>
+                                                                        <td> Employee tagged in Product Approval</td>
+                                                                        <td ng-show="showmstproductapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmstproductapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 6 </td>
+                                                                        <td> Business Approval </td>
+                                                                        <td> Pending Business Approval  </td>
+                                                                        <td ng-show="showagrapplicationapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrapplicationapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 7 </td>
+                                                                        <td> Application </td>
+                                                                        <td> Application  </td>
+                                                                        <td ng-show="showagrapplication_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrapplication_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 8 </td>
+                                                                        <td> Credit Approval </td>
+                                                                        <td> Pending Credit Approval</td>
+                                                                        <td ng-show="showagrappcreditapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrappcreditapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 9 </td>
+                                                                        <td> CC Approval </td>
+                                                                        <td> Pending CC Approval</td>
+                                                                        <td ng-show="showagrccmeeting2members_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrccmeeting2members_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 10 </td>
+                                                                        <td> CAD Approval </td>
+                                                                        <td> Pending CAD Approval</td>
+                                                                        <td ng-show="showagrprocesstype_assign == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showagrprocesstype_assign == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                   
+                                                                    <tr>
+                                                                        <td class="text-center"> 11 </td>
+                                                                        <td> Product Desk  </td>
+                                                                        <td> Product Desk Pending Approval </td>
+                                                                        <td ng-show="showappproductapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showappproductapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 12 </td>
+                                                                        <td> Warehouse Approval  </td>
+                                                                        <td> Warehouse Approval Pending Approval</td>
+                                                                        <td ng-show="showwarehouse2approval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showwarehouse2approval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Audit</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Audit Mapping </td>
+                                                                        <td> Employee Mapped for Audit  </td>
+                                                                        <td ng-show="showauditmapping2employee_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showauditmapping2employee_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Auditee Checker </td>
+                                                                        <td> Pending Auditee Checker Approval</td>
+                                                                        <td ng-show="showmultipleauditee_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmultipleauditee_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> Auditor - Maker, Checker and Approver </td>
+                                                                        <td> Pending Auditor - Maker, Checker and Approver Approval</td>
+                                                                        <td ng-show="showauditcreation_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showauditcreation_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Foundation</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Customer Mapping </td>
+                                                                        <td> Employee Mapped for Customer  </td>
+                                                                        <td ng-show="showcustomerapproving_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcustomerapproving_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Campaign Creation </td>
+                                                                        <td> Pending Campaign Approval </td>
+                                                                        <td ng-show="showcampaign_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcampaign_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> My Campaign Creation </td>
+                                                                        <td> Pending Campaign Approval </td>
+                                                                        <td ng-show="showfinalcampaign_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showfinalcampaign_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+
+
+                                                                    <tr>
+                                                                        <td class="text-center"> 4 </td>
+                                                                        <td> My Campaign </td>
+                                                                        <td> Pending Campaign Approval  </td>
+                                                                        <td ng-show="showcampaignapproving2employee_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcampaignapproving2employee_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 5 </td>
+                                                                        <td> Customer Approval </td>
+                                                                        <td> Pending Customer Approval  </td>
+                                                                        <td ng-show="showappcustomerapproving_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showappcustomerapproving_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Business Developement</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Callclosure </td>
+                                                                        <td> Callclosure Approval Pending  </td>
+                                                                        <td ng-show="showmarketingcall_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmarketingcall_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Inbound</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Callclosure </td>
+                                                                        <td> Callclosure Approval Pending  </td>
+                                                                        <td ng-show="showinboundcall_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showinboundcall_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>SA Onboarding</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Institution Approval </td>
+                                                                        <td> Maker Pending Approval </td>
+                                                                        <td ng-show="showmakersacontactinstitution_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmakersacontactinstitution_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Institution Approval </td>
+                                                                        <td> Checker Pending Approval </td>
+                                                                        <td ng-show="showcheckersacontactinstitution_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcheckersacontactinstitution_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> Institution Approval </td>
+                                                                        <td> Approver Pending Approval </td>
+                                                                        <td ng-show="showfinalsacontactinstitution_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showfinalsacontactinstitution_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 4 </td>
+                                                                        <td> Individual Approval </td>
+                                                                        <td> Maker Pending Approval </td>
+                                                                        <td ng-show="showmakersacontact_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmakersacontact_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 5 </td>
+                                                                        <td> Individual Approval </td>
+                                                                        <td> Checker Pending Approval </td>
+                                                                        <td ng-show="showcheckersacontact_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showcheckersacontact_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 6 </td>
+                                                                        <td> Individual Approval </td>
+                                                                        <td> Approver Pending Approval </td>
+                                                                        <td ng-show="showfinalsacontact_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showfinalsacontact_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="panel">
+                                                    <div class="panel-heading text-center" style="background-color:#EBEBEB;">
+                                                        <h5 class="text-primary"><b>Service Request</b></h5>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover table-striped">
+                                                                <thead>
+                                                                    <tr class="text-white" style="background-color:#e1e3e5;color:black;">
+
+                                                                        <th class="text-center" style="width:5%"> S.No</th>
+                                                                        <th style="width:15%"> Page Name </th>
+                                                                        <th style="width:45%"> Condition </th>
+                                                                        <th style="width:6%"> Status</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="text-center"> 1 </td>
+                                                                        <td> Active Business Unit master </td>
+                                                                        <td> Employee Tagged for Manager </td>
+                                                                        <td ng-show="showactivedepartment2manager_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showactivedepartment2manager_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 2 </td>
+                                                                        <td> Active Business Unit master </td>
+                                                                        <td> Employee Tagged for Member </td>
+                                                                        <td ng-show="showactivedepartment2member_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showactivedepartment2member_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 3 </td>
+                                                                        <td> Support Team </td>
+                                                                        <td> Employee Tagged for Support Team </td>
+                                                                        <td ng-show="showsupportteam2member_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showsupportteam2member_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 4 </td>
+                                                                        <td> Service Request </td>
+                                                                        <td> Service Request Approval Pending </td>
+                                                                        <td ng-show="showrequestapproval_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showrequestapproval_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 5 </td>
+                                                                        <td> Service Request </td>
+                                                                        <td>  Service Request Assign Activity </td>
+                                                                        <td ng-show="showservicerequest_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showservicerequest_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center"> 6 </td>
+                                                                        <td> Customer Query Assigned </td>
+                                                                        <td> Employee Assign for Customer Query </td>
+                                                                        <td ng-show="showemail_gid == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showemail_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>
+                                                                    <!--<tr>
+                                                                        <td class="text-center"> 7 </td>
+                                                                        <td> Service Request Mail </td>
+                                                                        <td> Service Request Mail Assigned Completed or Pending </td>
+                                                                        <td ng-show="showmaildetails_gid  == false" class="text-success"><em class="fa fa-thumbs-up" style="color:darkgreen;font-size:18px;"></em> </td>
+                                                                        <td ng-show="showmaildetails_gid == true" class="text-danger"> <em class="fa fa-thumbs-down fa-x" style="color:red;font-size:18px;"></em></td>
+                                                                    </tr>-->
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-form>   
+</div>
+
+

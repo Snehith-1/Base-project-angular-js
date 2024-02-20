@@ -1,0 +1,142 @@
+﻿<h3>
+    Supplier Approved
+    <!--<a href="#/app/AgrMstCustomerApprovalSummary">
+        <button type="button" title="Back to Customer Approval" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>-->
+</h3>
+<div ng-controller="AgrMstSupplierApprovedSummaryController">
+    <div class="card">
+        <md-content class="md-padding">
+            <md-tabs md-dynamic-height="" md-border-bottom="">
+                <md-tab md-on-select="GetsupplieronboardingApprovedlist()">
+                    <md-tab-label>
+                        Supplier Onboarding - Approved
+                        &emsp;<i class='pull-right label label-primary'>{{approvalcount.SupplierApproved}}</i>
+                    </md-tab-label>
+                    <md-tab-body>
+                        <md-content class="md-padding">
+
+                            <div class="">
+                                <h4 class="text-pink">
+                                    Supplier Onboarding - Approved
+                                </h4>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="table table-hover table-striped">
+                                            <thead class="nowrap">
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th> S.No </th>
+                                                    <th> Supplier ID </th>
+                                                    <th> Customer/Supplier Name </th>
+                                                    <!--<th> Vertical </th>-->
+                                                    <th style="width:10%;"> Applicant Type </th>
+                                                    <th> Submitted By </th>
+                                                    <th> Submitted Date </th>
+                                                    <th> Approved By </th>
+                                                    <th> Approved Date </th>
+                                                    <th> Tag Status </th>
+                                                    <th> Application Initiated</th>
+                                                    <th> Application Initiated By</th>
+                                                    <th class="text-center" style="width:14%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in supplierapplicationlist">
+                                                    <td data-title="'S.No'" class="text-center"> {{$index+1}}</td>
+                                                    <td data-title="'Buyer ID'">  {{data.application_no}} </td>
+                                                    <td data-title="'Applicant Name">  {{data.customer_name}} </td>
+                                                    <!--<td data-title="'Vertical">  {{data.vertical_name}} </td>-->
+                                                    <td data-title="'Applicant Type" style="width:10%;">  {{data.applicant_type}} </td>
+                                                    <td data-title="'Submitted By'">	 {{data.created_by}} </td>
+                                                    <td data-title="'Submitted Date'">	 {{data.submittedto_approval}} </td>
+                                                    <td data-title="'Approved By'">	 {{data.onboard_approvedby}} </td>
+                                                    <td data-title="'Approved Date'">
+                                                        {{data.onboard_approveddate}}
+                                                    </td>
+                                                    <td data-title="'Tag status'">
+                                                        {{data.lgltag_status}}
+                                                    </td>
+                                                    <td data-title="'Application Initiated'">
+                                                        <p ng-if="data.application_initiateddate!=''">{{data.application_initiateddate}}</p>
+                                                        <label ng-if="data.application_initiateddate==''" class="label label-info" style="font-size:11px;">Not Initiated</label>
+                                                    </td>
+                                                    <td data-title="'Application Initiated'"> {{data.application_initiatedby}} </td>
+                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;width:14%;" ng-switch="data.application_status">
+                                                        <button title="View" ng-click="suprapplcreation_view(data.application_gid)" class="btn btn-info">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                        <!--<button ng-show="data.lgltag_status=='Active'&&data.application_initiateddate==''" title="Buyer - Initiate Application" ng-click="initiate_supplieronboard(data.application_gid,data.application_no,data.customer_name)" class="btn btn-success">
+                                                            <em class="fa fa-arrow-circle-right"></em>
+                                                        </button>-->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </md-content>
+                    </md-tab-body>
+
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+
+    <script type="text/ng-template" id="/InitiateOnboard.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-arrow-circle-right"></em>&nbsp;<label style="font-size:16px">{{Popupdtl}} - Initiate Application</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="assignform" ng-submit="form.submitassign()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label>{{Popupdtl}} Id </label>
+                                        <br />
+                                        <p>{{application_no}}</p>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label> Customer Name </label>
+                                        <br />
+                                        <p>{{customer_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Remarks <span style="color:red;">*</span></label>
+                                        <textarea ng-model="txtremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="assignform.$invalid" ng-click="initiate_onboard()"><i class="fa fa-check"></i>&nbsp;&nbsp;Initiate</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+
+</div>

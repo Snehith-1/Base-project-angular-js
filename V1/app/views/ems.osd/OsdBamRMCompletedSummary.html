@@ -1,0 +1,70 @@
+﻿<h3>
+    Completed Summary
+</h3>
+<div ng-controller="OsdBamRMCompletedSummaryController">
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Reference No</th>
+                                    <th>Assigned On</th>
+                                    <th>Customer URN</th>
+                                    <th>Customer Name</th>
+                                    <th class="text-center"> RH Status</th>
+                                    <th class="text-center">Aging</th>
+                                    <th>Operation Status</th>
+                                    <th>Assigned To</th>
+                                    <th>Source</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in BankAlertCompleted_list">
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Assigned On'"> {{data.email_date}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}} </td>
+                                    <td data-title="'Customer Name'">{{data.customer_name}} </td>
+                                    <td data-title="'Status' " ng-switch="data.allocated_status">
+                                        <label style="font-size:10px" ng-switch-when="Pending" class="label label-info"> Pending </label>
+                                        <label style="font-size:10px" ng-switch-when="Completed" class="label label-green"> Completed </label>
+                                    </td>
+
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td data-title="'Operation Status'" ng-switch="data.operation_status">
+                                        <label style="font-size:10px" ng-switch-when="---" class="label label-warning">&nbsp; &nbsp;&nbsp;  ---&nbsp; &nbsp; &nbsp; </label>
+                                        <label style="font-size:10px" ng-switch-when="Assigned" class="label label-primary"> Assigned </label>
+                                        <label style="font-size:10px" ng-switch-when="Completed" class="label label-green"> Completed </label>
+                                    </td>
+                                    <td data-title="'Assigned To'">{{data.assigned_toname}} </td>
+                                    <td data-title="'Status'" ng-switch="data.kotakAPI_flag">
+                                        <label ng-switch-when="N" class="label label-info">E-Mail</label>
+                                        <label ng-switch-when="Y" class="label label-warning">Kotak API</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.allocated_status">
+                                        <button title="BankalertView" ng-click="BankalertView(data.bankalert2allocated_gid,data.customer_gid,data.customer_urn)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <br />
+                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+        </div>
+    </div>    
+</div>

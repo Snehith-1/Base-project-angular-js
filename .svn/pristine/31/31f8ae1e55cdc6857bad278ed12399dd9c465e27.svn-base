@@ -1,0 +1,989 @@
+﻿<h3>
+    Approve Leave
+    <a href="#/app/hrmDashboard">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="approveleavecontroller">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="panel widget" ng-click="panelDemo3 = !panelDemo3">
+                    <div class="row row-table row-flush">
+                        <div class="col-xs-4 bg-info text-center">
+                            <em class="fa fa-thumbs-o-up fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8">
+                        
+                            <div class="panel-body text-center" >
+                                <h4 class="mt0">{{count_approvalpending}}</h4>
+                                <p class="mb0">Approval Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="panel widget"  ng-click="panelDemo4 = !panelDemo4">
+                    <div class="row row-table row-flush">
+                        <div class="col-xs-4 bg-success-light text-center">
+                            <em class="fa fa-check fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8">
+                            <div class="panel-body text-center">
+                                <h4 class="mt0">{{count_approval}}</h4>
+                                <p class="mb0">Approved</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="panel widget" ng-click="panelDemo5 = !panelDemo5">
+                    <div class="row row-table row-flush">
+                        <div class="col-xs-4 bg-danger-light text-center">
+                            <em class="fa fa-thumbs-o-down fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8">
+                            <div class="panel-body text-center" >
+                                <h4 class="mt0">{{count_rejected}}</h4>
+                                <p class="mb0">Rejected</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="panel widget">
+                    <div class="row row-table row-flush">
+                        <div class="col-xs-4 bg-green text-center">
+                            <em class="fa fa-history fa-2x"></em>
+                        </div>
+                        <div class="col-xs-8">
+                            <div class="panel-body text-center">
+                                <h4 class="mt0">{{count_history}}</h4>
+                                <p class="mb0">History</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// Approval Pending TAB.....//-->
+    <div id="panelDemo3" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" style="">
+            <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; <label class="text-info">Approval Pending Summary</label>
+            <paneltool tool-collapse="tool-collapse" ng-init="panelDemo3=true" class="pull-right">
+                <a href="#" panel-collapse="" tooltip="Expand / Collapse" ng-click="panelDemo3 = !panelDemo3" class="ng-scope" tabindex="0">
+                    <em ng-show="panelDemo3" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                    <em ng-show="!panelDemo3" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                </a>
+            </paneltool>
+        </div>
+        <div collapse="panelDemo3" class="panel-wrapper collapse" style="height: 0px;">
+            <div class="panel-body">
+ 
+                <div class="panel" > 
+                    <tabset justified="true">
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em>
+                                Leave &nbsp; <label class="label label-danger" ng-if="pending_leave != '0'">{{pending_leave}}</label>   
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th class="text-nowrap">No of Days</th>
+                                                <th>Reason</th>
+                                                <th class="text-nowrap">Approval Status</th>
+                                                <th class="text-nowrap">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in leavepending_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td data-title="Approved By">{{data.applied_by}}</td>
+                                                <td title="Leave Type">{{data.leavetype_name}}</td>
+                                                <td title="From" class="text-nowrap">{{data.leave_from}}</td>
+                                                <td data-title="To" class="text-nowrap">{{data.leave_to}}</td>
+                                                <td data-title="No of Days">{{data.noofdays_leave}}</td>
+                                                <td data-title="Reason">
+                                                    {{data.leave_reason}}
+                                                </td>
+                                                <td data-title="Status">{{data.approval_status}}</td>
+                                                <td data-title="Action" class="text-nowrap" ng-switch="data.document_name"> 
+                                                    <button title="Approve" class="btn btn-success btn-sm" ng-click="approveleave(data.leave_gid)">
+                                                        <em class="fa fa-thumbs-o-up"></em>
+                                                    </button>
+                                                    <button title="Reject" class="btn btn-danger btn-sm" ng-click="rejectleave(data.leave_gid)">
+                                                        <em class="fa fa-thumbs-o-down"></em>
+                                                    </button>
+                                                    <button title="Document" class="btn btn-info btn-sm" ng-switch-when="Y" ng-click="documentleave(data.leave_gid)">
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                    <button title="No Document" class="btn btn-primary btn-sm" ng-switch-when="N" disabled>
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Login Time
+                                &nbsp; <label class="label label-danger" ng-if="pending_login != '0'">{{pending_login}}</label> 
+                            </tab-heading>
+                            <div>
+                                <!-- START table responsive-->
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th>Approval Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in loginapproval_pendinglist">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Apply Date">{{data.loginapply_date}}</td>
+                                                <td title="Attendence Date">{{data.loginattendence_date}}</td>
+                                                <td title="Login Time">{{data.login_time}}</td>
+                                                <td title="Login Reason">{{data.login_reason}}</td>
+                                                <td title="Approval Status">
+                                                    {{data.login_status}}
+                                                </td>
+                                                <td data-title="Action"  class="text-nowrap">
+                                                    <button title="Approve" class="btn btn-success btn-sm" ng-click="approvelogin(data.attendancelogintmp_gid,data.apply_employeegid,data.loginattendence_date)">
+                                                        <em class="fa fa-thumbs-o-up"></em>
+                                                    </button>
+                                                    <button title="Reject" class="btn btn-danger btn-sm" ng-click="rejectlogin(data.attendancelogintmp_gid)">
+                                                        <em class="fa fa-thumbs-o-down"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Logout Time 
+                                &nbsp; <label class="label label-danger" ng-if="pending_logout != '0'">{{pending_logout}}</label> 
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Logout Time</th>
+                                                <th>Logout Reason</th>
+                                                <th>Approval Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in logoutapproval_pendinglist">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Apply Date">{{data.logoutapply_date}}</td>
+                                                <td title="Attendence Date">{{data.logoutattendence_date}}</td>
+                                                <td title="Logout Time">{{data.logout_time}}</td>
+                                                <td title="Logout Reason">{{data.logout_reason}}</td>
+                                                <td title="Approval Status">
+                                                    {{data.logout_status}}
+                                                </td>
+                                                <td data-title="Action"  class="text-nowrap">
+                                                    <button title="Approve" class="btn btn-success btn-sm"
+                                                             ng-click="approvelogout(data.attendancelogouttmp_gid,data.logoutattendence_date,data.apply_employeegid)">
+                                                        <em class="fa fa-thumbs-o-up"></em>
+                                                    </button>
+                                                    <button title="Reject" class="btn btn-danger btn-sm"
+                                                             ng-click="rejectlogout(data.attendancelogouttmp_gid)">
+                                                        <em class="fa fa-thumbs-o-down"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> OnDuty  
+                                &nbsp; <label class="label label-danger" ng-if="pending_onduty != '0'">{{pending_onduty}}</label> 
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>OD Date</th>
+                                                <th>OD From</th>
+                                                <th>OD To </th>
+                                                <th>OD Duration</th>
+                                                <th>OD Reason</th>
+                                                <th>OD Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in ODapproval_pendinglist">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="OD Date">{{data.onduty_date}}</td>
+                                                <td title="OD From">{{data.onduty_from}}</td>
+                                                <td title="OD To">{{data.onduty_to}}</td>
+                                                <td title="OD Duration">
+                                                    {{data.onduty_duration}}
+                                                </td>
+                                                <td title="OD Reason">
+                                                    {{data.onduty_reason}}
+                                                </td>
+                                                <td title="OD Status">
+                                                    {{data.ondutytracker_status}}
+                                                </td>
+                                                <td data-title="Action"  class="text-nowrap">
+                                                    <button title="Approve" class="btn btn-success btn-sm" 
+                                                            ng-click="approveOD(data.ondutytracker_gid)">
+                                                        <em class="fa fa-thumbs-o-up"></em>
+                                                    </button>
+                                                    <button title="Reject" class="btn btn-danger btn-sm" 
+                                                            ng-click="rejectOD(data.ondutytracker_gid)">
+                                                        <em class="fa fa-thumbs-o-down"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> CompOff 
+                                &nbsp; <label class="label label-danger" ng-if="pending_compoff != '0'">{{pending_compoff}}</label> 
+                            </tab-heading>
+                            <div>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Employee</th>
+                                                    <th>Compoff Applied</th>
+                                                    <th>Actual Working </th>
+                                                    
+                                                    <th>Compoff Reason</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in compoffpending_list">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Employee">{{data.employee_name}}</td>
+                                                    <td class="nowrap" title="Compoff From">{{data.Compoff_from}}</td>
+                                                    <td class="nowrap" title="Compoff To">{{data.Compoff_to}}</td>
+                                                   
+                                                    <td title="Compoff Reason">
+                                                        {{data.Compoff_reason}}
+                                                    </td>
+                                                    <td title="Status">
+                                                        {{data.Compoff_status}}
+                                                    </td>
+                                                    <td data-title="Action" class="text-nowrap">
+                                                        <button title="Approve" class="btn btn-success btn-sm"
+                                                                 ng-click="approvecompoff(data.compensatoryoff_gid)">
+                                                            <em class="fa fa-thumbs-o-up"></em>
+                                                        </button>
+                                                        <button title="Reject" class="btn btn-danger btn-sm" 
+                                                                ng-click="rejectcompoff(data.compensatoryoff_gid)">
+                                                            <em class="fa fa-thumbs-o-down"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Permission
+                                &nbsp; <label class="label label-danger" ng-if="pending_permission != '0'">{{pending_permission}}</label> 
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in permissionapproval_pendinglist">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee">{{data.employee_name}}</td>
+                                                <td class="nowrap" title="Permission Date">{{data.permission_date}}</td>
+                                                <td class="nowrap" title="Permission From">{{data.permission_from}}</td>
+                                                <td title="Permission To">{{data.permission_to}}</td>
+                                                <td title="Duration">
+                                                    {{data.permission_duration}}
+                                                </td>
+                                                <td title="Reason">
+                                                    {{data.permission_reason}}
+                                                </td>
+                                                <td title="Status">
+                                                    {{data.permission_status}}
+                                                </td>
+                                                <td data-title="Action"  class="text-nowrap">
+                                                    <button title="Approve" class="btn btn-success btn-sm"
+                                                             ng-click="approvepermission(data.permissiondtl_gid)">
+                                                        <em class="fa fa-thumbs-o-up"></em>
+                                                    </button>
+                                                    <button title="Reject" class="btn btn-danger btn-sm" 
+                                                            ng-click="rejectpermission(data.permissiondtl_gid)">
+                                                        <em class="fa fa-thumbs-o-down"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--// Approved Summary TAB.....//-->
+
+    <div id="panelDemo4" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':panelDemo4}" class="panel-heading panel-heading-collapsed" style="">
+            <em class="fa fa-check text-success fa-2x"></em>&emsp; <label class="text-success">Approved Summary</label>
+            <paneltool tool-collapse="tool-collapse" ng-init="panelDemo4=true" class="pull-right">
+                <a href="#" panel-collapse="" tooltip="Expand / Collapse" ng-click="panelDemo4 = !panelDemo4" class="ng-scope" tabindex="0">
+                    <em ng-show="panelDemo4" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                    <em ng-show="!panelDemo4" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                </a>
+            </paneltool>
+        </div>
+        <div collapse="panelDemo4" class="panel-wrapper collapse" style="height: 0px;">
+            <div class="panel-body">
+
+                <div class="panel">
+                    <tabset justified="true">
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em>
+                                Leave &nbsp; <p class="label label-info" ng-if="approved_leave != '0'">{{approved_leave}}</p>   
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th class="text-nowrap">Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th class="text-nowrap">No of Days</th>
+                                                <th>Reason</th>
+                                                <th class="text-nowrap">Approval Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in leave_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Approved By" class="text-nowrap">{{data.applied_by}}</td>
+                                                <td title="Leave Type" class="text-nowrap">{{data.leavetype_name}}</td>
+                                                <td title="From" class="text-nowrap">{{data.leave_from}}</td>
+                                                <td title="To" class="text-nowrap">{{data.leave_to}}</td>
+                                                <td title="No of Days" class="text-nowrap">{{data.noofdays_leave}}</td>
+                                                <td title="Reason">
+                                                    {{data.leave_reason}}
+                                                </td>
+                                                <td data-title="Status">{{data.approval_status}}</td>
+                                                <td data-title="Action" class="text-nowrap" ng-switch="data.document_name">
+                                                    <button title="Document" class="btn btn-info btn-sm" ng-switch-when="Y" ng-click="documentleave(data.leave_gid)">
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                    <button title="No Document" class="btn btn-primary btn-sm" ng-switch-when="N" disabled>
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Login Time 
+                               <label class="label label-info" ng-if="approved_login != '0'">{{approved_login}}</label>   
+                            </tab-heading>
+                            <div>
+                                <!-- START table responsive-->
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th class="text-nowrap">Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in loginsummary_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Apply Date" class="text-nowrap">{{data.loginapply_date}}</td>
+                                                <td title="Attendence Date" class="text-nowrap">{{data.loginattendence_date}}</td>
+                                                <td title="Login Time" class="text-nowrap">{{data.login_time}}</td>
+                                                <td title="Login Reason">{{data.login_reason}}</td>
+                                                <td title="Approval Status">
+                                                    {{data.login_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Logout Time
+                               <label class="label label-info" ng-if="approved_logout != '0'">{{approved_logout}}</label>
+                            </tab-heading>
+                            <div>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Employee</th>
+                                                    <th>Apply Date</th>
+                                                    <th>Attendence Date</th>
+                                                    <th>Logout Time</th>
+                                                    <th>Logout Reason</th>
+                                                    <th>Approval Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in logoutsummary_list">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Employee Name">{{data.employee_name}}</td>
+                                                    <td title="Apply Date">{{data.logoutapply_date}}</td>
+                                                    <td title="Attendence Date">{{data.logoutattendence_date}}</td>
+                                                    <td title="Logout Time">{{data.logout_time}}</td>
+                                                    <td title="Logout Reason">{{data.logout_reason}}</td>
+                                                    <td title="Approval Status">
+                                                        {{data.logout_status}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> OnDuty
+                                &nbsp; <label class="label label-info" ng-if="approved_onduty != '0'">{{approved_onduty}}</label>
+                            </tab-heading>
+                            <div>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Employee</th>
+                                                    <th>OD Date</th>
+                                                    <th>OD From</th>
+                                                    <th>OD To </th>
+                                                    <th>OD Duration</th>
+                                                    <th>OD Reason</th>
+                                                    <th>OD Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in onduty_details">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Employee Name">{{data.employee_name}}</td>
+                                                    <td title="OD Date">{{data.onduty_date}}</td>
+                                                    <td title="OD From">{{data.onduty_from}}</td>
+                                                    <td title="OD To">{{data.onduty_to}}</td>
+                                                    <td title="OD Duration">
+                                                        {{data.onduty_duration}}
+                                                    </td>
+                                                    <td title="OD Reason">
+                                                        {{data.onduty_reason}}
+                                                    </td>
+                                                    <td title="OD Status">
+                                                        {{data.ondutytracker_status}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> CompOff
+                                &nbsp; <label class="label label-info" ng-if="approved_compoff != '0'">{{approved_compoff}}</label>
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Compoff Applied</th>
+                                                <th>Actual Working </th>
+                                               
+                                                <th>Compoff Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in compoff_details">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td class="nowrap" title="Compoff From">{{data.Compoff_from}}</td>
+                                                <td class="nowrap" title="Compoff To">{{data.Compoff_to}}</td>
+                                                
+                                                <td title="Compoff Reason">
+                                                    {{data.Compoff_reason}}
+                                                </td>
+                                                <td title="Status">
+                                                    {{data.Compoff_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Permission
+                                &nbsp; <label class="label label-info" ng-if="approved_permission != '0'">{{approved_permission}}</label>
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in permission_details">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Permission Date">{{data.permission_date}}</td>
+                                                <td title="Permission From">{{data.permission_from}}</td>
+                                                <td title="Permission To">{{data.permission_to}}</td>
+                                                <td title="Duration">
+                                                    {{data.permission_duration}}
+                                                </td>
+                                                <td title="Reason">
+                                                    {{data.permission_reason}}
+                                                </td>
+                                                <td title="Status">
+                                                    {{data.permission_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--// Rejected Summary TAB.....//-->
+
+    <div id="panelDemo5" class="panel panel-default">
+        <div ng-class="{'panel-heading-collapsed':panelDemo5}" class="panel-heading panel-heading-collapsed" style="">
+            <em class="fa fa-thumbs-o-down text-danger fa-2x"></em>&emsp; <label class="text-danger">Rejected Summary</label>
+            <paneltool tool-collapse="tool-collapse" ng-init="panelDemo5=true" class="pull-right">
+                <a href="#" panel-collapse="" tooltip="Expand / Collapse" ng-click="panelDemo5 = !panelDemo5" class="ng-scope" tabindex="0">
+                    <em ng-show="panelDemo5" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                    <em ng-show="!panelDemo5" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                </a>
+            </paneltool>
+        </div>
+        <div collapse="panelDemo5" class="panel-wrapper collapse" style="height: 0px;">
+            <div class="panel-body">
+
+                <div class="panel">
+                    <tabset justified="true">
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em>
+                                Leave   &nbsp; <label class="label label-info" ng-if="rejected_leave != '0'">{{rejected_leave}}</label>
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Leave Type</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th class="text-nowrap">No of Days</th>
+                                                <th>Reason</th>
+                                                <th class="text-nowrap">Approval Status</th>
+                                                <th class="text-nowrap">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in leavereject_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td data-title="Approved By">{{data.applied_by}}</td>
+                                                <td title="Leave Type">{{data.leavetype_name}}</td>
+                                                <td title="From" class="text-nowrap">{{data.leave_from}}</td>
+                                                <td data-title="To" class="text-nowrap">{{data.leave_to}}</td>
+                                                <td data-title="No of Days">{{data.noofdays_leave}}</td>
+                                                <td data-title="Reason">
+                                                    {{data.leave_reason}}
+                                                </td>
+                                                <td data-title="Status">{{data.approval_status}}</td>
+                                                <td data-title="Action" class="text-nowrap" ng-switch="data.document_name">
+                                                    <button title="Document" class="btn btn-info btn-sm" ng-switch-when="Y" ng-click="documentleave(data.leave_gid)">
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                    <button title="No Document" class="btn btn-primary btn-sm" ng-switch-when="N" disabled>
+                                                        <em class="fa fa-file"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Login Time
+                                &nbsp; <label class="label label-info" ng-if="rejected_login != '0'">{{rejected_login}}</label>
+                            </tab-heading>
+                            <div>
+                                <!-- START table responsive-->
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Apply Date</th>
+                                                <th>Attendence Date</th>
+                                                <th>Login Time</th>
+                                                <th>Login Reason</th>
+                                                <th>Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in loginsummaryrej_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Apply Date">{{data.loginapply_date}}</td>
+                                                <td title="Attendence Date">{{data.loginattendence_date}}</td>
+                                                <td title="Login Time">{{data.login_time}}</td>
+                                                <td title="Login Reason">{{data.login_reason}}</td>
+                                                <td title="Approval Status">
+                                                    {{data.login_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Logout Time
+                                &nbsp; <label class="label label-info" ng-if="rejected_logout != '0'">{{rejected_logout}}</label>
+                            </tab-heading>
+                            <div>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Employee</th>
+                                                    <th>Apply Date</th>
+                                                    <th>Attendence Date</th>
+                                                    <th>Logout Time</th>
+                                                    <th>Logout Reason</th>
+                                                    <th>Approval Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in logoutsummaryrej_list">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Employee Name">{{data.employee_name}}</td>
+                                                    <td title="Apply Date">{{data.logoutapply_date}}</td>
+                                                    <td title="Attendence Date">{{data.logoutattendence_date}}</td>
+                                                    <td title="Logout Time">{{data.logout_time}}</td>
+                                                    <td title="Logout Reason">{{data.logout_reason}}</td>
+                                                    <td title="Approval Status">
+                                                        {{data.logout_status}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> OnDuty
+                                &nbsp; <label class="label label-info" ng-if="rejected_onduty != '0'">{{rejected_onduty}}</label>
+                            </tab-heading>
+                            <div>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Employee</th>
+                                                    <th>OD Date</th>
+                                                    <th>OD From</th>
+                                                    <th>OD To </th>
+                                                    <th>OD Duration</th>
+                                                    <th>OD Reason</th>
+                                                    <th>OD Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in ondutyrej_details">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Employee Name">{{data.employee_name}}</td>
+                                                    <td title="OD Date">{{data.onduty_date}}</td>
+                                                    <td title="OD From">{{data.onduty_from}}</td>
+                                                    <td title="OD To">{{data.onduty_to}}</td>
+                                                    <td title="OD Duration">
+                                                        {{data.onduty_duration}}
+                                                    </td>
+                                                    <td title="OD Reason">
+                                                        {{data.onduty_reason}}
+                                                    </td>
+                                                    <td title="OD Status">
+                                                        {{data.ondutytracker_status}}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> CompOff
+                                &nbsp; <label class="label label-info" ng-if="rejected_compoff != '0'">{{rejected_compoff}}</label>
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Compoff Applied</th>
+                                                <th>Actual Working</th>
+                                              
+                                                <th>Compoff Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in compoffrej_details">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td class="nowrap" title="Compoff From">{{data.Compoff_from}}</td>
+                                                <td class="nowrap" title="Compoff To">{{data.Compoff_to}}</td>
+                                               
+                                                <td title="Compoff Reason">
+                                                    {{data.Compoff_reason}}
+                                                </td>
+                                                <td title="Status">
+                                                    {{data.Compoff_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                        <tab>
+                            <tab-heading>
+                                <em class="fa fa-check-circle fa-1x"></em> Permission
+                                &nbsp; <label class="label label-info" ng-if="rejected_permission != '0'">{{rejected_permission}}</label>
+                            </tab-heading>
+                            <div>
+                                <div class="table-responsive">
+                                    <table datatable="ng" class="row-border hover">
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th>S.No</th>
+                                                <th>Employee</th>
+                                                <th>Permission Date</th>
+                                                <th>Permission From</th>
+                                                <th>Permission To</th>
+                                                <th>Duration</th>
+                                                <th>Permission Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in permissionrej_details">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Employee Name">{{data.employee_name}}</td>
+                                                <td title="Permission Date">{{data.permission_date}}</td>
+                                                <td title="Permission From">{{data.permission_from}}</td>
+                                                <td title="Permission To">{{data.permission_to}}</td>
+                                                <td title="Duration">
+                                                    {{data.permission_duration}}
+                                                </td>
+                                                <td title="Reason">
+                                                    {{data.permission_reason}}
+                                                </td>
+                                                <td title="Status">
+                                                    {{data.permission_status}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/ng-template" id="/myModalContent.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                </span>Uploaded Document
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row"> 
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-secondary">
+                                <thead class="bg-gray text-white">
+                                    <tr width="100%">
+                                        <th scope="col">Document Name</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in filename_list" width="100%">
+                                        <td title="'Document Name'">{{data.documentname}}</td>
+                                        <td data-title="'Action'">
+                                            <a class="btn btn-xs btn-success" title="Download" ng-click="document_downloadclick(data.path,data.documentname)">
+                                                <span class="fa fa-download"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br/>
+    </script>
+</div>

@@ -1,0 +1,198 @@
+﻿<h3>
+    Credit Operations Document
+</h3>
+<div ng-controller="idasTrnDocumentTaggingCreditOperationsChildController">
+    <div class="panel">
+        <div class="panel-body">
+            <br />
+            <div class="text-center text-primary" style="font-size: 20px;">
+                <label>{{customerName}}/{{Customerurn}}</label>
+            </div>
+            <div class="row" >
+                <br>
+                <div class="col-lg-12">
+                    <div class="col-lg-3">
+                        <button type="button" ng-click="CreditOperationsFolder()" class="btn btn-warning btn-xs">
+                            <span class="fa fa-plus"></span>&nbsp;&nbsp;&nbsp;New Folder
+                        </button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" ng-click="CreditOperationspopFileShow()" class="btn btn-info btn-xs">
+                            <span class="fa fa-plus"></span>&nbsp;&nbsp;New File
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <br>
+                <ul class="breadcrumb">
+                    <li>
+                        <a ng-click="home()">Home</a>
+                    </li>
+                    <li ng-repeat="data in BreadCrumb_list| orderBy : '-serial_no'" ng-class="{active: $last}">
+                        <a ng-click="goCreditOperationsChild(data.creditoperationsfileupload_gid)">{{data.folder_name}}</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="input-group">
+                <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            <br />
+            <div>
+                <div>
+                    <table class="table m0">
+                        <thead>
+                            <tr class="bg-gray-light text-white">
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Document Label</th>
+                                <th style="width:30%;">Remarks</th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                                <th class="text-nowrap" style="width:8%;" ng-if="creditoperationteam_flag=='Y'">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in CreditOperationsDocumentDtls_list|filter:searchtxt">
+                                <td>
+                                    <em class="fa fa-folder text-warning fa-2x" ng-if="data.directory_type=='Folder'"></em>
+                                    <em class="fa fa-file text-info fa-2x" ng-if="data.directory_type=='File'"></em>
+                                </td>
+                                <td>
+                                    <a ng-if="data.directory_type=='Folder'"
+                                       ng-click="goCreditOperationsChild(data.creditoperationsfileupload_gid)">{{data.folder_name}}</a>
+                                    <a download="" href="" id="btnpdf" ng-if="data.directory_type=='File'"
+                                       ng-click="downloadcreditoperationsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                </td>
+                                <td>
+                                    {{data.documentlabel_name}}
+                                </td>
+                                <td style="width:30%;">
+                                    {{data.remarks}}
+                                </td>
+                                <td>
+                                    {{data.created_by}}
+                                </td>
+                                <td>
+                                    {{data.created_date}}
+                                </td>
+                                <td class="text-nowrap" ng-if="creditoperationteam_flag=='Y'">
+                                    <button title="Rename" ng-if="data.directory_type=='File'" class="btn btn-green btn-sm"
+                                            ng-click="RenameCreditOperationsFolder(data.creditoperationsfileupload_gid,data.directory_type,data.document_name)">
+                                        <em class="icon icon-pencil"></em>
+                                    </button>
+                                    <button title="Rename" ng-if="data.directory_type=='Folder'"
+                                            class="btn btn-green btn-sm"
+                                            ng-click="RenameCreditOperationsFolder(data.creditoperationsfileupload_gid,data.directory_type,data.folder_name)">
+                                        <em class="icon icon-pencil"></em>
+                                    </button>
+                                    <button title="Delete" class="btn btn-danger btn-sm"
+                                            ng-click="DeleteCreditOperationsDocument(data.creditoperationsfileupload_gid)">
+                                        <em class="fa fa-trash"></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <script type="text/ng-template" id="/myModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Create Folder</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="createfolderform" ng-submit="form.submitForm1()" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                <div class="controls">
+                    <input type="text" name="folder_name" ng-model="folderName" maxlength="130" placeholder="Enter the Folder Name" class="form-control" />
+
+                </div>
+                <br />
+                <div class="row text-center">
+                    <button type="button" ng-click="createFolder()" ng-disabled="!folderName" class="btn btn-primary">Create</button>&nbsp;
+                    <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                </div>
+
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/myModalContent1.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-pencil"></em>&nbsp;Rename</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="controls">
+                <input type="text" name="renameFolder" ng-model="renameFolder" maxlength="130" class="form-control" />
+
+            </div>
+            <br>
+            <div class="row text-center">
+                <button type="button" ng-click="renameSave()" ng-disabled="!renameFolder" class="btn btn-primary">Save</button>&nbsp;
+                <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Documentuploadcontent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Document Upload</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Document Label <span style="color:red"> * </span></label>
+                        <select id="documentlabelname" name="document_lblname" chosen="" ng-options="m.documentlabel_name for m in document_labellist"
+                                ng-model="documentlabel_gid" class="chosen-select form-control" required>
+                            <option value=""> -------- Select Document Label --------</option>
+                        </select>
+                    </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Remarks</label>
+                        <textarea ng-model="remarks" id="remarks" placeholder="Enter the Remarks" rows="4" class="form-control"
+                                  ng-trim="false" aria-multiline="true" aria-invalid="true"></textarea>
+                    </div>
+                    <br /><br /> <br /><br /><br /><br /><br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <p>
+                            <input type="file" id="file" multiple />
+                        </p>
+                        <p id="fp"></p>
+                    </div>
+                </div>
+                <br />
+                <div clas="row">
+                    <div class="text-center">
+                        <button type="button" ng-click="uploadfile()" class="btn btn-info" ng-disabled="documentAddform.$invalid">
+                            <span class="fa fa-upload"></span>&nbsp;&nbsp;Upload
+                        </button>
+                        <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                        <br /><br />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+</div>

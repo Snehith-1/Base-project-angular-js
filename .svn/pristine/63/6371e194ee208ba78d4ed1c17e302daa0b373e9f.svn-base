@@ -1,0 +1,186 @@
+﻿
+<h3>
+    RM Mapping
+</h3>
+<div ng-controller="MstRMMappingController">
+    <br />
+    <div class="row">
+        <form novalidate="" name="basesearch" ng-submit="form.searchsubmit()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2  col-sm-2 col-md-2">
+                    <label>Base Location</label>&nbsp;
+                    <select name="cbobaselocation" id="cbobaselocation" ng-options="m.baselocation_name for m in location_list" chosen="" ng-change="onselectdlocation(cbobaselocation)"
+                            ng-model="cbobaselocation" class="chosen-select form-control" style="height:37px;" size="1">
+                        <option value=""> ----- Select Base Location -----</option>
+                    </select>
+                </div>
+                <div class="col-lg-2  col-sm-2 col-md-2">
+                    <label>Vertical Name </label>&nbsp;
+                    <select name="vertical" id="vertical" ng-options="m.vertical_gid as m.vertical_name for m in vertical_list" ng-change="OnchangeVertical(cbovertical)" chosen=""
+                            ng-model="cbovertical" class="chosen-select form-control" style="height:37px;" size="1">
+                        <option value=""> ----- Select Vertical  -----</option>
+                    </select>
+                </div>
+                <div class="col-lg-2  col-sm-2 col-md-2">
+                    <label>Program </label>
+                    <select name="cboprogram" chosen="" tabindex="2"
+                            ng-options="m.program_name for m in program_list"  
+                            ng-model="cboprogram" class="chosen-select form-control"></select>
+                </div>
+                <div class="col-lg-3  col-sm-3 col-md-3">
+                    <label>Employee Name </label>&nbsp;
+                    <select name="employeename" id="employeename" ng-options="m.employee_name for m in employee_list" chosen=""
+                            ng-model="cboemployee" class="chosen-select form-control" style="height:37px;" size="1">
+                        <option value=""> ----- Select Employee  -----</option>
+                    </select>
+
+                </div>
+                <div  class="col-lg-2  col-sm-2 col-md-2" style="padding-top:25px;">
+                    <button type="button" class="btn btn-green btn-md" ng-disabled="basesearch.$invalid" style="background-color:#23b1e6;" ng-click="searchsubmit()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                    <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-click="refresh()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                    <button type="button" ng-show="locationbasedexport" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="basesearch.$invalid" ng-click="export()" title="Export Excel"><i class="fa fa-file"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <br />
+            <div class="col-lg-1 col-sm-1 col-md-1">
+
+            </div>
+            <div class="col-lg-7 col-sm-7 col-md-7">
+
+                <!--<input type="text" name="customer" id="customer" ng-model="customer" required
+                       ng-keyup="complete(customer)" class="form-control" placeholder="Search Employee Name Here..." />
+
+                <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                    <li class="list-group-item" ng-repeat="m in customer_list"
+                        ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                </ul>
+
+                <label style="color:red;">{{message}}</label>-->
+            </div>
+            <div class="pull-right col-lg-2 col-sm-2 col-md-2">
+
+                <i>
+                    Total Employee  :{{locationemployee_count}} of {{employee_count}}
+                </i>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12 pull-right">
+
+        </div>
+    </div> 
+    <div class="dd-handle ng-scope" ng-show="locationbased" ng-repeat="data in employee_data">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-sm-6 col-md-6 text-primary" style="font-size:130%;font-weight :bold;">
+                    <label style="font-weight:bold">{{data.level_zero}}</label>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Level 0</label><br />
+                    {{data.level_zero}}
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Level 1</label><br />
+                    {{data.level_one}}
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Cluster Head</label><br />
+                    {{data.clusterhead}}
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Region Head</label><br />
+                    {{data.regionhead}}
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Zonal Head</label><br />
+                    {{data.zonalhead}}
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                    <label style="font-weight:bold">Business Head</label><br />
+                    {{data.businesshead}}
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <!--<button type="button" class="btn btn-primary  btn-sm" ng-click="rdGenerate(data.customer_gid)" ><i class="fa fa-hand-o-right"></i> &nbsp;&nbsp;Generate</button>
+                    <button type="button" class="btn btn-green btn-sm" ng-click="mailHistory(data.customer_gid)" ><i class="fa fa-history"></i> &nbsp;&nbsp;History</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dd-handle ng-scope" ng-show="verticalshow">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <br />
+                <div class="col-lg-12 col-md-12 col-sm-12 text-pink text-center" style="font-size:130%;font-weight :bold;">
+                    <label style="font-weight:bold">{{level_zero}}</label> Reporting To
+                    <label style="font-weight:bold">{{level_one}}</label>
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <div class="row dd-handle" ng-repeat="data in vertical" style="background-color: #f9f8f8;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <p style="font-weight:bold;font-size:15px;" class="text-primary text-center">{{data.vertical_name}}</p>
+                </div>
+            </div>
+            <div ng-repeat="list in data.viewlist">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12 ">
+                            <p style="color:#a2510b;font-weight:bold;font-size:110%;">{{list.program_name}}</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label style="font-weight:bold">Cluster Head</label><br />
+                            {{list.clusterhead}}
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label style="font-weight:bold">Regional Head</label><br />
+                            {{list.regionhead}}
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label style="font-weight:bold">Zonal Head</label><br />
+                            {{list.zonalhead}}
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                            <label style="font-weight:bold">Business Head</label><br />
+                            {{list.businesshead}}
+                        </div>
+                    </div>
+                </div> <br />
+            </div>
+            <br />
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                </div>
+                <div class="col-lg-6 col-sm-6 col-md-6">
+                    <!--<button type="button" class="btn btn-primary  btn-sm" ng-click="rdGenerate(data.customer_gid)" ><i class="fa fa-hand-o-right"></i> &nbsp;&nbsp;Generate</button>
+                    <button type="button" class="btn btn-green btn-sm" ng-click="mailHistory(data.customer_gid)" ><i class="fa fa-history"></i> &nbsp;&nbsp;History</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

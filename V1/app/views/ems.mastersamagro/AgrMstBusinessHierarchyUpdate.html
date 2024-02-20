@@ -1,0 +1,257 @@
+<h3>
+    Business Hierarchy Update
+</h3>
+<div ng-controller="AgrMstBusinessHierarchyUpdateController">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);color:#ffffff">
+            <h5> Business Hierarchy Update </h5>
+        </div>
+        <br />
+        <form novalidate="" name="BusinessHierarchyUpdateform" ng-submit="form.BusinessHierarchyUpdateform()" autocomplete="off" class="form-validate mb-lg">            
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <p style="font-size:14px;color: #930D59;"><b><u> Business Approval Details </u></b></p>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <p class="text-primary" style="font-size:14px;"><b> Approval Hierarchy Details </b></p>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#141478;font-size: 12px;">L0 - RM</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                    {{level_zero}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#db2525;font-size: 13px;">L1 - DRM</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                    {{level_one}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#871490;font-size: 13px;">L2 - CH  </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- > </span><br />
+                                                    {{clusterhead}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#12574f;font-size: 13px;">L3 - RH </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- ></span><br />
+                                                    {{regionhead}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#f17a0b;font-size: 13px;">L4 - ZH </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- > </span><br />
+                                                    {{zonalhead}}
+                                                </div>
+                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                    <label style="font-weight:bold;color:#ee1c62;font-size: 13px;">L5 - BVH</label><br />
+                                                    {{businesshead}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <p class="text-primary" style="font-size:14px;"><b> Approval Summary </b></p>
+                                        <hr />
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                    <tr class="text-white" style="background-color:#09385f;">
+                                                        <th class="text-center" style="width:5%;"> S.No </th>
+                                                        <th class="text-center"> Levels </th>
+                                                        <th> User Name </th>
+                                                        <th class="text-center"> Approval Status </th>
+                                                        <th> Approval Remarks </th>
+                                                        <th> Approval Date </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in approval_list">
+                                                        <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                        <td class="text-center" data-title="'Levels'">L{{data.hierary_level}} </td>
+                                                        <td data-title="'User Name'"> {{data.approval_name}} </td>
+                                                        <td class="text-center" data-title="'Approval Status'" ng-switch="data.approval_status">
+                                                            <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                                            <label class="label label-warning" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                                                            <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                                            <label class="label label-primary" ng-switch-when='Hold' style="font-size:10px;">Hold</label>
+                                                            <label ng-switch-when='-'>-</label>
+                                                        </td>
+                                                        <td data-title="'Approval Remarks'"> {{data.approval_remarks}} </td>
+                                                        <td data-title="'Approval Date'" ng-switch="data.approval_status">
+                                                            <p ng-switch-when='Approved'>{{data.approved_date}} </p>
+                                                            <p ng-switch-when='Pending'>-</p>
+                                                            <p ng-switch-when='Rejected'>{{data.rejected_date}} </p>
+                                                            <p ng-switch-when='Hold'>{{data.hold_date}} </p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-primary" style="font-size:14px;"><b> Current Application Details - {{lblapplicant_name}}</b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <label style="font-weight:bold">Application Reference Number</label>
+                                        <br />
+                                        <p>{{lblapplref_no}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <label style="font-weight:bold"> Vertical Name </label>
+                                        <br />
+                                        <p>{{lblvertical_name}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <label style="font-weight:bold">Business Classification Name</label>
+                                        <br />
+                                        <p>{{lblprogram_name}}</p>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <label style="font-weight:bold"> RM Name </label>
+                                        <br />
+                                        <p>{{lblrm_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <p class="text-primary" style="font-size:14px;"><b> Business Hierarchy Update </b></p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Vertical <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="Vertical" id="Vertical" ng-options="m.vertical_name for m in vertical_list" chosen="" ng-change="OnchangeVertical(cbovertical)"
+                                                ng-model="cbovertical" class="chosen-select form-control" style="height:37px;" size="1">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Business Classification <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="program" id="program" chosen="" ng-options="m.program_name for m in program_list" ng-change="OnchangeProgram(cboprogram)"
+                                                ng-model="cboprogram" class="chosen-select form-control">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> RM Name <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="employeelist" chosen="" ng-options="m.employee_name for m in employee_list" 
+                                               ng-model="cboemployee" class="chosen-select form-control"></select>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2" style="padding-top:6px;">
+                                        <br/>
+                                        <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-click="searchsubmit()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-click="refresh()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>                           
+
+                            <div ng-show="verticalshow">                                
+                                <div class="row dd-handle" style="background-color: #f9f8f8;"> 
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 text-center" style="font-size:130%;font-weight :bold;color:#1F1377;">
+                                                <label style="font-weight:bold">{{rmmappinglevel_zero}}</label> <span style="color:#000000;font-size:14px;">Reporting To</span>
+                                                <label style="font-weight:bold">{{rmmappinglevel_one}}</label>
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-show="hierarchyavailable_status==true">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                                    <label style="font-weight:bold">Cluster Head</label><br />
+                                                    {{rmmappingclusterhead}}
+                                                </div>
+                                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                                    <label style="font-weight:bold">Regional Head</label><br />
+                                                    {{rmmappingregionhead}}
+                                                </div>
+                                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                                    <label style="font-weight:bold">Zonal Head</label><br />
+                                                    {{rmmappingzonalhead}}
+                                                </div>
+                                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                                    <label style="font-weight:bold">Business Head</label><br />
+                                                    {{rmmappingbusinesshead}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>  
+                                    
+                                    <div ng-show="hierarchyavailable_status==false">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <p style="color:red;font-size:16px;"><b> No Hierarchy Mapped for the above Vertical and Business Classification! </b></p>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <p class="text-primary" style="font-size:14px;"><b> Business Hierarchy Update Remarks </b></p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label"> Remarks : <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <textarea ng-model="txthierarchy_remarks" rows="4" class="form-control" style="resize:vertical;" required
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <br /><br />
+                    <button type="button" class="btn btn-success" ng-disabled="BusinessHierarchyUpdateform.$invalid"
+                            ng-click="hierarchyupdate_submit()">
+                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                    </button>
+                    <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </div>
+        </form>
+    </div>
+    <br />
+
+</div>

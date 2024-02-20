@@ -1,0 +1,218 @@
+<h3>
+    Loan Report
+</h3>
+<div ng-controller="RptEmployeeLoanReportController">
+    <div class="col-lg-12 col-sm-12 col-md-12 " style="text-align:right;padding-bottom:10px;">
+        <button type="button" class="btn btn-success" ng-click="Loanreport()" title="Export Excel"><i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <br /><br /><label style="background-color:white;left:90%;"> Export Excel </label>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;border-radius: 2px;">
+                <div class="panel widget bg-white-300" style="border:1px solid rgb(179, 177, 177);">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                            <div class="h4 mt0">{{totalcount}}</div>
+                        </div>
+                        <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                            <div><b>Total<br>Request</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;border-radius: 2px;">
+                <div class="panel widget bg-white-300" style="border:1px solid rgb(179, 177, 177);">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-white-500 pv-lg">
+                            <div class="h4 mt0">
+                                {{pendingcount}}
+                            </div>
+                        </div>
+                        <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                            <div><b>Pending Request</b> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;border-radius: 2px;">
+                <div class="panel widget bg-white-300" style="border:1px solid rgb(179, 177, 177);">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                            <div class="h4 mt0">{{rejectedcount}}</div>
+                        </div>
+                        <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                            <div><b>Rejected Request</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;border-radius: 2px;">
+                <div class="panel widget bg-white-300" style="border:1px solid rgb(179, 177, 177);">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                            <div class="h4 mt0">{{completedcount}}</div>
+                        </div>
+                        <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                            <div><b>Completed Request</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;border-radius: 2px;">
+                <div class="panel widget bg-white-300" style="border:1px solid rgb(179, 177, 177);">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                            <div class="h4 mt0">{{WithdrawnCount}}</div>
+                        </div>
+                        <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                            <div><b>Withdrawn Request</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding:20px;">
+                <div class="panel widget" style="height:60px;width:233px;">
+                    <div class="row row-table">
+                        <div class="col-xs-6 text-center bg-gray-dark pv-lg">
+                            <now format="MMMM" class="text-sm"></now>
+                            <now format="d" class="h4 mt0"></now>
+                        </div>
+                        <div class="col-xs-10 pv-lg bg-gray-500">
+                            <now format="EEEE" class="text-sm"></now>
+                            <now format="h:mm" class="h4 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row" >
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                    <br>
+
+
+                <div class ="row">
+                    <div class="col-lg-1 col-md-1 col-sm-1"></div>
+
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+
+                        <div class="panel widget bg-white-300">
+                            <div class="row row-table">
+                                <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                                    <div class="h4 mt0">{{totalcount}}</div>
+                                </div>
+                                <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                                    <div><b>Total <br>
+                                         Request</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="panel widget bg-white-300">
+                            <div class="row row-table">
+                                <div class="col-xs-4 text-center bg-white-500 pv-lg">
+                                    <div class="h4 mt0">
+                                        {{pendingcount}}
+                                    </div>
+                                </div>
+                                <div class="col-xs-8 pv-lg" style="font-size:14px;">
+                                    <div><b>Pending Request</b> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="panel widget bg-white-300">
+                            <div class="row row-table">
+                                <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                                    <div class="h4 mt0">{{rejectedcount}}</div>
+                                </div>
+                                <div class="col-xs-8 pv-lg" style="font-size:14px;" >
+                                    <div><b>Rejected Request</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="panel widget bg-white-300">
+                            <div class="row row-table">
+                                <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                                    <div class="h4 mt0">{{completedcount}}</div>
+                                </div>
+                                <div class="col-xs-8 pv-lg" style="font-size:14px;" >
+                                    <div><b>Completed Request</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="panel widget bg-white-300">
+                            <div class="row row-table">
+                                <div class="col-xs-4 text-center bg-white-500 pv-lg" style="padding-top:30px;">
+                                    <div class="h4 mt0">{{WithdrawnCount}}</div>
+                                </div>
+                                <div class="col-xs-8 pv-lg" style="font-size:14px;" >
+                                    <div><b>Withdrawn Request</b></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                </div>
+
+
+        </div>
+    </div> -->
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Reference Number </th>
+                                    <th> Created Date</th>
+                                    <th> Employee Name </th>
+                                    <th> Role </th>
+                                    <th> Department </th>
+                                    <th> Amount </th>
+                                    <th> Approval Status </th>
+                                    <!--<th> Status </th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Report_list">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Reference Number'">{{data.request_refno}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td data-title="'Employee Name'">{{data.employee_name}}</td>
+                                    <td data-title="'Employee Role'">{{data.employee_role}}</td>
+                                    <td data-title="'Department Name'">{{data.department_name}}</td>
+                                    <td data-title="'Amount'">{{data.amount}}</td>
+                                    <td data-title="'Request Status'">{{data.request_status}}</td>
+                                    <!-- <td data-title="'Status'">{{data.status1}}</td> -->
+                                    <!--<td data-title="'Status'" ng-switch="data.status1">
+                                        <label ng-switch-when="DRM Pending" class="label label-danger">DRM Pending</label>
+                                        <label ng-switch-when="FH Pending" class="label label-danger">FH Pending</label>                                      
+                                        <label ng-switch-when="HR Pending" class="label label-danger">HR Pending</label>
+                                        <label ng-switch-when="HRVerify Pending" class="label label-danger">HRVerify Pending</label>
+                                        <label ng-switch-when="Payment Pending" class="label label-danger">Payment Pending</label>
+                                        <label ng-switch-when="Payment Completed" class="label label-success">Payment Completed</label>
+                                        <label ng-switch-when="Withdrawn" class="label label-danger">Withdrawn</label>
+                                    </td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

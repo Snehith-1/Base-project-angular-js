@@ -1,0 +1,231 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Credit Underwriting
+</h3>
+<div ng-controller="MstCADCreditBuyerDtlEditController as form">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit Buyer Details </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <form name="form.formValidate" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <p class="text-primary" style="font-size:14px;"><b> Buyer Details </b></p>
+                                        <hr />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Buyer Name <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="BuyerName" id="BuyerName" chosen="" ng-options="m.buyer_gid as m.buyer_name for m in buyer_list" 
+                                            type="text" class="form-control parsley-error" required="" ng-model="cboBuyerName" ng-change="buyer()"   >
+                                                <option value=""> ----- Select From Dropdown -----</option>    
+                                            </select>
+                                            <span ng-show="form.validateInput('BuyerName', 'required')" class="text-danger">This field is required</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Buyer limit <span style="color:red"> *</span></label>
+                                            <br />
+                                            <input type="text" ng-model="txtBuyer_limit" name="Buyerlimit" id="Buyerlimit" required="" tabindex="0" ng-pattern="/^[0-9+]*$/" class="form-control" disabled />
+                                            <span ng-show="form.validateInput('Buyerlimit', 'required')" class="text-danger">This field is required</span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Availed limit <span style="color:red"> *</span></label>
+                                            <br />
+                                            <input type="text" ng-model="txtAvailed_limit" name="Availedlimit" id="Availedlimit" required="" tabindex="0" ng-pattern="/^[0-9+]*$/" class="form-control" disabled />
+                                            <span ng-show="form.validateInput('Availedlimit', 'required')" class="text-danger">This field is required</span>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Balance limit <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtBalance_limit" name="Balancelimit" id="Balancelimit" required="" tabindex="0" ng-pattern="/^[0-9+]*$/" class="form-control" disabled />
+                                                <span ng-show="form.validateInput('Balancelimit', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Top Buyer <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="TopBuyer" id="TopBuyer" type="text" class="form-control" required="" ng-model="cboTopBuyer"  >
+                                                    <option value=""> ----- Select From Dropdown -----</option>
+                                                    <option value="Top 5 Buyer">Top 5 Buyer</option>
+                                                    <option value="Recommended Buyer">Recommended Buyer</option> 
+                                                </select>
+                                                <span ng-show="form.validateInput('TopBuyer', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Bill Tenure in days <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtBillTenuredays" name="BillTenuredays" id="BillTenuredays" ng-pattern="/^[0-9+]*$/" required="" tabindex="0" class="form-control" maxlength="3" />
+                                                <span ng-show="form.validateInput('BillTenuredays', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Margin-% <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtMargin" name="Margin" id="Margin" required="" tabindex="0" class="form-control" maxlength="5" step="0.01" />
+                                                <span ng-show="form.validateInput('Margin', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Relationship Vintage (years)<span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtRelationshipVintageyear" name="RelationshipVintageyear" id="RelationshipVintageyear" required="" ng-pattern="/^[0-9+]*$/" tabindex="0" class="form-control" maxlength="4" />
+                                                <span ng-show="form.validateInput('RelationshipVintageyear', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Relationship Vintage (months) <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtRelationshipVintagemonth" name="RelationshipVintagemonth" id="RelationshipVintagemonth" required="" ng-pattern="/^[0-9+]*$/" tabindex="0" class="form-control" maxlength="2" />
+                                                <span ng-show="form.validateInput('RelationshipVintagemonth', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div ng-controller="MstCreditBuyerDtlEditController as dp">
+                                                    <label class="col-form-label"> Start Date <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="StartDate" name="StartDate" ng-model="$parent.txtStart_Date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" required="" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <span ng-show="form.validateInput('StartDate', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div ng-controller="MstCreditBuyerDtlEditController as dp">
+                                                    <label class="col-form-label"> End Date <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="EndtDate" name="EndtDate" ng-model="$parent.txtEnd_Date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" required="" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <span ng-show="form.validateInput('EndtDate', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Purchase Amount <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input id="Purchaseamt" name="Purchaseamt" ng-model="txtPurchaseamt" maxlength="34" class="form-control ng-pristine ng-valid ng-touched"
+                                                       required ng-change="Purchaseamt()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;">
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount1" style="color:#003c96fc;" class="text-bold"></span>
+                                                  <span ng-show="form.validateInput('Purchaseamt', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <div ng-controller="MstCreditBuyerDtlEditController as dp">
+                                                    <label class="col-form-label"> Bank Credit Date <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="BankCreditDate" name="BankCreditDate" ng-model="$parent.txtBankCredit_Date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY"/>
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender3($event)" style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Bank Credit Value <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input id="BankCreditValue" name="BankCreditValue" ng-model="txtBankCreditValue" maxlength="34" class="form-control ng-pristine ng-valid ng-touched"
+                                                       required ng-change="BankCreditValue()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;">
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount2" style="color:#003c96fc;" class="text-bold"></span>
+                                                  <span ng-show="form.validateInput('BankCreditValue', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label> Deduction at Source <span style="color:red"> *</span></label>
+                                                    <div class="radio c-radio">
+                                                        <label>
+                                                            <input type="radio" id="DeductionatSource" name="DeductionatSource" value="Yes" ng-model="rdbDeductionat_Source" required="" />
+                                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" id="DeductionatSource" name="DeductionatSource" value="No" ng-model="rdbDeductionat_Source" required="" />
+                                                            <span class="fa fa-circle"></span>No
+                                                        </label>
+                                                    </div>
+                                                    <span ng-show="form.validateInput('DeductionatSource', 'required')" class="text-danger">This field is required</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <label>Relationship with Borrower </label>
+                                                <textarea style="resize:vertical;" rows="4" name="Relationshipwiththeborrower" id="Relationshipwiththeborrower" placeholder="Enter Relationship with the borrower..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                                    ng-model="txtrelationship_borrower" class="form-control" ></textarea>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row"> 
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <label>End Use Monitoring </label>
+                                                <textarea style="resize:vertical;" rows="4" name="EndUseMonitoring" id="EndUseMonitoring" placeholder="Enter Relationship with the borrower..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                                    ng-model="txtEndUse_Monitoring" class="form-control" ></textarea>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success btn-md"  ng-click="update_buyerdtl()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                <button ng-click="buyerdtl_Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

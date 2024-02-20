@@ -1,0 +1,589 @@
+﻿<h3>
+    Activate Business Unit
+</h3>
+<style>
+    .modal-content {
+        margin-top: 120px;
+    }
+</style>
+<div ng-controller="osdMstDepartmentManagementController">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <button title="Add Activity" class="btn btn-info btn-sm"
+                    ng-click="popupactivatedept()">
+                <em class="fa fa-plus"></em>&nbsp;Activate Business Unit
+            </button>
+        </div>
+    </div>
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+        <div class="panel-body">
+
+            <br />
+            <div class="table-responsive">
+                <table datatable="ng" class="table table-hover table-striped">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th>S.No</th>
+                            <th>Business Unit Code</th>
+                            <th>Business Unit Name</th>
+                            <th>Assigned Manager</th>
+                            <th>Assigned Member</th>
+                            <th>Created On / By</th>
+                            <th> Status </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in deptmasterlist">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Activity Code'">{{data.department_code}}</td>
+                            <td data-title="'Activity Name'">{{data.department_name}}</td>
+                            <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                       ng-click="showPopovermanager(data.activedepartment_gid)">
+                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                </label>
+                            </td>
+                            <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                       ng-click="showPopovermember(data.activedepartment_gid)">
+                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                </label>
+                            </td>
+                            <td data-title="'Created By'">{{data.created_date}} / {{data.created_by}}</td>
+                            <td data-title="'Status'" ng-switch="data.department_status">
+                                <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                            </td>
+                            <td data-title="'Action'" class="text-nowrap" ng-switch="data.department_status">
+                                <button title="Edit Department" ng-click="edit(data.activedepartment_gid)" class="btn btn-success">
+                                    <em class="fa fa-edit "></em>
+                                </button>
+                                <button title="Assign Manager" ng-click="assignmanager(data.activedepartment_gid)" class="btn btn-primary">
+                                    <em class="fa fa-user "></em>
+                                </button>
+                                <button title="Assign Members" ng-click="assignmember(data.activedepartment_gid)" class="btn btn-info">
+                                    <em class="icon icon-users"></em>
+                                </button>
+                                <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.activedepartment_gid)" class="btn btn-success">
+                                    <em class="fa fa-thumbs-up"></em>
+                                </button>
+                                <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.activedepartment_gid)" class="btn btn-warning">
+                                    <em class="fa fa-thumbs-down"></em>
+                                </button>
+                                <button title="Delete Department" ng-click="delete(data.activedepartment_gid)" class="btn btn-danger">
+                                    <em class="icon icon-trash "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <!--End Panel-->
+    <!--Add Popup Starts-->
+    <script type="text/ng-template" id="/activatedepartmentModalContent.html">
+        <div class="modal-content" style="margin-top:0px">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-plus"></em>&nbsp;Activate Business Unit</h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="activatedeptformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="pd-sm-10">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <label>Business Unit Code</label>
+                                <br />
+                                <label class="text-info">Auto Generated</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <label>Business Unit Name </label>&nbsp;<span style="color:red">*</span>
+                                <select name="department" id="department" ng-options="m.department_name for m in departmentList" chosen=""
+                                        ng-model="cbodepartment" class="chosen-select form-control" style="height:37px;" required size="1">
+                                    <option value=""> ----- Select Business Unit -----</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div>
+                        <div class="text-center">
+                            <button type="button" tabindex="4" class="btn btn-success btn-md" ng-disabled="activatedeptformsubmit.$invalid" ng-click="activatedeptSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" tabindex="5" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <!--Add Popup Ends-->
+    <!--Edit Popup Starts-->
+    <script type="text/ng-template" id="/activatemanagementModaledit.html">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Edit Activate Business Unit</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body">
+            <div class="pd-sm-10">
+                <form novalidate="" name="activityform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Business Unit Code </label>
+                            <input ng-model="activatedeptcodeedit" tabindex="0" aria-required="true"
+                                   aria-invalid="true" class="form-control" style="" disabled>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Business Unit Name </label>&nbsp;<span style="color:red">*</span>
+
+                            <select name="cbodepartmentedit" id="cbodepartment_edit" ng-options="m.department_gid as m.department_name for m in departmentList" chosen=""
+                                    ng-model="cbodepartmentedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                <option value=""> ----- Select Business Unit -----</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <br />
+
+                </form>
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button type="button" ng-click="activatedeptUpdate()" class="btn btn-success btn-md" ng-disabled="activityform.$invalid">
+                        <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--Edit Popup Ends-->
+    <script type="text/ng-template" id="/departmentstatus.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="departmentstatus" ng-submit="form.update_status()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label> Business Unit Name </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    {{department_name}}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Status  </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                            <span class="fa fa-circle"></span> Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks *</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="departmentstatus.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="departmentstatusehistory!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in departmentstatusehistory" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.departmentstatus}} </td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/assignmanagermodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Assign Manager</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body">
+            <div class="pd-sm-10">
+                <form novalidate="" name="activityform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-md-4 col-4 col-sm-4">
+                            </div>
+                            <div class="col-md-4 col-4 col-sm-4">
+                                <label>Business Unit Name </label>&nbsp;
+                                {{department_name}}
+                            </div>
+                            <div class="col-md-4 col-4 col-sm-4">
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+
+
+
+
+                            <div class="col-md-6 col-6 col-sm-6">
+
+
+
+                                <div class="table-responsive table-bordered">
+                                    <table class="table">
+
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th width="15%">
+                                                    Check All
+                                                    <input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);">
+                                                </th>
+                                                <th width="25%">UnAssigned </th>
+
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                    <div style="max-height:300px;overflow:auto;">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr ng-repeat="data in employee_list">
+                                                    <td width="15%">
+                                                        &nbsp;
+                                                        <input type="checkbox" id="c1"
+                                                               value={{data.checked}} ng-disabled="{{data.checked}}" ng-model="data.checked">
+                                                    </td>
+
+                                                    <td width="25%" data-title="">{{data.employee_name}}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 col-6 col-sm-6">
+
+
+                                <div class="table-responsive table-bordered">
+                                    <table class="table">
+
+                                        <thead>
+                                            <tr class="bg-primary-light text-white">
+                                                <th width="15%">
+                                                    S.No
+                                                </th>
+                                                <th width="25%">Assigned </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    <div style="max-height:300px;overflow:auto;">
+                                        <table class="table">
+
+                                            <tbody>
+                                                <tr ng-repeat="data in manager_list">
+                                                    <td width="25%">{{data.employee_name}}</td>
+                                                    <td width="10%">
+                                                        <button title="Un-Assign" ng-click="unassign(data.activedepartment2manager_gid)" class="btn btn-danger">
+                                                            <em class="fa fa-remove (alias)"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+
+                    <div class="ng-scope">
+                        <div class="text-center">
+
+                            <button ng-click="assign()" class="btn btn-success"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Assign</button>
+                            <button ng-click="ok()" tabindex="5" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+
+                </form>
+            </div>
+            <br />
+
+        </div>
+    </script>
+    <!--Edit Popup Ends-->
+    <script type="text/ng-template" id="/showpopupmanagerModal.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:right;">{{department_code}} /</th>
+                            <th style="color:white;background:#7986cb;width:2%;text-align:left;">{{department_name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b>Assigned Manager : </b> <br /></td>
+                            <td style="width:2%; text-align:left"><b>Business Unit Name : </b> <br /></td>
+                        </tr>
+                        <tr ng-repeat="data in manager_list"
+                            style="text-align: left;height:20px;">
+                            <td data-title="'Member Name'" style="width:2%; text-align:left"> {{data.employee_name}}</td>
+                            <td data-title="'Department Name'" style="width:2%; text-align:left"> {{data.department_name}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/assignmembermodal.html">
+        <div class="modal-content" style="margin-top:0px">
+            <md-toolbar>
+                <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                    <h2><em class="fa fa-edit"></em>&nbsp;Assign Member</h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body">
+                <div class="pd-sm-10">
+                    <form novalidate="" name="activityform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-md-4 col-4 col-sm-4">
+                                </div>
+                                <div class="col-md-4 col-4 col-sm-4">
+                                    <label>Business Unit Name </label>&nbsp;
+                                    {{department_name}}
+                                </div>
+                                <div class="col-md-4 col-4 col-sm-4">
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                <div class="col-md-6 col-6 col-sm-6">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table">
+
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th width="15%">
+                                                        Check All
+                                                        <input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);">
+                                                    </th>
+                                                    <th width="25%">UnAssigned </th>
+
+                                                </tr>
+                                            </thead>
+
+                                        </table>
+                                        <div style="max-height:300px;overflow:auto;">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr ng-repeat="data in employee_list">
+                                                        <td width="15%">
+                                                            &nbsp;
+                                                            <input type="checkbox" id="c1"
+                                                                   value={{data.checked}} ng-disabled="{{data.checked}}" ng-model="data.checked">
+                                                        </td>
+
+                                                        <td width="25%" data-title="">{{data.employee_name}}</td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 col-6 col-sm-6">
+
+
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table">
+
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th width="15%">
+                                                        S.No
+                                                    </th>
+                                                    <th width="25%">Assigned </th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <div style="max-height:300px;overflow:auto;">
+                                            <table class="table">
+
+                                                <tbody>
+                                                    <tr ng-repeat="data in member_list">
+                                                        <td width="25%">{{data.employee_name}}</td>
+                                                        <td width="10%">
+                                                            <button title="Un-Assign" ng-click="unassign(data.activedepartment2member_gid)" class="btn btn-danger">
+                                                                <em class="fa fa-remove (alias)"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <br />
+
+                        <div class="ng-scope">
+                            <div class="text-center">
+
+                                <button ng-click="assign()" class="btn btn-success"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Assign</button>
+                                <button ng-click="ok()" tabindex="5" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                        <br />
+
+                    </form>
+                </div>
+                <br />
+
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/showpopupmemberModal.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:right;">{{department_code}} /</th>
+                            <th style="color:white;background:#7986cb;width:2%;text-align:left;">{{department_name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b>Assigned Member : </b> <br /></td>
+                            <td style="width:2%; text-align:left"><b>Business Unit Name : </b> <br /></td>
+                        </tr>
+                        <tr ng-repeat="data in member_list"
+                            style="text-align: left;height:20px;">
+                            <td data-title="'Member Name'" style="width:2%; text-align:left"> {{data.employee_name}}</td>
+                            <td data-title="'Department Name'" style="width:2%; text-align:left"> {{data.department_name}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+

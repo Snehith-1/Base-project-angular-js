@@ -1,0 +1,106 @@
+﻿<h3>
+    Document Checklist
+</h3>
+<div ng-controller="AgrTrnCadDocChecklistApprovalSummaryController">
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>Approval Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="maker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{cadmaker_count -- makerfollowup_count}}</b></div>
+                        <b style="font-size: 14px;"> Maker </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="checker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{cadchecker_count -- checkerfollowup_count}}</b></div>
+                        <b style="font-size: 14px;"> Checker </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="approval()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);  background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{cadcheckerapproval_count}}</b></div>
+                        <b style="font-size: 14px;">Approval</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="approvalcompleted()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{approvalcompleted_count}}</b></div>
+                        <b style="font-size: 14px;">Approval Completed</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Application Number</th>
+                                    <!-- <th> Customer URN </th> -->
+                                    <th> Customer Name </th>
+                                    <th> AC Approved Date </th>
+                                    <!-- <th> Sanction Reference Number</th> -->
+                                    <!--<th> Approval Status </th>
+                                    <th> AC Group </th>
+                                    <th> CAD Group </th>
+                                    <th> Checker Submitted Date </th>
+                                    <th> Checker Submitted By </th>
+                                    <th> Status </th>-->
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in sanctionmaker_list" ng-switch="data.approval">
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <!-- <td data-title="'Customer URN'"> {{data.customer_urn}} </td> -->
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'AC Approved Date'"> {{data.ccapproved_date}} </td>
+                                    <!-- <td data-title="'Sanction Reference Number'"> {{data.sanction_refno}} </td>  -->
+                                    <!--<td data-title="'Approval Status'"> {{data.approval_status}} </td>
+                                    <td data-title="'AC Group'"> {{data.ccgroup_name}} </td>
+                                    <td data-title="'CAD Group'"> {{data.cadgroupname}} </td>
+                                    <td data-title="'Checker Submitted Date'"> {{data.checkerapproved_on}} </td>
+                                    <td data-title="'Checker Submitted By'"> {{data.checkerapproved_by}} </td>
+                                    <td data-title="'Status'">
+                                        <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                        <label class="label label-warning" ng-switch-when='Approval Pending' style="font-size:10px;">Approval Pending</label>
+                                        <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                    </td>-->
+                                    <td align="center" class="nowrap" ng-switch="data.approval">
+                                        <button title="View" ng-click="view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button ng-switch-when='Approved' title="Process" ng-click="process(data.application_gid, data.created_by, data.docchecklist_approvalflag)" style="background-color:#871490;" class="btn btn-pink">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                        <button ng-switch-when='Approval Pending' title="Process" ng-click="processApprove(data.application_gid, data.created_by, data.docchecklist_approvalflag)" style="background-color:#871490;" class="btn btn-pink">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>

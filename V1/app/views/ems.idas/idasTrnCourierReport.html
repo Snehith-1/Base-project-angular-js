@@ -1,0 +1,97 @@
+<h3>
+    Courier Report
+</h3>
+
+<div ng-controller="idasTrnCourierReportController">
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .panel-scroll {
+            max-height: 120px;
+            overflow: auto;
+        }
+    </style>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+        <div class="col-lg-4  col-sm-4 col-md-4">
+            <label>Customer Name</label>
+            <input type="text" name="customer" id="customer" ng-model="cbocustomer_name" required
+            ng-keyup="complete(cbocustomer_name)" class="form-control" placeholder="Search Customer Name Here..." />
+
+           <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                <li class="list-group-item" ng-repeat="m in customer_list"
+                    ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+            </ul> 
+
+            <label style="color:red;">{{message}}</label>
+
+        </div>
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <label>Courier Type</label>
+            <select id="courier_type" name="courier_type" ng-model="cbocourier_type" 
+                class="form-control ng-valid ng-touched ng-valid-parse">
+                <option value="">---Select---</option>
+                <option value="Courier Inward">Courier Inward</option>
+                <option value="Courier Outward">Courier Outward</option>
+                <option value="Physical Inward">Physical Inward</option>
+                <option value="Physical Outward">Physical Outward</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+        <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+        <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2 pull-right" style="text-align:right;">
+            <div style="padding-right: 15px;"><button type="button" class="btn btn-success" ng-click="exportcourierreport()" title="Export Excel"><i class="fa fa-file-excel-o"></i><a download="" href="" id="btnpdf" style="display:none;"></a></button>&nbsp;</div>
+            <label >Export Excel</label>
+        </div>
+    </div>
+    </div>
+   <br/>
+   <br>
+<div class="row">
+   <div class="col-lg-12">
+       <!-- START panel-->
+       <div id="panelDemo13" class="panel panel-default">
+           <div class="panel-body" style="margin-top: -40px;">
+                <div class="table-responsive">
+                   <table datatable="ng" class="table table-striped row-border hover">
+                       <thead>
+                           <tr class="text-white column" style="background-color:#09385f;">
+                            <th style="display:none"> S.No</th>
+                            <th class="nowrap">Courier Ref No</th>                                  
+                            <th class="nowrap">Date Of Courier</th>
+                            <th class="nowrap">Courier Type</th>
+                            <th class="nowrap">Customer Name</th>
+                            <th class="nowrap">Courier Sent By</th>
+                            <th class="nowrap">Courier Received By</th>
+                            <th class="nowrap">Created By/On</th>
+                            <th class="nowrap">Status</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           <tr ng-repeat="data in idasTrnCourierReport">
+                            <td style="display:none">{{$index+1}}</td>
+                            <td data-title="'Courier Management Ref.No'">{{data.courierref_no}}</td>
+                            <td data-title="'Date of Courier'">{{data.date_of_courier}}</td>
+                            <td data-title="'Courier Type'" class="nowrap">{{data.courier_type}}</td>
+                            <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                            <td data-title="Courier Sent By">{{data.sender_name}}</td>
+                            <td data-title="Courier Received By">{{data.courierhandover_to}}</td>
+                            <td data-title="'Created By/On'" class="nowrap">{{data.created_by}}/{{data.created_date}}</td>
+                            <td data-title="Status">{{data.ack_status}}</td>
+                           </tr>
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+</div>

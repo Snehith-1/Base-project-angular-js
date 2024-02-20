@@ -1,0 +1,390 @@
+﻿<h3>
+    Customer Management
+</h3>
+
+<div ng-controller="editCustomercontroller">
+
+    <div id="load" style="text-align: center;"></div>
+    <div id="panelDemo8" class="panel panel-success ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span>EDIT CUSTOMER
+        </div>
+
+        <div class="panel-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 ">
+                        <input name="customer_gid" id="customer_gid" style="font-size:12px" placeholder="Enter Customer gid"
+                               ng-model="customer_gid" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+
+                    <div class="row" style="display:none;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                            <div class="col-lg-8 col-md-8 col-sm-8 ">
+                                <label style="font-size:15px;" ng-model="customer_gid" class="col-form-label w3-text-indigo"><strong>{{LoanDetails.customer_gid}}</strong></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                
+                                    <label>Customer ID <span style="color:red">*</span></label>
+                                    <input ng-model="customerCodeedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                  
+                               
+                            </div>
+
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                               
+                                    <label>Customer Name </label><span style="color:red">*</span>
+                                    <input ng-model="customerNameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                               
+                                    <label>Contact Person </label>
+                                    <input ng-model="contactPersonedit" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                 
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                              
+                                    <label>Customer URN </label>
+                                    <input ng-model="customerURNedit" tabindex="0" min="0" aria-required="true" aria-invalid="true" class="form-control"
+                                           ng-change="urnvalidation()"  style="">
+                                <div ng-show="Warning">
+                                    <label style="color:red">Already This URN is in Imported Customer</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                              
+                                    <label>Email Address  </label>
+                                    <input type="email" ng-model="emailedit" tabindex="0"   aria-required="true" aria-invalid="true" class="form-control" style="">
+                              
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                        
+                                    <label>Contact Number <span style="color:red">*</span> </label>
+                                    <input ng-model="contactnoedit" tabindex="0" min="0" required  type="number" maxlength="12" 
+                                           aria-required="true" aria-invalid="true" class="form-control" 
+                                           style="">
+                                 
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                              
+                                    <label>Mobile No  </label>
+                                    <input ng-model="mobileNoedit" tabindex="0" min="0" aria-required="true" type="number" maxlength="12" 
+                                     aria-invalid="true" class="form-control" style="">
+                                  
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                               
+                                <label class="col-form-label control-label"><strong>Vertical </strong> <span style="color:red">*</span></label>
+                                <select id="vertical_code" name="vertical_code" dropzone="" ng-model="vertical" required=""
+                                        ng-options="verticaldata.vertical_gid as verticaldata.vertical_code for verticaldata in vertical_list" class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value="">-----Select Vertical-----</option>
+
+                                </select>
+                            </div>
+                            </div>
+                        </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                             
+                                    <label>GST Number</label>
+                                    <input ng-model="gst_number" tabindex="0" min="0" maxlength="15" aria-required="true" aria-invalid="true"
+                                      onkeyup="this.value = this.value.toUpperCase();"   pattern="^[A-Z0-9A-Za-z]+$" ng-pattern-restrict      class="form-control" style="">
+                                 
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                             
+                                    <label>PAN Number</label>
+                                    <input ng-model="pan_number" tabindex="0" min="0" maxlength="10" aria-required="true" aria-invalid="true" 
+                                      onkeyup="this.value = this.value.toUpperCase();"   pattern="^[A-Z0-9A-Za-z]+$" ng-pattern-restrict     class="form-control" style="">
+                                  
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                 
+                                        <label for="input_13">Address Line 1</label>
+                                        <textarea ng-model="txtaddress1" rows="3" maxlength="1000" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                               
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                   
+                                        <label for="input_13">Address Line 2</label>
+                                        <textarea ng-model="txtaddress2" rows="3" maxlength="1000" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                    <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                               
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label control-label"><strong>State </strong> <span style="color:red">*</span></label>
+                                    <select id="statename" name="state_name" dropzone="" ng-model="state_gid"
+                                            ng-options="statedata.state_gid as statedata.state_name for statedata in state_list" class="form-control" required="">
+                                        <option value="">-----Select State-----</option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                            <label>Region </label>
+                                        <input ng-model="regionedit" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                
+                               
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                       <label>Country </label>
+                                        <input ng-model="countryedit" tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                                     
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                       <label>Postal Code </label>
+                                        <input ng-model="postalcodeedit" tabindex="0" type="number" maxlength="6"
+                                               aria-required="true" aria-invalid="true" class="form-control" style="">
+                                      
+                                </div>
+                            </div>
+                        </div>
+                    <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Constitution </strong> <span style="color:red">*</span></label>
+                                    <select id="constitutionname" name="cboconstitutionedit" required="" ng-options="data.constitution_gid as data.constitution_name for data in constitution_list"
+                                            ng-model="cboconstitutionedit" class="form-control ng-valid ng-touched ng-valid-parse"
+                                            size="1">
+                                        <option value=""> -----Select constitution----- </option>
+                                    </select>
+
+
+                                </div>        
+                               
+                                <div class="col-lg-1 col-md-1 col-sm-">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Zonal Head </strong> <span style="color:red">*</span></label>
+                                    <select id="zonalHead_name" name="zonalHead" dropzone="" required ng-model="zonalHead"
+                                            ng-options="zonedata.employee_gid as zonedata.employee_name for zonedata in zonallist"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value="">-----Select Zonal Head-----</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    <br/>
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                              
+                              
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Business Head </strong> <span style="color:red">*</span></label>
+                                    <select id="businessHead_name" name="businessHead" dropzone="" required ng-model="businessHead"
+                                            ng-options="bhdata.employee_gid as bhdata.employee_name for bhdata in businesshead_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value="">-----Select Business Head-----</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Regional Head </strong> <span style="color:red">*</span></label>
+                                    <select id="regionalHead_name" name="regionalHead" dropzone="" required ng-model="regionalHead"
+                                            ng-options="rhdata.employee_gid as rhdata.employee_name for rhdata in regionalhead_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value="">-----Select Regional Head-----</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">                                                         
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Cluster Manager </strong> <span style="color:red">*</span></label>
+                                    <select id="cluster_manager_name" name="clustermanager" dropzone="" required ng-model="clustermanager"
+                                            ng-options="cmdata.employee_gid as cmdata.employee_name for cmdata in clusterlist"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value="">-----Select Cluster Manager-----</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-">
+
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label"><strong>Relationship Manager </strong> <span style="color:red">*</span></label>
+                                    <select id="relationshipMgmt_name" name="relationshipMgmt" required ng-model="relationshipMgmt"
+                                            ng-options="rmdata.employee_gid as rmdata.employee_name for rmdata in relationshiplist"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value="">-----Select Relationship Manager-----</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label"><strong>Credit Manager </strong> <span style="color:red">*</span></label>
+                                <select id="creditmanager_name" name="creditmanager" dropzone="" required ng-model="creditmanager"
+                                        ng-options="crdata.employee_gid as crdata.employee_name for crdata in creditlist"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value="">-----Select Credit Manager-----</option>
+
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label"><strong>Zonal Risk  Manager </strong> <span style="color:red">*</span></label>
+                                <select id="zonlRM_name" name="ZonalRM" dropzone="" required ng-model="ZonalRM"
+                                        ng-options="zonalrmdata.employee_gid as zonalrmdata.employee_name for zonalrmdata in zonalrm_list"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value="">-----Select Zonal Risk Manager-----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label"><strong>Risk Manager </strong> <span style="color:red">*</span></label>
+                                <select id="riskmanager_name" name="riskmanager" dropzone="" required ng-model="riskmanager"
+                                        ng-options="riskmanagerdata.employee_gid as riskmanagerdata.employee_name for riskmanagerdata in rm_list"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value="">-----Select Risk Manager-----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label"><strong>Head Risk monitoring </strong> <span style="color:red">*</span></label>
+                                <select id="RiskMonitoring_Name" name="RiskMonitoringName" dropzone="" required ng-model="RiskMonitoringName"
+                                        ng-options="riskmonitoringhead.employee_gid as riskmonitoringhead.employee_name for riskmonitoringhead in riskmonitorning_list"
+                                        class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                    <option value="">-----Select Head Risk monitoring-----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label>Major Corporate/ Group Company Name </label>
+                                <textarea type="text" ng-model="txtmajor_corporateedit" tabindex="0" min="0" aria-required="true"
+                                          aria-invalid="true" class="form-control" rows="3" style="" />
+
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-">
+
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+
+                                <label for="input_13">CC Mail</label>
+                                <textarea ng-model="ccmailedit" placeholder="Enter Email with , seperation" rows="6" maxlength="1000" class="form-control"
+                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                            </div>
+                            
+                          
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="customerUpdate()"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="customereditback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+

@@ -1,0 +1,163 @@
+﻿<h3>
+    Edit Invoice
+    <a href="#/app/invoiceSummary">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-info">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+        </button>
+    </a>
+</h3>
+
+<div ng-controller="invoiceeditcontroller as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-edit"></em>&nbsp; Edit Invoice
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form name="sanctionform" id="sanctionform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-md-4 ">
+                                <label>Invoice No <span style="color:red">*</span></label>
+                                <input ng-model="txtinvoice_refno" class="form-control ng-pristine ng-valid ng-touched" required>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Case Type <span style="color:red">*</span></label>
+                                <select name="case_type" required=""
+                ng-model="cbocase_type" class="form-control ng-valid ng-touched ng-valid-parse" ng-change="onselectedchangecasetype()"
+                  size="1">
+              <option value=""> ---Select Case Type--- </option>
+              <option value="Legal Services"> Legal Services</option>
+              <option value="Legal SR"> Legal SR </option>
+              <option value="dn"> DN </option>
+          </select>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Case Ref No <span style="color:red">*</span></strong></label>
+                                <select id="caseref_no" name="caseref_no" chosen="" ng-options="m.caseref_gid as m.caseref_no for m in cases_list" required
+                                        ng-model="cbocaseref_no" class="chosen-select form-control">
+                                    <option value=""> ---Select  Case Ref No ---</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="form-group float-label">
+                                    <label>Invoice Amount <span style="color:red">*</span></label>
+
+                                    <input id="txtInput" ng-model="txtinvoice_amount" required type="text" ng-change="invoiceamountchange()"
+                                           class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+                                    <span style="font-style:italic;">Number in words:</span>
+                                    <span id="wordsinvoiceamount" style="color:#003c96fc;" class="text-bold"></span>
+                                </div>
+                            </div>
+                       
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Service Type <span style="color:red">*</span></strong></label>
+                                <select id="cboservice_type" name="cboservice_type" chosen="" ng-options="m.servicetype_gid as m.service_type for m in servicetype_data" required
+                                  ng-change="onselectedservicetype()"      ng-model="cboservice_type" class="chosen-select form-control">
+                                    <option value=""> ---Select Service Type ---</option>
+                                </select>
+
+                                <br/>
+                                <div ng-show="servicetype_others">
+                                    <label>Title <span style="color:red">*</span></label>
+                                    <input ng-model="txtserviceypeothers_title" tabindex="0" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                                </div>
+                            </div>
+                       
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>Service Render Date</label>
+                                <p class="input-group">
+                                    <input type="text" id="txtservicerender_date" name="date" ng-model="txtservicerender_date" datepicker-popup="{{dpick.format}}"
+                                           style="height:30px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                           close-text="Close" class="form-control" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="dpick.open($event)" style="height:30px;" class="btn btn-default">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                <label>Description <span style="color:red">*</span></label>
+                                <textarea name="txtinvoice_remarks" placeholder="Enter Description..." required
+                                          ng-model="txtinvoice_remarks" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <strong class="ng-binding w3-text-indigo">
+                                    <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                    Upload Document
+                                </strong>
+                                <br /><div class="form-group dd-handle ng-scope">
+    <input filestyle="" type="file" data-button-text="File Upload" data-class-button="btn btn-default" style="height:30px;" data-classinput="form-control inline" nv-file-select="" ng-model="uploaddocument" class="form-control "
+           onchange="angular.element(this).scope().upload(this.files)" />
+    <br />
+
+</div>
+</div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="table-responsive table-bordered bg-grey-100">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.NO</th>
+                                                <th>Document Name</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in filename_list">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{data.document_name}}</td>
+                                                <td>
+                                                    <button title="Cancel" class="btn btn-danger btn-xs"
+                                                            ng-click="delete(data.invoice_documentgid)">
+                                                        <em class="fa fa-close"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <div class="row">
+                            <div class="text-center">
+                                <a class="btn btn-success  btn-md" ng-click="updateInvoiceSubmit()" ng-disabled="sanctionform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Submit</span>
+                                </a>
+                                <a class="btn btn-info  btn-md" ng-click="cancel()">
+                                    <em class="fa fa-arrow-left"></em>
+                                    <span>Back</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

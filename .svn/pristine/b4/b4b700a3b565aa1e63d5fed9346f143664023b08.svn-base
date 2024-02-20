@@ -1,0 +1,443 @@
+﻿<h3>
+    My Profile
+    <a href="#/app/myTeam">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="myProfilecontroller as dpick">
+    <div class="panel widget">
+        <div style="background-image: url('app/img/bg4.jpg')" class="panel-body text-center bg-center">
+            <div class="row row-table">
+                <div class="col-xs-12 text-white">
+                    <div ng-switch="employeedetails.employee_photo">
+                        <img src="app/img/user-bg1.jfif" alt="Image" ng-switch-when="N"
+                             class="img-thumbnail img-circle thumb96"> 
+                        <img ng-src="{{employee_photo}}" alt="Image" ng-switch-default
+                             class="img-thumbnail img-circle thumb96">
+                    </div>
+                    <h3 class="m0">{{employeedetails.user_name}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div class="panel widget">
+                <div class="panel-heading">
+                    <h4 class="text-primary">Employee Details</h4>
+                    <!--<button type="button" title="Edit" class="pull-right btn btn-sm btn-default">
+                        <em class="fa fa-pencil text-primary"></em>
+                    </button>-->
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>User Code</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.user_code}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>User Name</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.user_name}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Designation</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.designation}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Department</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.department}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Branch</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.branch}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Joining Date</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.joining_date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                <label>Status</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                <p>{{employeedetails.user_status}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-md-6">
+            <div class="panel widget">
+                <form name="changePasswordform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <div class="panel-heading">
+                        <h4 class="text-primary">Change Password</h4>
+                        <button type="button" title="Edit" class="pull-right btn btn-sm btn-default" ng-show="changeedit" ng-click="changeedit()">
+                            <em class="fa fa-pencil text-primary"></em>
+                        </button>
+                        <button type="button" title="Update" class="pull-right btn btn-sm btn-default" ng-show="changeUpdate" 
+                              ng-click="passwordupdate()"   ng-disabled="changePasswordform.$invalid">
+                            <em class="fa fa-check text-success"></em>
+                        </button>
+                        <button type="button" title="Cancel" class="pull-right btn btn-sm btn-default" ng-show="changeCancel" ng-click="chcancel()">
+                            <em class="fa fa-close text-danger"></em>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="mda-form-group float-label">
+                                    <input type="password" ng-model="CurrentpassWord" name="pwd" ng-disabled="disablevalue"
+                                           class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Current Password <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="mda-form-group float-label">
+                                    <input type="password" ng-model="NewpassWord" name="pwd" ng-disabled="disablevalue"
+                                           class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>New Password <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="mda-form-group float-label">
+                                    <input type="password" ng-model="ConfirmpassWord" name="pwd" ng-disabled="disablevalue"
+                                           class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Confirm password <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="panel widget">
+                <form name="personalDetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                    <div class="panel-heading">
+                        <h4 class="text-primary">Personal Details</h4>
+                        <button type="button" title="Edit" class="pull-right btn btn-sm btn-default" ng-show="personaledit" ng-click="personaledit()">
+                            <em class="fa fa-pencil text-primary"></em>
+                        </button>
+                        <button type="button" title="Update" class="pull-right btn btn-sm btn-default" ng-click="personalupdate()"
+                                ng-disabled="personalDetailsform.$invalid" ng-show="personalUpdate">
+                            <em class="fa fa-check text-success"></em>
+                        </button>
+                        <button type="button" title="Cancel" class="pull-right btn btn-sm btn-default" ng-show="personalCancel" ng-click="personalcancel()">
+                            <em class="fa fa-close text-danger"></em>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtFirstname" class="mda-form-control ng-pristine ng-valid ng-touched"
+                                            ng-disabled="disablepersonaldetails" required >
+                                    <label>First Name <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtLastname" class="mda-form-control ng-pristine ng-valid ng-touched" 
+                                            ng-disabled="disablepersonaldetails" required>
+                                    <label>Last Name <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <label>Gender</label>
+                                    <div class="col">
+                                        <label class="mda-radio">
+                                            <input type="radio" name="radio_gender" ng-model="rdgender" 
+                                                    ng-disabled="disablepersonaldetails"  value="male">
+                                            <em class="bg-indigo-500"  ></em> Male
+                                        </label>
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; &nbsp;
+                                    </div>
+                                    <div class="col">
+                                        <label class="mda-radio">
+                                            <input type="radio" name="radio_gender" ng-model="rdgender"  ng-disabled="disablepersonaldetails" value="female">
+                                            <em class="bg-indigo-500"></em> Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-sm-6 col-md-6">
+                                <div class="mda-form-group float-label">
+                                    <p class="input-group">
+                                        <label>Date Of Birth</label> &nbsp;
+                                        <input type="text" name="date" ng-model="dob" datepicker-popup="{{dpick.format}}"
+                                                is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                               close-text="Close" class="form-control" max-date="'3000-12-22'" ng-disabled="disablepersonaldetails"/>
+                                        <button type="button" ng-click="dpick.open($event)"
+                                                class="btn btn-default" ng-disabled="disablepersonaldetails">
+                                            <em class="fa fa-calendar"></em>
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtmobile" type="number" maxlength="12" class="mda-form-control ng-pristine ng-valid ng-touched"
+                                            ng-disabled="disablepersonaldetails"  >
+                                    <label>Mobile</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtpersonalnum" type="number" maxlength="12" class="mda-form-control ng-pristine ng-valid ng-touched" 
+                                            ng-disabled="disablepersonaldetails" >
+                                    <label>Personal Number</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtqualification" class="mda-form-control ng-pristine ng-valid ng-touched" 
+                                            ng-disabled="disablepersonaldetails" >
+                                    <label>Qualification</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtexperience" class="mda-form-control ng-pristine ng-valid ng-touched"
+                                            ng-disabled="disablepersonaldetails"  >
+                                    <label>Experience</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <select name="bloodgroup" ng-model="bloodgroup"  ng-disabled="disablepersonaldetails"
+                                            class="mda-form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""></option>
+                                        <option value="A+">A+</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="A1B+">A1B+</option>
+                                        <option value="A1B-">A1B-</option>
+                                        <option value="A2B+">A2B+</option>
+                                    </select>
+                                    <label>Blood Group</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <label>Upload Photo</label>
+                                <div class="mda-form-group float-label">
+                                    <input type="file" id="addupload" ng-model="employeephoto"  ng-disabled="disablepersonaldetails" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <form name="addressDetailsform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                <div class="panel widget">
+                    <div class="panel-heading">
+                        <h4 class="text-primary">Address Details</h4>
+                        <button type="button" title="Edit" class="pull-right btn btn-sm btn-default" ng-show="addressedit" ng-click="addressedit()">
+                            <em class="fa fa-pencil text-primary"></em>
+                        </button>
+                        <button type="button" title="Update" class="pull-right btn btn-sm btn-default" ng-click="addressupdate()"
+                                ng-disabled="addressDetailsform.$invalid" ng-show="addressUpdate">
+                            <em class="fa fa-check text-success"></em>
+                        </button>
+                        <button type="button" title="Cancel" class="pull-right btn btn-sm btn-default" ng-show="addressCancel" ng-click="addresscancel()">
+                            <em class="fa fa-close text-danger"></em>
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Permanent Address</label>
+                            </div>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                               
+                                <div class="mda-form-group">
+                                  
+                                    <input ng-model="txtaddress1" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Address 1 <span style="color:red">*</span></label>
+                                   
+                                </div>
+                               
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtaddress2" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Address 2 <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtCity" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>City <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtState" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>State <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <select name="subcategory" ng-model="txtcountry" required="" ng-disabled="disableaddressdetails"
+                                            class="mda-form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option data-ng-repeat="data in country_list" value="{{data.country_gid}}">{{data.country_name}}</option>
+                                    </select>
+                                    <label>Country <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="txtpostalcode" ng-disabled="disableaddressdetails" type="number" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Postal Code <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <fieldset>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Temporary Address</label>
+                            </div>
+                        </fieldset>
+                        <!--<div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label>Temporary Address</label>
+                    </div>
+                </div>-->
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="tmp_txtaddress1" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" >
+                                    <label>Address 1</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="tmp_txtaddress2" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" >
+                                    <label>Address 2</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="tmp_txtCity" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" >
+                                    <label>City</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="tmp_txtState" ng-disabled="disableaddressdetails" class="mda-form-control ng-pristine ng-valid ng-touched" >
+                                    <label>State</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <select name="tmp_txtcountry" ng-model="tmp_txtcountry" ng-disabled="disableaddressdetails"
+                                            class="mda-form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option data-ng-repeat="data in country_list" value="{{data.country_gid}}">{{data.country_name}}</option>
+                                    </select>
+                                    <label>Country</label>
+                                </div>
+                                <!--<div class="mda-form-group float-label">
+                            <input ng-model="tmp_txtCountry" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                            <label>Country</label>
+                        </div>-->
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <div class="mda-form-group">
+                                    <input ng-model="tmp_txtpostalcode" ng-disabled="disableaddressdetails"  type="number"  class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                    <label>Postal Code *</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+</div>
+    </div>
+
+    
+</div>

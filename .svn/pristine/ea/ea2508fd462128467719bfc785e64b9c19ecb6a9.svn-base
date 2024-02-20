@@ -1,0 +1,412 @@
+﻿
+
+<h3>
+    Customer
+</h3>
+<div ng-controller="registerCustomersummary">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <button type="button" title="Add Customer" class="btn btn-success btn-sm" ng-click="popupcustomer()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>ADD CUSTOMER
+            </button>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-gray-darker"></em>
+                            <em class="fa fa-user-times fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <!--<div class="pull-right"><span class="blinking">Pending!</span></div>-->
+                            <a href="#/app/taggedCustomerList?lspage=regcustomer" title="Tagged Legal List" class="text-danger m0">Tagged Legal List</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-gray-darker"></em>
+                            <em class="fa fa-user-times fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+
+                        <div class="media-box-heading">
+                            <a href="#/app/taggedNPACustomerList?lspage=regcustomer" title="Tagged NPA List" class="text-danger m0">Tagged NPA List</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-sm-4 col-md-4 pull-right" style="text-align:right;">
+            <br />
+            <a title="Color Indicates" style="background-color:#6047eb;" class="ng-binding ng-scope label">
+                <em class="fa"></em>
+            </a>&nbsp;<lable> - Color Indicates that the Customer Tagged to Legal</lable>&nbsp;
+            <button type="button" class="btn btn-success" ng-click="exportcustomerdata()" title="Export Excel"><i class="fa fa-file-excel-o"></i><a download="" href="" id="btnpdf" style="display:none;"></a></button>&nbsp;
+
+        </div>
+        
+    </div>
+    <br />
+   
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                  <!--      <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                   
+                                   
+                                    <th>CUSTOMER URN</th>
+                                    <th>CUSTOMER </th>
+                                  
+                                    <th>VERTICAL</th>
+                                    <th>ZONAL HEAD</th>
+                                    <th>BUSINESS HEAD</th>
+                                    <th>CLUSTER MANAGER</th>
+                                    <th>RELATIONSHIP MANAGER</th>
+                                    <th>CREDIT MANAGER</th>
+                                    <th>LEGAL TAGGING</th>
+                                    <th>NPA TAGGING</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.legaltag_flag" ng-repeat="data in customer_data">
+                                  
+                                  
+                           
+                                    <td ng-switch-when="" data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                    <td ng-switch-when="N" data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Customer URN'">{{data.customer_urn}}</td>
+
+                                    <td ng-switch-when="" data-title="'Customer'">{{data.customername}}</td>
+                                    <td ng-switch-when="N" data-title="'Customer'">{{data.customername}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Customer'">{{data.customername}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Vertical Code'">{{data.vertical_code}}</td>
+                                    <td ng-switch-when="N" data-title="'Vertical Code'">{{data.vertical_code}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Vertical Code'">{{data.vertical_code}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Zonal Head'">{{data.zonalGid}}</td>
+                                    <td ng-switch-when="N" data-title="'Zonal Head'">{{data.zonalGid}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Zonal Head'">{{data.zonalGid}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Business Head'">{{data.businessHeadGid}}</td>
+                                    <td ng-switch-when="N" data-title="'Business Head'">{{data.businessHeadGid}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Business Head'">{{data.businessHeadGid}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>
+                                    <td ng-switch-when="N" data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+                                    <td ng-switch-when="N" data-title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+
+                                    
+                                    <td ng-switch-when="" data-title="'Credit Manager'">{{data.creditmanagerName}}</td>
+                                    <td ng-switch-when="N" data-title="'Credit Manager'">{{data.creditmanagerName}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Credit Manager'">{{data.creditmanagerName}}</td>
+
+                                   
+                                    <td ng-switch-when="" data-title="'Legal Tagging'">{{data.legal_tagging}}</td>
+                                    <td ng-switch-when="N" data-title="'Legal Tagging'">{{data.legal_tagging}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Legal Tagging'">{{data.legal_tagging}}</td>
+
+                                    <td ng-if="data.npatag_flag == ''" data-title="'NPA Tagging'">{{data.npa_tagging}}</td>
+                                    <td ng-if="data.npatag_flag == 'N'" data-title="'NPA Tagging'">{{data.npa_tagging}}</td>
+                                    <td ng-if="data.npatag_flag == 'Y'" data-title="'NPA Tagging'"><label style="font-size:10px" class="label label-info"> {{data.npa_tagging}}</label></td>
+
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Update Customer URN" ng-click="updatecustomerURN(data.customer_gid,data.customername,data.customer_urn)"
+                                                class="btn btn-info">
+                                            <em class="fa fa-user"></em>
+                                        </button>
+                                        <button title="Edit" ng-click="edit(data.customer_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button ng-switch-when="Y" disabled title="Tag to Legal" ng-click="btntag2legal(data.customer_gid,data.customername,data.customer_urn)" style="color:white;" class="btn bg-cyan-400">
+                                            <em class="fa fa-tag"></em>
+                                        </button>
+                                        <button ng-switch-when="N" title="Tag to Legal" ng-click="btntag2legal(data.customer_gid,data.customername,data.customer_urn)" style="color:white;" class="btn bg-cyan-400">
+                                            <em class="fa fa-tag"></em>
+                                        </button>
+                                        <button ng-switch-when=""  title="Tag to Legal" ng-click="btntag2legal(data.customer_gid,data.customername,data.customer_urn)" style="color:white;" class="btn bg-cyan-400">
+                                            <em class="fa fa-tag"></em>
+                                        </button>
+
+                                        <button ng-disabled="data.npatag_flag == 'Y'" title="Tag to NPA" ng-click="btntag2npa(data.customer_gid,data.customername,data.customer_urn)" class="btn bg-deep-purple-400">
+                                            <em class="fa fa-tag"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                  
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/updateURN.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-user"></em>&nbsp;Update Customer URN </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name  : </label>&nbsp;<span>{{customername}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Current URN: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{customer_urn}}</span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>New Customer URN <span style="color:red;">*</span></label>
+                                    <input ng-model="txtnewcustomerURN" required="" tabindex="0" aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="UrnUpdate()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/tagtoLegal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-tag"></em>&nbsp;Tag to Legal</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddformlegal" id="mappingAddformlegal" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name  : </label>&nbsp;<span>{{customername}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer URN: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{customer_urn}}</span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Remarks <span style="color:red;">*</span></label>
+                                    <textarea ng-model="txttag_remarks" rows="3" maxlength="1000" class="form-control" required
+                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="btnconfirm()" ng-disabled="mappingAddformlegal.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Confirm</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/tagtoNPA.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-tag"></em>&nbsp;Tag to NPA</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddformNPA" id="mappingAddformNPA" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name  : </label>&nbsp;<span>{{customername}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer URN: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{customer_urn}}</span>
+
+                                </div>
+                            </div>
+
+                            <br />
+                            <p class="lead bb text-purple text-bold" style="font-size:16px;text-align:left;" ng-if="customertagnpa_list">Tagged History</p>
+
+                            <div class="row " ng-if="customertagnpa_list">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="statictable" style="height:200px; overflow-y: auto">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">S.No</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="overflow:scroll;">
+                                                <tr class="text-center" ng-repeat="data in customertagnpa_list">
+                                                    <td title="S.No">{{$index+1}}</td>
+                                                    <td title="Member Name">{{data.tagged_by}}</td>
+                                                    <td title="Tagged Date/Time">{{data.remarks}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+
+
+
+
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Remarks <span style="color:red;">*</span></label>
+                                    <textarea ng-model="txttag_remarks" rows="3" maxlength="1000" class="form-control" required
+                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="btnconfirmnpa()" ng-disabled="mappingAddformNPA.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Confirm</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>
+
+

@@ -1,0 +1,202 @@
+﻿<!--<a href="#/app/customerMaster">
+    <button type="button" ng-click="" title="Back" class="pull-right btn btn-sm btn-primary">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a>-->
+
+<h3>
+    Tagged Customer List
+</h3>
+
+<div ng-controller="taggedCustomerListController">
+    <button type="button" ng-click="btnback()" title="Back" class="pull-right btn btn-sm btn-primary">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+    <style type="text/css">
+        #table-wrapper {
+            position: relative;
+        }
+
+        #table-scroll {
+            height: 150px;
+            overflow: auto;
+            margin-top: 20px;
+        }
+
+        #table-wrapper table {
+            width: 100%;
+        }
+
+            #table-wrapper table * {
+                background: yellow;
+                color: black;
+            }
+
+            #table-wrapper table thead th .text {
+                position: absolute;
+                top: -20px;
+                z-index: 2;
+                height: 20px;
+                width: 35%;
+                border: 1px solid red;
+            }
+    </style>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body ">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.No</th>
+                                    <th>Customer URN </th>
+                                    <th>Customer Name </th>
+                                    <th>Vertical</th>
+                                    <th>Tagged By</th>
+                                    <th>Tagged Date</th>
+                                    <th>Remarks</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in customertag_list|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'customer_urn'">{{data.customer_urn}}</td>
+                                    <td data-title="'customer_name'">{{data.customer_name}}</td>
+                                    <td data-title="'verical'">{{data.vertical}}</td>
+                                    <td data-title="tagged_by">{{data.tagged_by}}</td>
+                                    <td data-title="tagged_date">{{data.tagged_date}}</td>
+                                    <td data-title="remarks">{{data.remarks}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Untag" ng-click="untag(data.customer_gid,data.customer_name,data.customer_urn)" class="btn btn-green">
+                                            <em class="fa fa-user-times"></em>
+                                        </button>
+                                        <!--<button title="Delete" ng-click="delete(data.covenanttype_gid)" ng-model="covenanttype_gid" class="btn btn-danger">
+                                            <em class="icon icon-trash"></em>
+                                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/customeruntag.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-user-times"></i>
+                </span>Untag Customer
+            </h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="pd-sm-10">
+                <form novalidate="" name="userform3" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div>
+                                <label>Customer Name  : </label>&nbsp;<span>{{customer_name}}</span>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <label>Customer URN: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{customer_urn}}</span>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;text-align:left;">Tagged History</p>
+
+                    <div class="row ">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="statictable" style="height:200px; overflow-y: auto">
+                                <table class="table" >
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="overflow:scroll;">
+                                        <tr class="text-center"  ng-repeat="data in customertag_list">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="Member Name">{{data.tagged_by}}</td>
+                                            <td title="Tagged Date/Time">{{data.remarks}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Remarks </label><span style="color:red;">*</span>
+                            <textarea ng-model="untagremarks" placeholder="Enter the Remarks" required rows="4" class="form-control"
+                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform3.$invalid" ng-click="btnuntagcustomer()">
+                        <i class="fa fa-arrow-circle-up"></i> &nbsp;&nbsp;Confirm
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

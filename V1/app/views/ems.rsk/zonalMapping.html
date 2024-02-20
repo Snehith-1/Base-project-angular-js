@@ -1,0 +1,356 @@
+﻿<h3>
+    Zonal Mapping
+</h3>
+<div ng-controller="zonalMappingcontroller">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <button title="Add Zonal" class="btn btn-info btn-sm"
+                    ng-click="addzonalMapping()">
+                <em class="fa fa-plus"></em>&nbsp;Add Zonal
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">Zonal Name</th>
+                            <th class="text-nowrap">Zonal Risk Manager</th>
+                            <th class="text-nowrap">Created By</th>
+                            <th class="text-nowrap">Created Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in zonalMappingList|filter :searchtxt|limitTo:totalDisplayed">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Zonal Name'">{{data.zonal_name}}</td>
+                            <td data-title="'Zonal Risk Manager'">{{data.zonalrisk_managername}}</td>
+                            <td data-title="Created By">{{data.created_by}}</td>
+                            <td data-title="Created Date">{{data.created_date}}</td>
+                            <td class="text-nowrap">
+                                <button title="View" class="btn btn-info btn-sm"
+                                        ng-click="viewtagstatedtl(data.zonalmapping_gid)">
+                                    <em class="fa fa-eye"></em>
+                                </button>
+                                <button title="Edit" class="btn btn-success btn-sm"
+                                        ng-click="editstatedtl(data.zonalmapping_gid)">
+                                    <em class="fa fa-edit"></em>
+                                </button>
+                                <button title="Tag State" class="btn bg-blue-grey-500 btn-sm text-white"
+                                        ng-click="tagstatedtl(data.zonalmapping_gid)">
+                                    <em class="fa fa-tag text-white"></em>
+                                </button>
+
+                                <!--<button title="Delete" class="btn btn-danger btn-sm"
+                            ng-click="deletemappingdtl(data.RMmapping_gid)">
+                        <em class="fa fa-trash"></em>
+                    </button>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <script type="text/ng-template" id="/addZonalMapping.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Add Zonal </h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group float-label">
+                                        <label>Zonal Name <span style="color:red">*</span></label>
+                                        <input ng-model="txtzonalname" class="form-control ng-pristine ng-valid ng-touched" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Zonal Risk Manager <span style="color:red">*</span></label>
+                                    <select id="zonalriskmanager" name="zonalriskmanager" ng-model="cboemployeegid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Zonal Risk Manager </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_id}}"
+                                                style="width:250px;">{{data.employee_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submitzonalmapping()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/tagZonalstate.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-tag"></em>&nbsp;Tag State </h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingtagform" id="mappingtagform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="form-group float-label">
+                                        <label>Zonal Name </label>
+                                        <p>{{zonal_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Zonal Risk Manager </label>
+                                    <p>{{zonalrisk_managername}}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                    <label>State <span style="color:red">*</span></label>
+                                    <div class="dd-handle ng-scope" style="height:300px;">
+
+                                        <div class="row">
+                                             
+                                            <div class="col-lg-11 col-sm-12 col-md-12">
+                                                <label>Choose State</label>
+                                                <div ui-scroll-viewport="" style="height:270px; overflow-y: auto;" class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive table-bordered">
+                                                            <table class="table">
+                                                             
+                                                                <tbody>
+                                                                  
+                                                                    <tr ng-repeat="statedtl in statedtllist">
+
+                                                                        <td>
+                                                                            <input type="checkbox" id="c1"
+                                                                                   value={{statedtl.checked}} ng-model="statedtl.checked">
+                                                                        </td>
+                                                                        <td>
+                                                                            {{statedtl.state_name}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="tagzonalmapping()" ng-disabled="mappingtagform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="/viewtaggedZonalstate.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-eye"></em>&nbsp;View Zonal Mapping</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingtagform" id="mappingtagform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="form-group float-label">
+                                        <label>Zonal Name </label>
+                                        <p>{{zonal_name}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Zonal Risk Manager </label>
+                                    <p>{{zonalrisk_managername}}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                    <label>State </label>
+                                    <div class="row">
+
+                                        <div class="col-lg-11 col-sm-12 col-md-12">
+                                            <div ui-scroll-viewport="" style="height:280px; overflow-y: auto;" class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+
+                                                            <tbody>
+                                                                <tr ng-repeat="statedtl in statedtlList">
+
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>
+                                                                        {{statedtl.state_name}}
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="/edittaggedZonalstate.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Edit Zonal Mapping</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingeditform" id="mappingeditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="form-group float-label">
+                                        <label>Zonal Name </label>
+                                        <p>{{zonal_name}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Zonal Risk Manager <span style="color:red">*</span></label>
+                                    <select id="zonalrisk_managername" name="district_gid" dropzone="" ng-model="zonalrisk_managerGid" 
+                                            ng-options="zonalRM.employee_id as zonalRM.employee_name for zonalRM in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Zonal Risk Manager </option>
+                                    </select>
+                                </div>
+                            </div>
+                             
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="updatezonalmapping(zonalrisk_managerGid)" ng-disabled="mappingeditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

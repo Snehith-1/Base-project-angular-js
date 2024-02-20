@@ -1,0 +1,318 @@
+﻿<h3>
+    My Team
+    <a href="#/app/myTeam">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="myTeamProfilecontroller">
+    <div class="panel widget">
+        <div style="background-image: url('app/img/bg4.jpg')" class="panel-body text-center bg-center">
+            <div class="row row-table">
+                <div class="col-xs-12 text-white">
+                    <div ng-switch="employee_photo">
+                        <img src="app/img/user-bg1.jfif" alt="Image" ng-switch-when="N"
+                             class="img-thumbnail img-circle thumb96">
+                        <img ng-src="{{employee_photo}}" alt="Image" ng-switch-default
+                             class="img-thumbnail img-circle thumb96">
+                    </div>
+                    <h3 class="m0">{{employeedetails.user_name}}</h3>
+               
+                    <h4>Reporting To Manager : <a href="" class="text-white" title="Click to View Details"
+                         ng-click="teamprofile(employeedetails.employeereporting_gid)">{{employeedetails.employeereporting_to}}
+                        </a></h4>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>User Code :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.user_code}}</p>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Designation :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.designation}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Department :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.department}} </p>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Branch :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.branch}} </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Joining Date  :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.joining_date}}</p>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label>Status :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <p>{{employeedetails.user_status}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="widget">
+                <div class="panel-heading">
+                    <h4 class="text-success">Assigned Employee</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-sm-4 col-md-4" ng-repeat="data in employeeteam">
+                                <div class="panel widget" style="height:100%">
+                                    <div class="panel-body text-center">
+                                        <div ng-switch="data.employee_photo">
+                                            <img src="app/img/user-bg1.jfif" alt="Image" ng-switch-when="N"
+                                                 class="img-thumbnail img-circle thumb96">
+                                            <img ng-src="{{data.employee_photo}}" alt="Image" ng-switch-default
+                                                 class="img-thumbnail img-circle thumb96">
+                                        </div>
+                                        <h4 class="mt0">{{data.employee_code}}</h4>
+                                        <label class="text-primary text-nowrap">
+                                            <a ng-click="teamprofile(data.employee_gid)" title="Click to View Details">{{data.employee_name}}</a>
+                                        </label>
+                                        <p class="m0">
+                                            {{data.designation}}
+                                        </p>
+                                        <p class="m0">
+                                            {{data.employee_mobileno}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h4 class="text-success">About <span>{{employeedetails.first_name}} {{employeedetails.last_name}}</span></h4>
+    <br/>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="panel widget">
+                <div class="panel-heading">
+                    <h4 class="text-primary">Personal Details</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>First Name</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.first_name}}</p>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Last Name</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.last_name}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Gender</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.gender}}</p>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Date Of Birth</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.dob}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Mobile</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.mobile}}</p>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Personal Number</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.personal_number}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Qualification</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.qualification}}</p>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Experience</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.experience}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label>Blood Group</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            <p>{{employeedetails.blood_group}}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default ng-scope">
+        <div class="panel-heading">
+            <h4 class="text-primary">Address Details</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="bb text-green text-bold">Permanent Address</p>
+                    <br />
+                    <form class="form-horizontal p-20 ng-pristine ng-valid">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Address 1</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanentaddress1}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Address 2</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanent_address2}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>City</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanent_city}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>State</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanent_state}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Country</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanent_country}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Postal Code</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.permanent_postalcode}}</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6">
+                    <p class="bb text-green text-bold">Temporary Address</p>
+                    <br />
+                    <form class="form-horizontal p-20 ng-pristine ng-valid">
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Address 1</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_address1}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Address 2</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_address2}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>City</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_city}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>State</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_state}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Country</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_country}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <label>Postal Code</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <p>{{employeedetails.temporary_postalcode}}</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>

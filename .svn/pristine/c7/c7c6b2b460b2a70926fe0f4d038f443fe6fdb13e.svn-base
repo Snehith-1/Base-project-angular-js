@@ -1,0 +1,240 @@
+﻿
+<h3>
+    Edit Loan
+</h3>
+<style type="text/css">
+    .list-group-item:hover {
+        color: #000000;
+        background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .panel-scroll {
+        max-height: 120px;
+        overflow: auto;
+    }
+</style>
+<style>
+
+    .loader {
+        width: 100%;
+        height: 700%;
+        /*padding-right:100px;*/
+        text-align: center;
+        position: absolute;
+        z-index: 9999;
+        background: url("https://www.creditmutuel.fr/cmne/fr/banques/webservices/nswr/images/loading.gif") no-repeat center center rgba(0,0,0,0.25);
+    }
+</style>
+<div ng-controller="editLoan as dpick">
+    <div id="load" class="loader" style="display:none;text-align: center;"></div>
+    <div id="panelDemo8" class="panel panel-success ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span>EDIT LOAN
+        </div>
+
+        <div class="panel-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 ">
+                        <input name="loan_gid" id="loan_gid" style="font-size:12px" placeholder="Enter Customer gid"
+                               ng-model="loan_gid" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body ng-scope">
+
+
+
+                <div class="pd-sm-10">
+                    <form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="row ">
+                            <!--<form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">-->
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label>Customer </label>
+                                    <input ng-model="customer" tabindex="0" maxlength="45" readonly
+                                           required aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" />
+
+                                   
+                                    
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label">
+                                        <label>Loan Ref No. *</label>
+                                        <input ng-model="loanRefNoedit" tabindex="0" maxlength="45"
+                                               required aria-required="true" aria-invalid="true"
+                                               class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label>Zonal Head </label>
+                                    <select id="zonal_name" name="zonal_name" dropzone="" ng-model="zonalHead" disabled
+                                            ng-options="data.employee_gid as data.employee_name for data in zonallist"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Zonal Head </option>
+                                    </select>
+                                   
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label">
+                                        <label class="col-form-label control-label"><strong>Sanction Ref No. *</strong></label>
+                                        <select id="sanctionrefno" name="sanction_refno" dropzone="" chosen="" ng-model="cbosanctionGid"
+                                                ng-options="data.sanction_Gid as data.sanctionrefno for data in sanctiondtl" 
+                                                class="form-control" ng-change="sanctionrefnochange(cbosanctionGid)">
+                                            <option value=""> Select Sanction Ref No. </option>
+                                        </select>
+                                        
+                                    </div>
+ 
+                                </div>
+
+
+                            </div>
+                            <!--</form>-->
+                        </div>
+                    </form>
+                    </br>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <!--<div layout="row">-->
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label>Business Head </label>
+                                <select id="businesshead_name" name="businesshead" dropzone="" ng-model="businessHead" disabled
+                                        ng-options="business.employee_gid as business.employee_name for business in businesshead_list"
+                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value=""> Select Business Head </option>
+
+                                </select>
+                               
+
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label control-label"><strong>Sanction Date *</strong></label>
+                                <br />
+                                <p ng-model="sanction_Date">{{sanctionDateedit}}</p>
+                               
+                            </div>
+
+                        </div>
+                        <!--</div>-->
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label>Cluster Manager </label>
+                                <select id="cluster_manager_name" name="businesshead" dropzone="" ng-model="clustermanager" disabled
+                                        ng-options="Cluster.employee_gid as Cluster.employee_name for Cluster in clusterlist"
+                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value=""> Select Cluster Manager </option>
+
+                                </select>
+
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+
+                                <label class="col-form-label control-label"><strong>Loan Facility Type  *</strong></label>
+                                <select id="loanTitle" name="facility" dropzone="" ng-model="loanmaster_gid"
+                                        ng-options="data.facility_gid as data.facility_type for data in loan_list"
+                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value=""> Select Loan Facility Type </option>
+
+                                </select>
+                              
+                            </div>
+                        </div>
+                        <!--</div>-->
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label control-label"><strong>Relationship Manager</strong></label>
+                                <select id="relationshipmgmt_name" name="businesshead" dropzone="" ng-model="relationshipMgmt" disabled
+                                        ng-options="relationship.employee_gid as relationship.employee_name for relationship in relationshiplist"
+                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value=""> Select Relationship Manager </option>
+
+                                </select>
+                               
+                            </div>
+
+
+
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+
+
+                                <label class="col-form-label control-label"><strong>Vertical</strong></label>
+                                <p ng-model="vertical_code">{{mdlheadsofcustomer.vertical_code}}</p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <!--<div layout="row">-->
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label control-label"><strong>Credit Manager</strong></label>
+                                <select id="creditmanager_name" name="creditmanager" dropzone="" ng-model="creditmgmt_name" disabled
+                                        ng-options="credit.employee_gid as credit.employee_name for credit in creditlist"
+                                        class="form-control ng-valid ng-touched ng-valid-parse">
+                                    <option value=""> Select Credit Manager </option>
+
+                                </select>
+                                
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="ng-scope">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userform5.$invalid" ng-click="loanUpdate(loan_gid)"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="loanback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>
+
+

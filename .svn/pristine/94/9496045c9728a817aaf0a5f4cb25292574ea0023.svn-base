@@ -1,0 +1,161 @@
+﻿<h3>
+    Transfer RM
+</h3>
+<div ng-controller="transferRMcontroller as drop">
+   
+    <!--<br />
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="control-label"></label>
+           
+        </div>
+    </div>-->
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+
+                <div class="panel-body table-responsive">
+                   
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                        <table  class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>RM</th>
+                                    <th>BRANCH</th>
+                                    <th>ENTITY</th>
+                                    <th>DEFERRAL COUNT</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in transferRM_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Customer'">{{data.relationshipmgmt_name}}</td>
+                                    <td data-title="'Loan Facility Type'">{{data.branch_name}}</td>
+                                    <td data-title="'Tracking Type'">{{data.entity_name}}</td>
+                                    <td data-title="'Deferral'">{{data.count}}</td>
+                                    <td data-title="'Action'">
+                                        <button title="Transfer" ng-click="popuptransfer(data.relationshipmgmt_gid)" class="btn btn-sm btn-info">
+                                            <em class="fa fa-exchange"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+    <script type="text/ng-template" id="/myModalContent.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-exchange"></i>
+                </span>TRANSFER DEFERRALS
+            </h4>
+        </div>
+        <form novalidate="" id="userform" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">
+            <div class="modal-body" style="padding-left:50px;">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Loan Ref No</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.loanref_no}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Loan Title</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.loan_title}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Deferral Ref No</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.record_id}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Deferral</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.deferral_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Transferred From</label>
+                    </div>
+
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        {{UploadDocumentname.rm_name}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <label>Transferred To*</label>
+                    </div>
+                    <div class="col-lg-9 col-sm-9 col-md-9">
+                        <select name="employee_gid" dropzone="" style="width:250px;" ng-model="employee_gid" required class="mda-form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched" size="1">
+                            <option value="">-----Select Transferred To----</option>
+                            <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">{{data.employee_name}}</option>
+                        </select>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer ng-scope">
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-click="transferSubmit(drop.data.selected)" ng-disabled="userform.$invalid">
+                        <i class="fa fa-exchange"></i> &nbsp;&nbsp;Transfer
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+
+        </form>
+    </script>
+</div>
+
+
+

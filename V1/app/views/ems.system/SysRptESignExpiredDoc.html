@@ -1,0 +1,86 @@
+﻿<a href="#/app/SysRptEsign">
+    <button type="button" title="Back to Home" class="pull-right btn btn-sm btn-primary ">
+        <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+    </button>
+</a>
+<style>
+    .tabactivecolorstyle {
+        background-color: #84cbdb;
+    }
+</style>
+<h3>
+    HR Document E Sign Expired Report
+</h3>
+
+<div ng-controller="SysRptESignExpiredDocController">
+    <button type="button" class="btn btn-success pull-right" ng-click="esignreporthrdoc()" title="Export Excel">
+        <i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i>
+    </button>
+    <br /><br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" id="opentab" class="btn btn-labeled" ng-click="UnSigned()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{pendingesign_count}}</b></div>
+                            <b style="font-size: 14px;">Pending E Sign</b>
+                        </button>
+                        <br />
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" id="pendingtab" class="btn btn-labeled" ng-click="Signed()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{completedesign_count}}</b></div>
+                            <b style="font-size: 14px;">Completed E Sign</b>
+                        </button>
+                        <br />
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" id="expiredtab" class="btn btn-labeled tabactivecolorstyle" ng-click="Expired()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{expiredesign_count}}</b></div>
+                            <b style="font-size: 14px;">Expired E Sign</b>
+                        </button>
+                        <br />
+                    </div>
+
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead class="text-nowrap">
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th> S.No </th>
+                                        <th> Employee Name </th>
+                                        <th> Document Type </th>
+                                        <th> Document Name </th>
+                                        <th> E Sign Request Date </th>
+                                        <th> Expired Date </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in document_list ">
+                                        <td data-title="'S.No'" style="text-align: center; width: 10%;"> {{$index+1}} </td>
+                                        <td data-title="'Employee Name'">{{data.documentemployee_name }}</td>
+                                        <td data-title="'Document type'">{{data.hrdocument_name }}</td>
+                                        <td data-title="'Document Name'">{{data.hrdoc_name }}</td>
+                                        <td data-title="'Proceeded for ESign Date'">{{data.document_proceededforesign }}</td>
+                                        <td data-title="'Expired Date'">{{data.expire_on}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

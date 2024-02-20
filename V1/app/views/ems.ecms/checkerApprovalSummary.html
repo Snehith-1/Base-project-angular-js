@@ -1,0 +1,253 @@
+﻿<h3>
+    Checker Approval
+</h3>
+<div id="defid" ng-controller="checkerApprovalSummaryController">
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <br />
+                    <form novalidate="" name="deferralform" ng-submit="form.Approve()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                </div>
+                                <div class="col-lg-4  col-sm-4 col-md-4">
+
+                                </div>
+                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                    <label class="col-form-label"><strong>Checker Status<span style="color:red;">*</span></strong></label><br />
+                                    <select ng-switch="user_status" name="deferral_status" style="width:300px;" dropzone="" ng-model="deferral_status" required="" class="mda-form-control" size="1">
+                                        <option value="">-----Select Status----</option>
+                                        <option ng-switch-when="Y" value="Approve">Approve</option>
+                                        <option value="PushBack">PushBack</option>
+                                        <option value="Close">Close</option>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-click="export()" title="Export Excel">
+                                    <i class="fa fa-file"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;
+                                    <button title="Bulk Verify" style="height:25px;" ng-disabled="deferralform.$invalid" ng-click="bulkVerifyChecker()" class="btn btn-purple">
+                                        <em class="icon icon-check"></em>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th><input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);"> </th>
+                                    <!--<th>S.NO</th>-->
+                                    <th>ENTITY</th>
+                                    <!--<th>BRANCH</th>-->
+                                    <th>CUSTOMER</th>
+                                    <th>VERTICAL</th>
+                                    <!--<th>LOAN REF NO</th>-->
+                                    <th>RECORD ID</th>
+                                    <th>TRACKING TYPE</th>
+                                    <th>DEFERRAL TYPE</th>
+                                    <th>CREATED BY</th>
+                                    <th>CREATED DATE</th>
+                                    <th>DUE DATE</th>
+                                    <!--<th>EXTENDED DATE</th>-->
+                                    <!--<th>DEFERRAL STAGE</th>-->
+                                    <!--<th>CHECKER STATUS</th>-->
+                                    <th>DEFERRAL STATUS</th>
+
+                                    <th>AGING</th>
+
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in deferral_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td>
+                                        <input type="checkbox" id="c1" name='check'
+                                               value={{data.checked}} ng-model="data.checked">
+                                    </td>
+                                    <!--<td data-title="'S.No'">{{$index+1}}</td>-->
+                                    <td data-title="'Entity'">{{data.entity_name}}</td>
+                                    <!--<td data-title="'Branch'">{{data.branch_name}}</td>-->
+                                    <td data-title="'Customer'">{{data.customername}}</td>
+                                    <td data-title="'Customer'">{{data.vertical_code}}</td>
+                                    <!--<td class="nowrap" data-title="'Loan Ref No'">{{data.loanTitle}}</td>-->
+                                    <td data-title="'Record Id'">{{data.record_id}}</td>
+                                    <!--<td data-title="'Deferral Name'">{{data.deferral_name}}</td>-->
+                                    <!--<td data-title="'Catagory'">{{data.deferral_catagory}}</td>-->
+                                    <td data-title="'Tracking Type'">{{data.tracking_type}}</td>
+                                    <td data-title="'Deferral Type'">{{data.deferral_name}}</td>
+                                    <td data-title="'Created Date'">{{data.Created_by}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.duedate}}</td>
+                                    <!--<td class="nowrap" data-title="'Due Date'">{{data.extended_date}}</td>-->
+                                    <!--<td data-title="'Deferral Status'">{{data.approval_status}}</td>-->
+                                    <!--<td data-title="'Deferral Status'">{{data.checker_status}}</td>-->
+                                    <td data-title="'Deferral Status'">{{data.deferral_status}}</td>
+
+                                    <td data-title="'Deferral Status'">{{data.aging}}</td>
+
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Verify" ng-click="verifyChecker(data.deferral_gid)" class="btn btn-purple">
+                                            <em class="icon icon-check"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END panel-->
+            </div>
+        </div>
+        <script type="text/ng-template" id="/updatecheckerremarks.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools bg-success">
+                    <h2><em class="fa fa-check"></em>&nbsp;Update Checker Remarks </h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Checker Remarks<span style="color:red;">*</span></label>
+                                            <textarea ng-model="checker_remarks" rows="3" required md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="RemarksUpdate()" ng-disabled="mappingAddform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Update</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Close</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+
+        <script type="text/ng-template" id="/updateremarks.html">
+            <md-toolbar>
+                <div class="md-toolbar-tools bg-success">
+                    <h2><em class="fa fa-check"></em>&nbsp;Update Remarks </h2>
+                    <span flex></span>
+
+                </div>
+            </md-toolbar>
+            <div class="modal-body ng-scope">
+                <div class="pd-sm-10">
+
+                    <div class="row">
+                        <form name="remarksAddform" id="remarksAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Approval Remarks</label>
+                                            <textarea ng-model="approval_remarks" rows="3" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
+                                    <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                      
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Customer Remarks</label>
+                                            <!--<button type="button"
+                                                    title="Copy Internal Remarks to Customer Remarks"
+                                                    ng-click="btncopy()">
+                                                <em class="fa fa-copy text-primary fa-sm"></em>
+                                            </button>-->
+                                            <textarea ng-model="customerremarks" rows="3" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div class="class">
+                                    <div class="text-center">
+                                        <a class="btn btn-success" ng-click="Update()" ng-disabled="remarksAddform.$invalid">
+                                            <em class="fa fa-check"></em>
+                                            <span>Update</span>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="ok()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Close</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </script>
+
+    </div>
+</div>
+
+
+
+

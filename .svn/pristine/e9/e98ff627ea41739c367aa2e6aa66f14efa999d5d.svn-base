@@ -1,0 +1,354 @@
+<h3>
+    Covenant Period
+</h3>
+<div ng-controller="MstCovenantPeriodController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button title="Add Covenant Period" class="btn btn-info btn-sm" ng-hide="lsoneapipage=='OneApi'" ng-click="addcovenantperiod()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>Add Covenant Period
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color: #09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th> One API Code</th>
+                                    <th> Covenant Code</th>
+                                    <th> Covenant Period</th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> LMS code</th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Bureau Code</th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Remarks </th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Created By</th>
+                                    <th class="" ng-hide="lsoneapipage=='OneApi'"> Created Date</th>
+                                    <th> Status </th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>                                               
+                            </thead>
+                            <tbody>
+                                
+                                <tr ng-repeat="data in covenantperiod_list">
+                                    <td style="display:none;" data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="Covenant Code">{{data.covenantperiod_code}}</td>
+                                    <td data-title="'Covenant Period'">{{data.covenantperiod_name}} </td>
+                                    <td data-title="'LMS code'" class="" ng-hide="lsoneapipage=='OneApi'">{{data.lms_code}} </td>
+                                    <td data-title="'Bureau Code'" class="" ng-hide="lsoneapipage=='OneApi'">{{data.bureau_code}} </td>
+                                    <!--<td align="center">
+                                        <em class="fa fa-question-circle" ng-hide="lsoneapipage=='OneApi'" ng-click=showremarks(data.remarks) style="font-size:24px;align-content:center;"></em>
+                                    </td>-->
+                                    <td class="fa fa-question-circle" ng-click=showremarks(data.remarks) ng-hide="lsoneapipage=='OneApi'" style="font-size:24px" align-content:center;"></td>
+                                    <td data-title="'Created By'" class="" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'" class="" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="editcovenantperiod(data.covenantperiod_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.covenantperiod_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.covenantperiod_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.covenantperiod_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+
+    <!-- Add -->
+
+    <script type="text/ng-template" id="/addpopup.html">
+    <div class="modal-header bg-primary ng-scope">
+        <h4 id="myModalLabel" class="modal-title">
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-plus "></i>
+            </span> Add Covenant Period
+        </h4>
+    </div>
+
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="AddCovenantPeriod" ng-submit="form.AddCovenantPeriod()" autocomplete="off" class="form-validate form-horizontal">
+               <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="row "><br/>
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                    <label class="col-form-label float-label"> Covenant Code <span style="color:red">*</span> </label> 
+                                    <br />
+                                    <input type="text" ng-model="txtcovenantperiod_code" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />
+                                </div>
+                        </div>                  
+                    <br/>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtcovenantperiod_name"  required maxlength="255" tabindex="0" aria-required="true" aria-invalid="false" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>Covenant Period <span style="color:red">*</span></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtlms_code"  maxlength="30" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>LMS Code </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtbureau_code" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                              <div class="mda-form-group float-label">
+                              <textarea ng-model="txtremarks" style="resize:vertical;" required rows="3" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched"></textarea>
+                              <label>Remarks <span style="color:red">*</span></label>
+                            </div>
+                            </div>
+                       </div>    
+                    </div>
+                </div>
+                <div>
+                    
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="AddCovenantPeriod.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>   
+                <br /> 
+            </div>
+        </form>
+    </div>
+</script>
+
+<!-- Edit -->
+
+<script type="text/ng-template" id="/editpopup.html">
+    <div class="modal-header bg-primary ng-scope">
+
+        <h4 id="myModalLabel" class="modal-title">
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span>Edit Covenant Period
+
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="EditCovenantPeriod" ng-submit="form.EditCovenantPeriod()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="row "><br/>
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                 <label class="col-form-label"> Covenant Code <span style="color:red">*</span></label>
+                                 <br/>
+                                    <input type="text" ng-model="txteditcovenantperiod_code" tabindex="0" class="form-control" placeholder=""disabled />
+                                </div>
+                        </div>  
+                        <br/>                
+                    
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <input ng-model="txteditcovenantperiod_name" required maxlength="255" tabindex="0" aria-required="true" aria-invalid="false" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label> Covenant Period <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <input ng-model="txteditlms_code" tabindex="0" maxlength="30" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" >
+                                    <label>LMS Code </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <input ng-model="txteditbureau_code"  maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                              <div class="mda-form-group">
+                                  <textarea ng-model="txteditremarks" style="resize:vertical;" required rows="3" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                  <label>  Remarks <span style="color:red">*</span></label>
+                              </div>
+                            </div>
+                       </div>    
+                    </div>
+                </div>
+            </div>
+            <div>
+                
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="EditCovenantPeriod.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+            <br/>
+        </form> 
+    </div>         
+</script>
+
+ <!--Showpopover-->
+
+<script type="text/ng-template" id="/remarks.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">&nbsp;&nbsp;
+            <span class="btn-label bg-primary">
+                 <i class="fa fa-info-circle"></i>
+            </span> Remarks
+        </h4>
+    </div>
+    
+    <div class="modal-body">
+          <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <label>Remarks</label>
+                        <p>{{remarks}}</p>
+                    </div>
+                </div>
+            </div>
+       
+        <div align="center">
+            <button ng-click="back()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+
+<!-- status -->
+
+<script type="text/ng-template" id="/statuscovenantperiod.html">
+    <div class="modal-header bg-primary ng-scope">
+
+        <h4 class="modal-title">
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-thumbs-up"></i>
+            </span>Status
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="statuscovenantperiod" ng-perio="form.statuscovenantperiod()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="pd-sm-10">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="row ">
+                                    <br />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label> Covenant Period <span style="color:red">*</span> </label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        {{txteditcovenantperiod_name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Status  </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" />
+                                        <span class="fa fa-circle"></span> Inactive
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks <span style="color:red;">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="statuscovenantperiod.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive" ng-show="covenantperiodinactivelog_data!=null">
+                <div style="max-height:300px;overflow:auto;">
+                    <table class="table table-striped table-secondary">
+                        <thead class="bg-gray text-white">
+                            <tr width="100%">
+                                <th align="center" scope="col">S.No</th>
+                                <th align="center" scope="col">Status</th>
+                                <th align="center" scope="col">Updated By</th>
+                                <th align="center" scope="col">Updated Date</th>
+                                <th align="center" scope="col">Remarks</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in covenantperiodinactivelog_data" width="100%">
+                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                <td align="left" scope="col" title="'Status'">{{data.status}} </td>
+                                <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+</div>
+

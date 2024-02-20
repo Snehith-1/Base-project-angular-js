@@ -1,0 +1,75 @@
+<h3>
+    Buyer Summary
+</h3>
+<div ng-controller="MstBuyerSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Buyer" class="btn btn-info btn-sm" ng-click="addbuyer()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Buyer
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Buyer Code </th>
+                                    <th> One API Code</th>
+                                    <th> Buyer Name </th>
+                                    <th> Credit Status </th>
+                                    <th> Buyer Status </th>
+                                    <th> Created Date</th>
+                                    <th> Status </th>
+                                    <th style="text-align: center;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in buyer_list" ng-switch="data.creditActive_status">
+                                    <td data-title="'S.No'" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'buyer Code'">{{data.buyer_code}}</td>
+                                    <td data-title="'One API Code'">{{data.api_code}}</td>
+                                    <td data-title="'buyer Name'"> {{data.buyer_name}} </td>
+                                    <td data-title="'Credit Status'">
+                                        <label class="label label-danger" ng-if="data.credit_status=='Not yet Completed'" style="font-size:10px;">Not yet Completed</label>
+                                        <label class="label" ng-if="data.credit_status!='Not yet Completed' " style="color:#656565;font-size: 11px;">{{data.credit_status}}</label>
+                                    </td>
+                                    <td data-title="'Buyer Status'"> {{data.creditstatus_Approval}} </td>
+                                    <td data-title="'Created Date'"> {{data.created_date}} </td>
+                                    <td data-title="'Status'">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="viewbuyer(data.buyer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-click="editbuyer(data.buyer_gid)" class="btn btn-green" ng-switch-when='Active'>
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.buyer_gid)" class="btn btn-danger" ng-switch-when='Active'>
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

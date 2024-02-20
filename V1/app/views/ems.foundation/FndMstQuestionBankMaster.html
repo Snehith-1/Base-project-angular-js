@@ -1,0 +1,276 @@
+﻿<h3>
+    Questionnaire
+</h3>
+<div ng-controller="FndMstQuestionBankMaster">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Questions" class="btn btn-info btn-sm" ng-click="addQuestionTitle()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>Add Questions
+            </button>
+        </div>
+        <div>
+            <br />
+            <button type="button" class="btn btn-success btn-md pull-right" title="Sample Import Excel" ng-click="importexcel()">
+                <i class="fa fa-file-excel-o">&nbsp;Import</i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" no-wrap style="background-color:#09385f;">
+                                    <th class="text-center" style="display:none">S.No</th>
+                                    <th>Questionnaire Code</th>     
+                                    <th>Campaign Type</th>                               
+                                    <th>Questions</th>
+                                    <th>Answer Type</th>                                 
+                                    <th>Mandatory</th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>                                    
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in questionarie">
+                                    <td data-title="'S.No'" style="display:none">{{$index+1}}</td>                                   
+                                    <td data-title="'Quetionarie ID'">{{data.Questionnarie_gid}}</td>
+                                    <td data-title="'Campaign type'">{{data.Campaigntype_name}}</td>
+                                    <td data-title="'Quetionarie name'">{{data.Questionnarie_name}}</td>
+                                    <td data-title="'Quetionarie type'">{{data.Questionnarie_type}}</td>                                
+                                    <td data-title="'Mandatory'">{{data.mandatory}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td> 
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                               ng-click="showPopover(data.Questionnarie_gid,data.Questionnarie_name)">
+                                            <em class="fa fa-info-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td> 
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="edit(data.Questionnarie_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.Questionnarie_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.Questionnarie_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.Questionnarie_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>                                   
+                                    
+                                </tr>
+                              
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
+<script type="text/ng-template" id="/importexcel.html">
+    <div class="modal-header bg-blue-600 ng-scope">
+        <h4 id="myModalLabel" class="modal-title">
+            <span class="btn-label bg-blue-600">
+                <em class="fa fa-plus"></em>
+                Sample Import Excel
+            </span>
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="pd-sm-10">
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px;">
+                                    <b> Click here to download Template </b>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label> Upload Excel : </label>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                <input type="file" id="fileimport" ng-model="test_document"
+                                       onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                &nbsp;
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                    <em class="icon-cloud-upload"></em>
+                                </button>
+                                <span>
+                                    <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                        <i class="fa icon-close"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/statusQuestionnarie.html">
+    <div class="modal-header bg-primary ng-scope">
+
+        <h4>
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-thumbs-up"></i>
+            </span>Status
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="statusQuestionnarie" ng-submit="form.statusQuestionnarie()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="row ">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row ">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Questionnarie</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            {{Questionnarie_name }}
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label>Status  </label>
+                        </div>
+                        <!--<div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                </label>
+                                <label>
+                                    <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                    <span class="fa fa-circle"></span> Inactive
+                                </label>
+                            </div>
+                        </div>-->
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                </label>
+                                <label>
+                                    <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                    <span class="fa fa-circle"></span> Inactive
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="mda-form-group float-label">
+                                <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                <label>Remarks<span style="color:red"> *</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="statusQuestionnarie.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive" ng-show="statusQuestionnarieinactivelog_list!=null">
+                <div style="max-height:300px;overflow:auto;">
+                    <table class="table table-striped table-secondary">
+                        <thead class="bg-gray text-white">
+                            <tr width="100%">
+                                <th align="center" scope="col">S.No</th>
+                                <th align="center" scope="col">Status</th>
+                                <th align="center" scope="col">Updated By</th>
+                                <th align="center" scope="col">Updated Date</th>
+                                <th align="center" scope="col">Remarks</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in statusQuestionnarieinactivelog_list" width="100%">
+                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                <td align="left" scope="col" title="'Status'">{{data.status}}</td>
+                                <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+<script type="text/ng-template" id="/showremarks.html">
+
+    <div class="panel-body text-center">
+        <div class="table-responsive">
+
+            <table class="table hover table-striped row-border">
+
+                <thead>
+
+                    <tr style="text-align: left;height:40px;">
+                        <th style="color:white;background:#7986cb; width:2%;text-align:center;"><i class="fa fa-info-circle" style="text-align: left;">&nbsp; Remarks</i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td style="width:2%; text-align:left"><b> Remarks: </b> <br /></td>
+                    </tr>
+                    <tr style="text-align: left;height:20px;">
+                        <td data-title="'Credit head'" style="width:2%; text-align:left"> {{txteditremarks}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div class="text-center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+            </div>
+        </div>
+    </div>
+</script>
+

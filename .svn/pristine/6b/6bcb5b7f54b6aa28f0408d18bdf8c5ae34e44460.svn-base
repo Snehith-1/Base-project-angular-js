@@ -1,0 +1,157 @@
+<style>
+    #changestyle_chosen {
+        width: 250px !important;
+    }
+    #changestyle500_chosen {
+        width: 550px !important;
+    }
+</style>
+<h3>
+    Colending
+</h3>
+<div ng-controller="MstCreditColendingRuleController">
+    
+            <div class="row" style="margin-bottom:-10px;">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div id="panelDemo9" class="panel panel-primary">
+                        <div class="panel-heading" style="background-color: #d5591e;
+                    background-image: linear-gradient(316deg, rgb(236 195 100) 0%,  rgb(171 225 166) 74%);color:#000000;">
+                            <b class="text-center">{{txtcolendar_name}} - Score Card </b>
+                        </div>
+                        <div class="panel-body" ng-if="showsubmitscoreevent==false">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <table class="table table-stripped table-bordered">
+                                        <tr style="background-color:#2196f3;color:white;">
+                                            <th class="col-sm-6 col-lg-6 col-md-6 text-center">Parameter</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Actual Value</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Score</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Final Score</th>
+                                        </tr>
+                                        <tbody ng-repeat="m in GroupTitle_List_Colending">
+                                            <tr class="info">
+                                                <td class="col-sm-6 col-lg-6 col-md-6">
+                                                    <p style="font-size:15px;"><b>{{m.grouptitle_name}}</b></p>
+                                                </td>
+                                                <td class="col-sm-3 col-lg-3 col-md-3"></td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2"></td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">
+                                                    <b><input type="text" ng-model="m.final_scoredisplay" tabindex="0" class="form-control" ng-disabled="true" /></b>
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="data in m.GroupQuestion_list_Colending" ng-hide="data.hidden_question=='true'">
+        
+                                                <td class="col-sm-6 col-lg-6 col-md-6">
+                                                    <p>{{data.question}}</p>
+                                                </td>
+                                                <td class="col-sm-3 col-lg-3 col-md-3" ng-switch="data.answer_type">
+                                                    <select id="changestyle" ng-switch-when="List" name="cluster" chosen="" tabindex="2"  
+                                                            ng-options="m.colendingquestionlistoption_gid as m.list_name for m in data.DropdownListArraydtl"
+                                                             ng-model="data.cbofield_type"
+                                                             class="chosen-select form-control" 
+                                                     ng-change="changefieldtypeEdit({{$parent.$parent.$index}},data.cbofield_type,data.DropdownListArraydtl,$parent.$index);"></select>
+        
+                                                    <input type="text" ng-model="data.field_number" style="width:250px;" ng-switch-when="Number"
+                                                           ng-change="ChangeNumberFieldEdit({{$parent.$parent.$index}},data.field_number,$parent.$index)" tabindex="0" class="form-control" />
+                                                    <p ng-switch-when="Number" class="text-info">* Allow only 2 decimal Numbers</p>
+        
+                                                    <input type="text" ng-model="data.field_number" tabindex="0" class="form-control" style="width:250px;"
+                                                           ng-switch-when="Calculation" ng-disabled="true" />
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2" ng-switch="data.actual_score">
+                                                    <input type="text" ng-model="data.actual_score" ng-switch-default tabindex="0" class="form-control" ng-disabled="true" />
+                                                    <input type="text" ng-model="data.actual_score" style="background-color:#ff0000a1;color:white;" ng-switch-when="Rejected" tabindex="0" class="form-control" ng-disabled="true" />
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">
+                                                    <input type="text" ng-model="data.final_scoredisplay" tabindex="0" class="form-control" ng-disabled="true" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <br />
+                                    <div class="row">
+                                        <div class="text-center">
+                                            <button ng-hide="btnupdateshow" class="btn btn-grey"><i class="fa fa-check"></i>&nbsp;&nbsp; Update Score Card </button> &nbsp;&nbsp;
+        
+                                            <button ng-show="btnupdateshow" ng-click="saveScoreCard()" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp; Update Score Card </button> &nbsp;&nbsp;
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+        
+                        </div>
+                        <div class="panel-body" ng-if="showsubmitscoreevent==true">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <table class="table table-stripped table-bordered">
+                                        <tr style="background-color:#2196f3;color:white;">
+                                            <th class="col-sm-6 col-lg-6 col-md-6 text-center">Parameter</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Actual Value</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Score</th>
+                                            <th class="col-sm-2 col-lg-2 col-md-2 text-center">Final Score</th> 
+                                        </tr>
+                                        <tbody ng-repeat="m in GroupTitle_List_Colending">  
+                                            <tr class="info"> 
+                                                <td class="col-sm-6 col-lg-6 col-md-6">
+                                                    <p style="font-size:15px;"><b>{{m.grouptitle_name}}</b></p>
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2"> 
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">  
+                                                 </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">
+                                                    <b><input type="text" ng-model="m.final_scoredisplay" tabindex="0" class="form-control" ng-disabled="true" /></b>
+                                                </td> 
+                                            </tr>
+                                            <tr ng-repeat="data in m.GroupQuestion_list_Colending" ng-hide="data.hidden_question=='true'">
+                                               
+                                                <td class="col-sm-6 col-lg-6 col-md-6">
+                                                    <p>{{data.question}}</p> 
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2" ng-switch="data.answer_type">
+                                                    <select id="changestyle" ng-switch-when="List" name="cluster" chosen="" tabindex="2" ng-options="k.list_name for k in data.DropdownListArraydtl track by k.colendingquestionlistoption_gid"
+                                                            ng-model="data.cbofield_type" class="chosen-select form-control" ng-change="changefieldtype({{$parent.$parent.$index}},data.cbofield_type,data.DropdownListArraydtl,$parent.$index);"></select>
+        
+                                                    <input type="text" ng-model="data.field_number" style="width:250px;" ng-switch-when="Number"
+                                                           ng-change="ChangeNumberField({{$parent.$parent.$index}},data.field_number,$parent.$index)" tabindex="0" class="form-control" />
+                                                    <p ng-switch-when="Number" class="text-info">* Allow only 2 decimal Numbers</p>
+        
+                                                    <input type="text" ng-model="data.field_number" tabindex="0"  class="form-control" style="width:250px;"
+                                                           ng-switch-when="Calculation" ng-disabled="true" /> 
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2" ng-switch="data.Score">
+                                                    <input type="text" ng-model="data.Score" ng-switch-default tabindex="0" class="form-control" ng-disabled="true" /> 
+                                                    <input type="text" ng-model="data.Score" style="background-color:#ff0000a1;color:white;" ng-switch-when="Rejected" tabindex="0" class="form-control" ng-disabled="true" /> 
+                                                </td>
+                                                <td class="col-sm-2 col-lg-2 col-md-2">
+                                                    <input type="text" ng-model="data.final_scoredisplay" tabindex="0" class="form-control" ng-disabled="true" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="text-center">
+                                            <button ng-click="submitScoreCard()" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp; Submit Score Card </button> &nbsp;&nbsp;
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+                            <button ng-click="Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>           
+       
+</div>

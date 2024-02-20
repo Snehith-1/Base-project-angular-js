@@ -1,0 +1,214 @@
+﻿<h3>
+    Edit Audit Creation
+</h3>
+<div ng-controller="AtmMstChecklistMasterEditController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-edit"></em>&nbsp; Audit Creation
+        </div>
+        <br />
+        <div class="panel-body">
+           
+            <form novalidate="" name="editchecklist" ng-submit="form.editchecklist()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Entity </label> &nbsp;<span style="color:red">*</span>
+                            <select name="Entity" id="Entity" ng-options="m.entity_gid as m.entity_name for m in entity_data" chosen=""
+                                    ng-model="cboentityedit" class="chosen-select form-control" required style="height:37px;">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Audit Department </label> &nbsp;<span style="color:red">*</span>
+                            <select name="AuditDepartment" id="AuditDepartment" ng-options="m.auditdepartment_gid as m.auditdepartment_name for m in auditdepartment_list" chosen=""
+                                    ng-model="cboauditdepartmentedit" class="chosen-select form-control" required style="height:37px;">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <!--<div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Audit Type </label> &nbsp;<span style="color:red">*</span>
+                            <select name="AuditType" id="AuditType" ng-options="m.audittype_gid as m.audittype_name for m in audittype_data" chosen=""
+                                    ng-model="cboaudittypeedit" class="chosen-select form-control" required style="height:37px;">
+                                <option value=""></option>
+                            </select>
+                        </div>-->
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label><strong>Audit Name </strong> <span style="color:red">*</span></label>
+                            <input type="text" ng-model="txtauditname_edit" required maxlength="30" tabindex="0" class="form-control" />
+                            <!--<label><strong>Audit Name </strong> <span style="color:red">*</span></label>
+        <textarea ng-model="txtauditname_edit" style="resize:vertical;" maxlength="3000" rows="3" required aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>-->
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Check Point Group </label> &nbsp;<span style="color:red">*</span>
+                            <select name="CheckpointGroup" id="CheckpointGroup" ng-options="m.checkpointgroup_name for m in checkpointaddgroup_list" chosen=""
+                                    ng-model="cbocheckpointgroup_edit" class="chosen-select form-control" multiple="multiple" required ng-change="onchangecheckpoint(cbocheckpointgroup_edit)" style="height:37px;">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8 col-sm-8 col-sm-8">
+                            <label><strong>Audit Description </strong> <span style="color:red">*</span></label>
+                            <textarea ng-model="txtauditedit_description" required tabindex="3" maxlength="3000" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                
+                <div class="panel panel-default ">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="table table-hover table-striped mb-mails">
+                                <tbody>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th class="text-center"> S.No </th>
+                                        <th class="text-center"> Checkpoint </th>
+                                        <th class="text-center"> Checkpoint Intent </th>
+                                        <th class="text-center"> Checkpoint Description </th>
+                                        <th class="text-center">  Risk Category </th>
+                                        <th> Positive Conformity </th>
+                                        <th> Note To Auditor</th>
+                                        <th> Yes-Score</th>
+                                        <th class="text-center"> No-Score</th>
+                                        <th class="text-center"> Partial-Score</th>
+                                        <th class="text-center"> Na-Score</th>
+                                        <th class="text-center"> Total Score</th>
+                                        <!--<th> Action</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in checklistmasteradd_list">
+
+                                        <td class="text-center"> {{$index+1}} </td>
+                                        <td>  {{data.checkpointgroup_name}}  </td>
+                                        <td align="center">
+                                            <em class="fa fa-info-circle" ng-click=checkpointintent(data.checklistmasteradd_gid,data.checkpoint_intent) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td align="center">
+                                            <em class="fa fa-info-circle" ng-click=description(data.checklistmasteradd_gid,data.checkpoint_description) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td>  {{data.riskcategory_name}}  </td>
+                                        <td> {{data.positiveconfirmity_name}}</td>
+                                        <td align="center">
+                                            <em class="fa fa-info-circle" ng-click=notetoauditor(data.checklistmasteradd_gid,data.noteto_auditor) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td>  {{data.yes_score }} </td>
+                                        <td>  {{data.no_score}} </td>
+                                        <td> {{data.partial_score}}  </td>
+                                        <td>  {{data.na_score}} </td>
+                                        <td> {{data.total_score}}  </td>
+                                        <!--<td data-title="'Action'" class="nowrap">
+                                            <button title="Edit" ng-disabled="data.status_flag =='Y'" ng-click="editcheckpoint(data.checklistmasteradd_gid)" class="btn btn-green">
+                                                <em class="fa fa-edit"></em>
+                                            </button>
+                                            <button title="View" ng-click="viewcheckpoint(data.checklistmasteradd_gid)" class="btn btn-info">
+                                                <em class="fa fa-eye"></em>
+                                            </button>
+                                            <button title="Delete" ng-disabled="data.status_flag =='Y'" ng-click="deletechecklistmaster(data.checklistmasteradd_gid)" class="btn btn-danger">
+ 
+                                        <em class="icon icon-trash "></em>
+                                    </button>--> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="editchecklist.$invalid" ng-click="UpdateChecklistMaster()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                            <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="/checkpointintent.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Intent
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtcheckpointintent}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/checkpointdescription.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Description
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+
+        <div style="white-space: pre-wrap;width:100%; word-wrap: break-word;display: inline-block;">
+            {{txtcheckpointdescription}}
+        </div>
+
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/notetoauditor.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Note To Auditor
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtnotetoauditor}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/auditname.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Audit Name
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtaudit_description}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>

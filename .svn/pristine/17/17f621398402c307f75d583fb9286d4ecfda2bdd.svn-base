@@ -1,0 +1,650 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Supplier Application 
+</h3>
+<div ng-controller="AgrTrnSuprCreditGeneralDtlEditController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit General Information </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <form name="Generaldetailsupdate" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; General Details </b></p>
+                                        <hr />
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <!--<label class="col-form-label"> Applicant Name <span style="color:red"> *</span></label>-->
+                                            <label class="col-form-label"> Customer/Supplier Name <span style="color:red"> *</span></label>
+                                            <br />
+                                            <input type="text" ng-model="txtcustomer_name" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" maxlength="25" />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <br />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Vertical <span style="color:red"> *</span></label>
+                                            <!--<label style="font-weight:bold"> Customer/Supplier Type </label>-->
+                                            <br />
+                                            <select name="Vertical" id="Vertical" chosen="" ng-options="m.vertical_gid as m.vertical_name for m in vertical_list"
+                                                    ng-model="cboVertical" class="chosen-select form-control" required>
+                                                <option value="">----- Select Vertical -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <!--<label class="col-form-label"> Credit Group <span style="color:red"> *</span></label>-->
+                                            <label style="font-weight:bold"> Product Credit Group </label>
+                                            <br />
+                                            <select name="CreditGroup" id="CreditGroup" chosen="" ng-options="m.creditmapping_gid as m.creditgroup_name for m in creditgrouplist"
+                                                    ng-model="cbocreditgroup" class="chosen-select form-control" required>
+                                                <option value="">----- Select Product Credit Group -----</option>
+                                            </select>
+                                        </div>
+                                        <!--<div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Vertical Tag <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="VerticalTag" id="VerticalTag" chosen="" ng-options="m.verticaltaggs_gid as m.verticaltaggs_name for m in verticaltaggs_list"
+                                                    ng-model="cboVerticaltag" class="chosen-select form-control" required>
+                                                <option value="">----- Select Vertical Tag -----</option>
+                                            </select>
+                                        </div>-->
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Constitution <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="Constitution" id="Constitution" chosen="" ng-options="m.constitution_gid as m.constitution_name for m in constitution_list"
+                                                    ng-model="cboConstitution" class="chosen-select form-control" required>
+                                                <option value="">----- Select Constitution -----</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Product <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="ProductName" id="ProductName" chosen="" ng-options="m.product_gid as m.product_name for m in productname_list"
+                                                    ng-model="cboproduct_name" class="chosen-select form-control" required ng-change="productname_change(cboproduct_name)">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"><strong> Sector / Strategic Business Unit </strong></label>
+                                            <input type="text" ng-model="txtsector_name" tabindex="0" disabled class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"><strong> Category </strong> </label>
+                                            <input type="text" ng-model="txtcategory_name" tabindex="0" disabled class="form-control" />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Variety <span style="color:red"> *</span> </label>
+                                            <br />
+                                            <select name="VarietyName" id="VarietyName" chosen="" ng-options="m.variety_gid as m.variety_name for m in varietyname_list" required
+                                                    ng-model="cbovariety_name" class="chosen-select form-control" ng-change="Variety_change(cbovariety_name)">
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"><strong> Botanical Name </strong></label>
+                                            <input type="text" ng-model="txtbotanical_name" tabindex="0" disabled class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"><strong> Alternative Names</strong></label>
+                                            <input type="text" ng-model="txtalternative_name" tabindex="0" disabled class="form-control" />
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <!--<div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Strategic Business Unit / Sector (SBU) <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="StrategicBusinessUnit" id="StrategicBusinessUnit" chosen="" ng-options="m.businessunit_gid as m.businessunit_name for m in businessunit_list"
+                                                    ng-model="cboStrategicBusinessUnit" class="chosen-select form-control" required>
+                                                <option value="">----- Select Strategic Business Unit / Sector (SBU) -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Primary Value Chain (PVC) <span style="color:red"> *</span></label>
+                                            <br />
+
+                                            <select name="PrimaryValueChain" id="PrimaryValueChain" chosen="" multiple ng-options="m.valuechain_name for m in valuechain_list"
+                                                    ng-model="$parent.cboPrimaryValueChain" class="chosen-select form-control">
+                                                <option value=""> ----- Select Primary Value Chain (PVC) -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Secondary Value Chain (SVC) </label>
+                                            <br />
+                                            <select name="SecondaryValueChain" id="SecondaryValueChain" chosen="" multiple ng-options="m.valuechain_name for m in valuechain_list"
+                                                    ng-model="$parent.cboSecondaryValueChain" class="chosen-select form-control">
+                                                <option value=""> ----- Select Secondary Value Chain (SVC) -----</option>
+                                            </select>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />-->
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <!--<label class="col-form-label"> Program <span style="color:red"> *</span></label>-->
+                                            <label style="font-weight:bold"> Business Classification </label>
+                                            <br />
+                                            <select name="program" id="program" chosen="" ng-options="m.program_gid as m.program for m in program_list"
+                                                    ng-model="cboprogram" class="chosen-select form-control" required>
+                                                <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Application From SA <span style="color:red"> *</span></label>
+                                            <div class="radio c-radio">
+                                                <label>
+                                                    <input type="radio" id="SA" name="SA" value="Yes" ng-model="rdbsa_status" ng-change="onselectedsa_yes()" required />
+                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                </label>
+                                                <label>
+                                                    <input type="radio" id="SA" name="SA" value="No" ng-model="rdbsa_status" ng-change="onselectedsa_yes()" required />
+                                                    <span class="fa fa-circle"></span>No
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4" ng-show="SA_yes">
+                                            <label class="col-form-label"> SAM Associate ID/Name <span style="color:red"> *</span> </label>
+                                            <br />
+                                            <select name="sa_idname" id="sa_idname" ng-options="m.associatemaster_gid as m.name for m in associatemaster_list"
+                                                    ng-model="cbosa_idname" class="form-control" size="1" chosen="">
+                                                <option value="">----- Select SAM Associate ID/Name -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4" ng-hide="SA_yes">
+                                            <label><strong> SAM Associate ID/Name </strong> </label>
+                                            <input type="text" ng-model="sa_idname" tabindex="0" class="form-control" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Vernacular Language <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="VernacularLanguage" id="VernacularLanguage" chosen="" multiple ng-options="m.vernacular_language for m in vernacularlang_list"
+                                                    ng-model="cboVernacularLanguage" class="chosen-select form-control">
+                                                <option value="">----- Select Vernacular Language -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Contact Person Details </b></p>
+                                        <hr />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> First Name <span style="color:red"> *</span> </label>
+                                            <br />
+                                            <input type="text" ng-model="txtcontactpersonfirst_name" tabindex="0" class="form-control" maxlength="50" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Middle Name </label>
+                                            <br />
+                                            <input type="text" ng-model="txtcontactpersonmiddle_name" tabindex="0" class="form-control" maxlength="50" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Last Name </label>
+                                            <br />
+                                            <input type="text" ng-model="txtcontactpersonlast_name" tabindex="0" class="form-control" maxlength="50" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Designation <span style="color:red"> *</span></label>
+                                            <br />
+                                            <select name="designation_type" id="designation_type" chosen="" ng-options="m.designation_gid as m.designation_type for m in designation_list"
+                                                    ng-model="cboDesignation" class="chosen-select form-control" required>
+                                                <option value="">----- Select Designation -----</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Landline Number </label>
+                                            <br />
+                                            <input type="text" ng-model="txtlandline_no" tabindex="0" class="form-control" maxlength="10" ng-pattern="/^[0-9]*$/" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Mobile Number(s)  </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                <label class="col-form-label"> Mobile Number <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <input type="text" name="generalmobileno" id="generalmobileno" ng-model="txtmobile_no" maxlength="12" ng-pattern="/^[0-9+]*$/"
+                                                                       aria-invalid="true" class="form-control ng-pristine ng-invalid ng-touched">
+                                                            </div>
+                                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                <label>Primary Status <span style="color:red"> *</span> </label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="primarymobileno" name="primarymobileno" value="Yes" ng-model="rdbprimary_mobileno" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="primarymobileno" name="primarymobileno" value="No" ng-model="rdbprimary_mobileno" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                <label>Whatsapp Number <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="whatsappmobileno" name="whatsappmobileno" value="Yes" ng-model="rdbwhatsapp_mobileno" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="whatsappmobileno" name="whatsappmobileno" value="No" ng-model="rdbwhatsapp_mobileno" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                                <br />
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="mobileno_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <div style="max-height:200px;overflow:auto;">
+                                                                        <table class="table">
+                                                                            <thead class="bg-gray text-white">
+                                                                                <tr>
+                                                                                    <th>S.No</th>
+                                                                                    <th>Mobile No</th>
+                                                                                    <th>Primary Status</th>
+                                                                                    <th>Whatsapp Number </th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="data in mstmobileno_list">
+                                                                                    <td>{{$index+1}}</td>
+                                                                                    <td>{{data.mobile_no}}</td>
+                                                                                    <td>{{data.primary_mobileno}}</td>
+                                                                                    <td>{{data.whatsapp_mobileno}}</td>
+                                                                                    <td class="text-nowrap">
+                                                                                        <button title="Edit" ng-click="mobileno_edit(data.application2contact_gid)"
+                                                                                                class="btn btn-green btn-xs">
+                                                                                            <em class="fa fa-edit"></em>
+                                                                                        </button>
+                                                                                        <button title="Delete" ng-click="mobileno_delete(data.application2contact_gid)"
+                                                                                                class="btn btn-danger btn-xs ">
+                                                                                            <em class="fa fa-trash-o"></em>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Mail ID(s) </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                                <label class="col-form-label"> Email Address <span style="color:red"> *</span> </label>
+                                                                <input type="text" ng-model="txtemail_address" class="form-control" ng-pattern="appemail_pattern" maxlength="100">
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                <label>Primary Status <span style="color:red"> *</span></label>
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="primaryemail" name="primaryemail" value="Yes" ng-model="rdbprimary_emailaddress" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="primaryemail" name="primaryemail" value="No" ng-model="rdbprimary_emailaddress" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                <br />
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;" ng-click="emailaddress_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="col-lg-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <table class="table">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Email Address</th>
+                                                                                <th>Primary Status</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in mstemailaddress_list">
+                                                                                <td>{{$index+1}}</td>
+                                                                                <td>{{data.email_address}}</td>
+                                                                                <td>{{data.primary_emailaddress}}</td>
+                                                                                <td class="text-nowrap">
+                                                                                    <button title="Edit" ng-click="emailaddress_edit(data.application2email_gid)" class="btn btn-green btn-xs">
+                                                                                        <em class="fa fa-edit"></em>
+                                                                                    </button>
+                                                                                    <button title="Delete" ng-click="emailaddress_delete(data.application2email_gid)"
+                                                                                            class="btn btn-danger btn-xs ">
+                                                                                        <em class="fa fa-trash-o"></em>
+                                                                                    </button>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b> Genetic Code Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive table-bordered">
+                                                <div>
+                                                    <table class="table">
+                                                        <thead class="bg-gray text-white">
+                                                            <tr>
+                                                                <th>S.No</th>
+                                                                <th>Genetic Code</th>
+                                                                <th>Status</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in mstgeneticcode_list">
+                                                                <td>{{$index+1}}</td>
+                                                                <td>{{data.geneticcode_name}}</td>
+                                                                <td>{{data.genetic_status}}</td>
+                                                                <td>{{data.genetic_remarks}}</td>
+
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-md" ng-disabled="Generaldetailsupdate.$invalid" ng-click="basicdetail_update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                        <button ng-click="generdtl_Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/editgeneralmobileno.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px">Edit Mobile Number</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong>Mobile Number</strong><span style="color:red"> *</span></label>
+                            <input ng-model="txteditmobile_no" type="text" tabindex="0" maxlength="12" ng-pattern="/^[0-9]*$/" required
+                                   aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Primary Status <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="primarymobile_no" name="primarymobile_no" value="Yes" ng-model="rdbeditprimary_mobileno" required ng-change="ngchange()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="primarymobile_no" name="primarymobile_no" value="No" ng-model="rdbeditprimary_mobileno" required ng-change="ngchange()" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Whatsapp Number <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="mobileno" name="whatsappmobile_no" value="Yes" ng-model="rdbeditwhatsapp_mobileno" required ng-change="ngchange()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="mobileno" name="whatsappmobile_no" value="No" ng-model="rdbeditwhatsapp_mobileno" required ng-change="ngchange()" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="userform1.$invalid" ng-click="update_mobileno()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/generalemailaddressedit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px"> Edit Mail ID</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong>Email Address </strong><span style="color:red"> *</span></label>
+                            <input ng-model="txteditemail_address" type="text" ng-pattern="appemail_pattern" tabindex="0"
+                                   aria-required="true" aria-invalid="true" required class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Primary Status <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="primary_emailaddress" name="primary_emailaddress" required value="Yes" ng-model="rdbeditprimary_emailaddress" ng-change="ngchange()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="primary_emailaddress" name="primary_emailaddress" required value="No" ng-model="rdbeditprimary_emailaddress" ng-change="ngchange()" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="userform1.$invalid" ng-click="update_emailaddress()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/editgeneticcode.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px"> Edit Genetic Code </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row ">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label class="col-form-label"> Genetic Code </label>
+                                    <br />
+                                    <span>{{lblgeneticcode_name}}</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label> Status <span style="color:red"> *</span></label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" id="Status" name="Status" value="Yes" ng-model="rdbeditgenetic_status" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="Status" name="Status" value="No" ng-model="rdbeditgenetic_status" />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label>Remarks <span style="color:red"> *</span></label>
+                                    <textarea rows="2" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                              ng-model="txteditgenetic_remarks" class="form-control"></textarea>
+                                    <br />
+                                </div>
+                            </div>
+                            <br />
+
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="userform1.$invalid" ng-click="update_geneticcode()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+</div>

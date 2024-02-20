@@ -1,0 +1,142 @@
+﻿<h3>
+    HR Payment Completed
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 48px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 56px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApprovals(evt, ApprovalsName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApprovalsName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="TrnHRLoanHRPaymentApprovedSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="tab nowrap">
+                <button class="tablinks" ng-click="myapproval_loans()" style="color:#141478;font-size:13px">
+                    <em class="fa fa-user fa-x" style="color:#141478;font-size: 15px;"></em> &nbsp; Pending Payment
+                    &nbsp; <div class="pull-right label" style="background-color:#141478;padding-top:4px;font-size: 13px;padding-bottom:4px;">{{lspendinghrpayment_count}}</div>
+                </button>
+                <button class="tablinks" ng-click="approved_loans()" onclick="openApprovals(event, 'Approved Applications')" id="defaultOpen" style="color:#00796b;font-size:13px">
+                    <em class="fa fa-check-square-o" style="color:#00796b;font-size: 15px;"></em> &nbsp; Completed Payment
+                    &nbsp; <div class="pull-right label" style="background-color:#00796b;padding-top:4px;font-size:13px;padding-bottom:4px;">{{lscompletedhrpayment_count}}</div>
+                </button>
+                <!-- <button class="tablinks" ng-click="rejected_loans()" style="color:#FF0000;font-size:13px">
+                    <em class="fa icon-close fa-x" style="color:#FF0000;font-size: 15px;"></em> &nbsp; Rejected Payment
+                    &nbsp; <div class="pull-right label" style="background-color:#FF0000;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{rejectedapprovals_count}}</div>
+                </button> -->
+            </div>
+        </div>       
+    </div>
+    <br />
+    <div class="panel" id="Approved Applications">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th>Reference Number</th>
+                                    <th> Created Date</th>
+                                    <th> Employee Name </th>
+                                    <th> Role </th>
+                                    <th> Department </th>
+                                    <th> Entity Name </th>
+                                    <th> Amount </th>
+                                    <th> Approval Status </th>
+                                    <th class="text-center" style="width:8%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Approveddetails_list">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{data.request_refno}}</td>
+                                    <td>{{data.created_date}}</td>
+                                    <td>{{data.employee_name}}</td>
+                                    <td>{{data.employee_role}}</td>
+                                    <td>{{data.department_name}}</td>
+                                    <td>{{data.entity_name}}</td>
+                                    <td>{{data.amount}}</td>
+                                    <td>{{data.request_status}}</td>                                 
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;width:8%;">
+                                        <button title="View" ng-click="viewrequests(data.request_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+</div>

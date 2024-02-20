@@ -1,0 +1,79 @@
+﻿<h3>
+    LSA Report
+</h3>
+<div ng-controller="idasTrnLsaReportController">
+            
+    <div class="row">
+        <div class="col-lg-4  col-sm-4 col-md-4">
+            <label class="col-form-label control-label"><strong>Customer </strong></label>
+                 <input type="text" name="customer" id="customer" ng-model="customer" required ng-change="onselectedchangesanction(sanction)"
+                   ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+                   <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                <li class="list-group-item" ng-repeat="m in customer_list"
+                    ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+            </ul>
+              <label style="color:red;">{{message}}</label>
+         </div>
+        
+        <div class="col-sm-4 col-md-4 col-lg-4">
+            <label><strong>Sanction Ref No</strong></label>
+            <select name="sanction"  ng-options="m.sanctionref_no for m in customer2sanction_list"
+                    ng-model="cbocustomer2sanction_gid" class="form-control ng-valid ng-touched ng-valid-parse"
+                    size="1" >
+                <option value="">-----Select Sanction Reference No------</option>
+               
+            </select>
+
+        </div>
+        <br/>
+        
+        <div class="col-sm-2 col-md-2 col-lg-2">
+            <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;"  ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;"  ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2 pull-right" style="text-align:right;">
+            <button type="button" class="btn btn-success" ng-click="exportlsareport()" title="Export Excel"><i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- START panel-->
+                <div id="panelDemo13" class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table datatable="ng" class="table table-striped row-border hover">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th>LSA Ref Number</th>
+                                        <th>Customer URN</th>
+                                        <th>Customer Name</th>
+                                        <th>Sanction Ref No</th>
+                                        <th class="nowrap">Sanction Date</th>
+                                        <th>Created By</th>
+                                        <th class="nowrap">Created Date</th>
+                                        <th>Approved By</th>
+                                        <th class="nowrap">Approved Date</th>
+                                        <th class="nowrap">Approval Status</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in idasTrnLsaReport">
+                                        <td data-title="'LSA Ref Number'">{{data.lsaref_no}}</td>
+                                        <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                        <td data-title="'Customer Name'">{{data.customername}}</td>
+                                        <td data-title="'Sanction Ref No'">{{data.sanctionref_no}}</td>
+                                        <td data-title="'Sanction Date'">{{data.sanction_date}}</td>
+                                        <td data-title="'Created By'">{{data.created_by}}</td>
+                                        <td data-title="'Created Date'">{{data.created_date}}</td>
+                                        <td data-title="'Approved By'">{{data.lsaapproved_by}}</td>
+                                        <td data-title="Approved Date">{{data.lsaapproved_date}}</td>
+                                        <td data-title="'Approval Status'">{{data.approval_status}}</td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

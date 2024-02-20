@@ -1,0 +1,256 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        width: 100%;
+    }
+
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+            height: 58px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(140, 138, 141);
+                color: white;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #d5591e;
+                background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 58px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 58px;
+                color: black;
+            }
+
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+    /* Style for blinking the notification button */
+    .button {
+        background-color: #FCB77E;
+        padding: 17px 9px;
+        text-align: center;
+        text-decoration: double;
+    }
+
+
+    .button {
+        animation: glowing 2000ms infinite;
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+
+</script>
+
+<h3>
+   SA Verification Checker
+</h3>
+<div ng-controller="MstSAVerificationInstPendingSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="tab">
+                    <button class="tablinks" onclick="openApplication(event, 'Auditee Maker Summary')" ng-click="verification_maker()">  Maker Summary </button>
+                    <button class="tablinks" onclick="openApplication(event, 'Auditee Checker Summary')" id="defaultOpen" ng-click="verification_checker()"> Checker Summary </button>
+                </div>
+                <div id="Auditee Checker Summary" class="tabcontent">
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color: #84cbdb;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{institution_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="institution_pending()"><b>Institution Pending </b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{institutioninitiated_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="institution_initiated()"><b> Institution Completed</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{institutiontrash_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="institution_distract()"><b>Deferred</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{individual_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="individual_pending()"><b> Individual Pending</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{individualinitiated_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="individual_initiated()"><b> Individual Completed </b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{individualtrash_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="individual_distract()"><b>Deferred </b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <table datatable="ng" class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th> S.No </th>
+                                                            <th>SA Application ID </th>
+                                                            <th>Samunnati Associate Name </th>
+                                                            <th>SA Type</th>
+                                                            <th> Referred By</th>
+                                                            <th> Status</th>
+                                                            <th> Renewal Status</th>
+                                                            <th> Origination</th>
+                                                            <th>Allocated By</th>
+                                                            <th>Allocated Date</th>
+                                                            <th>TAT </th>
+                                                            <th class="text-center">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in saOnboardSummary_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.sa_autogeneratedid}}</td>
+                                                            <td>{{data.sa_associatename}}</td>
+                                                            <td>{{data.satype_name}}</td>
+                                                            <td>{{data.referred_by}}</td>
+                                                            <td>{{data.approvalstatus}}</td>
+                                                            <td>{{data.renewal_status}}</td>
+                                                            <td>{{data.recordsource}}</td>
+                                                            <td>{{data.sa_updated_by}}</td>
+                                                            <td>{{data.sa_updated_date}}</td>
+                                                            <td>{{data.sa_tat}}</td>
+                                                            <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                                <button title="Approval" ng-click="saonboardingverification(data.sacontactinstitution_gid)"
+                                                                        style="text-align: center;" class="btn btn-green">
+                                                                    <em class="fa fa-check-square-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                    

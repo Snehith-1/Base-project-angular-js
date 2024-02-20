@@ -1,0 +1,175 @@
+﻿<h3>
+    Customer 360
+</h3>
+<div ng-controller="MstRMcustomerSummary">
+    <div class="panel">
+        <div class="panel-body">
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <p style="color:#09385f;font-size: 17px;"><b> My Customer List Summary</b></p>
+                        <hr />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="mycustomerlist_summary()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177); background-color: #84cbdb;">
+                            <b style="font-size: 14px;">  My Customer List </b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled" ng-click="myteamcustomer_list()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <b style="font-size: 14px;"> My Team Customer List </b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-sm-12">
+
+                    </div>
+                </div>
+            </div>
+            <tabset justified="true">
+                <tab ng-click="urngroupingtab()">
+                    <tab-heading title="My Customer List">
+                        <em class="fa fa-users fa-1x"></em> With URN
+                    </tab-heading>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th class="text-center"> S.No</th>
+                                    <th> Customer URN</th>
+                                    <th> Customer Name </th>
+                                    <th> Vertical </th>
+                                    <th> Region </th>
+                                    <th> CAD Accepted Date </th>
+                                    <th> CAD Accepted By </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in urngroupingcustomer_list">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Customer URN'"> {{data.customer_urn}} </td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical'"> {{data.vertical_name}} </td>
+                                    <td data-title="'Region'"> {{data.region}} </td>
+                                    <td data-title="'CAD Accepted Date'"> {{data.cadaccepted_date}} </td>
+                                    <td data-title="'CAD Accepted By'"> {{data.cadaccepted_by}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="urngrouping_view(data.application_gid,data.created_by)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="URN Grouping" ng-click="urn_grouping(data.application_gid,data.customer_urn)" class="btn btn-info" style="background-color:#C10B68;">
+                                            <em class="fa fa-users"></em>
+                                        </button>
+                                        <button title="Renewal" ng-show="(data.renewal_status=='' && data.enhancement_status=='' && (data.renewalapproval_status=='' || data.enhancementapproval_status=='')) ||
+                                                (data.renewal_status!='' && data.enhancement_status=='' && data.renewalapproval_status!='') ||
+                                                (data.renewal_status=='' && data.enhancement_status!='' && data.enhancementapproval_status!='')"
+                                                ng-click="renewal(data.application_gid,data.customer_urn)" class="btn btn-info" style="background-color:#0828c7;">
+                                            <em class="icon-refresh"></em>
+                                        </button>
+                                        <button title="Renewal" ng-show="(data.renewal_status!='' && data.renewalapproval_status=='') || (data.enhancement_status!=''&& data.enhancementapproval_status=='')"
+                                                disabled class="btn btn-info" style="background-color:#0828c7;">
+                                            <em class="icon-refresh"></em>
+                                        </button>
+                                        <button title="Limit Management" ng-click="limit_management(data.application_gid,data.customer_urn)"
+                                                class="btn btn-info" style="background-color: #6a1b9a; ">
+                                            <em class="fa fa-money"></em>
+                                        </button>
+                                        <button title="Process" ng-click="process(data.customer_urn)" style="background-color: #cc7a00;" class="btn btn-pink">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab ng-click="mycustomerlisttab()">
+                    <tab-heading title="My Customer List">
+                        <em class="fa fa-user fa-1x"></em> Without URN
+                    </tab-heading>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th class="text-center"> S.No</th>
+                                    <th> Customer URN</th>
+                                    <th> Customer Name </th>
+                                    <th> Vertical </th>
+                                    <th> Region </th>
+                                    <th> CAD Accepted Date </th>
+                                    <th> CAD Accepted By </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in Rmmycustomer_list">
+                                    <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Customer URN'"> {{data.customer_urn}} </td>
+                                    <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical'"> {{data.vertical_name}} </td>
+                                    <td data-title="'Region'"> {{data.region}} </td>
+                                    <td data-title="'CAD Accepted Date'"> {{data.cadaccepted_date}} </td>
+                                    <td data-title="'CAD Accepted By'"> {{data.cadaccepted_by}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="mycustomerlist_view(data.application_gid,data.created_by)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Process" ng-click="withouturn_process(data.application_gid,data.customer_urn)" style="background-color:#871490;" class="btn btn-pink">
+                                            <em class="fa fa-spinner"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/Renewalpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="icon-refresh"></em>&nbsp;<label style="font-size:16px">Renewal</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div ng-show="renewalshow">
+                    <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <h4> Do you want to Renew this Application? </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="renewl_confirm()" class="btn btn-success"><em class="fa fa-check"></em>&nbsp;&nbsp;Confirm</button>
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="renewedshow">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <p style="font-size:18px;color:#148417" class="text-center"><b>Renewed Successfully! </b> </p>
+                            <p style="font-size:14px;"><b> New Application created with Application number <span style="color:#7f1187;">{{renewedapplication_no}}</span>.</b></p>
+                            <p style="font-size:14px;"><b>Kindly, update the Customer information and proceed for further process. </b></p> 
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

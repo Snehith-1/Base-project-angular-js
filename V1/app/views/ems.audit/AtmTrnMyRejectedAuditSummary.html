@@ -1,0 +1,177 @@
+﻿<h3>
+    Audit Creation Approval
+</h3>
+<div ng-controller="AtmTrnMyRejectedAuditSummaryController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <br />
+                        <p style="font-size:16px;color:#09385f;"><b><u>Reject Audit Summary</u></b></p>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="list-group-item picColor" style="height: 48px; background-color: #f3f1f1; border: 1px solid rgb(179, 177, 177)">
+                            <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{pendingapprovalaudit_count}}</div>
+                                <div style="font-size:14px;color:#000000;text-align:center;" ng-click="pendingapproval_audit()"><b>Pending Approval Audit </b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                            <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{approvedaudit_count}}</div>
+                                <div style="font-size:14px;color:#000000;text-align:center;" ng-click="approved_audit()"><b>Approved Audit</b></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="list-group-item picColor" style="height: 48px; background-color: #84cbdb; border: 1px solid rgb(179, 177, 177)">
+                            <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{rejectedaudit_count}}</div>
+                                <div style="font-size:14px;color:#000000;text-align:center;" ng-click="rejected_audit()"><b>Rejected Audit</b></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th>S.No</th>
+                                        <th>Audit Ref No.</th>
+                                        <th>Audit Name</th>
+                                        <th>Audit Type</th>
+                                        <th>Audit Department </th>
+                                        <th>Priority </th>
+                                        <th>Audit End Date </th>
+                                        <th>Assigned Information</th>
+                                        <th>Approval Status</th>
+                                        <!--<th>Status</th>-->
+                                        <th>Created Date</th>
+                                        <th>Created By</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in auditcreation_list">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Audit Ref No.'">{{data.audit_uniqueno}}</td>
+                                        <td data-title="'Audit Name'">{{data.audit_name}}</td>
+                                        <td data-title="'Audit Name'">{{data.audittype_name}}</td>
+                                        <td data-title="'Audit Department'">{{data.auditdepartment_name}}</td>
+                                        <td data-title="'Priority'">{{data.auditpriority_name}}</td>
+                                        <td data-title="'Audit End Date'">{{data.due_date}}</td>
+                                        <td data-title="'Approval Information'" class="text-center">
+                                            <em class="fa fa-info-circle" ng-click=approvalinformation(data.auditcreation_gid) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td data-title="'Approval Status'">{{data.approval_status}}</td>
+                                        <!--<td data-title="'Status'">{{data.status_update}}</td>-->
+                                        <td data-title="'Created Date'">{{data.created_date}}</td>
+                                        <td data-title="'Created By'">{{data.created_by}}</td>
+
+                                        <td data-title="'Action'" class="nowrap">
+
+                                            <button title="Audit 360 view" ng-click="approverview(data.auditcreation_gid,data.checklistmaster_gid,data.sampleimport_gid);" class="btn bg-blue-500">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <!--<button title="Edit" ng-click="edit(data.auditcreation_gid);" class="btn btn-green">
+                                                <em class="fa fa-edit"></em>
+                                            </button>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/Approvalinformation.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-info-circle"></i>
+                </span> Assigned Information
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <br>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label> Audit Period From </label><br /><span> {{lblauditperiod_fromdate}} </span>
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label> Audit Period To </label><br /><span> {{lblauditperiod_todate}} </span>
+
+                </div>
+            </div>
+
+            <div class="dd-handle ng-scope">
+                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+                <hr class="space" />
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive table-bordered">
+                                <div style="max-height:200px;overflow:auto;">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th align="center" scope="col">S.No</th>
+                                                <th align="center" scope="col">Auditee Maker</th>
+                                                <th align="center" scope="col">Auditee Checker</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td align="left" scope="col" title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                <td align="left" scope="col" title="Auditee Checker'">{{data.auditeechecker_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <label class="text-primary">Auditor Information</label>
+            <br />
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Maker </label>
+                    <br />
+                    <span> {{lblaudit_maker}} </span>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Checker </label><br /><span> {{lblaudit_checker}}</span>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Approver </label><br /><span> {{lblauditapprover_name}}</span>
+                </div>
+            </div>
+            <br /><br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+</div>
+    </div>
+</div>

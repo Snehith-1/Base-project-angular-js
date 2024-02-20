@@ -1,0 +1,180 @@
+﻿<h3>
+    Tier 3 Preparation
+</h3>
+<div ng-controller="tier3Preparation">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-indigo-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-500 pv-lg">
+                        <div class="h3 mt0">{{count_pending}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-success">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                        <div class="h3 mt0">{{count_completed}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Completed</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <!-- START date widget-->
+            <div class="panel widget">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-gray-dark pv-lg">
+
+                        <now format="MMMM" class="text-sm"></now>
+
+                        <now format="d" class="h4 mt0"></now>
+                    </div>
+                    <div class="col-xs-8 pv-lg bg-gray-500">
+                        <now format="EEEE" class="text-sm"></now>
+
+                        <now format="h:mm" class="h4 mt0"></now>
+                        <now format="a" class="text-sm"></now>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <button title="Tier 2 Preparation" class="btn btn-info btn-sm"
+                    ng-click="createtier3preparation()">
+                <em class="fa fa-plus"></em>&nbsp;Create Tier 3
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th>Tier 3 Submission Date</th>
+                            <th class="text-nowrap">MLRC Date</th>
+                            <th class="text-nowrap">Month</th>
+                            <th class="text-nowrap">Vertical</th>
+                            <th class="text-nowrap">Tier 3 Status</th>
+                            <th class="text-nowrap">Completed Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in tier3preparation_list|filter :searchtxt|limitTo:totalDisplayed" ng-switch="data.tier3_status">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Tier 3 Submission Date'">{{data.created_date}}</td>
+                            <td data-title="'MLRC Date'">{{data.MLRC_date}}</td>
+                            <td data-title="'Month'">{{data.tier3_monthname}}</td>
+                            <td data-title="'Vertical'">{{data.vertical}}</td>
+                            <td>
+                                <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                <label class="label label-success" ng-switch-when=Completed>Completed</label>
+                                <label ng-switch-default>-</label>
+                            </td>
+                            <td data-title="'Completed Date'">{{data.completed_date}}</td>
+                            <td class="text-nowrap">
+
+                                <button title="Tier 3 Details" class="btn btn-info btn-sm"
+                                        ng-click="viewtier3details(data.tier3preparation_gid)">
+                                    <em class="fa fa-retweet"></em>
+                                </button>
+                                <button title="Tier 3 Completion" class="btn btn-success btn-sm" ng-switch-when="Pending"
+                                        ng-click="viewtier3completed(data.tier3preparation_gid)">
+                                    <em class="fa fa-check-square-o"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/completetier3.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-check-square-o"></em>&nbsp; Tier 3 Completion</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="tier3completeform" id="tier3completeform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Completed Remarks: <span style="color:red">*</span></label>
+                                    <textarea name="remarks" placeholder="Enter Remarks..." required
+                                              ng-model="txttier3_completedremarks" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="completetier3()" ng-disabled="tier3completeform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Complete</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

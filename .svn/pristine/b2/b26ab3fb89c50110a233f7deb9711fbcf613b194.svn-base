@@ -1,0 +1,2177 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Customer Application 
+</h3>
+<div ng-controller="AgrMstApplcreationInstitutiondtlEditController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit Institution Details </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <form name="Institutiondetailsupdate" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Company Details </b></p>
+                                            <hr />
+                                            <!--<div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Having URN </label> <span style="color:red">*</span>
+                                                <label class="col-form-label"> ERP Id </label> <span style="color:red">*</span>
+                                                <br />
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" id="URN" name="URN" value="Yes" ng-model="rdburn_status" ng-change="onselectedurn_yes()" required />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" id="URN" name="URN" value="No" ng-model="rdburn_status" ng-change="onselectedurn_yes()" required />
+                                                        <span class="fa fa-circle"></span>No
+                                                    </label>
+                                                </div>
+                                            </div>-->
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <!--<label class="col-form-label"> URN </label> <span style="color:red">*</span>-->
+                                                <label class="col-form-label"> ERP ID </label>
+                                                <br />
+                                                <input type="text" ng-model="txt_urn" tabindex="0" disabled class="form-control" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" maxlength="25" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <label class="col-form-label"> Legal/Trade Name <span style="color:red"> *</span> </label>
+                                                <br />
+                                                <input type="text" ng-model="txtcompany_name" tabindex="0" class="form-control" maxlength="300" required ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/.,-&]*$/" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> Stakeholder Type <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="user_type" ng-options="m.usertype_gid as m.user_type for m in usertype_list"
+                                                        ng-model="cboStakeholdertype" class="chosen-select form-control" chosen="" style="height:37px;" required
+                                                        ng-change="getPANbasedGST()" size="1">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> PAN Value <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-disabled="!cboStakeholdertype" ng-model="txtpan_number" tabindex="0" class="form-control" required ng-pattern="/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/" maxlength="10" ng-change="getPANbasedGST()" />
+                                                <label class="fa fa-check" style="color:green" ng-show="panvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="panvalidation">Verified</label>
+                                                <!--<label class="fa fa-warning text-danger" style="font-weight:bolder;" ng-show="Alreadyaddedpanaadhar">This PAN number is already approved, you cannot add.</label>-->
+                                                <label class="fa fa-warning text-danger" style="font-weight:bolder;" ng-show="Alreadyaddedpanaadhar"> This PAN number already Exists, created by <span style="color:black;"> {{lblcreated_by}} </span></label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; GST Details </b></p>
+                                                            <hr />
+                                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                <label>GST Registered <span style="color:red"> *</span></label>
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="GST_Registered" name="GST_Registered" value="Yes" ng-model="rdbgstregistered" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="GST_Registered" name="GST_Registered" value="No" ng-model="rdbgstregistered" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                                                <label class="col-form-label"> GST Number <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <input type="text" ng-model="txtgst_number" tabindex="0" class="form-control" maxlength="15" ng-pattern="/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/" ng-change="onchangegst_number()" />
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                <label class="col-form-label"> GST State </label>
+                                                                <br />
+                                                                <input type="text" ng-model="txtgst_state" tabindex="0" class="form-control" disabled />
+                                                            </div>
+                                                            <div class="col-lg-1 col-md-1 col-sm-1">
+                                                                <br />
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="institutiongst_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <div style="max-height:200px;overflow:auto;">
+                                                                        <table class="table">
+                                                                            <thead class="bg-gray text-white">
+                                                                                <tr>
+                                                                                    <th>S.No</th>
+                                                                                    <th>GST Registered</th>
+                                                                                    <th>GST State</th>
+                                                                                    <th>GST Number</th>
+                                                                                    <th>Head Office</th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="list in institutiongst_list">
+                                                                                    <td>{{$index+1}}</td>
+                                                                                    <td>{{list.gst_registered}}</td>
+                                                                                    <td>{{list.gst_state}}</td>
+                                                                                    <td>{{list.gst_no}}</td>
+                                                                                    <td data-title="'Head Office'" ng-switch="list.headoffice_status">
+                                                                                        <label class="label label-success" ng-switch-when='Yes' style="font-size:10px;">Yes </label>
+                                                                                        <label class="label label-danger" ng-switch-when='No' style="font-size:10px;">No </label>
+                                                                                    </td>
+                                                                                    <td class="text-nowrap">
+                                                                                        <button title="Confirmation" class="btn btn-success btn-xs" ng-click="headoffice_confirm(list.institution2branch_gid)">
+                                                                                            <span class="icon-check"></span>
+                                                                                        </button>
+                                                                                        <button title="Delete" ng-click="institutiongst_delete(list.institution2branch_gid)"
+                                                                                                class="btn btn-danger btn-xs ">
+                                                                                            <em class="fa fa-trash-o"></em>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label">Certificate of Incorporation <span style="color:red"> *</span></label>
+                                                <br />
+                                                <p class="input-group">
+                                                    <input type="text" id="incorporation_date" name="incorporation_date" ng-model="txtincorporation_date" datepicker-popup="{{dp.format}}"
+                                                           style="height:36px;" is-open="dp.open6" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                           close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" ng-change="futuredatecheck(txtincorporation_date)" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calender6($event)" style="height:36px;" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label">Business Start Date <span style="color:red"> *</span></label>
+                                                <br />
+                                                <p class="input-group">
+                                                    <input type="text" id="businessstart_date" name="businessstart_date" ng-model="txtbusinessstart_date" datepicker-popup="{{dp.format}}"
+                                                           style="height:36px;" is-open="dp.open06" min-date="dp.minDate" datepicker-options="dp.dateOptions" ng-change="onchangebusinessstartdate(); futuredatecheck(txtbusinessstart_date);"
+                                                           close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calender06($event)" style="height:36px;" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label class="col-form-label"> Years in Business </label>
+                                                <br />
+                                                <input type="text" ng-model="txtyearin_business" tabindex="0" class="form-control" disabled required />
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label class="col-form-label"> Months in Business </label>
+                                                <br />
+                                                <input type="text" ng-model="txtmonthsin_business" tabindex="0" class="form-control" disabled required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <!--<div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Form-60 Document Upload </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <div class="float-label">
+                                                            <strong>Upload Documents</strong>
+                                                            <input type="file" id="institutionform60file" tabindex="5" onchange="angular.element(this).scope().InstitutionForm60DocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                                   ng-model="txtinstitutionform60_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <br />
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-secondary">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr width="100%">
+                                                                                <th scope="col">S.No</th>
+                                                                                <th scope="col">Document Name</th>
+                                                                                <th scope="col">Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in institutionform60upload_list">
+                                                                                <td title="S.No">{{$index+1}}</td>
+                                                                                <td title="Document Name">{{data.document_name}}</td>
+                                                                                <td data-title="Action">
+                                                                                    <button title="Download" class="btn btn-green btn-sm"
+                                                                                            ng-click="downloads(data.document_path,data.document_name)">
+                                                                                        <em class="fa fa-download"></em>
+                                                                                    </button>
+                                                                                    <a title="Delete" class="btn btn-sm btn-danger" ng-click="institutionuploaddocumentcancel(data.institution2form60documentupload_gid)">
+                                                                                        <span class="icon icon-trash "></span>
+                                                                                    </a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />-->
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Corporate Identification Number(CIN) </label>
+                                                <br />
+                                                <input type="text" ng-model="txtcin_no" tabindex="0" class="form-control" maxlength="21" ng-pattern="/^(L|U)[0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$/" />
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> TAN  <span style="color:red"> *</span></label>
+                                                <input type="text" ng-model="txttan_number" ng-pattern="/^[A-Z]{4}[0-9]{5}[A-Z]{1}$/" maxlength="10" required ng-change="getTAN()" class="form-control">
+                                                <label class="fa fa-check" style="color:green" ng-show="tanvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="tanvalidation">Verified</label>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Company Type <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="companytype_name" id="companytype_name" chosen="" ng-options="m.companytype_gid as m.companytype_name for m in companytype_list"
+                                                ng-model="cboCompanytype" class="chosen-select form-control" required>
+                                            <option value=""></option>
+                                        </select>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Official Contact Number <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtofficialtelephone_number" tabindex="0" class="form-control" maxlength="10" ng-pattern="/^[0-9]*$/" required />
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Official Mail ID <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtofficial_mailid" tabindex="0" class="form-control" maxlength="50" required ng-pattern="appemail_pattern" />
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Category - AML(Anti Money Laundering) </label>
+                                                <br />
+                                                <select name="amlcategory_name" ng-options="m.amlcategory_gid as m.amlcategory_name for m in amlcategory_list"
+                                                        ng-model="cboAMLCategory" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                        size="1">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Category - Business <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="businesscategory_name" ng-options="m.businesscategory_gid as m.businesscategory_name for m in businesscategory_list"
+                                                        ng-model="cboBusinesscategory" class="chosen-select form-control" chosen="" style="height:37px;" required
+                                                        size="1">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> MSME Registration </label>
+                                                <br />
+                                                <input type="text" ng-model="txteditmsmereg" tabindex="0" disabled class="form-control" maxlength="19" ng-pattern="/^([A-Z0-9]{19})$/" />
+
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Legal Entity Identification(LEI) </label>
+                                                <br />
+                                                <input type="text" ng-model="txteditlei" tabindex="0" disabled class="form-control" maxlength="20" ng-pattern="/^([A-Z0-9]{20})$/" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> LEI Renewal Date </label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="leirenewal_date" name="leirenewal_date" ng-model="txteditleirenewal_date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open20" min-date="dp.minDate" datepicker-options="dp.dateOptions" 
+                                                               close-text="Close" class="form-control" disabled placeholder="DD-MM-YYYY" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender20($event)" disabled style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> KIN </label>
+                                                    <br />
+                                                    <input type="text" ng-model="txteditkin" tabindex="0" disabled class="form-control" maxlength="14" />
+
+                                                </div>
+       
+                                            </div>
+                                        </div>
+
+                                </div>
+
+                                <br />
+                                <div class="dd-handle ng-scope">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Rating Details </b></p>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Credit Rating Agency <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <select name="assessmentagency_name" ng-options="m.assessmentagency_gid as m.assessmentagency_name for m in assessmentagency_list"
+                                                                ng-model="cboCreditAssessmentagency" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                                size="1">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Credit Rating <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <select name="assessmentagencyrating_name" ng-options="m as m.assessmentagencyrating_name for m in assessmentagencyrating_list track by m.assessmentagencyrating_gid"
+                                                                ng-model="cboAssessmentRating" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                                size="1">
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Assessed On <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <p class="input-group">
+                                                            <input type="text" id="Rating-as-on" name="date" ng-model="txtratingason_date" datepicker-popup="{{dp.format}}"
+                                                                   style="height:36px;" is-open="dp.open7" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                            <span class="input-group-btn">
+                                                                <button type="button" ng-click="dp.calender7($event)" style="height:36px;" class="btn btn-default">
+                                                                    <em class="fa fa-calendar"></em>
+                                                                </button>
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <label class="col-form-label"> Credit Rating Link <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <textarea ng-model="txtcreditratinglink" rows="4" class="form-control" style="resize:vertical;"
+                                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row text-center">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <button class="btn btn-sm btn-default" ng-disabled="(cboCreditAssessmentagency && cboAssessmentRating && txtratingason_date && txtcreditratinglink) ?  false : true"
+                                                            style="background-color:#09385f;color:white;" ng-click="ratingdtl_add()">
+                                                        <span class="fa fa-plus" /> &nbsp; Add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="table-responsive table-bordered">
+                                                            <div>
+                                                                <table class="table">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>Credit Rating Agency</th>
+                                                                            <th>Credit Rating</th>
+                                                                            <th>Assessed On</th>
+                                                                            <th>Credit Rating Link</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in institutionratinglist">
+                                                                            <td>{{$index+1}}</td>
+                                                                            <td>{{data.creditrating_agencyname}}</td>
+                                                                            <td>{{data.creditrating_name}}</td>
+                                                                            <td>{{data.assessed_on}}</td>
+                                                                            <td>
+                                                                                <button title="View" ng-click="ratingdtl_view(data.creditrating_link)"
+                                                                                        class="btn btn-info btn-xs ">
+                                                                                    <em class="fa fa-eye"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td class="text-nowrap">
+                                                                                <button title="Delete" ng-click="ratingdtl_delete(data.institution2ratingdetail_gid)"
+                                                                                        class="btn btn-danger btn-xs ">
+                                                                                    <em class="fa fa-trash-o"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="dd-handle ng-scope">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Contact Person Details </b></p>
+                                            <hr />
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> First Name <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input type="text" ng-model="txtfirst_name" tabindex="0" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" class="form-control" required maxlength="50" />
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> Middle Name </label>
+                                                <br />
+                                                <input type="text" ng-model="txtmiddle_name" tabindex="0" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" class="form-control" maxlength="50" />
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> Last Name </label>
+                                                <br />
+                                                <input type="text" ng-model="txtlast_name" tabindex="0" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" class="form-control" maxlength="50" />
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <label class="col-form-label"> Designation <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="designation_type" ng-options="m.designation_gid as m.designation_type for m in designation_list"
+                                                        ng-model="cboDesignation" class="chosen-select form-control" chosen="" style="height:37px;" required
+                                                        size="1">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Institution Mobile Number  </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                <label><strong>Mobile Number</strong> <span style="color:red"> *</span></label>
+                                                                <input ng-model="txtmobile_no" type="text" tabindex="0" maxlength="10" ng-pattern="/^[0-9]*$/"
+                                                                       aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                                            </div>
+                                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                <label>Primary Status <span style="color:red"> *</span> </label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="mobileno" name="mobile_no" value="Yes" ng-model="rdbprimarymobile_no" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="mobileno" name="mobile_no" value="No" ng-model="rdbprimarymobile_no" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                <label>Whatsapp Number <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="whatsappno" name="whatsapp_no" value="Yes" ng-model="rdbprimarywhatsapp_no" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="whatsappno" name="whatsapp_no" value="No" ng-model="rdbprimarywhatsapp_no" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-1 col-md-1 col-sm-1 align-top">
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="institutionmobileno_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="col-lg-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <div style="max-height:200px;overflow:auto;">
+                                                                        <table class="table">
+                                                                            <thead class="bg-gray text-white">
+                                                                                <tr>
+                                                                                    <th>S.No</th>
+                                                                                    <th>Mobile No</th>
+                                                                                    <th>Primary Status</th>
+                                                                                    <th>Whatsapp Number </th>
+                                                                                    <th>Action</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr ng-repeat="list in institutionmobileno_list">
+                                                                                    <td>{{$index+1}}</td>
+                                                                                    <td>{{list.mobile_no}}</td>
+                                                                                    <td>{{list.primary_status}}</td>
+                                                                                    <td>{{list.whatsapp_no}}</td>
+                                                                                    <td class="text-nowrap">
+                                                                                        <button title="Delete" ng-click="institutionmobileno_delete(list.institution2mobileno_gid)"
+                                                                                                class="btn btn-danger btn-xs ">
+                                                                                            <em class="fa fa-trash-o"></em>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6 col-sm-6">
+                                            <div class="panel">
+                                                <div class="panel-heading">
+                                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Institution Email Address </b></p>
+                                                    <hr />
+                                                </div>
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                                <label class="col-form-label"> Email Address <span style="color:red"> *</span> </label>
+                                                                <input type="text" ng-model="txtinstitution_emailaddress" class="form-control" ng-pattern="appemail_pattern" maxlength="50">
+                                                            </div>
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                <label>Primary Status <span style="color:red"> *</span></label>
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="mailID" name="mailID" value="Yes" ng-model="rdbemailprimarymobile_no" />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="mailID" name="mailID" value="No" ng-model="rdbemailprimarymobile_no" />
+                                                                        <span class="fa fa-circle"></span>No
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                <br />
+                                                                <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;" ng-click="institutionmaildetails_add()"><span class="fa fa-plus" /></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="col-lg-12">
+                                                                <div class="table-responsive table-bordered">
+                                                                    <table class="table">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr>
+                                                                                <th>S.No</th>
+                                                                                <th>Email Address</th>
+                                                                                <th>Primary Status</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="list in institutionemailaddress_list">
+                                                                                <td>{{$index+1}}</td>
+                                                                                <td>{{list.email_address}}</td>
+                                                                                <td>{{list.primary_status}}</td>
+                                                                                <td class="text-nowrap">
+                                                                                    <a class="btn btn-xs  btn-danger" ng-click="institutionmaildetails_delete(list.institution2email_gid)"><span class="fa fa-trash-o"></span></a>
+
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel">
+                                        <div class="panel-heading">
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Address Details </b></p>
+                                            <hr />
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-sm-4 col-md-4 col-lg-4">
+
+                                                        <strong class="ng-binding w3-text-indigo">
+                                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="addaddress()"><span class="fa fa-plus" />  Add Address</a>
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive table-bordered">
+                                                            <div style="max-height:200px;overflow:auto;">
+                                                                <table class="table">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr width="100%">
+                                                                            <th scope="col">S.No</th>
+                                                                            <th scope="col">Address Type</th>
+                                                                            <th scope="col">Address</th>
+                                                                            <th scope="col">Land Mark</th>
+                                                                            <th> Primary Status</th>
+                                                                            <th> Static Map / Photos</th>
+                                                                            <th scope="col">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in institutionaddress_list"  width="100%">
+                                                                            <td title="S.No">
+                                                                                {{$index+1}}
+                                                                            </td>
+                                                                            <td title="AddressType">{{data.address_type}}</td>
+                                                                            <td title="Address">
+                                                                                {{data.addressline1}},{{data.addressline2}},<br />{{data.taluka}},{{data.district}},
+                                                                                <br />{{data.state}},{{data.country}},{{data.postal_code}}
+                                                                                <br /> <b>Latitude:</b> {{data.latitude}}
+                                                                                <br /> <b>Longitude:</b> {{data.longitude}}
+                                                                            </td>
+                                                                            <td title="Land Mark">{{data.landmark}}</td>
+                                                                            <td title="primary_address">{{data.primary_status}}</td>
+                                                                            <td title="Static Map and Photos">
+                                                                                <button title="View" ng-click="StaticMapAndPhotos_View(data.latitude, data.longitude, data.addressline1, data.addressline2, data.postal_code)" class="btn btn-xs btn-info">
+                                                                                    <em class="fa fa-eye"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                            <td data-title="Action">
+                                                                                <a class="btn btn-xs btn-danger" ng-click="deleteinstitution_address(data.institution2address_gid)"><span class="fa fa-trash-o"></span></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b> Bank Account Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> IFSC Code <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <!--required=""-->
+                                                        <input type="text" ng-model="txtIFSC_Code" name="IFSCCode" id="IFSCCode" ng-pattern="/^[A-Z]{4}0[A-Z0-9]{6}$/" maxlength="11"
+                                                               ng-change="IFSCValidation()" tabindex="0" class="form-control" />
+                                                        <label class="fa fa-check" style="color:green" ng-show="ifscvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="ifscvalidation">Verified</label>
+                                                        <span ng-show="form.validateInput('IFSCCode', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Bank Name</label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtBank_Name" name="BankName" id="BankName" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Branch Name<span style="color:red"> *</span> </label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtBranch_Name" name="BranchName" id="BranchName" tabindex="0" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                                        <label class="col-form-label"> Branch Address<span style="color:red"> *</span> </label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtBank_Address" name="BankAddress" id="BankAddress" tabindex="0" class="form-control" />
+
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> MICR Code </label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtMICR_Code" name="MICRCode" id="MICRCode" tabindex="0" class="form-control" disabled />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label class="col-form-label"> Bank Account Number <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <!--required=""-->
+                                                        <input type="text" ng-model="txtbankacct_no" name="BankAccountNumber" id="BankAccountNumber" ng-pattern="/^([A-Z0-9]{9,18})$/" tabindex="0" class="form-control" maxlength="30" />
+                                                        <span ng-show="form.validateInput('BankAccountNumber', 'required')" class="text-danger">This field is required</span>
+                                                        <label class="fa fa-check" style="color:green" ng-show="bankaccvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="bankaccvalidation">Verified</label>
+                                                        <label ng-if="bankaccvalidation == false" style="font-weight:bolder;color:red">Not Verified</label>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label class="col-form-label"> Confirm Account Number<span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <!--required=""-->
+                                                        <input type="text" ng-model="txtconfirmbankacct_no" name="ConfirmBankAccountNumber" id="ConfirmBankAccountNumber" ui-validate="'$value==txtbankacct_no'" ui-validate-watch="'txtconfirmbankacct_no'" tabindex="0" class="form-control" maxlength="30" ng-change="BankAccValidation()" />
+                                                        <span ng-show="form.formValidate.ConfirmBankAccountNumber.$dirty &amp;&amp; form.formValidate.ConfirmBankAccountNumber.$error.validator" class="text-danger">Bank Account number does not match</span>
+                                                        <span ng-show="form.validateInput('ConfirmBankAccountNumber', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                                        <label class="col-form-label"> Account Holder Name <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <!--required=""-->
+                                                        <input type="text" ng-model="txtacctholder_name" name="accounttholdername" id="accounttholdername" tabindex="0" class="form-control" />
+                                                        <span ng-show="form.validateInput('accounttholdername', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Account Type <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <!--required=""-->
+                                                        <select name="AccountType" id="AccountType" chosen="" ng-options="m.bankaccounttype_name for m in accounttype_list"
+                                                                type="text" class="form-control parsley-error" ng-model="cboAccountType">
+                                                            <option value=""> ----- Select From Dropdown -----</option>
+                                                        </select>
+                                                        <span ng-show="form.validateInput('AccountType', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                                        <label> Joint Account <span style="color:red"> *</span></label>
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <!--required=""-->
+                                                                <input type="radio" id="JointAccount" name="JointAccount" value="Yes" ng-model="rdbJoint_Account" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <!--required=""-->
+                                                                <input type="radio" id="JointAccount" name="JointAccount" value="No" ng-change="change()" ng-model="rdbJoint_Account" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                        <span ng-show="form.validateInput('JointAccount', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="rdbJoint_Account=='Yes'">
+                                                        <label class="col-form-label"> Joint Account Holder Name  <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtjointacctholder_name" name="jointacctholdername" id="jointacctholdername" tabindex="0" class="form-control" maxlength="50" />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="rdbJoint_Account!='Yes'">
+                                                        <label class="col-form-label"> Joint Account Holder Name</label>
+                                                        <br />
+                                                        <input type="text" ng-model="test" disabled name="jointacctholdername" id="jointacctholdername" class="form-control" maxlength="50" />
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <label> Is Cheque Book Facility Available  <span style="color:red"> *</span></label>
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <!--required=""-->
+                                                                <input type="radio" id="CheckBook" name="CheckBook" value="Yes" ng-model="rdbCheque_Book" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <!--required=""-->
+                                                                <input type="radio" id="CheckBook" name="CheckBook" value="No" ng-model="rdbCheque_Book" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                        <span ng-show="form.validateInput('CheckBook', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label>Primary Status <span style="color:red"> *</span> </label>
+                                                        <br />
+                                                        <div class="radio c-radio">
+                                                            <label>
+                                                                <input type="radio" id="primarystatus" name="primarystatus" value="Yes" ng-model="rdbprimarystatus" />
+                                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" id="primarystatus" name="primarystatus" value="No" ng-model="rdbprimarystatus" />
+                                                                <span class="fa fa-circle"></span>No
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                                        <!--<div ng-controller="MstCreditIndividualBankAcctAddController as dp">-->
+                                                        <label class="col-form-label"> Account Open Date </label>
+                                                        <br />
+                                                        <p class="input-group">
+                                                            <input type="text" id="AccountOpenDate" name="AccountOpenDate" ng-model="txtAccountOpen_Date" datepicker-popup="{{dp.format}}"
+                                                                   style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                            <span class="input-group-btn">
+                                                                <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                                    <em class="fa fa-calendar"></em>
+                                                                </button>
+                                                            </span>
+                                                        </p>
+                                                        <!--</div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br />
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-primary" style="background-color:#09385f;color:white;"
+                                                                ng-click="add_creditbankacctdtl()">
+                                                            <i class="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 dd-handle ng-scope">
+                                                            <p class="text-primary" style="font-size:14px;"><b>  Bank Account Summary </b></p>
+                                                            <hr />
+                                                            <div class="table-responsive table-bordered">
+                                                                <table class="table">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr>
+                                                                            <th>S.No</th>
+                                                                            <th>IFSC Code</th>
+                                                                            <th>Primary Status</th>
+                                                                            <th>Created Date </th>
+                                                                            <th>Created By</th>
+                                                                            <th>Updated Date</th>
+                                                                            <th>Updated By</th>
+                                                                            <th>Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in creditbankacc_list">
+                                                                            <td>{{$index+1}}</td>
+                                                                            <td>{{data.ifsc_code}}</td>
+                                                                            <td>{{data.primary_status}}</td>
+                                                                            <td>{{data.created_date}}</td>
+                                                                            <td>{{data.created_by}}</td>
+                                                                            <td>{{data.updated_date}}</td>
+                                                                            <td>{{data.updated_by}}</td>
+                                                                            <td class="text-nowrap">
+                                                                                <button title="Edit" type="button" ng-click="creditbankacctdtl_edit(data.institution2bankdtl_gid)" class="btn btn-green btn-xs">
+                                                                                    <em class="fa fa-edit"></em>
+                                                                                </button>
+                                                                                <button title="Delete" type="button" ng-click="creditbankacctdtl_delete(data.institution2bankdtl_gid, data.institution_gid)"
+                                                                                        class="btn btn-danger btn-xs">
+                                                                                    <em class="fa fa-trash-o"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Company / Financial Details </b></p>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> Start Date <span style="color:red"> *</span></label>
+                                                <br />
+                                                <p class="input-group">
+                                                    <input type="text" id="startdate" name="date" ng-model="txtstart_date" datepicker-popup="{{dp.format}}"
+                                                           style="height:36px;" is-open="dp.open14" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                           close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" ng-change="futuredatecheck(txtstart_date)" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calender14($event)" style="height:36px;" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label class="col-form-label"> End Date <span style="color:red"> *</span></label>
+                                                <br />
+                                                <p class="input-group">
+                                                    <input type="text" id="enddate" name="date" ng-model="txtend_date" datepicker-popup="{{dp.format}}"
+                                                           style="height:36px;" is-open="dp.open15" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                           close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" ng-change="futuredatecheck(txtend_date)" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calender15($event)" style="height:36px;" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Escrow <span style="color:red"> *</span></label>
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" id="escrow_yes" name="escrow_yes" value="Yes" ng-model="rdbescrow" required />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" id="escrow_no" name="escrow_no" value="No" ng-model="rdbescrow" required />
+                                                        <span class="fa fa-circle"></span>No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <label class="col-form-label"> Last Year Turn Over <span style="color:red"> *</span></label>
+                                                <br />
+                                                <input id="lastyear_turnover" ng-model="txtlastyear_turnover" class="form-control ng-pristine ng-valid ng-touched"
+                                                       ng-change="txtlastyear_turnoverchange()" required style="text-align:right;" maxlength="20">
+
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label>Income Tax returns status </label>
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" id="incometax_yes" name="incometax_yes" value="Yes" ng-model="rdbincome_tax" />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" id="incometax_no" name="incometax_no" value="No" ng-model="rdbincome_tax" />
+                                                        <span class="fa fa-circle"></span>No
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> Revenue (in ₹) </label>
+                                                <br />
+                                                <input id="revenue" ng-model="txtrevenue" class="form-control ng-pristine ng-valid ng-touched"
+                                                       ng-change="txtrevenue_change()" style="text-align:right;" maxlength="20">
+
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount2" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> Profit (in ₹) </label>
+                                                <br />
+                                                <input id="profit" ng-model="txtprofit" class="form-control ng-pristine ng-valid ng-touched"
+                                                       ng-change="txtprofit_change()" style="text-align:right;" maxlength="20">
+
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount1" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> Fixed Assets (in ₹) </label>
+                                                <br />
+                                                <input id="fixed_asset" ng-model="txtfixed_asset" class="form-control ng-pristine ng-valid ng-touched"
+                                                       ng-change="txtfixed_assetchange()" style="text-align:right;" maxlength="20">
+
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount3" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <label class="col-form-label"> Sundry Debtors and Advances (in ₹) </label>
+                                                <br />
+                                                <input id="sundrydebt_adv" ng-model="txtsundrydebt_adv" class="form-control ng-pristine ng-valid ng-touched"
+                                                       ng-change="txtsundrydebt_advchange()" style="text-align:right;" maxlength="20">
+
+                                                <span style="font-style:italic;">Number in words:</span>
+                                                <span id="words_totalamount4" style="color:#003c96fc;" class="text-bold"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                                <div class="dd-handle ng-scope">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Documents for Underwriting </b></p>
+                                            <hr />
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label> Document Type <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="companydocument_name" ng-options="m as m.documenttype_name for m in institutiondoctype_list"
+                                                        ng-model="cbocompanydocumenttype" ng-change="documenttype_change(cbocompanydocumenttype)" class="chosen-select form-control" chosen="" style="height:37px;"
+                                                        size="1">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label> Document Name <span style="color:red"> *</span></label>
+                                                <br />
+                                                <select name="DocumentName" id="DocumentName" chosen="" ng-options="m as m.companydocument_name for m in companydocument_list track by m.companydocument_gid"
+                                                        ng-model="cboDocumentName" class="chosen-select form-control">
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <label>Document ID <span style="color:red"> *</span></label>
+                                                <input type="text" ng-model="txtdocument_id" tabindex="0" class="form-control" maxlength="50" />
+                                            </div>
+                                            <div class="col-lg-3 col-sm-3 col-md-3">
+                                                <div class="float-label">
+                                                    <strong>Upload Documents</strong>
+                                                    <br /><br />
+                                                    <input type="file" id="file" tabindex="5" multiple onchange="angular.element(this).scope().InstitutionDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           ng-model="txtupload_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row text-center">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="institutionDoc_upload()"><span class="fa fa-plus" /></a>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="table-responsive table-bordered">
+                                                    <div style="max-height:200px;overflow:auto;">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr>
+                                                                    <th>S.No</th>
+                                                                    <th>Document Type</th>
+                                                                    <th>Document Name</th>
+                                                                    <th>Document ID</th>
+                                                                    <!-- <th>Action</th> -->
+                                                                    <th align="center" scope="col">
+                                                                        Action&nbsp;&nbsp;&nbsp;
+                                                                        <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall()">
+                                                                            <em style="font-size: 1.5em;" class="icon-arrow-down"></em>&nbsp;
+                                                                        </a>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="list in institutionupload_list">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>{{list.documenttype_name}}</td>
+                                                                    <td>{{list.document_title}}</td>
+                                                                    <td>{{list.document_id}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-green btn-xs"
+                                                                                ng-click="doc_downloads(list.document_path,list.document_name)">
+                                                                            <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(list.document_path,list.document_name)">
+                                                                            <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                        </button>
+                                                                        <a title="Delete" class="btn btn-xs btn-danger" ng-click="upload_documentcancel(list.institution2documentupload_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                </div>
+                                    <br />
+                                    <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; License Details </b></p>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> License Type <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <select name="LicenseType" id="LicenseType" chosen="" ng-options="m as m.licensetype_name for m in licensetype_list track by m.licensetype_gid"
+                                                            ng-model="cboLicenseType" class="chosen-select form-control">
+                                                        <option value=""></option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>Number <span style="color:red"> *</span></label>
+                                                    <input type="text" ng-model="txtnumber" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" maxlength="20" />
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label class="col-form-label"> Issue Date <span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="Rating-as-on" name="date" ng-model="txtissue_date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open10" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender10($event)" style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label class="col-form-label"> Expiry Date<span style="color:red"> *</span></label>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="Rating-as-on" name="date" ng-model="txtexpiry_date" datepicker-popup="{{dp.format}}"
+                                                               style="height:36px;" is-open="dp.open11" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dp.calender11($event)" style="height:36px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="text-center">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="licensetype_add()"><span class="fa fa-plus" />  Add </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        <div style="max-height:200px;overflow:auto;">
+                                                            <table class="table">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>License Type</th>
+                                                                        <th>Number</th>
+                                                                        <th>Issue Date</th>
+                                                                        <th>Expiry Date</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="list in institutionlicense_list">
+                                                                        <td>{{$index+1}}</td>
+                                                                        <td>{{list.licensetype_name}}</td>
+                                                                        <td>{{list.license_number}}</td>
+                                                                        <td>{{list.licenseissue_date}}</td>
+                                                                        <td>{{list.licenseexpiry_date}}</td>
+                                                                        <td>
+                                                                            <button title="Edit" ng-click="editinstitution_licensetype(list.institution2licensedtl_gid)" class="btn btn-green btn-xs">
+                                                                                <em class="fa fa-edit"></em>
+                                                                            </button>
+                                                                            <button title="Delete" ng-click="deleteinstitution_licensetype(list.institution2licensedtl_gid)"
+                                                                                    class="btn btn-danger btn-xs ">
+                                                                                <em class="fa fa-trash-o"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <div class="text-center" ng-show="InstitutionSubmit">
+                                                <button type="button" class="btn btn-primary" ng-disabled="!txtcompany_name"
+                                                        ng-click="save_institution()">
+                                                    <em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft
+                                                </button>
+                                                <button type="button" ng-disabled="Institutiondetailsupdate.$invalid" class="btn btn-success"
+                                                        ng-click="submit_institution(program_gid)">
+                                                    <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                                                </button>
+                                                <button ng-click="institutiondtl_Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                            <div class="text-center" ng-show="InstitutionUpdate">
+                                                <button type="button" class="btn btn-success btn-md" ng-disabled="Institutiondetailsupdate.$invalid" ng-click="update_institutiondtl(program_gid)"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                <button ng-click="institutiondtl_Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/addaddresstype.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-plus"></em>&nbsp;<label style="font-size:16px">Add Address</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <label><strong>Address Type </strong> <span style="color:red"> *</span></label>
+                                <select name="vertical_code" required="" ng-options="m.address_type for m in addresstype_list" style="height:37px;"
+                                        ng-model="cboaddresstype" class="form-control " chosen=""
+                                        size="1">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Primary Status </label> <span style="color:red">*</span>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="Yes" ng-model="rdbprimaryaddress" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="No" ng-model="rdbprimaryaddress" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 1 </strong> <span style="color:red">*</span></label>
+                                <input type="text" ng-model="txtaddressline1" tabindex="0" class="form-control" maxlength="300" required />
+                                <label style="font-weight:bolder;color:red" ng-show="geocodingFailed">Invalid Address!</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 2 </strong></label>
+                                <input type="text" ng-model="txtaddressline2" tabindex="0" class="form-control" maxlength="300" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Land Mark </strong> </label>
+                                    <input type="text" ng-model="txtLand_Mark" tabindex="0" class="form-control" maxlength="100" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Postal Code </strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtpostal_code" tabindex="0" class="form-control" required
+                                           ng-pattern="/^[1-9]{1}[0-9]{5}$/" ng-change="onchangepostal_code(); getGeoCoding();" maxlength="6" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>City</label>
+                                    <input type="text" ng-model="txtcity" disabled ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" tabindex="0" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>Taluka</label>
+                                    <input type="text" ng-model="txttaluka" tabindex="0" class="form-control" disabled ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label><strong>District</strong> </label>
+                                    <input type="text" ng-model="txtdistrict" tabindex="0" class="form-control" disabled ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>State </label>
+                                    <br />
+                                    <input type="text" ng-model="txtstate" tabindex="0" class="form-control" disabled ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" />
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>Country</label> <span style="color:red">*</span>
+                                    <input type="text" ng-model="txtcountry" tabindex="0" class="form-control" required ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Latitude </strong></label>
+                                    <input type="text" ng-model="txtlatitude" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Longitude </strong></label>
+                                    <input type="text" ng-model="txtlongitude" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userform1.$invalid" ng-click="addressSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/GSTdetailedit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px">Edit Gst Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="usereditformgstedit" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong> GST Registered </strong><span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="mobileno" name="GST_Registered" value="Yes" ng-model="rdbgstregistered" required />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="mobileno" name="GST_Registered" value="No" ng-model="rdbgstregistered" required />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="float-label">
+                                <strong>GST Number</strong><span style="color:red"> *</span>
+                                <br /><br />
+                                <input ng-model="txteditgst_number" type="text" tabindex="0" required ng-pattern="/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/" maxlength="15"
+                                       ng-change="onchangeeditgst_number()" aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> GST State </label>
+                            <br />
+                            <input type="text" ng-model="txteditgst_state" tabindex="0" class="form-control" disabled required />
+                        </div>
+                    </div>
+
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="usereditformgstedit.$invalid" ng-click="update_gst()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editinstitutionmobileno.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px">Edit Institution Mobile Number</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong>Mobile Number</strong><span style="color:red"> *</span></label>
+                            <input ng-model="txteditmobile_no" type="text" tabindex="0" maxlength="15" ng-pattern="/^[0-9]*$/" required
+                                   aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Primary Status <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="primarymobile_no" name="primarymobile_no" value="Yes" ng-model="rdbeditprimarymobile_no" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="primarymobile_no" name="primarymobile_no" value="No" ng-model="rdbeditprimarymobile_no" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Whatsapp Number <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="mobileno" name="whatsappmobile_no" value="Yes" ng-model="rdbeditwhatsappmobile_no" required ng-change="ngchange()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="mobileno" name="whatsappmobile_no" value="No" ng-model="rdbeditwhatsappmobile_no" required ng-change="ngchange()" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="userform1.$invalid" ng-click="update_mobileno()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/institutionemailaddressedit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px"> Edit Institution Email Address </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong>Email Address </strong><span style="color:red"> *</span></label>
+                            <input ng-model="txteditemail_address" maxlength="50" type="text" ng-pattern="appemail_pattern" tabindex="0"
+                                   aria-required="true" aria-invalid="true" required class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                            <br />
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Primary Status <span style="color:red"> *</span></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" id="primary_emailaddress" name="primary_emailaddress" required value="Yes" ng-model="rdbeditprimary_emailaddress" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" id="primary_emailaddress" name="primary_emailaddress" required value="No" ng-model="rdbeditprimary_emailaddress" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="userform1.$invalid" ng-click="update_emailaddress()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/editaddresstype.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px">Edit Address</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="edituserform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <label><strong>Address Type </strong> <span style="color:red"> *</span></label>
+                                <select id="address_type" name="address_type" required="" ng-options="m.address_gid as m.address_type for m in addresstype_list" style="height:37px;"
+                                        ng-model="cboaddresstype_GID" class="form-control ng-valid ng-touched ng-valid-parse"
+                                        size="1">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Primary Status </label> <span style="color:red">*</span>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="Yes" ng-model="rdbprimaryaddress" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="No" ng-model="rdbprimaryaddress" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 1 </strong> <span style="color:red">*</span></label>
+                                <input type="text" ng-model="txtaddressline1" tabindex="0" class="form-control" maxlength="300" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 2 </strong></label>
+                                <input type="text" ng-model="txtaddressline2" tabindex="0" class="form-control" maxlength="300" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Land Mark </strong> </label>
+                                    <input type="text" ng-model="txtLand_Mark" tabindex="0" class="form-control" maxlength="100" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Postal Code </strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtpostal_code" tabindex="0" class="form-control" required
+                                           ng-pattern="/^[1-9]{1}[0-9]{5}$/" ng-change="onchangepostal_code(); getGeoCoding();" maxlength="6" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>City</label>
+                                    <input type="text" ng-model="txtcity" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>Taluka</label>
+                                    <input type="text" ng-model="txttaluka" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" disabled />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label><strong>District</strong></label>
+                                    <input type="text" ng-model="txtdistrict" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>State </label>
+                                    <br />
+                                    <input type="text" ng-model="txtstate" tabindex="0" class="form-control"
+                                           ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/,.]*$/" disabled />
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>Country</label> <span style="color:red">*</span>
+                                    <input type="text" ng-model="txtcountry" tabindex="0" class="form-control" required ng-pattern="/^[ A-Za-z0-9)(\]\['\\/,.]*$/" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Latitude </strong></label>
+                                    <input type="text" ng-model="txtlatitude" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Longitude </strong></label>
+                                    <input type="text" ng-model="txtlongitude" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="edituserform1.$invalid" ng-click="update_address()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/institutionlicensetypedit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;<label style="font-size:16px"> Edit Institution Email Address </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="licensetypeformedit" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> License Type <span style="color:red"> *</span></label>
+                            <br />
+                            <select name="licensetype_name" id="licensetype_name" chosen="" ng-options="m.licensetype_gid as m.licensetype_name for m in licensetype_list"
+                                    ng-model="cboeditLicenseType" class="chosen-select form-control" required>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label>Number <span style="color:red"> *</span></label>
+                            <input type="text" ng-model="txteditnumber" tabindex="0" class="form-control" required ng-pattern="/^[ A-Za-z0-9)\]\['\\/,.]*$/" maxlength="20" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label class="col-form-label"> Issue Date <span style="color:red"> *</span></label>
+                            <br />
+                            <!-- <p class="input-group">
+                                <input type="date" id="txteditissue_date" name="txteditissue_date" ng-model="txteditissue_date"
+                                       style="width:570px;height:35px" class="form-control">
+                            </p> -->
+
+                            <p class="input-group">
+                                <input type="text" id="txteditissue_date" name="txteditissue_date" ng-model="txteditissue_date" datepicker-popup="{{format}}"
+                                       style="height:36px;" is-open="open01" min-date="minDate" datepicker-options="dateOptions"
+                                       close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="calender01($event)" style="height:36px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <label class="col-form-label"> Expiry Date<span style="color:red"> *</span></label>
+                            <br />
+                            <!-- <p class="input-group">
+                                <input type="date" id="txteditExpiryDate" name="txteditExpiryDate" ng-model="txteditExpiryDate"
+                                       style="width:570px;height:35px" class="form-control">
+                            </p> -->
+
+                            <p class="input-group">
+                                <input type="text" id="txteditExpiryDate" name="txteditExpiryDate" ng-model="txteditExpiryDate" datepicker-popup="{{format}}"
+                                       style="height:36px;" is-open="open02" min-date="minDate" datepicker-options="dateOptions"
+                                       close-text="Close" class="form-control" required placeholder="DD-MM-YYYY" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="calender02($event)" style="height:36px;" class="btn btn-default">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="licensetypeformedit.$invalid" ng-click="update_licensetype()"><i class="fa fa-check"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/StaticMapAndPhotosView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-image"></em>&nbsp;<label style="font-size:16px">Static Map and Photos</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="text-primary" style="font-size:14px;"><b>&nbsp; Static Map </b></p>
+                            <img ng-src="{{staticmapImgUrl}}">
+                        </div>
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="text-primary" style="font-size:14px;"><b>&nbsp; Photos </b></p>
+                            <div ng-repeat="item in photoUrlList" ng-show="photoFound">
+                                <img ng-src="{{item}}">
+                                <br />
+                                <br />
+                            </div>
+                            <label style="font-weight:bolder;color:red" ng-show="photoNotFound">Photos not found!</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/institutionratingdetails.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px"> View Rating Details </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Credit Rating Link </strong> </label>
+                                <textarea ng-model="txtcreditrating_link" rows="4" class="form-control" style="resize:vertical;" disabled
+                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/companybankdtl.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-edit"></em>&nbsp;&nbsp;<label style="font-size:16px"> Edit Bank Details </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <form novalidate="" name="submitForm" ng-submit="form.submitForm()" autocomplete="off" class="form-validate mb-lg">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <p class="text-primary" style="font-size:14px;"><b> Bank Account Details </b></p>
+                                                        <hr />
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> IFSC Code <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtIFSC_Code" name="IFSCCode" id="IFSCCode" required=""
+                                                                   ng-change="IFSCValidation()" tabindex="0" class="form-control" />
+                                                            <label class="fa fa-check" style="color:green" ng-show="ifscvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="ifscvalidation">Verified</label>
+                                                            <span ng-show="form.validateInput('IFSCCode', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Bank Name </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBank_Name" name="BankName" id="BankName" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Branch Name <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBranch_Name" name="BranchName" id="BranchName" tabindex="0" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                                            <label class="col-form-label"> Branch Address <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBank_Address" name="BankAddress" id="BankAddress" tabindex="0" class="form-control"  />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> MICR Code </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtMICR_Code" name="MICRCode" id="MICRCode" tabindex="0" class="form-control" disabled />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Bank Account Number <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtbankacct_no" name="BankAccountNumber" id="BankAccountNumber" required="" ng-pattern="/^([A-Z0-9]{9,18})$/" tabindex="0" class="form-control" maxlength="30" />
+                                                            <span ng-show="form.validateInput('BankAccountNumber', 'required')" class="text-danger">This field is required</span>
+                                                            <label class="fa fa-check" style="color:green" ng-show="bankaccvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="bankaccvalidation">Verified</label>
+                                                            <label ng-if="bankaccvalidation == false" style="font-weight:bolder;color:red">Not Verified</label>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Confirm Account Number<span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtconfirmbankacct_no" name="ConfirmBankAccountNumber" id="ConfirmBankAccountNumber" ui-validate="'$value==txtbankacct_no'" ui-validate-watch="'txtconfirmbankacct_no'" ng-pattern="/^([A-Z0-9]{9,18})$/" required="" tabindex="0" class="form-control" maxlength="30" ng-change="BankAccValidation()" />
+                                                            <span ng-show="form.formValidate.ConfirmBankAccountNumber.$dirty &amp;&amp; form.formValidate.ConfirmBankAccountNumber.$error.validator" class="text-danger">Bank Account number does not match</span>
+                                                            <span ng-show="form.validateInput('ConfirmBankAccountNumber', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Account Holder Name <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtacctholder_name" name="accounttholdername" id="accounttholdername" required="" tabindex="0" class="form-control" />
+                                                            <span ng-show="form.validateInput('accounttholdername', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label class="col-form-label"> Account Type <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <select name="AccountType" id="AccountType" chosen="" ng-options="m.bankaccounttype_gid as m.bankaccounttype_name for m in accounttype_list"
+                                                                    type="text" class="form-control parsley-error" required="" ng-model="cboAccountType">
+                                                                <option value=""> ----- Select From Dropdown -----</option>
+                                                            </select>
+                                                            <span ng-show="form.validateInput('AccountType', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label> Joint Account <span style="color:red"> *</span></label>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" id="JointAccount" name="JointAccount" value="Yes" ng-model="rdbJoint_Account" required="" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" id="JointAccount" name="JointAccount" ng-change="change()" value="No" ng-model="rdbJoint_Account" required="" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                            <span ng-show="form.validateInput('JointAccount', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6" ng-show="rdbJoint_Account=='Yes'">
+                                                            <label class="col-form-label"> Joint Account Holder Name  <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtjointacctholder_name" name="jointacctholdername" id="jointacctholdername" tabindex="0" class="form-control" maxlength="50" />
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6" ng-show="rdbJoint_Account!='Yes'">
+                                                            <label class="col-form-label"> Joint Account Holder Name</label>
+                                                            <br />
+                                                            <input type="text" ng-model="test" disabled name="jointacctholdername" id="jointacctholdername" class="form-control" maxlength="50" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label> Is Cheque Book Facility Available  <span style="color:red"> *</span></label>
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" id="CheckBook" name="CheckBook" value="Yes" ng-model="rdbCheque_Book" required="" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" id="CheckBook" name="CheckBook" value="No" ng-change="change()" ng-model="rdbCheque_Book" required="" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                            <span ng-show="form.validateInput('CheckBook', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                                            <label>Primary Status <span style="color:red"> *</span> </label>
+                                                            <br />
+                                                            <div class="radio c-radio">
+                                                                <label>
+                                                                    <input type="radio" id="primarystatus" name="primarystatus" value="Yes" ng-model="rdbprimarystatus" />
+                                                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                                </label>
+                                                                <label>
+                                                                    <input type="radio" id="primarystatus" name="primarystatus" value="No" ng-model="rdbprimarystatus" />
+                                                                    <span class="fa fa-circle"></span>No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Account Open Date </label>
+                                                            <br />
+                                                            <p class="input-group">
+                                                                <input type="text" id="AccountOpenDate" name="AccountOpenDate" ng-model="txtAccountOpen_Date" datepicker-popup="{{format}}"
+                                                                       style="height:36px;" is-open="open01" min-date="minDate" datepicker-options="dateOptions"
+                                                                       close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="calender01($event)" style="height:36px;" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <br />
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <br /> <br />
+                                                    <div class="text-center">
+                                                        <button type="submit" class="btn btn-success btn-md" ng-disabled="submitForm.$invalid" ng-click="update_Bankacctdtl()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/HeadOfficeConfirmation.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="icon-check"></em>&nbsp;<label style="font-size:16px"> Head Office Confirmation </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitHeadoffice()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="text-center">
+                                <h4> Do you want to confirm this GST Number belongs to head office? </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="headoffice_submit()" class="btn btn-success"><em class="fa fa-check"></em>&nbsp;&nbsp;Confirm</button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+</div>

@@ -1,0 +1,145 @@
+﻿<h3>
+    Tier 1 Approval
+    <a href="#/app/allocationZonalRM">
+        <button type="button" title="Back to ZRM Dashboard" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="tier1Summarycontroller">
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-indigo-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-500 pv-lg">
+                        <div class="h3 mt0">{{count_pending}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Approval Pending</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-success">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                        <div class="h3 mt0">{{count_approved}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Approved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget  bg-danger-light">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-danger pv-lg">
+                        <div class="h3 mt0">
+                            {{count_rejected}}
+                        </div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Rejected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <!-- START date widget-->
+            <div class="panel widget">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-gray-dark pv-lg">
+
+                        <now format="MMMM" class="text-sm"></now>
+
+                        <now format="d" class="h4 mt0"></now>
+                    </div>
+                    <div class="col-xs-8 pv-lg bg-gray-500">
+                        <now format="EEEE" class="text-sm"></now>
+
+                        <now format="h:mm" class="h4 mt0"></now>
+                        <now format="a" class="text-sm"></now>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">Tier 1 Submission</th>
+                            <th class="text-nowrap">URN No.</th>
+                            <th class="text-nowrap">Customer Name</th>
+                            <th class="text-nowrap">Vertical</th>
+                            <th class="text-nowrap">Created By</th>
+                            <th class="text-nowrap">Approval Status</th>
+                            <th class="text-nowrap">Approved Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in tier1format|filter :searchtxt|limitTo:totalDisplayed" ng-switch="data.tier1_approvalstatus">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Date of Submission'">{{data.created_date}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                            <td data-title="'Vertical'">{{data.vertical}}</td>
+                            <td data-title="'Created By'">{{data.created_by}}</td>
+                            <td>
+                                <label class="label label-info" ng-switch-when=Pending>Pending</label>
+                                <label class="label label-success" ng-switch-when=Approved>Approved</label>
+                                <label class="label label-danger" ng-switch-when=Rejected>Rejected</label>
+                                <label ng-switch-default>-</label>
+                            </td>
+                            <td data-title="'Approved Date'">{{data.tier1_approveddate}}</td>
+                            <td class="text-nowrap">
+
+                                <button title="Tier 1 Format" class="btn btn-info btn-sm"
+                                        ng-click="viewtier1format(data.tier1format_gid,data.allocationdtl_gid)">
+                                    <em class="fa fa-star"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

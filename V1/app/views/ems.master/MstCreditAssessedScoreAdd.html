@@ -1,0 +1,697 @@
+<script type="text/ng-template" id="required-field">
+    <ng-message class="text-danger" when="required">This field is required</ng-message>
+</script>  
+<h3>
+    Assessed Score 
+</h3>
+<div ng-controller="MstCreditAssessedScoreAddController as dp">   
+<div class="panel">
+    <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+        <h5> Add Credit Assessed Score Details </h5>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+         <div class="col-lg-12 col-md-12 col-sm-12">             
+                <div class="panel-body">
+                    <br />
+                    <form name="userform2"  ng-submit="form.submitgrading()" novalidate="" autocomplete="off" class="form-validate form-horizontal" >
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br/>
+                                        <p class="text-primary" style="font-size:16px;"><b> RM Assessed Score Summary </b></p>
+                                        <hr />
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Date of Survey</th>
+                                                            <th>Overall FPO Rating</th>
+                                                            <th>Overall FPO Grade</th>
+                                                            <th>Created By</th>
+                                                            <th>Created Date</th>                                                           
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="list in gradingtoolrm_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{list.dateofsurvey}}</td>
+                                                            <td>{{list.overallfporating}}</td>
+                                                            <td>{{list.overallfpograde}}</td>
+                                                            <td>{{list.Created_by}}</td>
+                                                            <td>{{list.Created_date}}</td>
+                                                   
+                                                            <td class="text-nowrap">
+                                                                <button title="view" ng-click="RMassessedscore_view(list.application2gradingtool_gid)"
+                                                                        class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                               <!--  <button title="Edit" ng-click="gradingtooldetails_edit(list.application2gradingtool_gid)"
+                                                                        class="btn btn-green">
+                                                                    <em class="fa fa-edit"></em>
+                                                                </button> -->
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                        </div>
+                        <br/>
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Assessed Score Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Date of Survey <span style="color:red">*</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="DOS" name="date" ng-model="txtdateofsurvey_date" datepicker-popup="{{dp.format}}" required
+                                                   style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Overall FPO Rating </label>
+                                        <br />
+                                        <input type="text" name="fpo" ng-model="txtoverallfpo_rating" style="text-align:right" ng-pattern="/^[0-9]+\.?[0-9]*$/"   maxlength="6" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.fpo.$dirty && userform2.fpo.$error">
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Overall FPO Grade </label>
+                                        <br />
+                                        <input type="text" ng-model="txtoverallfpo_grade" maxlength="2" tabindex="0" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> Major Crops </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtmajor_crops" style="resize:vertical;" rows="4" class="form-control" required="" maxlength="1000"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> Alternative Source of Income  </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtalternative_income" style="resize:vertical;"  rows="4" class="form-control" required="" maxlength="1000"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> Objective of the FPO  </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtobjective_FPO" style="resize:vertical;" rows="4" class="form-control" required="" maxlength="1000"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> Recommendation  </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtrecommendation" style="resize:vertical;" rows="4" class="form-control" required="" maxlength="1000"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                       
+                        <div class="dd-handle ng-scope"  style="background-color: #f9f8f8;">
+                                <div ng-show="add">
+                                  
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <br />
+                                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assessment Criteria Details </b></p>
+                                                <hr />
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"><strong>Assessment Criteria</strong> <span style="color:red">*</span></label>
+                                                    <select name="Assessment Criteria" chosen="" multiple ng-options="m.assessmentcriteria_name for m in assessmentcriteria_list"
+                                                            ng-model="cboassessmentcriteria_name" class="form-control" 
+                                                            size="1">
+                                                        <option value="">------------Select Assessment Criteria--------</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Maximum Score </label>
+                                                    <br />
+                                                    <input type="text" name="maxscore" ng-model="txtmax_score" ng-pattern="/^[0-9]*$/" tabindex="0" maxlength="3" class="form-control" />
+                                                    <div ng-messages="userform2.maxscore.$dirty && userform2.maxscore.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Actual Scored </label>
+                                                    <br />
+                                                    <input type="text" name="actscore" ng-model="txtactual_score" ng-pattern="/^[0-9]*$/" tabindex="0" maxlength="3" class="form-control" />
+                                                    <div ng-messages="userform2.actscore.$dirty && userform2.actscore.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                    <label class="col-form-label"> In % </label>
+                                                    <br />
+                                                    <input type="text" name="in" ng-model="txtin" tabindex="0" ng-pattern="/^[0-9]+\.?[0-9]*$/"  maxlength="6" style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.in.$dirty && userform2.in.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                  </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> In Grade </label>
+                                                    <br />
+                                                    <input type="text" ng-model="txtin_grade" tabindex="0" maxlength="2" class="form-control" />
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> Shareholders - Male % </label>
+                                                    <br />
+                                                    <input type="text" name="sharemale" ng-model="txtshareholders_male" ng-pattern="/^[0-9]+\.?[0-9]*$/"  tabindex="0" maxlength="6" style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.sharemale.$dirty && userform2.sharemale.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                   </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Shareholders - Female % </label>
+                                                    <br />
+                                                    <input type="text" name="sharefemale" ng-model="txtshareholders_female" ng-pattern="/^[0-9]+\.?[0-9]*$/"  tabindex="0" maxlength="6" style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.sharefemale.$dirty && userform2.sharefemale.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                   </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> BODs - Male % </label>
+                                                    <br />
+                                                    <input type="text" name="bodsmale" ng-model="txtbods_male" tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.bodsmale.$dirty && userform2.bodsmale.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> BODs - Female % </label>
+                                                    <br />
+                                                    <input type="text" name="bodsfemale" ng-model="txtbods_female" tabindex="0" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" maxlength="6" class="form-control" />
+                                                    <div ng-messages="userform2.bodsfemale.$dirty && userform2.bodsfemale.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <br />
+                                                    <button class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="assessmentcriteria_add()"><span class="fa fa-plus" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+</div>
+                                <div ng-show="edit">
+                                 
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"><strong>Assessment Criteria</strong> <span style="color:red">*</span></label>
+                                                    <select name="Assessment Criteria"  chosen="" multiple ng-options="m.assessmentcriteria_name for m in assessmentcriteria_listedit"
+                                                            ng-model="editcboassessmentcriteria_name" class="form-control"
+                                                            size="1">
+                                                        <option value="">------------Select Assessment Criteria--------</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Maximum Score </label>
+                                                    <br />
+                                                    <input type="text" name="editmax" ng-model="edittxtmax_score" tabindex="0" ng-pattern="/^[0-9]*$/" maxlength="3" class="form-control" />
+                                                    <div ng-messages="userform2.editmax.$dirty && userform2.editmax.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Actual Scored </label>
+                                                    <br />
+                                                    <input type="text" name="editact" ng-model="edittxtactual_score" tabindex="0" ng-pattern="/^[0-9]*$/" maxlength="3" class="form-control" />
+                                                    <div ng-messages="userform2.editact.$dirty && userform2.editact.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                    <label class="col-form-label"> In % </label>
+                                                    <br />
+                                                    <input type="text" name="editin" ng-model="edittxtin" tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.editin.$dirty && userform2.editin.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                  </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> In Grade </label>
+                                                    <br />
+                                                    <input type="text" name="ingradeedit" ng-model="edittxtin_grade" tabindex="0" ng-pattern="/^[0-9]*$/" maxlength="2" class="form-control" />
+                                                    <div ng-messages="userform2.ingradeedit.$dirty && userform2.ingradeedit.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> Shareholders - Male % </label>
+                                                    <br />
+                                                    <input type="text" name="editsharema" ng-model="edittxtshareholders_male"  tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.editsharema.$dirty && userform2.editsharema.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> Shareholders - Female % </label>
+                                                    <br />
+                                                    <input type="text" name="editsharefe" ng-model="edittxtshareholders_female" tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.editsharefe.$dirty && userform2.editsharefe.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> BODs - Male % </label>
+                                                    <br />
+                                                    <input type="text" name="editbods_male" ng-model="edittxtbods_male"  tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.editbods_male.$dirty && userform2.editshare.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                  </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label class="col-form-label"> BODs - Female % </label>
+                                                    <br />
+                                                    <input type="text" name="editbods_female" ng-model="edittxtbods_female"  tabindex="0" maxlength="6" ng-pattern="/^[0-9]+\.?[0-9]*$/"  style="text-align:right" class="form-control" />
+                                                    <div ng-messages="userform2.editbods_female.$dirty && userform2.editbods_female.$error">
+
+                                                        <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-success btn-md"  ng-click="assessmentUpdate()"><i class="fa fa-arrow-circle-up"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                            <button ng-click="Cancel()" class="btn btn-danger"><i class="fa fa-close"></i>&nbsp;&nbsp;Cancel</button>
+                                        </div>
+                                    
+</div>
+                                        <br /><br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="table-responsive table-bordered">
+                                                        
+                                                            <table class="table">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr>
+                                                                        <th>S.No</th>
+                                                                        <th>Assessment Criteria</th>
+                                                                        <th>Assessment Criteria Details</th>
+                                                                        <th>Shareholders</th>
+                                                                        <th>BODs</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="list in assesment_list">
+                                                                        <td>{{$index+1}}</td>
+                                                                        <td>{{list.assessmentcriteria_name}}</td>
+                                                                        <td title="Assesment Criteria Details">
+                                                                            <b>Maximum Score : </b> {{list.maximum_score}} <br />
+                                                                            <b>Actual Scored : </b> {{list.actual_score}}  <br />
+                                                                            <b>In %          : </b> {{list.assessment_in}}<br />
+                                                                            <b>In Grade      : </b> {{list.assessment_ingrade}}
+                                                                        </td>
+                                                                        <td title="Shareholders">
+                                                                            <b>Shareholders - Male %   : </b> {{list.shareholders_male}} <br />
+                                                                            <b>Shareholders - Female % : </b> {{list.shareholders_female}}  <br />
+                                                                        </td>
+                                                                        <td title="BODs">
+                                                                            <b>BODs - Male %   : </b> {{list.bodmale_in}} <br />
+                                                                            <b>BODs - Female % : </b> {{list.bodfemale_in}}  <br />
+                                                                        </td>
+                                                                        <td class="text-nowrap">
+                                                                            <button title="Edit" ng-click="editAssessmentCriteria(list.application2gradingassesment_gid)" class="btn btn-green">
+                                                                                <em class="fa fa-edit"></em>
+                                                                            </button>
+                                                                            <button title="Delete" ng-click="assessmentcriteriadetails_delete(list.application2gradingassesment_gid)"
+                                                                                    class="btn btn-danger">
+                                                                                <em class="fa fa-trash-o"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <br /><br />
+
+                        </div>
+                        <br />
+                 
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; FPO Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> FPO AC Score </label>
+                                        <br />
+                                        <input type="text" name="fboac" ng-model="txtfpoac_score" ng-pattern="/^[0-9]*$/" tabindex="0" maxlength="3" class="form-control" />
+                                        <div ng-messages="userform2.fboac.$dirty && userform2.fboac.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Number of Active FIGs </label>
+                                        <br />
+                                        <input type="text" name="actfig" ng-model="txtnumber_activefigs" ng-pattern="/^[0-9]*$/" maxlength="5" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.actfig.$dirty && userform2.actfig.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Number of Existing Lending - Direct & Indirect </label>
+                                        <br />
+                                        <input type="text" name="existlead" ng-model="txtn0_existingleading" tabindex="0" ng-pattern="/^[0-9]*$/" maxlength="3" class="form-control" />
+                                        <div ng-messages="userform2.existlead.$dirty && userform2.existlead.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> All non-negotiable conditions met? </label>
+                                        <br />
+                                        <input type="text" ng-model="txtnon_negotiable"  tabindex="0" maxlength="50" class="form-control" />
+                                    
+                                     </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Outstanding Portfolio with Members (Rs.in Lakhs) - Direct & Indirect </label>
+                                        <br />
+                                        <input type="text" name="polio" ng-model="txtout_portfolio" maxlength="20" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.polio.$dirty && userform2.polio.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Does the Institution have Direct Borrowing or Indirect Borrowing </label>
+                                        <br />
+                                        <input type="text" ng-model="txtout_portfolio1" maxlength="50" tabindex="0" class="form-control" />
+                                      
+                                      </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Total Disbursements by other Direct Lenders in the last 12 months (Rs. in Lakhs) </label>
+                                        <br />
+                                        <input type="text" name="par90" ng-model="txtpar90_lending" ng-pattern="/^[0-9]*$/" maxlength="20" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.par90.$dirty && userform2.par90.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> PAR 90 of groups managed by the Institution-Only Direct  </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtpar_90groups" style="resize:vertical;" rows="4" class="form-control" required=""
+                                                  id="input_13" ng-trim="false" aria-multiline="true" maxlength="1000" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label><strong> Recommendation  </strong> <span style="color:red">*</span></label>
+                                        <textarea ng-model="txtrecommendation1" style="resize:vertical;" rows="4" class="form-control" required="" maxlength="1000"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Geographic Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Number of states </label>
+                                        <br />
+                                        <input type="text" name="state" ng-model="txtno_states" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.state.$dirty && userform2.state.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Number of Districts </label>
+                                        <br />
+                                        <input type="text" name="nodistrict" ng-model="txtno_districts" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.nodistrict.$dirty && userform2.nodistrict.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Number of Branches </label>
+                                        <br />
+                                        <input type="text" name="nobranch" ng-model="txtno_branches" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.nobranch.$dirty && userform2.nobranch.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Number of Members </label>
+                                        <br />
+                                        <input type="text" name="nos" ng-model="txtno_members" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.nos.$dirty && userform2.nos.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Number of Active Members  </label>
+                                        <br />
+                                        <input type="text" name="active" ng-model="txtno_activemembers" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.active.$dirty && userform2.active.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Number of Groups </label>
+                                        <br />
+                                        <input type="text" name="nogrp" ng-model="txtno_groups" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.nogrp.$dirty && userform2.nogrp.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Zonal Offices </label>
+                                        <br />
+                                        <input type="text" name="zone" ng-model="txtzonal_offices" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.zone.$dirty && userform2.zone.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Regional Offices </label>
+                                        <br />
+                                        <input type="text" name="region" ng-model="txtreginal_offices" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.region.$dirty && userform2.region.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Branches </label>
+                                        <br />
+                                        <input type="text" name="branch" ng-model="txtbranches" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.branch.$dirty && userform2.branch.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Admin Staff </label>
+                                        <br />
+                                        <input type="text" name="adminstaf" ng-model="txtadmin_staff" maxlength="10" ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.adminstaf.$dirty && userform2.adminstaf.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                      </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Field Staff </label>
+                                        <br />
+                                        <input type="text" name="fieldstaf" ng-model="txtfield_staff" maxlength="10"  ng-pattern="/^[0-9]*$/" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.fieldstaf.$dirty && userform2.fieldstaf.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Field Staff to Group ratio </label>
+                                        <br />
+                                        <input type="text" name="grpratio" ng-model="txtfield_togroupratio" maxlength="10" tabindex="0" class="form-control" />
+                                        <div ng-messages="userform2.grpratio.$dirty && userform2.grpratio.$error">
+
+                                            <p class="text-danger" ng-message="pattern">Allow Only Numbers..</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <br /><br />
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary" ng-click="save_gradingtool()"> <em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft</button>
+
+                                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform2.$invalid" ng-click="submitgrading()"> <em class="fa fa-arrow-circle-right"></em>&nbsp;&nbsp;Submit</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br /><br />
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b> Credit Assessed Score Summary </b></p>
+                                        <hr />
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Date of Survey</th>
+                                                            <th>Created By</th>
+                                                            <th>Created Date</th>                                                           
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="list in gradingtoolcredit_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{list.dateofsurvey}}</td>
+                                                            <td>{{list.Created_by}}</td>
+                                                            <td>{{list.Created_date}}</td>
+                                                   
+                                                            <td class="text-nowrap">
+                                                                <button title="Edit" ng-click="gradingtooldetails_edit(list.application2gradingtool_gid)"
+                                                                    class="btn btn-green">
+                                                                    <em class="fa fa-edit"></em>
+                                                                </button>
+                                                                <button title="view" ng-click="gradingtooldetails_view(list.application2gradingtool_gid)"
+                                                                        class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                               
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                        <br />
+
+</div>
+</div>
+</div>
+</div>
+     <br/>
+</div>
+</div>

@@ -1,0 +1,317 @@
+﻿<h3>
+  Bank Alert Assignment
+</h3>
+<div ng-controller="OsdTrnBAMSummary">
+    
+   
+    <div class="panel">
+        <div class="row" ng-show="privilege">
+            <br/>
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="col-lg-7 col-sm-7 col-md-7">
+
+                </div>
+                <div class="col-lg-2 col-sm-2 col-md-2">
+                   
+                    <div style="text-align:right;">
+                        <em class="fa fa-file-text fa-2x" style="color:#706710;"></em>
+                        &nbsp;&nbsp;  <a href="#/app/osdBamTicketCompletedSummary" title="Completed Tickets" style="color:#706710;font-size:16px;" >
+                        <u><b>Completed Tickets</b></u></a>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-sm-3 col-md-3">
+
+                    <div  style="text-align:left;">
+                        <em class="fa fa-arrow-circle-right fa-2x" style="color:#141478;"></em>
+                        &nbsp;&nbsp;  <a href="#/app/osdTrnTicketAllotedSummary" title="Go To Activity Management" style="color:#141478;font-size:16px;">
+                            <u>
+                                <b>Go to Activity Management</b>
+                            </u>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <tabset justified="true">
+
+                <tab id="id1" select="tab.activeTabId = 'requiredlist'" active="tabrequiredlist">
+                    <tab-heading title="Details Required List">
+                        <em class="icon-note fa-1x"></em> &nbsp;Details Required List&nbsp; &nbsp; <label class="label label-primary" ng-if="notallocated_count != '0'"> {{notallocated_count}}</label>
+                    </tab-heading>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Business Unit Name</th>
+                                    <th>Reference No</th>
+                                    <th>Ticket Created On</th>
+                                    <th>Subject</th>
+                                    <th>Reason</th>
+                                    <th class="text-center">Aging</th>
+                                    <th> source </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in BAMDtlpending">
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Department name'"> {{data.department_name}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Ticket Created date'"> {{data.created_date}} </td>
+                                    <td data-title="'Mail Details'">
+                                        <div class="mb-mail-meta">
+                                            <div class="pull-left">
+                                                <div> {{data.email_subject}} </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-title="'reason'"> <label style="font-size:10px" class="label label-green"> {{data.reason}}</label> </td>
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td data-title="'Status'" ng-switch="data.kotakAPI_flag ">
+                                        <label ng-switch-when="N" class="label label-info">E-Mail</label>
+                                        <label ng-switch-when="Y" class="label label-warning">Kotak API</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="BankalertView" ng-click="requiredlist(data.bankalert2notallocated_gid)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <!-- Allocated To RM List Start -->
+                <tab id="id2" select="tab.activeTabId = 'allocatedlist'" active="taballocatedlist">
+                    <tab-heading title="Allocated To RM List">
+                        <em class="fa fa-file-text-o fa-1x"></em> &nbsp;Allocated To RM &nbsp; &nbsp; <label class="label label-primary" ng-if="allocated_count != '0'"> {{allocated_count}}</label>
+                    </tab-heading>
+
+                    <div class="table-responsive">
+                        <div class="row col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9 ">
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 ">
+                                <a title="Color Indicates" style="background-color:#edb9b9;" class="ng-binding ng-scope label">
+                                    <em class="fa"></em>
+                                </a>&nbsp;<lable> - Color Indicates Transfer Initiated Tickets</lable>&nbsp;
+
+                            </div>
+                        </div>
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Business Unit Name</th>
+                                    <th>Reference No</th>
+                                    <th>Customer URN</th>
+                                    <th>Customer Name</th>
+                                    <th class="text-center">RM Status</th>
+                                    <th>Assigned To</th>
+                                    <th>Assigned On</th>
+                                    <th class="text-center">Aging</th>
+                                    <th>Source</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in BAMpendingSummary" ng-style="data.transfer_flag=='Y'?{'background-color':'#edb9b9'}:{} ">
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Department name'"> {{data.department_name}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_name}} </td>
+                                    <td data-title="'RM Status'" ng-switch="data.allocated_status">
+                                        <label style="font-size:10px" ng-switch-when="Pending" class="label label-info"> Pending </label>
+                                        <label style="font-size:10px" ng-switch-when="RH Approval Pending" class="label label-green"> RH Approval Pending </label>
+                                    </td>
+                                    <td data-title="'Allocated To'"> {{data.relationshipmanager_name}} </td>
+                                    <td data-title="'Allocated On'"> {{data.email_date}} </td>
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td data-title="'Status'" ng-switch="data.kotakAPI_flag">
+                                        <label ng-switch-when="N" class="label label-info">E-Mail</label>
+                                        <label ng-switch-when="Y" class="label label-warning">Kotak API</label>
+
+
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="BankalertView" ng-click="allocatedtoRM(data.bankalert2allocated_gid,data.customer_gid,data.customer_urn)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <!-- Allocated To RM List END -->
+                <tab id="id5" select="tab.activeTabId = 'rhApprovePendinglist'" active="tabrhApprovePendinglist">
+                    <tab-heading title="RH Approval Pending List">
+                        <em class="fa fa-file-text-o fa-1x"></em> &nbsp;RH Approval Pending &nbsp; &nbsp; <label class="label label-primary" ng-if="rhApprovePending_count != '0'"> {{rhApprovePending_count}}</label>
+                    </tab-heading>
+
+                    <div class="table-responsive">
+                        <div class="row col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9 ">
+                            </div>
+
+                            <!--<div class="col-lg-3 col-md-3 col-sm-3 ">
+                    <a title="Color Indicates" style="background-color:#edb9b9;" class="ng-binding ng-scope label">
+                        <em class="fa"></em>
+                    </a>&nbsp;<lable> - Color Indicates Transfer Initiated Tickets</lable>&nbsp;
+
+                </div>-->
+                        </div>
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Business Unit Name</th>
+                                    <th>Reference No</th>
+                                    <th>Customer URN</th>
+                                    <th>Customer Name</th>
+                                    <th class="text-center">RM Status</th>
+                                    <th>RH Name</th>
+                                    <th>Assigned To</th>
+                                    <th>Assigned On</th>
+                                    <th class="text-center">Aging</th>
+                                    <th>Source</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in RhpendingSummary" ng-style="data.transfer_flag=='Y'?{'background-color':'#edb9b9'}:{} ">
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Department name'"> {{data.department_name}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_name}} </td>
+                                    <td data-title="'RM Status'" ng-switch="data.allocated_status">
+                                        <!--<label style="font-size:10px" ng-switch-when="Pending" class="label label-info"> Pending </label>-->
+                                        <label style="font-size:10px" ng-switch-when="RH Approval Pending" class="label label-green"> RH Approval Pending </label>
+                                    </td>
+                                    <td data-title="'RH Name'"> {{data.regionalheadlevel_name}} </td>
+                                    <td data-title="'Allocated To'"> {{data.relationshipmanager_name}} </td>
+                                    <td data-title="'Allocated On'"> {{data.email_date}} </td>
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td data-title="'Status'" ng-switch="data.kotakAPI_flag">
+                                        <label ng-switch-when="N" class="label label-info">E-Mail</label>
+                                        <label ng-switch-when="Y" class="label label-warning">Kotak API</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="BankalertView" ng-click="rhApprovePending(data.bankalert2allocated_gid,data.customer_gid,data.customer_urn)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab id="id3" select="tab.activeTabId = 'assignlist'" active="tabassignlist">
+                    <tab-heading title="Assign to Operation-Pending List">
+                        <em class="icon-users fa-1x"></em>&nbsp;Assign to Operation &nbsp; &nbsp; <label class="label label-primary" ng-if="operation_count != '0'"> {{operation_count}}</label>
+                    </tab-heading>
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Business Unit Name</th>
+                                    <th>Reference No</th>
+                                    <th>Allocated On</th>
+                                    <th>Customer URN</th>
+                                    <th>Customer Name</th>
+                                    <th>RM Status</th>
+                                    <th>Assigned To</th>
+                                    <th>Operation Status</th>
+                                    <th class="text-center">Aging</th>
+                                    <th> Source </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in BAMOperationpending">
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Department name'"> {{data.department_name}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Allocated On'"> {{data.email_date}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_name}} </td>
+                                    <td data-title="'Status'"> {{data.allocated_status}} </td>
+                                    <td data-title="'Status'"> {{data.assigned_toname}} </td>
+                                    <td data-title="'Status'" ng-switch="data.operation_status">
+                                        <label style="font-size:10px" ng-switch-when="---" class="label label-warning">&nbsp; &nbsp;&nbsp;  ---&nbsp; &nbsp; &nbsp; </label>
+                                        <label style="font-size:10px" ng-switch-when="Assigned" class="label label-primary"> Assigned </label>
+                                        <label style="font-size:10px" ng-switch-when="Completed" class="label label-green"> Completed </label>
+                                    </td>
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td data-title="'Status'">
+                                        <label ng-show="data.kotakAPI_flag=='N' && data.brs_flag=='N'" class="label label-info">E-Mail</label>
+                                        <label ng-show="data.kotakAPI_flag=='Y'" class="label label-warning">Kotak API</label>
+                                        <label ng-show="data.brs_flag=='Y' && data.kotakAPI_flag=='N' " class="label label-primary">BRS</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="BankalertView" ng-click="BankalertView(data.bankalert2allocated_gid,data.customer_gid,data.customer_urn,data.ticketref_no)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+                <tab id="id4" select="tab.activeTabId = 'transferlist'" active="tabtransferlist">
+                    <tab-heading title="Transfer Initiated List">
+                        <em class="fa fa-file-text-o fa-1x"></em> &nbsp;Transfer Initiated List &nbsp; &nbsp; <label class="label label-primary" ng-if="transfer_count != '0'"> {{transfer_count}}</label>
+                    </tab-heading>
+
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none">S.No</th>
+                                    <th>Business Unit Name</th>
+                                    <th>Reference No</th>
+                                    <th>Customer URN</th>
+                                    <th>Customer Name</th>
+                                    <th>Transfer Initiated By</th>
+                                    <th>Initiated On</th>
+                                    <th class="text-center">Transfer Type</th>
+                                    <th class="text-center">Aging</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in BAMtransferSummary">
+                                    <td data-title="'Department name'"> {{data.department_name}} </td>
+                                    <td data-title="'S.No'" style="display:none" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Reference No'"> {{data.ticketref_no}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}} </td>
+                                    <td data-title="'Customer URN'">{{data.customer_name}} </td>
+                                    <td data-title="'Transfer Initiated On'"> {{data.relationshipmanager_name}} </td>
+                                    <td data-title="'Transfer Initiated On'"> {{data.email_date}} </td>
+                                    <td data-title="'Transfer Type'" class="text-center">
+                                        <label style="font-size:10px" class="label label-pink">{{data.transfer_type}}</label>
+                                    </td>
+                                    <td data-title="'Aging'" class="text-center">{{data.aging}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="BankalertView" ng-click="transfer(data.bankalert2allocated_gid,data.customer_gid,data.customer_urn)" class="btn btn-primary btn-sm">
+                                            <em class="fa fa-retweet"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+   
+</div>

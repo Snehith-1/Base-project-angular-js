@@ -1,0 +1,310 @@
+﻿<h3>
+    Allocation History
+</h3>
+<div ng-controller="allocationHistorycontroller">
+
+
+    <div class="panel">
+
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="row col-lg-12 col-sm-12 col-md-12  text-center">
+
+                        <label class="text-primary" style="font-size:17px;">{{customername}}</label>
+                        <br />
+                        URN No:&nbsp;<label class="text-pink" style="font-size:17px;">{{customer_urn}}</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">URN No.</th>
+                            <th>Allocated Date</th>
+                            <th>Visited Date</th>
+                            <th class="text-nowrap">State / District</th>
+                            <th>Zonal Risk Manager</th>
+                            <th>Assigned RM</th>
+                            <th>Completed Date</th>
+                            <th>Allocated By</th>
+                            <th>Done By</th>
+                            <!--<th>Allocation Status</th>-->
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in allocationHistoryList" ng-switch="data.reportcancel_flag">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Allocated Date'" class="text-nowrap">{{data.created_date}}</td>
+                            <td data-title="'Visited Date'" class="text-nowrap">{{data.lastvisit_date}}</td>
+                            <td data-title="'State / District'">{{data.location}}</td>
+                            <td data-title="'Zonal Risk Manager'" class="text-nowrap">{{data.ZonalRMname}}</td>
+                            <td data-title="'Allocate RM'" class="text-nowrap">{{data.assigned_RM}}</td>
+                            <td data-title="'Completed Date'" class="text-nowrap">{{data.completed_date}}</td>
+                            <td data-title="'Allocated By'" class="text-nowrap">{{data.created_by}}</td>
+                            <td ng-switch="data.allocate_external">
+                                <label class="label label-pink" ng-switch-when="Y">External</label>
+                                <label ng-switch-default>-</label>
+                            </td>
+                            <td class="text-nowrap">
+                                <button title="Allocation History View" class="btn btn-success btn-sm"
+                                        ng-click="viewallocation(data.allocationdtl_gid,data.customer_gid)">
+                                    <em class="fa fa-history"></em>
+                                </button>
+                                <button title="PDF" class="btn btn-danger btn-sm"
+                                        ng-click="generetePDF(data.allocationdtl_gid)">
+                                    <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                </button>
+                                <button title="View Cancel Log" class="btn btn-info btn-sm" ng-switch-when="Y"
+                                        ng-click="ViewCancelReason(data.allocationdtl_gid,customername,customer_urn,data.allocate_external)">
+                                    <em class="fa fa-comments-o"></em>
+                                </button>
+                                <button title="View Cancel Log" class="btn bg-blue-grey-100 btn-sm" ng-switch-when="N"
+                                        ng-click="ViewCancelReason(data.allocationdtl_gid,customername,customer_urn,data.allocate_external)">
+                                    <em class="fa fa-comments-o"></em>
+                                </button>
+                                <button title="Action / Observation Report" class="btn btn-info btn-sm"  
+                                        ng-click="observationviewreport(data.allocationdtl_gid,data.observation_reportgid)">
+                                    <em class="fa fa-star"></em>
+                                </button>
+                                  <button title="ATR PDF" class="btn btn-purple btn-sm" 
+                                       ng-click="genereteATRPDF(data.observation_reportgid)"> <em class="fa fa-file-pdf-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                   </button>
+                                <div ng-switch="data.allocate_external">
+                                    <button title="External Assigned" class="btn bg-pink-300 btn-sm" ng-switch-when="Y"
+                                            ng-click="externalAssigned(data.allocationdtl_gid)">
+                                        <em class="fa fa-external-link text-white"></em>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <a class="btn btn-info" ng-click="historyback()">
+                        <em class="fa fa-arrow-left"></em>
+                        <span>Back</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/reportCancelModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-file-pdf-o"></em>&nbsp; View Report Cancel Log</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="reportcancel" id="reportcancel" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                    <label class="text-primary" style="font-size:15px;">{{customername}} </label><br />
+                                    URN No: <label class="text-pink" style="font-size:15px;">{{customer_urn}}</label>
+                                </div>
+                            </div>
+                            <div class="table-responsive table-bordered">
+                                <table class="table">
+                                    <thead style="background-color:#bdc2e0;">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Cancel - Remarks</th>
+                                            <th>Updated By</th>
+                                            <th>Updated Date</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="canceldtl in visistreportcancel">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{canceldtl.cancel_remarks}}</td>
+                                            <td>{{canceldtl.created_by}}</td>
+                                            <td>{{canceldtl.created_date}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br />
+                            <div class="text-center">
+
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Close</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!--<div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                    <label class="text-primary">{{customername}}</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Updated Date : </label>
+                                    <br/>
+                                    <p>{{created_date}}</p>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <label>Updated By : </label>
+                                    <br />
+                                    <p>{{created_by}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Cancel Reason: </label>
+                                    <textarea name="specificcondition" placeholder="Enter Reason..." required
+                                              ng-model="cancel_remarks" class="form-control" rows="5" disabled></textarea>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>-->
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/AssignedExternal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp; Case Allocation - External View</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Customer Name / URN </label>
+                                    <br />
+                                    <p>{{customerdtl}}</p>
+
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Vendor Name </label>
+                                    <br />
+                                    <p>{{externalname}}</p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Assigned By </label>
+                                    <br />
+                                    <p>{{assigned_by}}</p>
+
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3 form-group float-label">
+                                    <label>Assigned Date </label>
+                                    <br />
+                                    <p>{{assigned_date}}</p>
+
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3 form-group float-label">
+                                    <label>Target Date </label>
+                                    <br />
+                                    <p>{{target_date}}</p>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Document Upload</label>
+
+                                    <div class="dd-handle ng-scope" style="height:355px;">
+
+                                        <div class="row">
+                                            <br />
+                                            <div class="col-lg-11 col-sm-12 col-md-12">
+                                                <div ui-scroll-viewport="" style="height:345px; overflow-y: auto;" class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive table-bordered bg-teal-100">
+                                                            <table class="table">
+                                                                <thead class="bg-teal-500">
+                                                                    <tr>
+                                                                        <th>Document Name</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="upload in upload_list">
+
+                                                                        <td>{{upload.document_name}}</td>
+                                                                        <td>
+                                                                            <button title="Download" class="btn btn-default btn-sm"
+                                                                                    ng-click="downloads(upload.document_path,upload.document_name)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a> <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label> Remarks</label>
+
+                                    <div class="dd-handle ng-scope" style="height:355px;">
+                                        <p ng-bind-html="AllocateExtRemarks"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="text-center">
+
+                                <a class="btn btn-danger" ng-click="ok()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Close</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

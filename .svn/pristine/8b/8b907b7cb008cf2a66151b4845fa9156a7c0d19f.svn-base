@@ -1,0 +1,206 @@
+﻿<h3>
+    CAD Report
+</h3>
+<div id="defid" ng-controller="reportView">
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .panel-scroll {
+            max-height: 120px;
+            overflow: auto;
+        }
+    </style>
+    <!--<form novalidate="" id="userform7" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Entity</strong>
+                <select id="select_value_label_93" name="entity_name" dropzone="" ng-model="entity_gid"
+                    class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                    <option value="">---Select---</option>
+                    <option data-ng-repeat="data in entity_list" value="{{data.entity_gid}}">
+                        {{data.entity_name}}
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Branch</strong>
+                <select id="select_value_label_93" name="vertical" dropzone="" ng-model="branch" 
+                       class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                    <option value="">---Select---</option>
+                    <option data-ng-repeat="data in branch_list" value="{{data.branch_gid}}">
+                        {{data.branch_name}}
+                    </option>
+                </select>
+
+            </div>
+            <div class="col-lg-4  col-sm-4 col-md-4">
+
+                <strong class="mt0">Customer</strong>
+                <!--<select id="customername" name="customer" dropzone="" ng-model="customer" 
+                       class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                    <option value="">---Select---</option>
+                    <option data-ng-repeat="data in customer_list" value="{{data.customer_gid}}">
+                        {{data.customername}}
+                    </option>
+                </select>-->
+                <input type="text" name="customer" id="customer" ng-model="customer" required
+                       ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+
+                <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                    <li class="list-group-item" ng-repeat="m in customer_list"
+                        ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                </ul>
+
+                <label style="color:red;">{{message}}</label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">State</strong><br />
+                <select name="state_code"   choose=""
+                    ng-model="cbostate" class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                    <option value=""> -----Select -----</option>
+                    <option data-ng-repeat="data in state_list" value="{{data.state_gid}}">{{data.state_name}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Vertical</strong><br />
+                <select id="vertical_code" name="vertical" dropzone="" ng-model="vertical" chosen=""
+                   class="chosen-select form-control ng-valid ng-touched ng-valid-parse" size="1">
+                    <option value="">-----Select ----</option>
+                    <option data-ng-repeat="data in vertical_list" value="{{data.vertical_gid}}">{{data.vertical_code}}</option>
+                </select>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4">
+                <a title="Color Indicates" style="background-color:#6047eb;" class="ng-binding ng-scope label">
+                    <em class="fa"></em>
+                </a>&nbsp;<lable> - Color Indicates that the Customer Tagged to Legal</lable>&nbsp;
+               
+                <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="userform.$invalid" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>
+                <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="userform.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>
+                <button type="button" class="btn btn-success btn-md"  ng-disabled="userform.$invalid" ng-click="export()" title="Export Excel"><i class="fa fa-file-excel-o"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table  class="table table-striped row-border hover" style="max-height:100px;">
+
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>ENTITY</th>
+                                    <th>BRANCH</th>
+                                    <th>CUSTOMER</th>
+                                    <th>VERTICAL</th>
+                                    <th>STATE</th>
+                                    <th>RECORD ID</th>
+                                    <th>TRACKING TYPE</th>
+                                    <th>DEFERRAL CATAGORY</th>
+                                    <th>DEFERRAL TYPE</th>
+                                    <th>RELATIONSHIP MANAGER</th>
+                                    <th>ZONAL RISK MANAGER</th>
+                                    <th>RISK MANAGER</th>
+                                    <th>HEAD RISK MONITORING</th>
+                                    <th>DUE DATE</th>
+                                    <th>EXTENDED DATE</th>
+                                    <th>DEFERRAL STAGE</th>
+                                    <th>DEFERRAL STATUS</th>
+                                    <th>CRITICALITY</th>
+                                    <th>REMARKS</th>
+                                    <th>AGING</th>
+                                    <th>EXTENSION COUNT</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.legaltag_flag" ng-repeat="data in deferral_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Entity'">{{data.entity_name}}</td>
+                                    <td data-title="'Branch'">{{data.branch_name}}</td>
+                                    <td ng-switch-when="" data-title="'Customer'">{{data.customername}}</td>
+                                    <td ng-switch-when="N" data-title="'Customer'">{{data.customername}}</td>
+                                    <td ng-switch-when="Y" style="color:rgb(105,113,215);font-weight:bold;" data-title="'Customer'">{{data.customername}}</td>
+                                    <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                                    <td data-title="'State'">{{data.state}}</td>
+                                    <td data-title="'Record ID'">{{data.record_id}}</td>
+                                    <td data-title="'Tracking Type'">{{data.tracking_type}}</td>
+                                    <td data-title="'Deferral Catagory'">{{data.deferral_catagory}}</td>
+                                    <td data-title="'Deferral Name'">{{data.deferral_name}}</td>
+                                    <td data-title="'Approval Status'">{{data.rm_mail}}</td>
+                                    <td data-title="'RM'">{{data.zonal_rm}}</td>
+                                    <td data-title="'Cluster Manager'">{{data.risk_manager}}</td>
+                                    <td data-title="'Credit Manager'">{{data.riskmonitoring_head}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.duedate}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.extended_date}}</td>
+                                    <td data-title="'Approval Status'">{{data.approval_status}}</td>
+                                    <td data-title="'Deferral Status'">{{data.deferral_status}}</td>
+                                    <td data-title="'criticality'">{{data.criticallity}}</td>
+                                    <td data-title="'Remarks'">{{data.remarks}}</td>
+                                    <td data-title="'Deferral Status'">{{data.aging}}</td>
+                                    <td data-title="'Deferral Status'">{{data.count_extension}}</td>
+                                    <td data-title="'Action'">
+
+                                        <button title="View Details" ng-click="popupView(data.deferral_gid)" class="btn btn-sm  bg-light-blue-600">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END panel-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

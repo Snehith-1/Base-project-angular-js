@@ -1,0 +1,43 @@
+﻿(function () {
+    'use strict';
+
+    angular
+        .module('vcx')
+        .controller('releaseMgmt', releaseMgmt);
+
+    releaseMgmt.$inject = ['$rootScope', '$scope', '$state', 'AuthenticationService', 'ScopeValueService', '$http', 'SocketService', 'Notify', '$location', 'apiManage', '$route', '$cookies'];
+
+    function releaseMgmt($rootScope, $scope, $state, AuthenticationService, ScopeValueService, $http, SocketService, Notify, $location, apiManage, $route, $cookies) {
+        /* jshint validthis:true */
+        var vm = this;
+        vm.title = 'releaseMgmt';
+
+        activate();
+
+        function activate() {
+            var url = apiManage.apiList['releaseMgmt'].api;
+            lockUI();
+            SocketService.get(url).then(function (resp) {
+                unlockUI();
+                $scope.tabledata = resp.data.tabledata;
+                console.log($scope.tabledata);
+            });
+
+        }
+
+        $scope.view = function (val) {
+            var doc = document.getElementById('releaseMgmt');
+            doc.style.display = 'block';
+            var params = {
+                release_gid: val
+            };
+            var url = apiManage.apiList["issue2Release"].api;
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.tabledata = resp.data.tabledata;
+               
+            });
+        }
+
+    }
+
+})();

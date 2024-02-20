@@ -1,0 +1,845 @@
+﻿<h3>
+    File Management
+</h3>
+<div ng-controller="idasTrnFile2Despatch as dp">
+    <div class="widget">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-pink-light ">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-pink-dark  pv-lg">
+
+                            <em class="icon icon-doc  fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger" style="background-color:black;">{{totalpendingbatch}}</div>
+                            <div style="font-size:14px;">Pending</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-indigo-400 ">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-indigo-700  pv-lg">
+
+                            <em class="icon icon-doc  fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger" style="background-color:black;">{{totalBatch}}</div>
+                            <div style="font-size:14px;">Batch Count</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-teal-400">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-teal-700 pv-lg">
+
+                            <em class="fa fa-dropbox fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger" style="background-color:black;">{{totalBox}}</div>
+                            <div style="font-size:14px;color:white;">Box Count</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6">
+
+
+                <div class="panel widget bg-purple-light">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-purple-dark pv-lg">
+
+                            <em class="fa fa-share-square-o fa-3x"></em>
+                        </div>
+                        <div class="col-xs-8 pv-lg">
+                            <div class="pull-right label label-danger" style="background-color:black;">{{totalDespatch}}</div>
+                            <div style="font-size:14px;">Despatch Count</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--<div class="col-lg-3 col-md-6 col-sm-12">
+              
+                <div class="panel widget">
+                    <div class="row row-table">
+                        <div class="col-xs-4 text-center bg-gray-dark pv-lg">
+                            <em class="fa fa-clock-o fa-3x"></em>
+
+                        </div>
+                        <div class="col-xs-8 pv-lg bg-grey-200">
+
+
+                            <now format="EEEE" class="text-sm"></now>
+
+                            <now format="h:mm" class="h4 mt0"></now>
+                            <now format="a" class="text-sm"></now>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>-->
+        </div>
+        <div class="card">
+            <tabset justified="true">
+                <tab id="id4" select="tab.activeTabId = 'pendingbatch'" active="tabpendingbatch">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Pending
+                    </tab-heading>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedpendingbatch}} of {{totalpendingbatch}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadMorependingbatch(pagecount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchpendingbatch" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="table" class="table hover table-striped ">
+
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th width="1%" style="display:none;">
+                                            S.No
+                                        </th>
+                                        <th width="10%">
+                                            URN
+                                        </th>
+                                        <th width="20%">Customer Name</th>
+                                        <th width="5%">No Of Documents</th>
+                                        <th width="10%">File Ref No.</th>
+                                        <th width="11%">File Created Date</th>
+                                        <th width="10%">Filed By</th>
+                                        <th width="15%">File Stamp Ref No.</th>
+                                        <th width="10%" align="center">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in pendingbatch_list| filter : searchpendingbatch" ng-style="data.redespatch_flag=='Y'?{'background-color':'#F1BCB1'}:{}">
+                                        <td style="display:none;">
+                                            {{$index+1}}
+                                        </td>
+                                        <td data-title="URN">{{data.customer_urn}}</td>
+                                        <td data-title="Customer Name'">{{data.customer_name}}</td>
+                                        <td data-title="'No Of Documents'">{{data.tagged_document}}</td>
+                                        <td data-title="'File Ref No.'">{{data.fileref_no}}</td>
+                                        <td data-title="'File Date'" width="5px">{{data.batched_on}}</td>
+                                        <td data-title="'Filled By''">{{data.batch_by}}</td>
+                                        <td data-title="'Stamp Ref No.'">
+                                            <form name="stampform" id="stampform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                                                <input ng-model="data.stampref_no" tabindex="0" maxlength="512"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" />
+                                            </form>
+
+                                        </td>
+                                        <td data-title="'Action'" class="nowrap">
+                                            <button title="Update Stamp Ref No" ng-disabled="stampform.$invalid" ng-click="UpdateStamp(data.sanction_gid,data.stampref_no)" class="btn btn-success">
+                                                <i class="fa fa-arrow-circle-up"></i>
+                                            </button>
+                                            <button title="Document 360" ng-click="pendingBatch360(data.sanction_gid)" class="btn btn-pink">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Update BarCode No" ng-click="UpdateBarCode(data.sanction_gid)" class="btn btn-success">
+                                                <em class="fa fa-pencil-square-o"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </tab>
+
+                <tab id="id1" select="tab.activeTabId = 'batch'" active="tabbatch">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Batch
+                    </tab-heading>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+
+                                        <button title="Create Box" class="btn btn-info btn-sm"
+                                                ng-click="createBox()">
+                                            <em class="fa fa-plus"></em>&nbsp;Create Box&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchbatch" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="pull-right">
+                                    <a title="Color Indicates" style="background-color:#F1BCB1;" class="ng-binding ng-scope label">
+                                        <em class="fa"></em>
+                                    </a>&nbsp;<lable> - Color Indicates for File are Received</lable>
+                                    <button type="button" title="Import Batch" class="btn btn-default bg-blue-600 btn-sm" style="height:30px" ng-click="importbatch()">
+                                        <span>
+                                            <i class="fa fa-file-excel-o"></i><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                        </span><b> Batch</b>
+                                    </button>
+                                 </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row" ng-show="IsCreateBox">
+                            <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <span class="btn-label">
+                                            <i class="fa fa-plus"></i>
+                                        </span>Create Box
+
+                                        <div class="pull-right ">
+                                            <span class="btn-label btn-danger">
+                                                <i class="fa fa-close" title="Close" ng-click="boxclose()"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body bg-gray-lighter">
+                                        <div class="pd-sm-10">
+                                            <form name="boxform" id="boxform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Internal Box Ref No. </label>
+                                                            <br />
+                                                            <label style="color:indigo;"><strong>Auto Generated</strong> </label>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Carton Box Ref No.&nbsp;<span style="color:red">*</span></label>
+                                                            <br />
+                                                            <input ng-model="box.stampref_no" tabindex="0" maxlength="128"
+                                                                   required aria-required="true" aria-invalid="true"
+                                                                   class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Boxed Date &nbsp;<span style="color:red">*</span></label>
+                                                            <p class="input-group">
+                                                                <input type="text" datepicker-popup="{{dp.format}}" ng-model="box.BoxedDate" is-open="dp.openBox"
+                                                                       datepicker-options="dp.dateOptions" ng-required="true"
+                                                                       close-text="Close" class="form-control" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" ng-click="dp.calenderBox($event)" class="btn btn-default">
+                                                                        <em class="fa fa-calendar"></em>
+                                                                    </button>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label class="col-form-label">Box BarCode No&nbsp;</label>
+                                                            <br />
+                                                            <input ng-model="box.barcoderef_no" tabindex="0" maxlength="128"
+                                                                   aria-required="true" aria-invalid="true"
+                                                                   class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                                        <div class="col-lg-12">
+                                                            <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                                                            <textarea ng-model="box.boxRemarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div>
+                                                    <div class="text-center">
+                                                        <a class="btn btn-success" ng-click="BoxSubmit()" ng-disabled="boxform.$invalid">
+                                                            <em class="fa fa-check"></em>
+                                                            <span>Submit</span>
+                                                        </a>
+                                                        <button ng-click="boxclose()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table ng-table="table" class="table hover table-striped ">
+
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th width="1%" style="display:none;">
+                                            S.No
+                                        </th>
+                                        <th width="8%">
+                                            Check All <br>
+                                            <input type="checkbox" id="c2" ng-model="all" ng-change="checkallBatch(all);">
+                                        </th>
+                                        <th width="10%">
+                                            URN
+                                        </th>
+                                        <th width="20%">Customer Name</th>
+                                        <th width="5%">No Of Documents</th>
+                                        <th width="10%">File Ref No.</th>
+                                        <th width="11%">File Created Date</th>
+                                        <th width="10%">Filed By</th>
+                                        <th width="15%">File Stamp Ref No.</th>
+                                        <th width="10%" align="center">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in batch_list| filter : searchbatch" ng-style="data.redespatch_flag=='Y'?{'background-color':'#F1BCB1'}:{}">
+                                        <td style="display:none;">
+                                            {{$index+1}}
+                                        </td>
+                                        <td align="center">
+                                            <input type="checkbox" id="c1"
+                                                   value={{data.checked}} ng-disabled="data.stampref_no=='' || data.barcoderef_no==''" ng-model="data.checked">
+                                        </td>
+                                        <td data-title="URN">{{data.customer_urn}}</td>
+                                        <td data-title="Customer Name'">{{data.customer_name}}</td>
+                                        <td data-title="'No Of Documents'">{{data.tagged_document}}</td>
+                                        <td data-title="'File Ref No.'">{{data.fileref_no}}</td>
+                                        <td data-title="'File Date'" width="5px">{{data.batched_on}}</td>
+                                        <td data-title="'Filled By''">{{data.batch_by}}</td>
+                                        <td data-title="'Stamp Ref No.'">
+                                            <form name="stampform" id="stampform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                                                <input ng-model="data.stampref_no" tabindex="0" maxlength="512"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" />
+                                            </form>
+
+                                        </td>
+                                        <td data-title="'Action'" class="nowrap">
+                                            <button title="Update Stamp Ref No" ng-disabled="stampform.$invalid" ng-click="UpdateStamp(data.sanction_gid,data.stampref_no)" class="btn btn-success">
+                                                <i class="fa fa-arrow-circle-up"></i>
+                                            </button>
+                                            <button title="Document 360" ng-click="gotoBatch360(data.sanction_gid)" class="btn btn-pink">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                            <button title="Update BarCode No" ng-click="UpdateBarCode(data.sanction_gid)" class="btn btn-success">
+                                                <em class="fa fa-pencil-square-o"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </tab>
+                <tab id="id2" select="tab.activeTabId ='box'" active="tabbox" ng-click="tabclick(tab.activeTabId)">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Box
+                    </tab-heading>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+
+                                        <button title="Create Despatch" class="btn btn-info btn-sm"
+                                                ng-click="createDespatch()">
+                                            <em class="fa fa-plus"></em>&nbsp;Create Despatch
+                                        </button>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchbox" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row" ng-show="IsCreate">
+                                <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <span class="btn-label">
+                                                <i class="fa fa-plus"></i>
+                                            </span>Create Despatch
+
+                                            <div class="pull-right ">
+                                                <span class="btn-label btn-danger">
+                                                    <i class="fa fa-close" title="Close" ng-click="close()"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body bg-gray-lighter">
+                                            <div class="pd-sm-10">
+                                                <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Despatch Ref No. &nbsp;<span style="color:red">*</span></label>
+                                                                <br />
+                                                                <input ng-model="user.stampref_no" tabindex="0" maxlength="45"
+                                                                       required aria-required="true" aria-invalid="true"
+                                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Despatched Date &nbsp;<span style="color:red">*</span></label>
+                                                                <p class="input-group">
+                                                                    <input type="text" datepicker-popup="{{dp.format}}" ng-model="user.txtDespatchDate" is-open="dp.openDespatch"
+                                                                           datepicker-options="dp.dateOptions" ng-required="true"
+                                                                           close-text="Close" class="form-control" />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" ng-click="dp.calenderDespatch($event)" class="btn btn-default">
+                                                                            <em class="fa fa-calendar"></em>
+                                                                        </button>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Vendor </label>
+                                                                <br />
+                                                                <label ng-model="user.vendorName" style="color:brown;">Crown</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Vendor Contact Person &nbsp;<span style="color:red">*</span></label>
+                                                                <br />
+                                                                <input ng-model="user.contactPerson" tabindex="0" maxlength="128"
+                                                                       required aria-required="true" aria-invalid="true"
+                                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Mobile No &nbsp;<span style="color:red">*</span></label>
+                                                                <br />
+                                                                <input ng-model="user.mobileNo" tabindex="0" maxlength="13" type="number" ng-change="mobile()"
+                                                                       required aria-required="true" aria-invalid="true"
+                                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                            </div>
+
+
+                                                            <div class="col-lg-4">
+                                                                <label class="col-form-label">Despatched By &nbsp;<span style="color:red">*</span></label>
+                                                                <br />
+                                                                <input ng-model="user.DespatchedBy" tabindex="0" maxlength="128"
+                                                                       required aria-required="true" aria-invalid="true"
+                                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                                                <!--<select id="cboemployee" name="cboemployee" chosen="" ng-options="m.employee_name for m in employee_list"
+                                                                        ng-model="cboemployee" class="chosen-select form-control" required>
+                                                                    <option value=""> ---Select Despatched By--- </option>
+                                                                </select>-->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-lg-12 col-sm-12">
+
+                                                            <div class="col-lg-12">
+                                                                <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                                                                <textarea ng-model="user.despatchRemarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                <button type="button" ng-click="FileShow()" class="btn btn-info btn-xs">
+                                                                    <span class="icon icon-cloud-upload"></span>&nbsp;&nbsp;Upload File
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div ng-show="DivFile">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>Document Title</label>&nbsp;<span style="color:red">*</span>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <input type="text" ng-model="user.txtdocument_title" rows="1" tabindex="0" min="0" aria-required="true"
+                                                                           aria-invalid="true" class="form-control" maxlength="512" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>File Upload</label>
+                                                                </div>
+
+                                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                    <input type="file" id="commonupload" ng-model="despatchdocument"
+                                                                           onchange="angular.element(this).scope().despatchdocumentupload(this.files, angular.element(this).scope().despatchdocumentupload, this.name)"
+                                                                           data-classbutton="btn btn-default" multiple data-classinput="form-control inline" data-button-text="Select"
+                                                                           accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped table-secondary">
+                                                                        <thead class="bg-gray text-white">
+                                                                            <tr width="100%">
+                                                                                <th align="center" scope="col">S.No</th>
+                                                                                <th align="center" scope="col">Document Name</th>
+                                                                                <th align="center" scope="col">Document Title</th>
+                                                                                <th align="center" scope="col">Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in uploaddocument" width="100%">
+                                                                                <td scope="col" title="'S.No'">{{$index+1}}</td>
+                                                                                <td align="left" scope="col" title="'Document Name'">{{data.document_name}}</td>
+                                                                                <td align="left" scope="col" title="'Document Title'">{{data.document_title}}</td>
+                                                                                <td align="left" scope="col" data-title="'Action'">
+                                                                                    <button title="Download Document" ng-click="downloadsdocument(data.document_path,data.document_name)" class="btn btn-info">
+                                                                                        <em class="fa fa-download"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                    </button>
+                                                                                    <button title="Delete Document" ng-click="deletedocument(data.conversationdocument_gid)" class="btn btn-danger">
+                                                                                        <em class="fa fa-close"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                    <div>
+                                                        <div class="text-center">
+                                                            <a class="btn btn-success" ng-click="DespatchSubmit()" ng-disabled="documentAddform.$invalid">
+                                                                <em class="fa fa-check"></em>
+                                                                <span>Submit</span>
+                                                            </a>
+                                                            <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="table-responsive">
+                                        <table ng-table="tableParams2" class="table hover table-striped ">
+
+                                            <thead>
+                                                <tr class="bg-primary text-white">
+                                                    <th width="1%" style="display:none;">
+                                                        S.No
+                                                    </th>
+                                                    <th width="8%">Check All <br /> <input type="checkbox" id="c4" ng-model="allBox" ng-change="checkallBox(allBox);" /></th>
+
+                                                    <th width="10%">Internal Box Ref No.</th>
+                                                    <th width="10%">Carton Box Ref No.</th>
+                                                    <th width="10%">Carton Boxed Date</th>
+                                                    <th width="10%">File Count</th>
+                                                    <th width="10%"> Box BarCode No</th>
+                                                    <th width="10%">Created Date</th>
+                                                    <th width="10%">Carton Box In-charge</th>
+
+                                                    <th width="10%" align="center">
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in box_list| filter : searchbox">
+                                                    <td style="display:none">
+                                                        {{$index+1}}
+                                                    </td>
+                                                    <td align="center">
+                                                        <input type="checkbox" id="c3"
+                                                               value={{data.checked}} ng-change="change()" ng-model="data.checked">
+                                                    </td>
+                                                    <td data-title="Carton Box Ref No.">{{data.cartonboxref_no}}</td>
+                                                    <td data-title="Stamp Ref No.">{{data.stampref_no}}</td>
+                                                    <td data-title="'Carton Boxed Date'">{{data.cartonboxed_date}}</td>
+                                                    <td align="center" data-title="'No Of Batch'">{{data.tagged_count}}</td>
+                                                    <td data-title="'Box BarCode No'">{{data.boxbarcoderef_no}}</td>
+                                                    <td data-title="Created Date'">{{data.created_date}}</td>
+                                                    <td data-title="'Carton Boxed By''">{{data.created_by}}</td>
+                                                    <td data-title="'Action'" align="center">
+                                                        <button title="Document 360" ng-click="gotoBox360(data.cartonbox_gid)" class="btn btn-pink">
+                                                            <em class="fa fa-retweet"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </tab>
+                <tab id="id3" select="tab.activeTabId = 'despatch'" active="tabdespatch">
+                    <tab-heading>
+                        <em class="fa fa-calendar fa-1x"></em>
+                        Despatch
+                    </tab-heading>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedDespatch}} of {{totalDespatch}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-click="loadMoreDespatch(pagecount)">Load More</button>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchdespatch" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <table ng-table="tableParams2" class="table hover table-striped ">
+
+                                <thead>
+                                    <tr class="bg-primary text-white">
+                                        <th width="1%" style="display:none;">
+                                            S.No
+                                        </th>
+                                        <th width="10%">Despatch Ref No</th>
+                                        <th width="15%">Despatch Stamp Ref No.</th>
+                                        <th width="25%">Despatched Details</th>
+                                        <th width="10%">Boxes Despatched</th>
+                                        <th width="10%">Vendor</th>
+                                        <th width="10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in despatch_list| filter : searchdespatch | limitTo:totalDisplayed">
+                                        <td style="display: none;">
+                                            {{$index+1}}
+                                        </td>
+                                        <td data-title="Despatch Box Ref No." align="center">{{data.despatchref_no}}</td>
+                                        <td data-title="Stamp Ref No." align="center">{{data.stampref_no}}</td>
+                                        <td data-title="Despatched Details'" align="center">
+                                            {{data.desptached_by}} On {{data.despatch_date}} <br />
+                                            <strong>Despatched to : </strong>{{data.contact_person}}
+                                        </td>
+                                        <td data-title="'Boxes Despatched'" align="center">{{data.tagged_count}}</td>
+
+                                        <td data-title="'Vendor'" align="center">{{data.vendor_name}}</td>
+
+                                        <td data-title="'Action'" align="center">
+                                            <button title="Document 360" ng-click="gotoDespatch360(data.despatch_gid)" class="btn btn-pink">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </tab>
+            </tabset>
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/updatebarcodenumberpopup.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-pencil-square-o"></em>&nbsp; Edit BarCode</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="updatebarcodenumberform" id="updatebarcodenumberform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <label class="text-center text-primary">{{customer_urn}} / {{customername}}</label>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label class="col-form-label">BarCode No&nbsp;<span style="color:red">*</span></label>
+                        <br />
+                        <input ng-model="barcoderef_no" tabindex="0" maxlength="128"
+                               required aria-required="true" aria-invalid="true"
+                               class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                    </div>
+                </div>
+                <br /> <br />
+                <div clas="row">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="update()" ng-disabled="updatebarcodenumberform.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Update</span>
+                        </a>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/importBatch.html">
+        <div class="modal-header bg-blue-600 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-blue-600">
+                    <em class="fa fa-plus"></em>
+                    Import Batch
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <a ng-click="exportbatchreport()" style="font-size: 13px;">
+                                            <b> Click here to download </b>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                    <div class="col-md-3 col-lg-3 col-sm-3">
+                                        <label> Upload Excel : </label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <input type="file" id="fileimport" ng-model="test_document"
+                                               onchange="angular.element(this).scope().uploadbatch(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-sm-3">
+                                        <button title="Upload Excel" ng-click="uploadExcelBatch()" class="btn btn-info">
+                                            <em class="icon-cloud-upload"></em>
+                                        </button>
+                                        <span>
+                                            <button title="Cancel Upload" ng-click="uploadExcelCancel()" class="btn btn-danger">
+                                                <i class="fa icon-close"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

@@ -1,0 +1,142 @@
+﻿<h3>
+    Create Collateral
+</h3>
+<div ng-controller="createCollateral" class="ball-clip-rotate">
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .panel-scroll {
+            max-height: 120px;
+            overflow: auto;
+        }
+    </style>
+    <div id="panelDemo8" class="panel panel-success ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE COLLATERAL
+        </div>
+
+        <div class="panel-body">
+            <form novalidate="" id="userform" name="userform" ng-submit="form.submitTransfer()" autocomplete="off" class="form-validate mb-lg">
+                <div class="modal-body" style="padding-right:40px;">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="col-lg-12">
+                                <label>Customer *</label>
+                                <!--<select id="customer_name" name="customer" dropzone="" ng-model="customer" class="mda-form-control" ng-change="onselectedchangecustomer(customer)" required="">
+                                    <option value="">-----Select Customer----</option>
+                                    <option data-ng-repeat="data in customer_list" value="{{data.customer_gid}}">{{data.customername}} </option>
+                                </select>-->
+                                <input type="text" name="customer" id="customer" ng-model="customer" required
+                                       ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+
+                                <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                    <li class="list-group-item" ng-repeat="m in customer_list"
+                                        ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                                </ul>
+
+                                <label style="color:red;">{{message}}</label>
+                            </div>
+                           
+
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="col-lg-5">
+                                <label>Security Type *</label>
+                                <select id="security_type" name="security_type" dropzone="" ng-model="security_type" class="mda-form-control" required="" size="1">
+                                    <option value="">-----Select Security Type----</option>
+                                    <option data-ng-repeat="data in security_data" value="{{data.securitytype_gid}}">{{data.security_type}} </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2">
+
+                            </div>
+                            <div class="col-lg-5">
+                                <label>Account Status *</label>
+                                <select name="account_status" id="account_status" dropzone="" ng-model="account_status" required="" class="mda-form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched" size="1">
+                                    <option value="">-----Select Account Status----</option>
+                                    <option value="Live">Live</option>
+                                    <option value="Closed">Closed</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="col-lg-12">
+
+                                <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                    <label for="input_13">Security Description * </label>
+                                    <textarea ng-model="security_description" required rows="2" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                </md-input-container>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="table-responsive">
+                                    <table class="row-border hover" id="statictable">
+                                        <thead>
+                                            <tr class="bg-success text-white">
+                                                <th width="3%">&nbsp;&nbsp;<input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);"> </th>
+                                                <th>S.NO</th>
+                                                <th>LOAN REF NO</th>
+                                                <th>LOAN TITLE</th>
+                                                <th>SANCTION REF NO</th>
+                                                <th>SANCTION DATE</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in loan">
+                                                <td>
+                                                    &nbsp;
+                                                    <input type="checkbox" id="c1"
+                                                           value={{data.value}} ng-model="data.checked">
+                                                </td>
+                                                <td data-title="'S.No'">{{$index+1}}</td>
+                                                <td data-title="'LOAN REF NO'">{{data.label}}</td>
+                                                <td data-title="'LOAN TITLE'">{{data.title}}</td>
+                                                <td data-title="'SANCTION REF NO'">{{data.sanction_refno}}</td>
+                                                <td data-title="'SANCTION DATE'">{{data.sanction_date}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12 ">
+                            <div class="col-lg-12">
+                                <div class="ng-scope">
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-md" ng-click="collateralSubmit()" ng-disabled="userform.$invalid"><i class="fa fa-arrow-circle-right"></i> &nbsp;&nbsp;Submit</button>
+                                        <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+</form>
+
+        </div>
+    </div>
+</div> 

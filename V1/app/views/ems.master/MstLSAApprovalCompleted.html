@@ -1,0 +1,218 @@
+﻿<h3>
+    LSA Management
+</h3>
+<div ng-controller="MstLSAApprovalCompletedcontroller">
+    <div class="panel">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>Approval Completed Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="maker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{MakerPendingCount -- MakerFollowUpCount}}</b></div>
+                        <b style="font-size: 14px;"> Maker </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="checker()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{CheckerPendingCount -- CheckerFollowUpCount}}</b></div>
+                        <b style="font-size: 14px;"> Checker </b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="approval()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{ApproverPendingCount}}</b></div>
+                        <b style="font-size: 14px;">Approval</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="approvalcompleted()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{CompletedCount}}</b></div>
+                        <b style="font-size: 14px;">Approval Completed</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+
+                </div>
+            </div>
+        </div>
+        <div class="row panel-body">
+            <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <tabset justified="true">
+                        <tab ng-click="LSACompletedSummary()">
+                            <tab-heading>
+                                LSA Completed <label style="font-size:11px;" class="label label-info pull-right"><!--{{CompletedCount}}--></label>
+                            </tab-heading>
+                            <div class="table-responsive">
+                                <table datatable="ng" class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="text-white nowrap" style="background-color:#09385f;">
+                                            <th class="nowrap"> S.No </th>
+                                            <th class="nowrap"> Application Number</th>
+                                            <th class="nowrap"> Customer Name </th>
+                                            <th class="nowrap"> CC Approved Date </th>
+                                            <th class="nowrap"> Sanction Ref No </th>
+                                            <th class="nowrap"> LSA Ref No </th>
+                                            <th class="nowrap" align="center">Status</th>
+                                            <th class="nowrap"> Type </th>
+                                            <th class="text-center nowrap">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in LSAApproverSummary" ng-switch="data.overall_lsastatus">
+                                            <td data-title="'S.No'"> {{$index +1}} </td>
+                                            <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                            <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                            <td data-title="'CC Approved Date'"> {{data.ccapproved_date}} </td>
+                                            <td data-title="'Sanction Ref No'"> {{data.sanction_refno}} </td>
+                                            <td data-title="'LSA Ref No'"> {{data.lsa_refno}} </td>
+                                            <td data-title="'Status'">
+                                                <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                                <label class="label label-warning" ng-switch-when='Approval Pending' style="font-size:10px;">Approval Pending</label>
+                                                <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                                <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                                <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.enhancement_flag=='Y'">
+                                                <label class="label label-success" style="font-size:10px;">Enhancement </label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.enhancement_flag=='N'">
+                                                <label class="label label-primary" style="font-size:10px;"> New </label>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <button title="View" ng-click="view(data.application_gid)" class="btn btn-info">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <button title="Approval 360" ng-click="maker_process(data.application_gid,data.application2sanction_gid,'Y')" class="btn btn-success">
+                                                    <em class="fa fa-check-square-o"></em>
+                                                </button>
+                                                <button title="PDF" class="btn btn-danger" ng-click="LSApdf(data.generatelsa_gid)" tabindex="0">
+                                                    <em class="fa fa-file-pdf-o"></em>
+                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+                        <tab ng-click="ReinitiateEligible()">
+                            <tab-heading>
+                                Reinitiate Eligible<label style="font-size:11px;" class="label label-info pull-right"><!--{{CompletedCount}}--></label>
+                            </tab-heading>
+                            <div class="table-responsive">
+                                <table datatable="ng" class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="text-white nowrap" style="background-color:#09385f;">
+                                            <th class="nowrap"> S.No </th>
+                                            <th class="nowrap"> Application Number</th>
+                                            <th class="nowrap"> Customer Name </th>
+                                            <th class="nowrap"> CC Approved Date </th>
+                                            <th class="nowrap"> Sanction Ref No </th>                                           
+                                            <th class="nowrap" align="center">Status</th>
+                                            <th class="nowrap"> Type </th>
+                                            <th class="text-center nowrap">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in LSAApproverSummary" ng-switch="data.overall_lsastatus">
+                                            <td data-title="'S.No'"> {{$index +1}} </td>
+                                            <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                            <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                            <td data-title="'CC Approved Date'"> {{data.ccapproved_date}} </td>
+                                            <td data-title="'Sanction Ref No'"> {{data.sanction_refno}} </td>                                            
+                                            <td data-title="'Status'">
+                                                <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                                <label class="label label-warning" ng-switch-when='Approval Pending' style="font-size:10px;">Approval Pending</label>
+                                                <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                                <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='Y'">
+                                                <label class="label label-pink" style="font-size:10px;"> Renewal </label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.enhancement_flag=='Y'">
+                                                <label class="label label-success" style="font-size:10px;">Enhancement </label>
+                                            </td>
+                                            <td data-title="'Application Type'" ng-if="data.renewal_flag=='N' && data.enhancement_flag=='N'">
+                                                <label class="label label-primary" style="font-size:10px;"> New </label>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <button title="View" ng-click="view(data.application_gid)" class="btn btn-info">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <button title="Approval 360" ng-click="maker_process(data.application_gid,data.application2sanction_gid,'Y')" class="btn btn-success">
+                                                    <em class="fa fa-check-square-o"></em>
+                                                </button>
+                                                <button title="PDF" class="btn btn-danger" ng-click="LSApdf(data.generatelsa_gid)" tabindex="0">
+                                                    <em class="fa fa-file-pdf-o"></em>
+                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                </button>
+                                                <button title="Reinitiate LSA" ng-click="reinitiate_lsa(data.generatelsa_gid)" ng-disabled="data.reinitiate_eligibleflag=='N'" class="btn btn-info" style="background-color:#0828c7;">
+                                                    <em class="icon-refresh"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+
+                    </tabset>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+            </div>
+        </div>
+       
+
+        <br />
+    </div>
+        <script type="text/ng-template" id="/closedContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="icon icon-share-alt"></em>&nbsp;Reinitiate LSA</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="transferformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks </label><span style="color:red;">&nbsp; *</span>
+                            <textarea ng-model="reinitatelsa_remarks" style="resize:vertical;" placeholder="Enter Remarks" rows="3" class="form-control"
+                                      id="input_13" ng-trim="true" required aria-multiline="true" tabindex="0" aria-invalid="true" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="transferformsubmit.$invalid" ng-click="reinitiate_lsa()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+        </div>
+    </script>
+</div>

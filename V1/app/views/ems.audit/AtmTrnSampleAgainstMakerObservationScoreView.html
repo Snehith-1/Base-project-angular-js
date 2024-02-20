@@ -1,0 +1,552 @@
+﻿
+<style>
+    /*tbody {
+        display: block;
+        overflow: auto;
+        width: 100%;
+    }
+
+    thead tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead, tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead {
+        width: calc( 100% - 1em );
+    }*/
+
+    .tablefix {
+        overflow-x: scroll;
+        margin-right: 60px;
+        overflow-y: visible;
+        padding-bottom: 1px;
+    }
+</style>
+<h3>
+    Sample Observation Score View
+</h3>
+<div ng-controller="AtmTrnSampleAgainstMakerObservationScoreViewController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;">
+                                    <h5>{{sample_name}}</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <p style="font-size:14px;color:darkblue;"><b>Sample Observation </b></p>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <!--<th rowspan="25" style="vertical-align : middle;text-align:center; width: 5% ">S.No.</th>-->
+                                                            <!--<th> <input type="checkbox" id="c2" ng-model="all" ng-change="selectall(all) padding-top: 2px;"> Select</th>-->
+                                                            <!--<th rowspan="25" style="vertical-align : middle;text-align:center; width: 5% "><input type="checkbox" id="c2" ng-model="all" ng-change="selectall(all) padding-top: 2px;"> Select</th>-->
+                                                            <!--<th rowspan="25" style="vertical-align : middle;text-align:center; width: 10% ">Audit Department</th>
+                                                            <th rowspan="25" style="vertical-align : middle;text-align:center; width: 20% ">Audit Type</th>-->
+                                                            <th rowspan="25" style="vertical-align : middle">Checkpoint Group</th>
+                                                            <!--<th rowspan="25" style="vertical-align : middle;text-align:center; width: 5% ">Audit Name</th>-->
+                                                            <th rowspan="25" style="vertical-align : middle">Checkpoint Intent</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Disposition Details</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Risk Category</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Positive Conformity</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Auditee Information</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Note To Auditor</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Checkpoint description</th>
+
+                                                            <!--<th colspan="4" style="horizontal-align : middle;text-align:center; width: 15% ">Standard Score</th>
+                                                            <th rowspan="25" style="vertical-align : middle;text-align:center; width: 15%">Total Score</th>-->
+                                                            <th colspan="4" style="horizontal-align : middle">Captured Score</th>
+                                                            <th rowspan="25" style="vertical-align : middle">Observation Sample Checkpoint </th>
+                                                        <tr>
+                                                            <!--<th scope="col" style="vertical-align : middle;text-align:center; width: 3%">Yes</th>
+                                                            <th scope="col" style="vertical-align : middle;text-align:center; width: 3%">No</th>
+                                                            <th scope="col" style="vertical-align : middle;text-align:center; width: 3%">Partial</th>
+                                                            <th scope="col" style="vertical-align : middle;text-align:center; width: 3%">NA</th>-->
+                                                            <th scope="col" style="vertical-align : middle; width: 3%">Yes</th>
+                                                            <th scope="col" style="vertical-align : middle; width: 3%">No</th>
+                                                            <th scope="col" style="vertical-align : middle; width: 3%">Partial</th>
+                                                            <th scope="col" style="vertical-align : middle; width: 3%">NA</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr ng-repeat="data in makercheckpointobservation_list">
+
+                                                            <td data-title="'CustomerState'">{{data.checkpointgroup_name}}</td>
+
+                                                            <td data-title="'Checkpoint Intent'">{{data.checkpoint_intent}}</td>
+                                                            <td data-title="'Disposition Details'">
+                                                                <b>Yes Disposition : </b>  {{data.yes_disposition}} <br />
+                                                                <b>No Disposition : </b>  {{data.no_disposition}}  <br />
+                                                                <b>Partial Disposition : </b> {{data.partial_disposition}} <br />
+                                                                <b>NA Disposition : </b> {{data.na_disposition}}
+                                                            </td>
+                                                            <!--<td align="center">
+                                                                <em class="fa fa-info-circle" ng-click=description(data.auditcreation_gid,data.checkpoint_description) style="font-size:24px;align-content:center;"></em>
+                                                            </td>-->
+                                                            <td data-title="'created_by'">{{data.riskcategory_name}}</td>
+                                                            <td data-title="'CustomerState'">{{data.positiveconfirmity_name}}</td>
+                                                            <td data-title="'Approval Information'">
+                                                                <em class="fa fa-info-circle" ng-click=approvalinformation(data.checkpointgroupadd_gid) style="font-size:24px;align-content:center;"></em>
+                                                            </td>
+                                                            <td data-title="'CustomerName'">{{data.noteto_auditor}}</td>
+
+                                                            <td data-title="'CustomerName'">{{data.checkpoint_description}}</td>
+                                                            <!--<td data-title="'CustomerName'">{{data.yes_score}}</td>
+                                                            <td data-title="'created_by'">{{data.no_score}}</td>
+                                                            <td data-title="'CustomerState'">{{data.partial_score}}</td>
+                                                            <td data-title="'created_by'">{{data.na_score}}</td>
+                                                            <td data-title="'Total Score'">{{data.total_score}}</td>-->
+                                                            <td>
+                                                                <div class="col">
+                                                                    <label class="mda-radio">
+                                                                        <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="yesscore" ng-model="data.yes_radio" ng-click="onselected('Yes', data.auditcreation2checklist_gid,data.checklistmasteradd_gid,data.observationscoresample_gid)" value="1" disabled="" class="form-control" required />
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col">
+
+                                                                    <label class="mda-radio">
+                                                                        <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="noscore" ng-model="data.no_radio" ng-click="onselected('No',data.auditcreation2checklist_gid,data.checklistmasteradd_gid,data.observationscoresample_gid)" value="1" disabled="" class="form-control" required />
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col">
+                                                                    <label class="mda-radio">
+                                                                        <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="partialscore" ng-model="data.partialscore_radio" ng-click="onselected('Partial', data.auditcreation2checklist_gid,data.checklistmasteradd_gid,data.observationscoresample_gid)" value="1" disabled="" class="form-control" required />
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="col">
+                                                                    <label class="mda-radio">
+                                                                        <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="nascore" ng-model="data.nascore_radio" ng-click="onselected('NA', data.auditcreation2checklist_gid,data.checklistmasteradd_gid,data.observationscoresample_gid)" value="1" disabled="" class="form-control" required />
+                                                                    </label>
+                                                                </div>
+                                                            </td>
+                                                            <td align="center">
+                                                                <em class="fa fa-info-circle" ng-click=observationcheckpointsample(data.checkpointgroupadd_gid,data.auditcreation2checklist_gid,data.auditcreation_gid,data.sampleimport_gid) style="font-size:24px;align-content:center;"></em>
+                                                            </td>
+                                                            <!--<td data-title="'Action'" class="nowrap">
+
+                                                                <button title="Observation Remarks" ng-click="observationremarks(data.auditcreation2checklist_gid, data.auditcreation_gid);" class="btn btn-pink">
+                                                                    <em class="fa fa-file"></em>
+                                                                </button>
+
+                                                                <button title="Checkpoint" ng-click="observationquery(data.checkpointgroupadd_gid,data.auditcreation2checklist_gid, sampleimport_gid,auditcreation_gid);" class="btn btn-green">
+                                                                    <em class="icon-check"></em>
+                                                                </button>
+
+                                                            </td>-->
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label><strong>Percentage </strong> <span style="color:red">*</span></label>
+                                                <input type="text" readonly ng-model="txt_percent" style="text-align:right;" tabindex="0" class="form-control" required placeholder="0" />
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label><strong> Total Score </strong> <span style="color:red">*</span></label>
+                                                <input type="text" readonly ng-model="txt_overallscore" style="text-align:right;" tabindex="0" class="form-control" required placeholder="0" />
+                                            </div>
+                                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <label><strong>Observation Score </strong> <span style="color:red">*</span></label>
+                                                <input type="text" readonly ng-model="txttotal_score" style="text-align:right;" tabindex="0" class="form-control" required placeholder="0" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="text-center">
+                            <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </div>
+                    <!--<div class="row" ng-show="!makersaveapprove">
+                        <div class="text-center">
+                            <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                        </div>
+                    </div>-->
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script type="text/ng-template" id="/checkpointintent.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span> Check Point Intent
+            </h4>
+        </div>
+        <div class="modal-body">
+            <br>
+            <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+                {{txtcheckpointintent}}
+            </div>
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="/notetoauditor.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-eye "></i>
+                </span>Note To Auditor
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="dd-handle ng-scope">
+                <!--<div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <label> Checkpoint Description : </label>
+                        <br />
+                        <p> {{txtcheckpointdescription}} </p>
+                    </div>
+                </div>
+                <hr />-->
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <label> Noteto Auditor : </label>
+                        <br />
+                        <p> {{txtnotetoauditor}} </p>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/raisequery.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-comment-o"></em>&nbsp;Raise Query</h2>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="raisequery" id="raisequery" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label> Sample Name : </label>&nbsp;<span> {{txtsample_name}} </span>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label"> Query Title </label> <span style="color:red"> *</span>
+                            <br />
+                            <input ng-model="txtquery_title" type="text" tabindex="0" required
+                                   aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                        </div>
+                    </div>
+
+                    <div class="row" style="display:none;">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <label>Query To </label>
+                            <br />
+                            <select name="approvalperson" id="approvalperson" chosen="" ng-options="m.employee_name for m in cboemployee_list"
+                                    ng-model="cboqueryto" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Query Description <span style="color:red">*</span></label>
+                            <br />
+                            <!--<textarea ng-model="txtquery_desc" rows="3" class="form-control" style="resize:vertical;" required
+                                      id="input_13" ng-trim="false"  aria-invalid="false" aria-multiline="true" tabindex="0" ></textarea>-->
+                            <textarea style="resize:vertical;" ng-model="txtquery_desc" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="form-control"></textarea>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="raisequery.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/warningObservation.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-info-circle"></em>&nbsp; Warning </h2>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="taguser" id="taguser" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="pd-sm-10  dd-handle">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <span style="font-size:14px;"> On proceeding to observation filing, Query cannot be raised. Would you like to proceed further ?</span>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="class">
+                        <div class="text-center">
+                            <a class="btn btn-success" ng-click="btnproceed()">
+                                <em class="fa fa-check"></em>
+                                <span>Proceed</span>
+                            </a>
+                            <a class="btn btn-danger" ng-click="ok()">
+                                <em class="icon icon-close"></em>
+                                <span>Cancel</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/observationremarksupdate.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                &nbsp;<label style="font-size:16px">Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-contents">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="observationremarks" ng-submit="form.observationremarks()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label> Remarks : <span style="color:red"></span></label>
+                                    <br />
+                                    <textarea id="txtremarks" name="txtremarks" rows="3" ng-model="txtremarks" required placeholder="Only 500 characters allowed"
+                                              maxlength="500" class="form-control"></textarea>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="text-center">
+                                <button ng-click="remark_submit()" ng-disabled="observationremarks.$invalid" class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>
+                                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div class="table-responsive" ng-show="observationremarkslog_data!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Remarks</th>
+                                    <th align="center" scope="col">Updated by</th>
+                                    <th align="center" scope="col">Updated Date</th>,
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr width="100%" ng-repeat="data in observationremarkslog_data">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.observation_remarks}}</td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}/{{data.auditor_details}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </script>
+    <script type="text/ng-template" id="/TagToDefferalEdit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px"></em>&nbsp;<label style="font-size:16px"><em class="icon icon-check"></em>&emsp; Checkpoint Verification </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <form novalidate="" name="userformsubmit" ng-submit="form.submitForm()" autocomplete="off" class="form-validate">
+                <div class="modal-body ng-scope" ui-scroll-viewport="" style="height:500px; overflow-y: auto;overflow-x: hidden;">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div>
+                                    <table class="table table-responsive">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No.</th>
+                                                <th>Checkpoint</th>
+                                                <th>Yes</th>
+                                                <th>No</th>
+                                                <th>Partial</th>
+                                                <th>NA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in checklistcheckpoint_list">
+                                                <td data-title="'S.No'"> {{$index+1}}</td>
+                                                <td data-title="'Checkpoint Intent'">{{data.checklist_name}}</td>
+                                                <td>
+                                                    <div class="col">
+                                                        <label class="mda-radio">
+                                                            <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="Yes" ng-click="onselected('Yes',data.sample2checkpoint)" ng-model="data.document_verifiedradio" value="1" disabled class="form-control" required />
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col">
+                                                        <label class="mda-radio">
+                                                            <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="No" ng-click="onselected('No',data.sample2checkpoint)" ng-model="data.tag_verifiedradio" value="1" disabled class="form-control" required />
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col">
+                                                        <label class="mda-radio">
+                                                            <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="Yes" ng-click="onselected('Partial',data.sample2checkpoint)" ng-model="data.partial_verifiedradio" value="1" disabled class="form-control" required />
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="col">
+                                                        <label class="mda-radio">
+                                                            <input type="radio" style="margin-top: -10px" name="radiodata{{data}}" id="No" ng-click="onselected('NA',data.sample2checkpoint)" ng-model="data.na_verifiedradio" value="1" disabled class="form-control" required />
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+                </div>
+
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/Approvalinformation.html">
+        <!--<div class="modal-header bg-primary">
+                    <h4 class="modal-title">
+                        <span class="btn-label bg-primary">
+                            <i class="fa fa-info-circle">&nbsp; Assigned Information</i>
+                           </span>
+                            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </h4>
+                </div>-->
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-info-circle"></i>
+                </span> Assigned Information
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <br>
+
+
+            <div class="dd-handle ng-scope">
+                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+                <hr class="space" />
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive table-bordered">
+                                <div style="max-height:200px;overflow:auto;">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th align="center" scope="col">S.No</th>
+                                                <th align="center" scope="col">Auditee Maker</th>
+                                                <th align="center" scope="col">Auditee Checker</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td align="left" scope="col" title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                <td align="left" scope="col" title="Auditee Checker'">{{data.auditeechecker_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br /><br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+</div>

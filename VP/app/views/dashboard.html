@@ -1,0 +1,614 @@
+<div ng-controller="issue">
+    <h3>
+        Dashboard
+        <small>Application Portal</small>
+    </h3>
+    <!-- START widgets box-->
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 col-md-4">
+            <!-- START widget-->
+            <div class="panel widget bg-indigo-400">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-600 pv-lg">
+                        <em class="icon-envelope fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_new}}</div>
+                        <div class="text-uppercase">New Issues</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-md-4">
+            <!-- START widget-->
+            <div class="panel widget bg-purple-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-purple-800 pv-lg">
+                        <em class="icon-envelope-open fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">
+                            {{notification.count_open}}
+                        </div>
+                        <div class="text-uppercase">Open Issues</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-cyan-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-cyan-700 pv-lg">
+                        <em class="icon-cloud-upload fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_uat}}</div>
+                        <div class="text-uppercase">UAT - Released</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-blue-grey-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-blue-grey-700 pv-lg">
+                        <em class="fa fa-comment-o fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_replycomments}}</div>
+                        <div class="text-uppercase">Reply Comments</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-teal-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-teal-800 pv-lg">
+                        <em class="fa fa-check-square-o fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_uatacknowledged}}</div>
+                        <div class="text-uppercase">UAT - Approved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-blue-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-blue-800 pv-lg">
+                        <em class="fa fa-cloud-upload fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_closed}}</div>
+                        <div class="text-uppercase">Ready To Release</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START widget-->
+            <div class="panel widget bg-brown-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-brown-600 pv-lg">
+                        <em class="icon-speech fa-3x"></em>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <div class="h2 mt0">{{notification.count_changedetails}}</div>
+                        <div class="text-uppercase">Change Details</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <!-- START date widget-->
+            <div class="panel widget">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-green pv-lg">
+                        <!-- See formats: https://docs.angularjs.org/api/ng/filter/date-->
+                        <now format="MMMM" class="text-sm"></now>
+                        <br />
+                        <now format="d" class="h2 mt0"></now>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+                        <now format="EEEE" class="text-uppercase"></now>
+                        <br />
+                        <now format="h:mm" class="h2 mt0"></now>
+                        <now format="a" class="text-muted text-sm"></now>
+                    </div>
+                </div>
+            </div>
+            <!-- END date widget    -->
+        </div>
+    </div>
+    <!-- END widgets box-->
+    <h3>
+        Issue Details
+    </h3>
+    <!--<div>
+        <button class="btn btn-success" ng-click="PopupreleaseDetails()">Create Release Request</button>
+    </div>-->
+    <!--<br />-->
+    <!-- START panel-->
+    <!--<div class="panel panel-default">-->
+        <!--<div class="panel panel-heading" ng-if="notification.count_uatacknowledged != '0'">
+            <button class="btn btn-success " ng-click="readytorelease()">Ready To Release</button>
+        </div>-->
+
+        <div class="panel">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="bg-blue-grey-400 text-white">
+                                <th>S.No</th>
+                                <th>Issue Ref No</th>
+                                <th>Issue Date</th>
+                                <th>Issue Title</th>
+                                <th>Issue Type</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="data in datas">
+                                <td>{{$index+1}}</td>
+                                <td>{{data.issue_refno}}</td>
+                                <td>{{data.issue_date}}</td>
+                                <td>{{data.issue_title}}</td>
+                                <td>{{data.issue_type}}</td>
+                                <td>{{data.priority}}</td>
+                                <td>{{data.issue_status}}</td>
+                                <td>
+                                    <button ng-click="view(data.issuetracker_gid)" title="Edit" class="btn btn-sm">
+                                        <em class="fa fa-edit"></em>
+                                    </button>
+                                    <div ng-switch="data.reply_flag">
+                                        <div ng-switch-when="Y" class="pull-right ng-binding ng-scope label label-danger">
+                                           New
+                                        </div>
+                                    </div>
+                                   <!--<div ng-switch="data.reply_flag">
+                                       <div ng-switch-when="data.reply_flag='Y'">
+                                           <div class="pull-right ng-binding ng-scope label label-danger">New</div>
+                                       </div>
+                                   </div>-->
+                                 
+                                    <!--<button title="Update Status" class="btn btn-sm btn-success " ng-click="state(data.issuetracker_gid)">
+                                        <em class="fa fa-pencil"></em>
+                                    </button>
+                                    <button title="Status Log" ng-click="statusLog(data.issuetracker_gid)" class="btn btn-sm btn-green">
+                                        <em class="fa fa-history"></em>
+                                    </button>-->
+                                    <!--<button title="Chat" hidden="hidden" ng-click="chat(data.issuetracker_gid)" class="btn btn-sm btn-pink">
+                                        <em class="fa fa-comment"></em>
+                                    </button>-->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END table-responsive-->
+    <div id="view_issuedetails" class="w3-modal">
+
+        <div class="w3-animate-zoom  panel-info w3-modal-content w3-round-large" style="width:800px;">
+            <div class="text-center w3-light-blue text-uppercase">
+                <h6><label style="font-weight:bold;padding: 13px;">View Issue Details</label></h6>
+                <big class="w3-display-topright" style="padding: 13px;" ng-click="close('view_issuedetails')">
+                    <button title="Close" class="btn btn-sm btn-outline-danger">
+                        <em class="fa fa-close" style="font-size:17px;"></em>
+                    </button>
+                </big>
+            </div>
+
+            <div class="table-responsive">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Ref no</label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_refno}}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Date </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_date}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Priority </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.priority}}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Severity </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.priority}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Title</label>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-md-8">
+                                {{viewdtl.issue_title}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                               <label style="font-weight:bold"> Issue Remarks </label>&emsp; &emsp; 
+                            
+                                {{viewdtl.issue_remarks}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="col-lg-9 col-sm-9 col-md-9">
+                            <div class="panel-info w3-modal-content">
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <div class="card-header">
+                                        <strong class="textdarkgreen">Attached Document </strong>&nbsp;&nbsp;
+                                        <span class="textdarkgreen">{{releaseapprovaldetails.issuerelease_count}}</span>
+                                        <button title="Click to View Attached Document" class="btn-outline-info" ng-click="active=!active">
+                                            <em class="fa fa-chevron-circle-down" style="font-size:14px;"></em>
+                                        </button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-body" ng-show="active">
+                                    <div class="col-lg-10 col-sm-10 col-md-10">
+                                        <div class="tab-content">
+                                            <div class="text-center" ng-if="viewdtl.docStatus != 'true'">
+                                                ---No Documents Available---
+                                            </div>
+                                            <div ng-if="viewdtl.docStatus == 'true'" class="row" style="padding: 20px;height:200px;overflow-y: auto;">
+                                                <div class="table-responsive">
+                                                    <table class="table" style="width:100%">
+                                                        <thead class="bg-blue text-white">
+                                                            <tr class="text-center">
+                                                                <td scope="col">S.No</td>
+                                                                <td scope="col">Name</td>
+                                                                <td scope="col">Download</td>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr ng-repeat="data in docdtl">
+                                                                <td class="text-center">{{$index +1}}</td>
+                                                                <td style="padding-left:10px;">{{data.document_name}}</td>
+                                                                <td class="text-center"><em class="fa fa-download" ng-click="downloads(data.document_path,data.document_name)"></em></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-8 col-md-8">
+                            <div class="panel-info w3-modal-content">
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <div class="card-header">
+                                        <strong class="textdarkblue">Issue Status Log</strong>&nbsp;&nbsp;
+                                        <span class="textdarkblue">{{releaseapprovaldetails.dependency_count}}</span>
+                                        <button title="Click to View Issue Status Log" class="btn-outline-info" ng-click="dependency=!dependency">
+                                            <em class="fa fa-chevron-circle-down" style="font-size:14px;"></em>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body" ng-show="dependency">
+                                    <div class="col-lg-10 col-sm-10 col-md-10">
+                                        <div class="tab-content">
+                                            <div class="table-responsive">
+                                                <table class="table" style="width:100%;">
+                                                    <thead class="bg-blue text-white">
+                                                        <tr class="text-center">
+                                                            <th scope="col">S.No</th>
+                                                            <!--<th scope="col">Issue Ref No</th>-->
+                                                            <!--<th scope="col">Issue Date</th>-->
+                                                            <!--<th scope="col">Issue Title</th>-->
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Remarks</th>
+                                                            <th scope="col">Reply Comments</th>
+                                                            <th scope="col">Created On </th>
+                                                            <th scope="col">Created by</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr ng-repeat="data in issuestatuslog">
+                                                            <td>{{$index+1}}</td>
+                                                            <!--<td>{{data.issue_refno}}</td>-->
+                                                            <!--<td>{{data.issue_date}}</td>-->
+                                                            <!--<td>{{data.issue_title}}</td>-->
+                                                            <td>{{data.issue_status}}</td>
+                                                            <td>{{data.issue_remarks}}</td>
+                                                            <td>{{data.reply_comments}}</td>
+                                                            <td>{{data.created_date}}</td>
+                                                            <td>{{data.created_by}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-8 col-sm-8 col-md-8">
+                            <div class="panel-info w3-modal-content">
+                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                    <div class="card-header">
+                                        <strong class="textcrimson">Update Issue Status</strong>&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="tab-content col-lg-10 col-sm-10 col-md-10">
+                                            <form name="statusform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                                <div class="panel-body text-left ">
+                                                    <label>Status *</label>
+                                                    <select name="issueStatus" ng-model="issueStatus" class="form-control" size="1" required>
+                                                        <option value="">----- Select Status ----</option>
+                                                        <!--<option value="Acknowledged">Acknowledged</option>
+                                                        <option value="Work-In-Progress">Work-In-Progress</option>
+                                                        <option value="Testing">Testing</option>
+                                                        <option value="UAT">UAT</option>-->
+                                                        <option value="Issue - Acknowledged">Issue - Acknowledged</option>
+                                                        <option value="DEV - Unable to Re-produce">DEV - Unable to Re-produce</option>
+                                                        <option value="DEV - In-Progress">DEV- In-Progress</option>
+                                                        <option value="Test - WIP">Test- WIP</option>
+                                                        <option value="Test - Approved">Test- Approved </option>
+                                                        <option value="Test - Rejected">Test- Rejected</option>
+                                                        <option value="UAT - Ready to Release"> UAT- Ready to Release</option>
+                                                        <option value="UAT - Released"> UAT- Released </option>
+                                                        <!--<option value="Release- Plan">Release- Plan</option>
+                                                        <option value="Release- CR">Release- CR</option>
+                                                        <option value="Release- Scheduled">Release- Scheduled</option>-->
+                                                    </select>
+                                                </div>
+                                                <div class="panel-body text-left ">
+                                                    <label>Remarks *</label>
+                                                    <textarea class="form-control" name="StatusRemarks" ng-model="StatusRemarks" required></textarea>
+                                                </div>
+                                                <div class="panel-body text-left ">
+                                                    <label>Done by *</label>
+                                                    <input type="text" ng-model="DoneBy" name="DoneBy" class="form-control" maxlength="256" required />
+                                                </div>
+                                                <div class="w3-center">
+                                                    <button class="btn btn-success " ng-disabled="statusform.$invalid" ng-click="updateStatus(viewdtl.issuetracker_gid)">Submit</button>
+                                                    <button class="btn btn-warning " ng-click="close('view_issuedetails')">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="viewIssue" class="w3-modal">
+        <div class="w3-animate-zoom  panel-info w3-modal-content w3-round-large" style="width:500px;">
+            <div class="text-center w3-light-green">
+                <h5><label style="font-weight:bold;padding: 15px;">View Issue Details</label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('viewIssue')"><b>X</b></big>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label class="text-bold fa-font">Issue Ref no</label>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                        {{viewdtl.issue_refno}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label>Issue Title</label>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                        {{viewdtl.issue_title}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label>Issue Remarks</label>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                        {{viewdtl.issue_remarks}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label>Priority</label>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                        {{viewdtl.priority}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-4 col-md-4">
+                        <label>Issue Date</label>
+                    </div>
+                    <div class="col-lg-8 col-sm-8 col-md-8">
+                        {{viewdtl.issue_date}}
+                    </div>
+                </div>
+                <div ng-if="viewdtl.docStatus == 'true'" class="row w3-bar w3-round w3-lime text-center" style="margin: auto">
+                    Attached Documents
+                </div>
+                <div class="text-center" ng-if="viewdtl.docStatus != 'true'">
+                    ---No Documents Available---
+                </div>
+                <div ng-if="viewdtl.docStatus == 'true'" class="row" style="padding: 20px;height:200px;overflow-y: auto;">
+                    <div class="table-responsive">
+                        <table class="table table-condensed" style="width:100%">
+                            <thead class="header">
+                                <tr class="text-center">
+                                    <td style="width:10%;">S.No</td>
+                                    <td style="width:60%;">Name</td>
+                                    <td style="width:30%">Download</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="data in docdtl">
+                                    <td class="text-center">{{$index +1}}</td>
+                                    <td style="padding-left:10px;">{{data.document_name}}</td>
+                                    <td class="text-center"><em class="fa fa-download" ng-click="downloads(data.document_path,data.document_name)"></em></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--<div id="statusLog" class="w3-modal">
+        <div class="w3-animate-zoom panel-info w3-modal-content w3-round-large" style="width:750px;">
+            <div class="text-center w3-light-green">
+                <h5><label style="font-weight:bold;padding: 15px;">Issue Status Log</label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('statusLog')"><b>X</b></big>
+            </div>
+            <div>
+                <div class="table-responsive">
+                    <table ng-table="issueTable" class="table" style="width:100%;">
+                        <thead>
+                            <tr class="text-center">
+                                <th style="width:10%;">S.No</th>
+                                <th style="width:10%;">Issue Ref No</th>
+                                <th style="width:10%;">Issue Date</th>
+                                <th style="width:20%;">Issue Title</th>
+                                <th style="width:20%;">Status</th>
+                                <th style="width:15%;">Remarks</th>
+                                <th style="width:15%;">Created On </th>
+                                <th style="width:25%;">Created by</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="data in data">
+                                <td>{{$index+1}}</td>
+                                <td>{{data.issue_refno}}</td>
+                                <td>{{data.issue_date}}</td>
+                                <td>{{data.issue_title}}</td>
+                                <td>{{data.issue_status}}</td>
+                                <td>{{data.issue_remarks}}</td>
+                                <td>{{data.created_date}}</td>
+                                <td>{{data.created_by}}</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>-->
+    <div id="status" class="w3-modal">
+
+        <div class="w3-animate-zoom panel-info w3-modal-content w3-round-large" style="width:400px;">
+            <div class="text-center w3-light-green text-uppercase">
+                <h5><label style="font-weight:bold;padding: 15px;">Update Issue Status </label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('status')"><b>X</b></big>
+            </div>
+            <form name="statusform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="panel-body text-left ">
+                    <label>Status *</label>
+                    <select name="issueStatus" ng-model="issueStatus" class="form-control" size="1" required>
+                        <option value="Acknowledged">Acknowledged</option>
+                        <option value="Work-In-Progress">Work-In-Progress</option>
+                        <option value="Testing">Testing</option>
+                        <option value="UAT">UAT</option>
+
+                    </select>
+                </div>
+                <div class="panel-body text-left ">
+                    <label>Remarks *</label>
+                    <textarea class="form-control" name="StatusRemarks" ng-model="StatusRemarks" required></textarea>
+                </div>
+                <div class="panel-body text-left ">
+                    <label>Done by *</label>
+                    <input type="text" ng-model="DoneBy" name="DoneBy" class="form-control" maxlength="256" required />
+                </div>
+                <div class="panel-footer w3-center">
+                    <button class="btn btn-success " ng-disabled="statusform.$invalid" ng-click="updateStatus()">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div id="chatIssue" class="w3-modal">
+        <div class="w3-animate-right panel-info w3-modal-content w3-round-large" style="width:500px;">
+            <div class="text-center w3-blue text-uppercase">
+                <h5><label style="font-weight:bold;padding: 15px;">Issue Chat</label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('chatIssue')"><b>X</b></big>
+            </div>
+            <div id="scrollbody" class="panel-body" style="max-height: 350px;overflow-y: auto;min-height:300px;">
+                <ul ng-class="'timeline'" ng-repeat="data in chatdtl">
+                    <li data-datetime="{{data.dates}}" class="timeline-separator"></li>
+                    <!-- START timeline item-->
+                    <li ng-repeat="datas in data.Chatdtl" ng-class="{'timeline-inverted' : datas.vendor_text!=''}">
+                        <div class="timeline-badge" ng-class="{'primary' : datas.vendor_text!='','success': datas.onprimise_text !=''}">
+                            <em class="fa fa-user"></em>
+                        </div>
+                        <div class="timeline-panel">
+                            <div class="popover" ng-class="{'right' : datas.vendor_text!='','left': datas.onprimise_text !=''}">
+                                <div class="arrow"></div>
+                                <div class="popover-content">
+                                    <p>{{datas.onprimise_text != '' ? datas.onprimise_text : datas.vendor_text}}<small ng-class="{'w3-display-bottomright' :datas.onprimise_text !='' ,'w3-display-bottomleft' : datas.vendor_text!=''}" style="padding-right: 10px;">Time {{datas.response_time}}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <input style="width:90%;margin:auto;" name="sendText" type="text" class="text-gray-darker" ng-model="sendText" placeholder="Type your Text here..." />
+                <button class="btn btn-success btn-circle" ng-click="logsend(sendText)"><em class="fa fa-send"></em></button>
+            </div>
+        </div>
+    </div>
+<!--</div>-->

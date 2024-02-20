@@ -1,0 +1,311 @@
+﻿<h3>
+    LAN Waiver Master
+</h3>
+<div ng-controller="MstLANWaiverSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add LAN Waiver" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="addlanwaiver()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add LAN Waiver
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <!--Summary-->
+
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"class="text-center"> S.No </th>
+                                    <th> One API Code  </th>
+                                    <th> LAN Waiver Code  </th>
+                                    <th> LAN Waiver Name </th>
+                                    <th class="text-center"> Description </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th>Status</th>
+                                    <th class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in lanwaiver_list">
+                                    <td data-title="'S.No'" style="display:none;"class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'One API Code '">{{data.api_code}}</td>
+                                    <td data-title="'LAN Waiver Code '">{{data.lanwaiver_code}}</td>
+                                    <td data-title="'LAN Waiver Name'">{{data.lanwaiver_name}}</td>
+                                    <td align="center">
+                                        <em class="fa fa-question-circle" ng-click=description(data.description) style="font-size:24px;align-content:center;"></em>
+                                    </td>
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td data-title="'Status'" ng-switch="data.Status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" ng-switch="data.Status">
+
+                                        <button title="Edit" ng-hide="lsoneapipage=='OneApi'"ng-click="editlanwaiver(data.lanwaiver_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Active' ng-click="Status_update(data.lanwaiver_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Inactive' ng-click="Status_update(data.lanwaiver_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-hide="lsoneapipage=='OneApi'"ng-click="delete(data.lanwaiver_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <!--Add-->
+
+
+    <script type="text/ng-template" id="/addlanwaiver.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add LAN Waiver
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addlanwaiver" ng-submit="form.addlanwaiver()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label class="col-form-label"> LAN Waiver Code  </label> <span style="color:red">*</span>
+                                    <br />
+                                    <input type="text" ng-model="txtlanwaiver_code" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <br />
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <label> LAN Waiver Name &nbsp;<span style="color:red">*</span></label>
+                                    <input ng-model="txtlanwaiver_name" required="" maxlength="255"
+                                           tabindex="1" aria-required="true" aria-invalid="true" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <br />
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtdescription" style="resize:vertical;" rows="3" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Description  </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addlanwaiver.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <!--EDIT-->
+
+    <script type="text/ng-template" id="/editlanwaiver.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit LAN Waiver
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editlanwaiver" ng-submit="form.editlanwaiver()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group">
+                                    <label>LAN Waiver Code  <span style="color:red">*</span> </label>
+                                    <input ng-model="lanwaivercodeedit" tabindex="0" aria-required="true"
+                                           aria-invalid="true" class="form-control" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                                <div class="mda-form-group">
+                                    <label class="col-form-label"> LAN Waiver Name <span style="color:red">*</span> </label>
+                                    <input type="text" ng-model="txteditlanwaiver_name" required tabindex="0" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                                <div class="mda-form-group">
+                                    <textarea ng-model="txteditdescription" style="resize:vertical;" rows="2" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Description </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="editlanwaiver.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <!--Showpopover-->
+
+    <script type="text/ng-template" id="/description.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span> Description
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div style="white-space: pre-wrap;">
+                &nbsp;&nbsp;{{description}}
+            </div>
+            <div align="center">
+                <button ng-click="back()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+        </div>
+    </script>
+
+    <!--Status-->
+
+    <script type="text/ng-template" id="/statuslanwaiver.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statuslanwaiver" ng-submit="form.statuslanwaiver()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="row ">
+                                        <br />
+                                        <div class="col-sm-4 col-sm-4 col-sm-4">
+                                            <label> LAN Waiver Name </label>
+                                        </div>
+                                        <div class="col-sm-8 col-sm-8 col-sm-8">
+                                            {{txteditlanwaiver_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Status  </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" />
+                                            <span class="fa fa-circle"></span> Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks <span style="color:red;">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statuslanwaiver.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="lanwaiverinactivelog_data!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in lanwaiverinactivelog_data" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}} </td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

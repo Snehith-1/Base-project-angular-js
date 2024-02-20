@@ -1,0 +1,706 @@
+﻿
+
+<style>
+    .buttonz
+    {
+        background-color:#ffddcc;
+         padding: 18px 10px;
+        text-align: center;
+        text-decoration: double;
+    }
+    .button {
+        padding: 18px 10px;
+        text-align: center;
+        text-decoration: double;
+    }
+      @keyframes glowing {
+          0% {
+              background-color: #e64d00;
+              box-shadow: 0 0 5px #ff5500;
+      }
+    50% {
+        background-color: #ff7733;
+    box-shadow: 0 0 20px #ff9966;
+    }
+    100% {
+        background-color: #ffbb99;
+    box-shadow: 0 0 5px #ffeee6;
+    }
+    }
+      .button {
+        animation: glowing 2000ms infinite;
+      }
+      
+</style>
+<h3>
+    Activity Management
+</h3>
+<div ng-controller="osdTrnTicketManagement">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="col-lg-2 col-sm-2 col-md-2">
+
+            </div>
+            <div class="col-lg-8 col-sm-8 col-md-8">
+
+            </div>
+            <div class="col-lg-2 col-sm-2 col-md-2">
+                <a style="background-color:#edb9b9;" class="ng-binding ng-scope label label-pink">
+                    <em class="fa"></em>
+                </a>&nbsp;<label> - Color Indicates Reopen Cases</label>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-indigo-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-indigo-500 pv-lg">
+                        <div class="h4 mt0">{{count_newticket}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Allotted</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-info">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-info-dark pv-lg">
+                        <div class="h4 mt0">{{count_transferticket}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>Work In Progress</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-purple-300">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-purple-500 pv-lg">
+                        <div class="h4 mt0">{{forward_count}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div> External Transfer </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-6">
+
+            <div class="panel widget bg-success">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-success-dark pv-lg">
+                        <div class="h4 mt0">
+                            {{count_completedticket}}
+                        </div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div> Completed </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12">
+
+            <div class="panel widget bg-teal-500">
+                <div class="row row-table">
+                    <div class="col-xs-4 text-center bg-teal-700 pv-lg">
+                        <div class="h4 mt0">{{count_closedticket}}</div>
+                    </div>
+                    <div class="col-xs-8 pv-lg">
+
+                        <div>
+                            Closed
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div ng-show="old" class="col-lg-2 col-md-6 col-sm-12">
+            <!-- START date widget-->
+            <div class="panel widget buttonz">
+                <div class="row row-table">
+                    <a href="#/app/OsdTrnBankAlertManagementSummary" style="text-align:center;font-family:Arial;font-size:medium">Bank Alert</a>
+                </div>
+            </div>
+
+        </div>
+        <div ng-show="new" class="col-lg-2 col-md-6 col-sm-12 ">
+            <!-- START date widget-->
+            <div class="panel widget button">
+                <div class="row row-table">
+                    <a href="#/app/OsdTrnBankAlertManagementSummary" style="text-align:center;font-family:Arial;font-size:medium">New Bank Alert</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel">
+        <tabset justified="true">
+            <!--Allotted Activity-->
+            <tab ng-click="new_ticket()" select="tab.activateTabId = 'New'" active="tabnew">
+                <tab-heading title="Allotted Tickets">
+                    <em class="fa fa-user fa-1x"></em> &nbsp; Allotted &nbsp;
+                    <label class="label label-primary">{{count_newticket}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="allotedform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayednew}} of {{totalnew}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Show <input ng-model="pagecountnew" id="pagecountnew" type="text" name="pagecountnew" maxlength="5" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="loadmorenew" ng-disabled="!pagecountnew" style="text-align:left;"
+                                            ng-click="loadMorenew(pagecountnew)">
+                                        Load More
+                                    </button>
+                                    <div ng-messages="allotedform.pagecountnew.$dirty && allotedform.pagecountnew.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtnew" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>Request Ref No</th>
+                                    <th>Raised On / By</th>
+                                    <th>Raised Department</th>
+                                    <th>Activity Name</th>
+                                    <th>Request Title</th>
+                                    <th>Assigned Team</th>
+                                    <th>Assigned To</th>
+                                    <th>Request Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in servicerequestdtl|filter:searchtxtnew|limitTo:totalDisplayednew" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                                    <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                                    <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                                    <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                                    <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                                    <td data-title="'Request Title'">{{data.request_title}}</td>
+                                    <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                                    <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                                    <td data-title="'Request Status'">{{data.request_status}}</td>
+                                    <td class="text-nowrap" data-title="'Action'">
+                                        <button title="View" ng-click="viewNew(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <button title="Transfer Allocation" class="btn bg-pink-400"
+                                                ng-click="TransferAllocation(data.servicerequest_gid, data.assigned_team, data.assigned_to,data.assigned_membergid,data.assigned_supportteamgid)">
+                                            <em class="fa fa-external-link text-white"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+        <!--Work In Progress--> 
+            <tab ng-click="workinprogress_ticket()" select="tab.activateTabId = 'Workin-Progress'" active="tabworkinprogressticket">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em>&nbsp; Work In Progress &nbsp;
+                    <label class="label label-primary">{{count_transferticket}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="workinprogressform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedworkinprogress}} of {{totalworkinprogress}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Show <input ng-model="pagecountworkinprogress" id="pagecountworkinprogress" type="text" name="pagecountworkinprogress" maxlength="5" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="loadmoreworkinprogress" ng-disabled="!pagecountworkinprogress" style="text-align:left;"
+                                            ng-click="loadmoreworkinprogress(pagecountworkinprogress)">
+                                        Load More
+                                    </button>
+                                    <div ng-messages="workinprogressform.pagecountworkinprogress.$dirty && workinprogressform.pagecountworkinprogress.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtworkinprogress" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>Request Ref No</th>
+                                    <th>Raised On / By</th>
+                                    <th>Raised Department</th>
+                                    <th>Activity Name</th>
+                                    <th>Request Title</th>
+                                    <th>Assigned Team</th>
+                                    <th>Assigned To</th>
+                                    <th>Request Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in workinprogressdtl|filter:searchtxtworkinprogress|limitTo:totalDisplayedworkinprogress" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                                    <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                                    <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                                    <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                                    <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                                    <td data-title="'Request Title'">{{data.request_title}}</td>
+                                    <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                                    <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                                    <td data-title="'Request Status'">{{data.request_status}}</td>
+                                    <td class="text-nowrap" data-title="'Action'">
+                                        <button title="View" ng-click="viewWorking(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <button title="Transfer Allocation" class="btn bg-pink-400"
+                                                ng-click="TransferAllocationwithRemarks(data.servicerequest_gid, data.assigned_team, data.assigned_to, data.assigned_membergid, data.assigned_supportteamgid)">
+                                            <em class="fa fa-external-link text-white"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+       
+            <!--Forward-->
+            <tab ng-click="forward_ticket()" select="tab.activateTabId = 'Forward-Ticket'" active="tabforwardticket">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em>&nbsp; External Transfer &nbsp;
+                    <label class="label label-primary">{{forward_count}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="forwardform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedforwardacivity}} of {{totalforwardactivity}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Show <input ng-model="pagecountforward" id="pagecountforward" type="text" name="pagecountforward" maxlength="5" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="loadmoreforward" ng-disabled="!pagecountforward" style="text-align:left;"
+                                            ng-click="loadMoreforwardactivity(pagecountforward)">
+                                        Load More
+                                    </button>
+                                    <div ng-messages="forwardform.pagecountforward.$dirty && forwardform.pagecountforward.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtforward" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>Request Ref No</th>
+                                    <th>Raised On / By</th>
+                                    <th>Raised Department</th>
+                                    <th>Activity Name</th>
+                                    <th>Request Title</th>
+                                    <th>Assigned Team</th>
+                                    <th>Assigned To</th>
+                                    <th>External Transfer To</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in forwardactivitysummary|filter:searchtxtforward|limitTo:totalDisplayedforward" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                                    <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                                    <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                                    <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                                    <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                                    <td data-title="'Request Title'">{{data.request_title}}</td>
+                                    <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                                    <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                                    <td data-title="'External Transfer To'">{{data.forward_to}}</td>
+                                    <td class="text-nowrap" data-title="'Action'">
+                                        <button title="View" ng-click="viewforward(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <!--<button title="Transfer Allocation" class="btn bg-success btn-sm"
+                                                ng-click="TransferAllocationwithRemarks(data.servicerequest_gid)">
+                                            <em class="fa fa-external-link text-white"></em>
+                                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+
+            <!--Completed Tickets-->
+            <tab ng-click="completed_ticket()" select="tab.activateTabId = 'Completed'" active="tabcompleted">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em>&nbsp; Completed  &nbsp;
+                    <!--<label class="label label-primary" ng-if="count_completedticket != '0''">--><label class="label label-primary">{{count_completedticket}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="completedform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedcompleted}} of {{totalcompleted}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Show <input ng-model="pagecountcompleted" id="pagecountcompleted" type="text" name="pagecountcompleted" maxlength="5" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="loadmorecompleted" ng-disabled="!pagecountcompleted" style="text-align:left;"
+                                            ng-click="loadMorecompleted(pagecountcompleted)">
+                                        Load More
+                                    </button>
+                                    <div ng-messages="completedform.pagecountcompleted.$dirty && completedform.pagecountcompleted.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtcompleted" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th>Request Ref No</th>
+                                    <th>Raised On / By</th>
+                                    <th>Raised Department</th>
+                                    <th>Activity Name</th>
+                                    <th>Request Title</th>
+                                    <th>Assigned Team</th>
+                                    <th>Assigned To</th>
+                                    <th>Request Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in completeddtl|filter:searchtxtcompleted|limitTo:totalDisplayedcompleted" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                                    <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                                    <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                                    <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                                    <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                                    <td data-title="'Request Title'">{{data.request_title}}</td>
+                                    <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                                    <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                                    <td data-title="'Request Status'">{{data.request_status}}</td>
+                                    <td class="text-nowrap" data-title="'Action'">
+                                        <button title="View" ng-click="viewCompleted(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <!--Closed Tickets-->
+            <tab ng-click="closed_ticket()" select="tab.activateTabId = 'Closed'" active="tabclosed">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em>&nbsp; Closed / Rejected &nbsp;
+                    <!--<label class="label label-primary" ng-if="count_closedticket != '0''">--><label class="label label-primary">{{count_closedticket}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="closedform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayedclosed}} of {{totalclosed}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Show <input ng-model="pagecountclosed" id="pagecountclosed" type="text" name="pagecountclosed" maxlength="5" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="loadmoreclosed" ng-disabled="!pagecountclosed" style="text-align:left;"
+                                            ng-click="loadMoreclosed(pagecountclosed)">
+                                        Load More
+                                    </button>
+                                    <div ng-messages="closedform.pagecountclosed.$dirty && closedform.pagecountclosed.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxtclosed" placeholder="Search Here .."
+                                               class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+
+                                    <th>Request Ref No</th>
+                                    <th>Raised On / By</th>
+                                    <th>Raised Department</th>
+                                    <th>Activity Name</th>
+                                    <th>Request Title</th>
+                                    <th>Assigned Team</th>
+                                    <th>Assigned To</th>
+                                    <th>Request Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in closeddtl|filter:searchtxtclosed|limitTo:totalDisplayedclosed" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                                    <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                                    <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                                    <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                                    <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                                    <td data-title="'Request Title'">{{data.request_title}}</td>
+                                    <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                                    <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                                    <td data-title="'Request Status'">{{data.request_status}}</td>
+                                    <td class="text-nowrap" data-title="'Action'">
+                                        <button title="View" ng-click="viewClosed(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+
+    <script type="text/ng-template" id="/transferallocationmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Transfer Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Team <span style="color:red">*</span></label>
+
+                            <select chosen="" ng-options="m as m.team_name for m in supportdtllist track by m.supportteam_gid"
+                                    ng-model="cbosuppport_team" class="chosen-select form-control" required ng-change="onselectedchangeteam(team_name)"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer To <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen=""
+                                    ng-options="m.employee_name for m in teammembers_list track by m.employee_gid" required
+                                    ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="transferlist">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Team</th>
+                                            <th align="center" scope="col">Assigned Member</th>
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in transferlistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_to}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="teamSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/transferallocationwithremarksmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Transfer Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Team <span style="color:red">*</span></label>
+                            <select chosen="" ng-options="m as m.team_name for m in supportdtllist track by m.supportteam_gid"
+                                    ng-model="cbosuppport_team" class="chosen-select form-control" required ng-change="onselectedchangeteam(team_name)"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer To <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen=""
+                                    ng-options="m.employee_name for m in teammembers_list track by m.employee_gid" required
+                                    ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea ng-model="team_description" placeholder="Enter Remarks" rows="3" maxlength="1000" class="form-control" required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="transferlist">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Team</th>
+                                            <th align="center" scope="col">Assigned Member</th>
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in transferlistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_to}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="teamSubmitremarks()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

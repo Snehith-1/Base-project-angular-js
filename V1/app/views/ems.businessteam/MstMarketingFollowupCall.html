@@ -1,0 +1,196 @@
+<h3>
+   Add Leads
+</h3>
+<div ng-controller="MstMarketingFollowupCallController">
+    <button type="button" class="btn btn-info button-sm" ng-click="addinbound()" title="Add Leads">
+        <span class="btn-label">
+            <i class="fa fa-plus"></i>
+        </span>
+        Add Leads
+    </button>
+    <br><br>
+    <div class="panel">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;"><b>Follow-up Leads Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="unassignedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{unassignedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Unassigned Leads</b>
+                    </button>
+                    <br />
+                </div>
+
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="assignedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{assignedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Assigned Leads</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="completedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{completedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Converted Leads</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="followupcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);  background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{followupcall_count}}</b></div>
+                        <b style="font-size: 14px;">Follow-up Leads</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="closedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{closedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Rejected Leads</b>
+                    </button>
+                    <br />
+                </div>
+            </div>
+        </div>
+             <!--  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                 
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="rejectedcall()" style="width:100%;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{rejectedcall_count}}</b></div>
+                        <b style="font-size: 14px;">Rejected Leads</b>
+                    </button>
+                    <br />
+                </div>
+            </div>
+        </div>-->
+        <div class="row">
+            <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Lead Number</th>
+                                    <th> Lead Name</th>
+                                    <th> Lead Request Type</th>
+                                    <th> Lead Received Date</th>
+                                    <th> Origination </th> 
+                                    <th> Follow-up By </th>
+                                    <th> Follow-up Date </th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in ibcall_list">
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'Lead Number'"> {{data.ticket_refid}}</td>
+                                    <td data-title="'Lead Name'"> {{data.caller_name}}</td>
+                                    <td data-title="'Lead Request Type'"> {{data.leadrequesttype_name}}</td>
+                                    <td data-title="'Call Received Date'"> {{data.callreceived_date}}</td>
+                                    <td data-title="'Origination'"> {{data.origination}} </td> 
+                                    <td data-title="'Follow Up By'"> {{data.followup_by}} </td>
+                                    <td data-title="'Follow Up Date'"> {{data.followup_date}} </td>
+                                    <td align="center">
+                                        <button title="View" ng-click="view(data.marketingcall_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye "></em>
+                                        </button>
+                                        <button title="Transfer" ng-click="transfer(data.marketingcall_gid)" class="btn btn-pink">
+                                            <em class="fa fa-external-link text-white"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <script type="text/ng-template" id="/transferContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="icon icon-share-alt"></em>&nbsp;Transfer</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="transferformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+                    <div class="row ">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Lead Number</label>
+                            <br />
+                            {{ticket_refid}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Assign To </label><br>
+                            {{assignemployee_name}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer To </label><span style="color:red;">&nbsp; *</span><br>
+                            <select name="transfer_to" id="transfer_to" chosen="" ng-options="m.employee_gid as m.employee_name for m in TransferEmployeeList"
+                                   maxlength="255" ng-model="cboTransferTo" class="chosen-select form-control" required></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            
+                            <label>Remarks </label><span style="color:red;">&nbsp; *</span>
+                            <textarea ng-model="transfer_remarks" style="resize:vertical;" placeholder="Enter Remarks" rows="3" class="form-control"
+                                      id="input_13" ng-trim="true" required aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="transferformsubmit.$invalid" ng-click="transfer_call()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="table-responsive">
+                <div style="max-height:300px;overflow:auto;">
+                    <table class="table table-striped table-secondary">
+                        <thead class="bg-gray text-white">
+                            <tr width="100%">
+                                <th align="center" scope="col">S.No</th>
+                                <th align="center" scope="col">Transfer From</th>
+                                <th align="center" scope="col">Transfer To</th>
+                                <th align="center" scope="col">Allotted By</th>
+                                <th align="center" scope="col">Transfer Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in ibcalltransfer_list" width="100%">
+                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                <td align="left" scope="col" title="Transfer From">{{data.transferfrom_name}}</td>
+                                <td align="left" scope="col" title="Transfer To'">{{data.transferto_name}}</td>
+                                <td align="left" scope="col" title="Allotted By'">{{data.transfer_by}}</td>
+                                <td align="left" scope="col" title="Transfer Date'">{{data.transfer_date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,214 @@
+<h3>
+    CC - Schedule Meeting
+</h3>
+<div ng-controller="MstCcScheduledMeetingDtlViewController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-calendar-o"></em>&nbsp; Scheduled Meeting Details
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="color:#141478;font-size: 15px;"><b> View Schedule Meeting </b></p>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <label>CC Meeting Title </label> <br />
+                                            {{lblccmeeting_title}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>CC Meeting Number </label><br />
+                                            {{lblccmeeting_no}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>CC Meeting Date</label><br />
+                                            {{lblccmeeting_date}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>CC Meeting Mode </label><br />
+                                            {{lblccmeeting_mode}}
+                                        </div>
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <label>Meeting Time</label><br />
+                                            {{lblmeeting_time}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">                                       
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                            <label>CC Group Name</label><br />
+                                            {{lblccgroup_name}}
+                                        </div>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                            <label>Other Samunnati Users </label><br />
+                                            {{lblotheruser_name}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2" style="color:darkgray">
+                                            <label>Non Samunnati Users</label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>CC Admin</label><br />
+                                            {{lblccadmin_name}}
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            <label>Description </label><br />
+                                            <p ng-bind-html=trustAsHtml(lbldescription)></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="color:#141478;font-size: 15px;"><b> View Attendance Details </b></p>
+                                        <hr />
+                                        <div class="dd-handle ng-scope" >
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p style="font-size:15px;color:darkblue;"><b>Committee Members Attendance</b></p>
+                                                   <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr style="font-size: 13px;">
+                                                                    <th class="text-center">S.No</th>
+                                                                    <th>Group Name</th>
+                                                                    <th>Name</th> 
+                                                                    <th class="text-center">Attendance </th>  
+                                                                    <th class="text-center">Approval Status</th>                                                                   
+                                                                   </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="list in ccmember_list">
+                                                                    <td  class="text-center">{{$index+1}}</td>                                                                   
+                                                                    <td>{{list.ccgroup_name}}</td>
+                                                                    <td>{{list.CCMember_name}}</td>
+                                                                    <td class="text-center">
+                                                                        <label style="color:green" ng-show="list.attendance_status=='P'">Present</label>
+                                                                        <label style="color:red" ng-show="list.attendance_status=='A'">Absent</label> 
+                                                                    </td>  
+                                                                        <td ng-hide="list.attendance_status=='A'" class="text-center">{{list.approval_status}}
+                                                                        &nbsp;
+                                                                            <button ng-if="list.approval_status!='-'" title="View Remarks" type="button" class="btn btn-default" ng-click="cc_remarksview(list.ccmeeting2members_gid)">
+                                                                                <em class="fa fa-eye"></em>
+                                                                            </button>
+                                                                        </td> 
+                                                                        <td ng-show="list.attendance_status=='A'" class="text-center">-
+                                                                            </td> 
+                                                                    </tr>
+                                                                    
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                  
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dd-handle ng-scope" >
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p style="font-size:15px;color:darkblue;"><b>Other Samunnati User Attendance</b></p>                                                   
+                                                    <div>
+                                                    <div class="table-responsive table-bordered">
+                                                        <table class="table">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr style="font-size: 13px;">
+                                                                    <th class="text-center">S.No</th>
+                                                                    <th>Name</th>                                                                   
+                                                                    <th class="text-center">Attendance</th>
+                                                                  
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in otheruser_list">
+                                                                    <td  class="text-center">{{$index+1}}</td>                                                                   
+                                                                    <td>{{data.employee_name}}</td>
+                                                                    <td class="text-center">
+                                                                        <label style="color:green" ng-show="data.attendance_status=='P'">Present</label>
+                                                                        <label style="color:red" ng-show="data.attendance_status=='A'">Absent</label>
+                                                                    </td> 
+                                                                  
+                                                                </tr>
+                                                             
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    </div>
+                            <br />
+                            <div class="row">
+                                <br />
+                                <div class="text-center">
+                                    <button class="btn btn-info" type="button" ng-click="Back()">
+                                        <em class="fa fa-arrow-left"></em>&nbsp;&nbsp;
+                                        <span>Back</span>
+                                    </button>
+                                    <br /><br />
+                                </div>
+                            </div>
+                        
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+<script type="text/ng-template" id="/viewccremarks.html">
+    <md-toolbar>
+        <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+            <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">View Remarks</label>
+            <span flex></span>
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </div>
+    </md-toolbar>
+    <div class="modal-content">
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label style="font-size:14px;color:darkblue;"><u> Remarks : </u></label>
+                                    <br />
+                                    <p>{{lblremarks}}</p>
+                                </div>
+                            </div>
+                        </div>
+                   
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+</div>

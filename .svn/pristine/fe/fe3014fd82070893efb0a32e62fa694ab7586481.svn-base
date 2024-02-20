@@ -1,0 +1,1570 @@
+﻿<h3>
+    My Approvals
+</h3>
+<div ng-controller="myApprovalController">
+    <div >
+        <!--<div class="row ng-scope">
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <em class="fa fa-thumbs-o-up fa-5x"></em>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="text-lg">{{approvalcount.overallservice_approval}}</div>
+                                <p class="m0"> Overall Approval Pending !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="panel-footer bg-gray-dark bt0 clearfix btn-block">
+                        <span class="pull-left">Service Desk Approval</span>                      
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <em class="fa fa-thumbs-o-up fa-5x"></em>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="text-lg">{{approvalcount.overallchangemana_approval}}</div>
+                                <p class="m0">Overall Approval Pending !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="panel-footer bg-gray-dark bt0 clearfix btn-block">
+                        <span class="pull-left">CMS Approval</span>                      
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="panel bg-cyan-50">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <em class="fa fa-tasks fa-5x"></em>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="text-lg">0</div>
+                                <p class="m0">Upcoming Approval !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="panel-footer bg-gray-dark bt0 clearfix btn-block">
+                        <span class="pull-left">TMS Approval</span>                       
+                    </a>
+                </div>
+            </div>
+        </div>-->
+        <div id="panelDemo3" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" >
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; Service Desk Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo3=true" class="pull-right">
+                    <a href="#" panel-collapse="" tooltip="Expand / Collapse" ng-click="panelDemo3 = !panelDemo3" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo3" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                        <em ng-show="!panelDemo3" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo3" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-check-circle fa-1x"></em>
+                                    Department Approval &nbsp; <label class="label label-primary" ng-if="approvalcount.departmentapprovalcount != '0'">{{approvalcount.departmentapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>Raised On</th>
+                                                    <th>Ref no</th>
+                                                    <th>Category</th>
+                                                    <th>Raised By</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in departmentapproval">
+                                                    <td title="'Raised On'">{{data.complaint_date}}</td>
+                                                    <td title="'Ref no">{{data.complaint_refno}}</td>
+                                                    <td data-title="'Category'">{{data.category_name}}</td>
+                                                    <td data-title="'Raised By'">{{data.raisedfor_employee}}</td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approvalstatus}}
+                                                    </td>
+                                                    <td data-title="'Action'" sortable="'location'">
+                                                        <button ng-click="btn_viewdepartmentclick(data.serviceapproval_gid,data.lsinternalapproval)" title="view" class="btn btn-sm btn-outline-success">
+                                                            <span style="font-size:14px;" class="fa fa-eye" title="view"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-check-circle fa-1x"></em> Service Approval &nbsp;
+                                    <label class="label label-primary" ng-if="approvalcount.serviceapprovalcount != '0'">{{approvalcount.serviceapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <!-- START table responsive-->
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>Raised On</th>
+                                                    <th>Ref no</th>
+                                                    <th>Category</th>
+                                                    <th>Raised By</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in serviceapproval">
+                                                    <td title="'Raised On'">{{data.complaint_date}}</td>
+                                                    <td title="'Ref no">{{data.complaint_refno}}</td>
+                                                    <td data-title="'Category'">{{data.category_name}}</td>
+                                                    <td data-title="'Raised By'">{{data.raisedfor_employee}}</td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approvalstatus}}
+                                                    </td>
+                                                    <td data-title="'Action'" sortable="'location'">
+
+                                                        <button ng-click="btn_viewserviceclick(data.serviceapproval_gid,data.lsinternalapproval)" title="view" class="btn btn-sm btn-outline-success">
+                                                            <span style="font-size:14px;" class="fa fa-eye" title="view"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-check-circle fa-1x"></em> Management Approval &nbsp;
+                                    <label class="label label-primary" ng-if="approvalcount.managementapprovalcount != '0'">{{approvalcount.managementapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>Raised On</th>
+                                                    <th>Ref no</th>
+                                                    <th>Category</th>
+                                                    <th>Raised By</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in managementapproval">
+                                                    <td title="'Raised On'">{{data.complaint_date}}</td>
+                                                    <td title="'Ref no">{{data.complaint_refno}}</td>
+                                                    <td data-title="'Category'">{{data.category_name}}</td>
+                                                    <td data-title="'Raised By'">{{data.raisedfor_employee}}</td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approvalstatus}}
+                                                    </td>
+                                                    <td data-title="'Action'" sortable="'location'">
+
+                                                        <button ng-click="btn_viewmanagementclick(data.serviceapproval_gid)" title="view" class="btn btn-sm btn-outline-success">
+                                                            <span style="font-size:14px;" class="fa fa-eye" title="view"></span>
+                                                        </button>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History &nbsp;
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-primary-light text-white">
+                                                    <th>Raised On</th>
+                                                    <th>Ref no</th>
+                                                    <th>Category</th>
+                                                    <th>Raised By</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in historyapproval">
+                                                    <td title="'Raised On'">{{data.complaint_date}}</td>
+                                                    <td title="'Ref no">{{data.complaint_refno}}</td>
+                                                    <td data-title="'Category'">{{data.category_name}}</td>
+                                                    <td data-title="'Raised By'">{{data.raisedfor_employee}}</td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approvalstatus}}
+                                                    </td>
+                                                    <td data-title="'Action'" sortable="'location'">
+
+                                                        <button ng-click="btn_viewhistoryclick(data.serviceapproval_gid)" title="view" class="btn btn-sm btn-outline-success">
+                                                            <span style="font-size:14px;" class="fa fa-eye" title="view"></span>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="panelDemo4" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed">
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp;CMS Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo4=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo4 = !panelDemo4" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo4" class="glyphicon glyphicon-chevron-down" aria-hidden="false" ></em>
+                        <em ng-show="!panelDemo4" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" ></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo4" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Dependency Approval &nbsp;
+                                    <label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Release Ref No</th>
+                                                    <th>Target Release Date</th>
+                                                    <th>Application</th>
+                                                    <th>Vendor</th>
+                                                    <th>Release Status</th>
+                                                    <th>Approval Status</th>
+                                                    <!--<th scope="col">Created By</th>
+                                                    <th scope="col">Created Date</th>-->
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dependencyapproval">
+                                                    <td title="'Release Ref No'">{{data.ref_no}}</td>
+                                                    <td title="'Target Release Date">{{data.release_date}}</td>
+                                                    <td data-title="'Application'">{{data.application}}</td>
+                                                    <td data-title="'Vendor'">{{data.vendor_name}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.release_status}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <!--<td data-title="'Created By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Created Date'">
+                                                        {{data.created_date}}
+                                                    </td>-->
+                                                    <td>
+                                                        <button ng-click="btn_viewdependencyclick(data.release_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-check-circle fa-1x"></em> CAC Approval &nbsp;
+                                    <label class="label label-info" ng-if="approvalcount.cabapprovalcount!='0'">{{approvalcount.cabapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+
+
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th scope="col">Release Ref No</th>
+
+                                                    <th scope="col">Target Release Date</th>
+                                                    <th scope="col">Application</th>
+                                                    <th scope="col">Approval Remarks</th>
+                                                    <th scope="col">Vendor</th>
+                                                    <th scope="col">Release Status</th>
+                                                    <th scope="col">Approval Status</th>
+                                                    <!--<th scope="col">Created By</th>
+                                                    <th scope="col">Created Date</th>-->
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in cacapproval">
+                                                    <td title="'Release Ref No'">{{data.ref_no}}</td>
+                                                    <td title="'Target Release Date">{{data.release_date}}</td>
+                                                    <td data-title="'Application'">{{data.application}}</td>
+                                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                               ng-click="showPopover(data.release_gid,data.approval_remarks)">
+                                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                        </label>
+                                                    </td>
+                                                    <td data-title="'Vendor'">{{data.vendor_name}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.release_status}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    
+                                                    <!--<td data-title="'Created By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Created Date'">
+                                                        {{data.created_date}}
+                                                    </td>-->
+                                                    <td>
+                                                        <button ng-click="btn_viewcabclick(data.release_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Dependency Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th scope="col">Release Ref No</th>
+                                                    <th scope="col">Target Release Date</th>
+                                                    <th scope="col">Application</th>
+                                                    <th scope="col">Vendor</th>
+                                                    <th scope="col">Release Status</th>
+                                                    <th scope="col">Approval Status</th>
+                                                    <!--<th scope="col">Created By</th>
+                                                    <th scope="col">Created Date</th>-->
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dependencyhistory">
+                                                    <td title="'Release Ref No'">{{data.ref_no}}</td>
+                                                    <td tit
+                                                    <td title="'Target Release Date">{{data.release_date}}</td>
+                                                    <td data-title="'Application'">{{data.application}}</td>
+                                                    <td data-title="'Vendor'">{{data.vendor_name}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.release_status}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <!--<td data-title="'Created By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Created Date'">
+                                                        {{data.created_date}}
+                                                    </td>-->
+                                                    <td>
+                                                        <button ng-click="btn_viewdependencyclick(data.release_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> CAC Approval History
+                                </tab-heading>
+                                <div>
+                                    <!-- START table responsive-->
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th scope="col">Release Ref No</th>
+                                                    <th scope="col">Target Release Date</th>
+                                                    <th scope="col">Application</th>
+                                                    <th scope="col">Approval Remarks</th>
+                                                    <th scope="col">Vendor</th>
+                                                    <th scope="col">Release Status</th>
+                                                    <th scope="col">Approval Status</th>
+                                                    <!--<th scope="col">Created By</th>
+                                                    <th scope="col">Created Date</th>-->
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in cachistory">
+                                                    <td title="'Release Ref No'">{{data.ref_no}}</td>
+                                                    <td title="'Target Release Date">{{data.release_date}}</td>
+                                                    <td data-title="'Application'">{{data.application}}</td>
+                                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                               ng-click="showPopover(data.release_gid,data.approval_remarks)">
+                                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                        </label>
+                                                    </td>
+                                                    <td data-title="'Vendor'">{{data.vendor_name}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.release_status}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <!--<td data-title="'Created By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Created Date'">
+                                                        {{data.created_date}}
+                                                    </td>-->
+                                                    <td>
+                                                        <button ng-click="btn_viewcabclick(data.release_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo5" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" >
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp;Service Request Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo5=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo5 = !panelDemo5" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo5" class="glyphicon glyphicon-chevron-down" aria-hidden="false" ></em>
+                        <em ng-show="!panelDemo5" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" ></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo5" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Approval &nbsp;
+                                    <label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Release Ref No</th>
+                                                    <th>Activity Name</th>
+                                                    <th>Request Title</th>
+
+                                                    <th>Approval Requested On </th>
+                                                    <th>Approval Requested By </th>
+                                                    <th>Approval Status</th>
+                                                    
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in approvalsummarylist">
+                                                    <td title="'Release Ref No'">{{data.request_refno}}</td>
+                                                    <td title="'Target Release Date">{{data.activity_name}}</td>
+                                                    <td data-title="'Application'">{{data.request_title}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.approvalreq_date}}
+                                                    </td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.approvalreq_by}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                        
+                                                    <td>
+                                                        <button ng-click="btn_approvalclick(data.requestapproval_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th scope="col">Request Ref No</th>
+                                                    <th scope="col">Activity Name</th>
+                                                    <th scope="col">Request Title</th>
+                          
+                                                    <th scope="col">Approval Requested On</th>
+                                                    <th scope="col">Approval Requested By</th>
+                                                    <th scope="col">Approval Status</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in approvalcompletedlist">
+                                                    <td title="'Release Ref No'">{{data.request_refno}}</td>
+                                                    
+                                                    <td title="'Target Release Date">{{data.activity_name}}</td>
+                                                    <td data-title="'Application'">{{data.request_title}}</td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.approvalreq_date}}
+                                                    </td>
+                                                    <td data-title="'Release Status'">
+                                                        {{data.approvalreq_by}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="btn_approvalhistory(data.requestapproval_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo11" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo11}" class="panel-heading panel-heading-collapsed" >
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp;RH Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo11=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo11 = !panelDemo11" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo11" class="glyphicon glyphicon-chevron-down" aria-hidden="false" ></em>
+                        <em ng-show="!panelDemo11" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" ></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo11" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> RH Approval Pending Summary &nbsp;
+                                    <label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Reference No</th>                                                    
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>                                                    
+                                                    <th>Assigned RM</th>                                                                                                       
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in rhapprovalsummarylist">
+                                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                                    <td title="'Ref No'">{{data.ref_no}}</td>
+                                                    <td title="'Customer URN'">{{data.customerurn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                                    <td data-title="'Assigned RM'">{{data.assignedrmname}}</td>                                                   
+                                                    <td class="text-center">
+                                                        <button ng-click="btn_rhapprovalclick(data.bankalertrefundapprl_gid,data.bankalert2allocated_gid,data.customername,data.customerurn)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>S.No</th>
+                                                    <th>Reference No</th>                                                    
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>                                                    
+                                                    <th>Assigned RM</th>
+                                                    <th>Approval Status</th>                                                                                                        
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in rhapprovalcompletedlist">
+                                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                                    <td title="'Ref No'">{{data.ref_no}}</td>
+                                                    <td title="'Customer URN'">{{data.customerurn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                                    <td data-title="'Assigned RM'">{{data.assignedrmname}}</td>                                                   
+                                                    <td data-title="'Status' " ng-switch="data.approvalStatus">
+                                                        <label style="font-size:10px" ng-switch-when="Approved" class="label label-green"> Approved </label>                                                        
+                                                        <label style="font-size:10px" ng-switch-when="Rejected" class="label label-danger"> Rejected </label>
+                                                    </td>                                                   
+                                                    <td class="text-center">
+                                                        <button ng-click="btn_rhapprovalhistory(data.bankalertrefundapprl_gid,data.bankalert2allocated_gid,data.customername,data.customerurn)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo6" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" >
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; Waiver Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo6=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo6 = !panelDemo6" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo6" class="glyphicon glyphicon-chevron-down" aria-hidden="false" ></em>
+                        <em ng-show="!panelDemo6" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" ></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo6" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Approval &nbsp;
+                                    <label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">   
+                                                    <th>Waiver Title</th>
+                                                    <th>Waiver Category</th>
+                                                    <th>URN</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in waiverapproval_list">
+                                                    
+                                                    <td title="'Waiver Title">{{data.waiver_title}}</td>
+                                                    <td data-title="'Waiver Category'">{{data.waiver_category}}</td>
+                                                    <td data-title="'URN'">
+                                                        {{data.urn}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approval_view(data.rmpostccwaiver_gid, data.application_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">   
+                                                    <th>Waiver Title</th>
+                                                    <th>Waiver Category</th>
+                                                    <th>URN</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in waiverapprovalhistory_list">
+                                                    
+                                                    <td title="'Waiver Title">{{data.waiver_title}}</td>
+                                                    <td data-title="'Waiver Category'">{{data.waiver_category}}</td>
+                                                    <td data-title="'URN'">
+                                                        {{data.urn}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvalhistory_view(data.rmpostccwaiver_gid, data.application_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="panelDemo7" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" >
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; Deferral/Waiver/Extension Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo7=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo7 = !panelDemo7" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo7" class="glyphicon glyphicon-chevron-down" aria-hidden="false" ></em>
+                        <em ng-show="!panelDemo7" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" ></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo7" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Approval &nbsp;
+                                    <label class="label label-info" ng-if="deferralapprovallist.length!='0'">{{deferralapprovallist.length}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Vetting</th>
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <!--<th>Activity Title</th>--> 
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr ng-repeat="data in deferralapprovallist">
+                                                    <td>  
+                                                        <span ng-if="data.fromphysical_document=='N'">Softcopy </span>
+                                                        <span ng-if="data.fromphysical_document=='Y'">Original Copy</span>
+                                                    </td>
+                                                    <td title="'Activity Type'"> {{data.activity_type}} </td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                     <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <!--<td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>-->
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvaldeferral_view(data.approval_initiationgid,data.groupdocumentchecklist_gid,data.initiateextendorwaiver_gid,data.application_gid,data.fromphysical_document)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Vetting</th>
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <!--<th>Activity Title</th>-->
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in deferralcompletedapprovallist">
+                                                    <td>  
+                                                        <span ng-if="data.fromphysical_document=='N'">Softcopy </span>
+                                                        <span ng-if="data.fromphysical_document=='Y'">Original Copy</span>
+                                                    </td>
+                                                    <td title="'Activity Type'">{{data.activity_type}}</td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <!--<td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>-->
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvaldeferral_historyview(data.extendorwaiverapproval_gid,data.groupdocumentchecklist_gid,data.initiateextendorwaiver_gid,data.application_gid,data.fromphysical_document)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo8" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo4}" class="panel-heading panel-heading-collapsed">
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; Deferral Approval - Buyer SamAgro
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo8=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo8 = !panelDemo8" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo8" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                        <em ng-show="!panelDemo8" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo8" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Approval &nbsp;
+                                    <label class="label label-info" ng-if="samagrodeferralapprovallist.length!='0'">{{samagrodeferralapprovallist.length}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Vetting</th>
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Activity Title</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in samagrodeferralapprovallist">
+                                                    <td>
+                                                        <span ng-if="data.fromphysical_document=='N'">Softcopy </span>
+                                                        <span ng-if="data.fromphysical_document=='Y'">Original Copy</span>
+                                                    </td>
+                                                    <td title="'Activity Type'"> {{data.activity_type}} </td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvalsamagrodeferral_view(data.approval_initiationgid,data.application_gid,data.initiateextendorwaiver_gid,data.groupdocumentchecklist_gid,data.fromphysical_document  )" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Vetting</th>
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Activity Title</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in samagrodeferralcompletedapprovallist">
+                                                    <td>
+                                                        <span ng-if="data.fromphysical_document=='N'">Softcopy </span>
+                                                        <span ng-if="data.fromphysical_document=='Y'">Original Copy</span>
+                                                    </td>
+                                                    <td title="'Activity Type'">{{data.activity_type}}</td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvalsamagrodeferral_historyview(data.extendorwaiverapproval_gid,data.groupdocumentchecklist_gid,data.initiateextendorwaiver_gid,data.application_gid, data.fromphysical_document)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo9" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo4}" class="panel-heading panel-heading-collapsed">
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp; Deferral Approval - Supplier SamAgro
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo9=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo9 = !panelDemo9" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo9" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                        <em ng-show="!panelDemo9" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo9" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Approval &nbsp;
+                                    <label class="label label-info" ng-if="deferralapprovallist.length!='0'">{{deferralapprovallist.length}}</label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Activity Title</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in samagrosupplierdeferralapprovallist">
+                                                    <td title="'Activity Type'">{{data.activity_type}}</td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvalsamagrosupplierdeferral_view(data.extendorwaiverapproval_gid,data.groupdocumentchecklist_gid,data.initiateextendorwaiver_gid,data.application_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Approval History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="bg-info-light text-white">
+                                                    <th>Activity Type</th>
+                                                    <th>Application No</th>
+                                                    <th>Customer URN</th>
+                                                    <th>Customer Name</th>
+                                                    <th>Activity Title</th>
+                                                    <th>Initiated By </th>
+                                                    <th>Initiated Date</th>
+                                                    <th>Approval Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in samagrosupplierdeferralcompletedapprovallist">
+                                                    <td title="'Activity Type'">{{data.activity_type}}</td>
+                                                    <td title="'Application No">{{data.application_no}}</td>
+                                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                                    <td data-title="'Activity Title'">
+                                                        {{data.activity_title}}
+                                                    </td>
+                                                    <td data-title="'Initiated By'">
+                                                        {{data.created_by}}
+                                                    </td>
+                                                    <td data-title="'Initiated Date'">
+                                                        {{data.created_date}}
+                                                    </td>
+                                                    <td data-title="'Approval Status'">
+                                                        {{data.approval_status}}
+                                                    </td>
+                                                    <td>
+                                                        <button ng-click="approvalsamagrosupplierdeferral_historyview(data.extendorwaiverapproval_gid,data.groupdocumentchecklist_gid,data.initiateextendorwaiver_gid,data.application_gid)" title="View" class="btn btn-sm btn-outline-success">
+                                                            <em class="fa fa-eye" style="font-size:14px;"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelDemo10" class="panel panel-default">
+            <div ng-class="{'panel-heading-collapsed':panelDemo5}" class="panel-heading panel-heading-collapsed">
+                <em class="fa fa-thumbs-o-up text-info fa-2x"></em>&emsp;SBA Approval
+                <paneltool tool-collapse="tool-collapse" ng-init="panelDemo10=true" class="pull-right">
+                    <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo10 = !panelDemo10" class="ng-scope" tabindex="0">
+                        <em ng-show="panelDemo10" class="glyphicon glyphicon-chevron-down" aria-hidden="false"></em>
+                        <em ng-show="!panelDemo10" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true"></em>
+                    </a>
+                </paneltool>
+            </div>
+            <div collapse="panelDemo10" class="panel-wrapper collapse" style="height: 0px;">
+                <div class="panel-body">
+                    <div class="panel">
+                        <tabset justified="true">
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Institution Approval
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th> S.No </th>
+                                                    <th>SBA Auto-Generated ID </th>
+                                                    <th>Samunnati Associate Name </th>
+                                                    <th>SBA Type</th>
+                                                    <th>SBA Entity Type</th>
+                                                    <th> Status</th>
+                                                    <th> Origination</th>
+                                                    <th>Approval Initiated By</th>
+                                                    <th>Approval Initiated Date</th>
+                                                    <th>Submitted By</th>
+                                                    <th>Submitted Date</th>
+                                                    <th> TAT </th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in saOnboardSummary_list">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{data.sa_autogeneratedid}}</td>
+                                                    <td>{{data.sa_associatename}}</td>
+                                                    <td>{{data.satype_name}}</td>
+                                                    <td>{{data.saentitytype_name}}</td>
+                                                    <td>{{data.approvalstatus}}</td>
+                                                    <td>{{data.recordsource}}</td>
+                                                    <td>{{data.approvalinitiated_by}}</td>
+                                                    <td>{{data.approvalinitiated_date}}</td>
+                                                    <td>{{data.sa_updated_by}}</td>
+                                                    <td>{{data.sa_updated_date}}</td>
+                                                    <td>{{data.sa_tat}}</td>
+                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                        <button title="Approval" ng-click="saonboardingverification(data.sacontactinstitution_gid)"
+                                                                style="text-align: center;" class="btn btn-green">
+                                                            <em class="fa fa-check-square-o"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Institution Approved/Rejected History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th> S.No </th>
+                                                    <th>SBA Auto-Generated ID </th>
+                                                    <th>Samunnati Associate Name </th>
+                                                    <th>SBA Type</th>
+                                                    <th>SBA Entity Type</th>
+                                                    <th> Status</th>
+                                                    <th> Origination</th>
+                                                    <th>Approval By</th>
+                                                    <th>Approval Date</th>
+                                                    <th>Submitted By</th>
+                                                    <th>Submitted Date</th>
+                                                    <th> TAT </th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in saOnboardSummary1_list">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{data.sa_autogeneratedid}}</td>
+                                                    <td>{{data.sa_associatename}}</td>
+                                                    <td>{{data.satype_name}}</td>
+                                                    <td>{{data.saentitytype_name}}</td>
+                                                    <td>{{data.approvalstatus}}</td>
+                                                    <td>{{data.recordsource}}</td>
+                                                    <td>{{data.approved_by}}</td>
+                                                    <td>{{data.approved_date}}</td>
+                                                    <td>{{data.sa_updated_by}}</td>
+                                                    <td>{{data.sa_updated_date}}</td>
+                                                    <td>{{data.sa_tat}}</td>
+                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                        <button title="Edit" ng-click="saonboardingverificationcompleted(data.sacontactinstitution_gid)"
+                                                                style="text-align: center;" class="btn btn-info">
+                                                            <!-- <em class="fa fa-check-square-o"></em>-->
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa  fa-check-circle  fa-1x"></em> Individual Approval &nbsp;
+                                    <label class="label label-info"></label>
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th> S.No </th>
+                                                    <th>SBA Auto-Generated ID </th>
+                                                    <th>Samunnati Associate Name </th>
+                                                    <th>SBA Type</th>
+                                                    <th>SBA Entity Type</th>
+                                                    <th> Status</th>
+                                                    <th> Origination</th>
+                                                    <th>Approval Initiated By</th>
+                                                    <th>Approval Initiated Date</th>
+                                                    <th>Allocated By</th>
+                                                    <th>Allocated Date</th>
+                                                    <th>TAT</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in saOnboardSummary2_list">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{data.sa_autogeneratedid}}</td>
+                                                    <td>{{data.sa_firstname}} {{data.sa_middlename}} {{data.sa_lastname}}</td>
+                                                    <td>{{data.satype_name}}</td>
+                                                    <td>{{data.saentitytype_name}}</td>
+                                                    <td>{{data.approvalstatus}}</td>
+                                                    <td>{{data.recordsource}}</td>
+                                                    <td>{{data.approvalinitiated_by}}</td>
+                                                    <td>{{data.approvalinitiated_date}}</td>
+                                                    <td>{{data.sa_updated_by}}</td>
+                                                    <td>{{data.sa_updated_date}}</td>
+                                                    <td>{{data.sa_tat}}</td>
+
+                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                        <button title="Approval" ng-click="saonboardingverificationpending(data.sacontact_gid)"
+                                                                style="text-align: center;" class="btn btn-green">
+                                                            <em class="fa fa-check-square-o"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+
+                            <tab>
+                                <tab-heading>
+                                    <em class="fa fa-history  fa-1x"></em> Individual Approved/Rejected History
+                                </tab-heading>
+                                <div>
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped row-border">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th> S.No </th>
+                                                    <th>SBA Auto-Generated ID </th>
+                                                    <th>Samunnati Associate Name </th>
+                                                    <th>SBA Type</th>
+                                                    <th>SBA Entity Type</th>
+                                                    <th> Status</th>
+                                                    <th> Origination</th>
+                                                    <th>Approval By</th>
+                                                    <th>Approval Date</th>
+                                                    <th>Allocated By</th>
+                                                    <th>Submitted Date</th>
+                                                    <th> TAT </th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in saOnboardSummary3_list">
+                                                    <td>{{$index+1}}</td>
+                                                    <td>{{data.sa_autogeneratedid}}</td>
+                                                    <td>{{data.sa_firstname}} {{data.sa_middlename}} {{data.sa_lastname}}</td>
+                                                    <td>{{data.satype_name}}</td>
+                                                    <td>{{data.saentitytype_name}}</td>
+                                                    <td>{{data.approvalstatus}}</td>
+                                                    <td>{{data.recordsource}}</td>
+                                                    <td>{{data.approved_by}}</td>
+                                                    <td>{{data.approved_date}}</td>
+                                                    <td>{{data.sa_updated_by}}</td>
+                                                    <td>{{data.sa_updated_date}}</td>
+                                                    <td>{{data.sa_tat}}</td>
+
+                                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                        <button title="Edit" ng-click="verificationindividualcompleted(data.sacontact_gid)"
+                                                                style="text-align: center;" class="btn btn-info">
+                                                            <!--<em class="fa fa-check-square-o"></em>-->
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </tab>
+                        </tabset>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+
+        <!--<div class="panel-body" ng-hide="CMS">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 sol-md-12">
+                    <div class="col-lg-4 col-sm-4 sol-md-4">
+                        <p class="text-info">
+                            Dependency Approval
+                            &nbsp;<label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 sol-md-12">
+                    <div class="col-lg-4 col-sm-4 sol-md-4">
+                        <p class="text-info">
+                            CAC Approval
+                            &nbsp;<label class="label label-info" ng-if="approvalcount.cabapprovalcount!='0'">{{approvalcount.cabapprovalcount}}</label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 sol-md-12">
+                    <div class="col-lg-4 col-sm-4 sol-md-4">
+                        <p class="text-info">
+                            Dependency Approval History
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 sol-md-12">
+                    <div class="col-lg-4 col-sm-4 sol-md-4">
+                        <p class="text-info">
+                            CAC Approval History
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <!--<div id="panelDemo9" class="panel" ng-click="TMS=!TMS">
+            <div class="panel-heading">
+                <em class="fa fa-tasks bg-cyan-500 fa-2x"></em>&emsp; TMS Approval
+            </div>
+            <div class="panel-body" ng-hide="TMS">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 sol-md-12">
+                        <div class="col-lg-4 col-sm-4 sol-md-4">
+                            <p class="text-green">
+                                Department Head Approval
+                                &nbsp;<label class="label bg-green-light" ng-if="approvalcount.task_approval!='0'">{{approvalcount.task_approval}}</label>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="panel">
+            <div class="panel">
+                <div class="" ng-show="TMS">
+
+                    <tabset justified="true">
+                        <tab>
+                            <tab-heading>
+                                <tab-heading>
+                                    <em class=" fa fa-check-circle fa-1x"></em> Department Head Approval
+                                </tab-heading>
+                                    <div>
+                                        <!-- START table responsive-->
+                                        <div class="table-responsive">
+                                            <table datatable="ng" class="row-border hover">
+                                                <thead>
+                                                    <tr class="bg-green-light text-white">
+                                                        <th scope="col">Task Date</th>
+                                                        <th scope="col">Task Ref No</th>
+                                                        <th scope="col">Task Name</th>
+                                                        <th scope="col">Task Title</th>
+                                                        <th scope="col">Initialized By</th>
+                                                        <th scope="col">Approval Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in taskapproval">
+                                                        <td title="'Task Date'">ti>{{data.taskinitiated_date}}<</td>
+                                                        <td title="'Task Ref No">{{data.taskref_no}}</td>
+                                                        <td data-title="'Task Name'">{{data.task_name}}</td>
+                                                        <td data-title="'Task Title'">{{data.task_title}}</td>
+                                                        <td data-title="'Initialized By'">
+                                                            By{{data.taskinitialized_by}}<
+                                                            /td>
+                                                        </td>
+                                                        }<
+                                                        <td data-title="'Approval Status'">
+                                                            {{data.task_status}}
+                                                        </td>
+                                                        <td data-title="'Action'" sortable="'location'">
+                                                            <div>
+                                                                <button ng-click="btn_viewtaskdetailclick(data.trntask_gid)" title="view" class="btn btn-sm btn-outline-success">
+                                                                    <span style="font-size:14px;" class="fa fa-eye"></span>
+                                                                </button>
+                                                            </div>
+                                                            <!--<div ng-switch="data.task_status">
+                                                                <div class="w3-center" ng-switch-when="Pending">
+                                                                    <a class="btn btn-outline-success alert alert-success1" style="width:75px; height:24px;"
+                                                                       ng-click="taskapprove_click(data.trntask_gid,data.trntask2activity_gid)" >
+                                                                        <i class="fa fa-check" style="font-size:15px;">Clic</i>
+                                                                    </a>
+                                                                    <a class="btn btn-outline-danger alert alert-danger2" style="width:75px; height:24px;" ng-click="taskreject_click(data.trntask_gid,data.trntask2activity_gid)">
+                                                                        <i class="fa fa-remove" style="font-size:15px;">&nbsp;Reject</i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>-->
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- END table responsive-->
+                                    </div>
+                        </tab>
+                    </tabset>
+                </div>
+            </div>
+        </div>
+    <script type="text/ng-template" id="/showpopupModal.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#51adf6;width:2%;text-align:center;">{{application}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td data-title="'CAC_ApprovalRemarks'" style="width:2%; text-align:left"><b>CAC Approval Remarks : </b> <br />{{approval_remarks}}</td>
+                        </tr>
+                      <br />
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+</div>

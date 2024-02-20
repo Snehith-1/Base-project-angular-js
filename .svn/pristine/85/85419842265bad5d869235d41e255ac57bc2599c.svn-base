@@ -1,0 +1,413 @@
+﻿<h3>
+    Checkpoint Group
+</h3>
+<div ng-controller="AtmMstCheckpointGroupAddController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Create Checkpointgroup " class="btn btn-info btn-sm" ng-click="addCheckpointGroup()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Create Checkpoint Group 
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th> Checklist Code</th>
+                                    <th> Checklist </th>
+                                    <th> LMS Code</th>
+                                    <th> Bureau Code</th>
+                                    <th> Created By </th>
+                                    <th> Created Date </th>
+                                    <th> Status </th>
+                                     <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in checkpointgroup_data|filter:searchText|limitTo:totalDisplayed">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'Checkpoint Group Code'">{{data.checkpointgroup_code}}</td>
+                                    <td data-title="'Checkpoint Group Name'">{{data.checkpointgroup_name}} </td>
+                                    <td data-title="'LMS Code'">{{data.lms_code}}</td>
+                                    <td data-title="'Bureau Code'">{{data.bureau_code}}</td>
+                                    <td data-title="'Created By'"> {{data.created_by}} </td>
+                                    <td data-title="'Created Date'"> {{data.created_date}}</td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button type="button" class="btn btn-sm" title="Create Checkpoint"
+                                                ng-click="createchecklist(data.checkpointgroup_gid)">
+                                            <em class="icon icon-plus text-gray-dark"></em>
+                                        </button>
+                                        <button title="Edit" ng-click="editCheckpointGroup(data.checkpointgroup_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.checkpointgroup_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.checkpointgroup_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-disabled="data.auditdelete_flag == 'Y'" ng-click="delete(data.checkpointgroup_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    </div>
+    
+    <script type="text/ng-template" id="/addCheckpointGroup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Create Checkpoint Group 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="AddCheckpointGroup" ng-submit="form.AddCheckpointGroup()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="txtcheckpointgroup_code" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" disabled>
+                                <label>Checklist Code <span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="txtcheckpointgroup_name" maxlength="255" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Checklist<span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="txtlms_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>LMS Code </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <input ng-model="txtbureau_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Bureau Code </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="AddCheckpointGroup.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+    <!--<script type="text/ng-template" id="/editCheckpointGroup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Checklist 
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate=""  ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group ">
+                                <input ng-model="txteditcheckpointgroup_code" required="" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" disabled>
+                                <label>Checklist Code <span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+                                <input ng-model="txteditcheckpointgroup_name" required="" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Checklist<span style="color:red">*</span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group ">
+                                <input ng-model="txteditlms_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>LMS Code </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group">
+                                <input ng-model="txteditbureau_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Bureau Code </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div>
+
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-md"  ng-click="update()"  ng-disabled="submitForm1.$invalid"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>-->
+<script type="text/ng-template" id="/editCheckpointGroup.html">
+    <div class="modal-header bg-primary">
+        <h4 id="myModalLabel" class="modal-title">
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit"></i>
+            </span>Edit Checkpoint Group
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="pd-sm-10">
+            <form novalidate="" name="submitForm1" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group ">
+                            <input ng-model="txteditcheckpointgroup_code" required="" maxlength="20" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" Disabled>
+                            <label>Checklist Code<span style="color:red">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group ">
+                            <input ng-model="txteditcheckpointgroup_name" name="checkpoint_groupedit" required="" maxlength="255" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>Checklist<span style="color:red">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group ">
+                            <input ng-model="txteditlms_code" maxlength="30" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>LMS Code</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group ">
+                            <input ng-model="txteditbureau_code" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                            <label>Bureau Code</label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+        <div>
+            <div class="text-center">
+                <button type="button" ng-click="update(data.checkpointgroup_gid)" class="btn btn-success btn-md" ng-disabled="submitForm1.$invalid">
+                    <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                </button>&nbsp;&nbsp;
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+            </div>
+        </div>
+
+    </div>
+</script>
+
+    <script type="text/ng-template" id="/statusCheckpointGroup.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusCheckpointGroup" ng-submit="form.statusCheckpointGroup()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label> Checkpoint Group </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    {{txtcheckpointgroup_name}}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label>Status  </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                            <span class="fa fa-circle"></span> Inactive
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row ">
+                                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statusCheckpointGroup.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="checkpointgroupinactivelog_data!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in checkpointgroupinactivelog_data" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}} </td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>
+<script type="text/ng-template" id="/checkpointintent.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Intent
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtcheckpointintent}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="/checkpointdescription.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Check Point Description
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+
+        <div style="white-space: pre-wrap;width:100%; word-wrap: break-word;display: inline-block;">
+            {{txtcheckpointdescription}}
+        </div>
+
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/notetoauditor.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Note To Auditor
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtnotetoauditor}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+

@@ -1,0 +1,124 @@
+﻿<h3>
+    Deferral Management
+</h3>
+<div id="defid" ng-controller="manageDeferral">
+    <div>
+        <button type="button" title="Create Deferral" class="btn btn-success btn-sm" ng-click="popupdeferral()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE DEFERRAL
+        </button>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>ENTITY</th>
+                                    <th>BRANCH</th>
+                                    <th>CUSTOMER</th>
+                                    <th>VERTICAL</th>
+                                    <th>LOAN REF NO</th>
+                                    <th>RECORD ID</th>
+                                    <!--<th>DEFERRAL NAME</th>-->
+                                    <!--<th>CATEGORY</th>-->
+                                    <th>TRACKING TYPE</th>
+                                    <th>DEFERRAL TYPE</th>
+                                    <th>CREATED BY</th>
+                                    <th>CREATED DATE</th>
+                                    <th>DUE DATE</th>
+                                    <th>EXTENDED DATE</th>
+                                    <th>DEFERRAL STAGE</th>
+                                    <th>CHECKER STATUS</th>
+                                    <th>DEFERRAL STATUS</th>
+                                   
+                                    <th>AGING</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.checker_status" ng-repeat="data in deferral_data|filter :searchtxt|limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Entity'">{{data.entity_name}}</td>
+                                    <td data-title="'Branch'">{{data.branch_name}}</td>
+                                    <td data-title="'Customer'">{{data.customername}}</td>
+                                    <td data-title="'Customer'">{{data.vertical_code}}</td>
+                                    <td data-title="'Loan Ref No'" width="5px">{{data.loanTitle}}</td>
+                                    <td data-title="'Record Id'">{{data.record_id}}</td>
+                                    <!--<td data-title="'Deferral Name'">{{data.deferral_name}}</td>-->
+                                    <!--<td data-title="'Catagory'">{{data.deferral_catagory}}</td>-->
+                                    <td data-title="'Tracking Type'">{{data.tracking_type}}</td>
+                                    <td data-title="'Deferral Type'">{{data.deferral_name}}</td>
+                                    <td data-title="'Created Date'">{{data.Created_by}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.duedate}}</td>
+                                    <td class="nowrap" data-title="'Due Date'">{{data.extended_date}}</td>
+                                    <td data-title="'Deferral Status'">{{data.approval_status}}</td>
+                                    <td ng-switch-when="Pending" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="Approved" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="Closed" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="N/A" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td ng-switch-when="PushBack" style="color:orangered;font-weight:bold;" data-title="'Deferral Status'">{{data.checker_status}}</td>
+                                    <td data-title="'Deferral Status'">{{data.deferral_status}}</td>
+                                    
+                                    <td data-title="'Deferral Status'">{{data.aging}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Edit" ng-click="edit(data.deferral_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button title="View Details" ng-click="popupView(data.deferral_gid)" class="btn bg-light-blue-600">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                       
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END panel-->
+            </div>
+        </div>
+      
+
+
+    </div>
+</div>
+
+
+
+

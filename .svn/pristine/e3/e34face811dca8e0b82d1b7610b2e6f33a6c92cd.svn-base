@@ -1,0 +1,1174 @@
+﻿<h3>
+    Business Approval
+</h3>
+
+<div ng-controller="AgrMstApplicationCreationRMApprovalController">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);color:#ffffff">
+            <h5> Recommendations / Business Approvals </h5>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="text-primary" style="font-size:14px;"><b> Application Details - {{lblapplicant_name}}</b></p>
+                                <hr />
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Application Reference Number</label>
+                                    <br />
+                                    <p>{{lblapplref_no}}</p>
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold"> Application Region </label>
+                                    <br />
+                                    <p>{{lblappl_state}}</p>
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Overall Limit Requested</label>
+                                    <br />
+                                    <p>{{lbloveralllimit_request}}</p>
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold"> Current Application Stage </label>
+                                    <br />
+                                    <p>{{lblcurrentappl_stage}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <p class="text-primary" style="font-size:14px;"><b> Commodity Details </b></p>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#dbdddf;color:black;">
+                                                    <th class="text-center" style="width:5%;"> S.No </th>
+                                                    <th> Product Name </th>
+                                                    <th> Facility Limit </th>
+                                                    <th> Tenure Limit </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in productlist">
+                                                    <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                    <td data-title="'Product Name'"> {{data.product_name}} </td>
+                                                    <td data-title="'Facility Limit'"> {{data.facility_limit}} </td>
+                                                    <td data-title="'Tenure Limit'"> {{data.tenure_limit}} </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <p style="font-size:14px;color: #930D59;"><b><u> Business Approval Details </u></b></p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div>
+                                                <div class="dd-handle ng-scope">
+                                                    <p class="text-primary" style="font-size:14px;"><b> Approval Hierarchy Details </b></p>
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#141478;font-size: 12px;">L0 - RM</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                                {{level_zero}}
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#db2525;font-size: 13px;">L1 - DRM</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                                {{level_one}}
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#871490;font-size: 13px;">L2 - CH  </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- > </span><br />
+                                                                {{clusterhead}}
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#12574f;font-size: 13px;">L3 - RH </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- ></span><br />
+                                                                {{regionhead}}
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#f17a0b;font-size: 13px;">L4 - ZH </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- > </span><br />
+                                                                {{zonalhead}}
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                <label style="font-weight:bold;color:#ee1c62;font-size: 13px;">L5 - BVH</label><br />
+                                                                {{businesshead}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Comment Summary </b></p>
+                                                <hr />
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="text-white" style="background-color:#09385f;">
+                                                                <th class="text-center" style="width:5%;"> S.No </th>
+                                                                <th> Comment Title </th>
+                                                                <th> Comment Description </th>
+                                                                <th> Levels </th>
+                                                                <th> Created by </th>
+                                                                <th> Created on </th>
+                                                                <th> Comment Closed Remarks</th>
+                                                                <th> Action </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in comment_list">
+                                                                <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                                <td data-title="'Comment Title'"> {{data.commenttitle}} </td>
+                                                                <td data-title="'Comment Description'">
+                                                                    <button title="View Comment Description'" ng-click="view_commentdesc(data.applicationcomment_gid)" class="btn btn-info">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>
+                                                                </td>
+                                                                <td data-title="'Levels'"> L{{data.hierary_level}} </td>
+                                                                <td data-title="'Created by'"> {{data.created_by}} </td>
+                                                                <td data-title="'Created on'"> {{data.created_date}} </td>
+                                                                <td data-title="'Close Remarks'"> {{data.close_remarks}} </td>
+                                                                <td>
+                                                                    <button title="Close'" ng-show="data.commenttatus=='Open'" ng-click="comment_close(data.applicationcomment_gid)" class="btn btn-danger">
+                                                                        Close
+                                                                    </button>
+                                                                    <label ng-show="data.commenttatus!=='Open'">
+                                                                        <label class="label label-default" style="color:black;">Closed</label>
+                                                                    </label>
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Approval Summary </b></p>
+                                                <hr />
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="text-white" style="background-color:#09385f;">
+                                                                <th class="text-center" style="width:5%;"> S.No </th>
+                                                                <th class="text-center"> Levels </th>
+                                                                <th> User Name </th>
+                                                                <th class="text-center"> Approval Status </th>
+                                                                <th> Approval Remarks </th>
+                                                                <th> Approval Date </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr ng-repeat="data in approval_list">
+                                                                <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                                <td class="text-center" data-title="'Levels'">L{{data.hierary_level}} </td>
+                                                                <td data-title="'User Name'"> {{data.approval_name}} </td>
+                                                                <td class="text-center" data-title="'Approval Status'" ng-switch="data.approval_status">
+                                                                    <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                                                    <label class="label label-warning" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                                                                    <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                                                    <label class="label label-primary" ng-switch-when='Hold' style="font-size:10px;">Hold</label>
+                                                                    <label ng-switch-when='-'>-</label>
+                                                                </td>
+                                                                <td data-title="'Approval Remarks'"> {{data.approval_remarks}} </td>
+                                                                <td data-title="'Approval Date'" ng-switch="data.approval_status">
+                                                                    <p ng-switch-when='Approved'>{{data.approved_date}} </p>
+                                                                    <p ng-switch-when='Pending'>-</p>
+                                                                    <p ng-switch-when='Rejected'>{{data.rejected_date}} </p>
+                                                                    <p ng-switch-when='Hold'>{{data.hold_date}} </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <p style="font-size:14px;color: #930D59;"><b><u> Product Desk Approval Details </u></b></p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div>
+                                                        <div class="dd-handle ng-scope">
+                                                            <p class="text-primary" style="font-size:14px;"><b> Approval Hierarchy Details </b></p>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                                        <label style="font-weight:bold;color:#141478;font-size: 13px;">Product</label><br />
+                                                                        {{productdesk_name}}
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                                        <label style="font-weight:bold;color:#db2525;font-size: 13px;">Product Desk Member(s)</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                                        {{product_membername}}
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                                        <label style="font-weight:bold;color:#871490;font-size: 13px;">Product Desk Manager(s)</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp;</span><br />
+                                                                        {{product_managername}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b> Product Desk Query Assigned to RM Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th class="text-center" style="width:5%;"> S.No </th>
+                                                            <th> Query Title </th>
+                                                            <th> Query Description </th>
+                                                            <th> Query Created by </th>
+                                                            <th> Query Created on </th>
+                                                            <th> Query Closed Remarks</th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in appproductquerylist">
+                                                            <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                            <td data-title="'Query Title'"> {{data.querytitle}} </td>
+                                                            <td data-title="'Query Description'">
+                                                                <button title="View Query Description'" ng-click="view_ProductQuerydescription(data.appproductquery_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td data-title="'Created by'"> {{data.created_by}} </td>
+                                                            <td data-title="'Created on'"> {{data.created_date}} </td>
+                                                            <td data-title="'Close Remarks'"> {{data.close_remarks}} </td>
+                                                            <td>
+                                                                <button title="Close'" ng-show="data.querystatus=='Open'" ng-click="productquery_close(data.appproductquery_gid)" class="btn btn-danger">
+                                                                    Close
+                                                                </button>
+                                                                <label ng-show="data.querystatus!=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Closed</label>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b> Product Desk Query Assigned to Member Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th class="text-center" style="width:5%;"> S.No </th>
+                                                            <th> Query Title </th>
+                                                            <th> Query Description </th>
+                                                            <th> Levels </th>
+                                                            <th> Query Created by </th>
+                                                            <th> Query Created on </th>
+                                                            <th> Query Closed Remarks</th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in appmanagerquerylist">
+                                                            <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                            <td data-title="'Query Title'"> {{data.querytitle}} </td>
+                                                            <td data-title="'Query Description'">
+                                                                <button title="View Query Description'" ng-click="view_querydesc(data.appcreditquery_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td data-title="'Levels'"> L{{data.hierary_level}} </td>
+                                                            <td data-title="'Created by'"> {{data.created_by}} </td>
+                                                            <td data-title="'Created on'"> {{data.created_date}} </td>
+                                                            <td data-title="'Close Remarks'"> {{data.close_remarks}} </td>
+                                                            <td>
+
+                                                                <label ng-show="data.querystatus=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Open</label>
+                                                                </label>
+                                                                <label ng-show="data.querystatus!=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Closed</label>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p style="font-size:14px;color: #930D59;"><b><u>Product Approval Summary </u></b></p>
+                                            <hr />
+                                            <!--<div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr class="text-white" style="background-color:#09385f;">
+                    <th class="text-center" style="width:5%;"> S.No </th>
+                    <th class="text-center"> Levels </th>
+                    <th> User Name </th>
+                    <th class="text-center"> Approval Status </th>
+                    <th> Approval Remarks </th>
+                    <th> Approval Date </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in creditapproval_list">
+                    <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                    <td class="text-center" data-title="'Levels'">L{{data.hierary_level}} </td>
+                    <td data-title="'User Name'"> {{data.approval_name}} </td>
+                    <td class="text-center" data-title="'Approval Status'" ng-switch="data.approval_status">
+                        <label class="label label-info" ng-switch-when='Submitted to Approval' style="font-size:10px;">Submitted to Approval</label>
+                        <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                        <label class="label label-warning" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                        <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                        <label class="label label-primary" ng-switch-when='Hold' style="font-size:10px;">Hold</label>
+                        <label ng-switch-when='-'>-</label>
+                    </td>
+                    <td data-title="'Approval Remarks'"> {{data.approval_remarks}} </td>
+                    <td data-title="'Approval Date'" ng-switch="data.approval_status">
+                        <p ng-switch-when='Approved'>{{data.approved_date}} </p>
+                        <p ng-switch-when='Pending'>-</p>
+                        <p ng-switch-when='Rejected'>{{data.rejected_date}} </p>
+                        <p ng-switch-when='Hold'>{{data.hold_date}} </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Member Approval Details </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight:bold;color:#141478;font-size: 13px;">Product Desk Member</label><br />
+                                                            {{product_membername}}
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight: bold; color:#141478; font-size: 13px;">Member Approval Date</label> <br />
+                                                            {{productmember_approvaldate}}
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight: bold; color:#141478; font-size: 13px;">Member Approval Status</label> <br />
+                                                            {{productmember_approvalflag}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Manager Approval Details </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight:bold;color:#141478;font-size: 13px;">Product Desk Manager</label><br />
+                                                            {{product_managername}}
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight: bold; color:#141478; font-size: 13px;">Manager Approval Date</label> <br />
+                                                            {{productmanager_approvaldate}}
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight: bold; color:#141478; font-size: 13px;">Manager Approval Status</label> <br />
+                                                            {{productmanager_approvalflag}}
+                                                        </div>
+                                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                                            <label style="font-weight: bold; color:#141478; font-size: 13px;">Manager Approval Remarks</label> <br />
+                                                            {{productmanager_approvalremarks}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p style="font-size:14px;color: #930D59;"><b><u> AC Details </u></b></p>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="ng-scope dd-handle">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <p style="color:#141478;font-size: 15px;"><b> View Schedule Meeting </b></p>
+                                                                <hr />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                    <label>AC Meeting Title </label> <br />
+                                                                    {{lblccmeeting_title}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Number </label><br />
+                                                                    {{lblccmeeting_no}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Date</label><br />
+                                                                    {{lblccmeeting_date}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Mode </label><br />
+                                                                    {{lblccmeeting_mode}}
+                                                                </div>
+                                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                    <label>Meeting Time</label><br />
+                                                                    {{lblmeeting_time}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                    <label>AC Group Name</label><br />
+                                                                    {{lblccgroup_name}}
+                                                                </div>
+                                                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                    <label>Other Samunnati Users </label><br />
+                                                                    {{lblotheruser_name}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2" style="color:darkgray">
+                                                                    <label>Non Samunnati Users</label><br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                    <label>AC Admin</label><br />
+                                                                    {{lblccadmin_name}}
+                                                                </div>
+                                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                                    <label>Description </label><br />
+                                                                    <p ng-bind-html=trustAsHtml(lbldescription)></p>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="ng-scope dd-handle">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <p style="color:#141478;font-size: 15px;"><b> View Attendance Details </b></p>
+                                                                <hr />
+                                                                <div class="dd-handle ng-scope">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                            <p style="font-size:15px;color:darkblue;"><b>Committee Members Attendance</b></p>
+                                                                            <div class="table-responsive table-bordered">
+                                                                                <table class="table">
+                                                                                    <thead class="bg-gray text-white">
+                                                                                        <tr style="font-size: 13px;">
+                                                                                            <th class="text-center">S.No</th>
+                                                                                            <th>Group Name</th>
+                                                                                            <th>Name</th>
+                                                                                            <th class="text-center">Attendance </th>
+                                                                                            <th class="text-center">Approval Status</th>
+                                                                                            <th class="text-center">Approved Date</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="list in ccmember_list">
+                                                                                            <td class="text-center">{{$index+1}}</td>
+                                                                                            <td>{{list.ccgroup_name}}</td>
+                                                                                            <td>{{list.CCMember_name}}</td>
+                                                                                            <td class="text-center">
+                                                                                                <label style="color:green" ng-show="list.attendance_status=='P'">Present</label>
+                                                                                                <label style="color:red" ng-show="list.attendance_status=='A'">Absent</label>
+                                                                                            </td>
+                                                                                            <td ng-hide="list.attendance_status=='A'" class="text-center">
+                                                                                                {{list.approval_status}}
+                                                                                                &nbsp;
+                                                                                                <button ng-if="list.approval_status!='-'" title="View Remarks" type="button" class="btn btn-default" ng-click="cc_remarksview(list.ccmeeting2members_gid)">
+                                                                                                    <em class="fa fa-eye"></em>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                            <td ng-show="list.attendance_status=='A'" class="text-center">
+                                                                                                -
+                                                                                            </td>
+                                                                                            <td  class="text-center">{{list.approved_date}}</td>
+                                                                                        </tr>
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dd-handle ng-scope">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                            <p style="font-size:15px;color:darkblue;"><b>Other Samunnati User Attendance</b></p>
+                                                                            <div>
+                                                                                <div class="table-responsive table-bordered">
+                                                                                    <table class="table">
+                                                                                        <thead class="bg-gray text-white">
+                                                                                            <tr style="font-size: 13px;">
+                                                                                                <th class="text-center">S.No</th>
+                                                                                                <th>Name</th>
+                                                                                                <th class="text-center">Attendance</th>
+
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr ng-repeat="data in otheruser_list">
+                                                                                                <td class="text-center">{{$index+1}}</td>
+                                                                                                <td>{{data.employee_name}}</td>
+                                                                                                <td class="text-center">
+                                                                                                    <label style="color:green" ng-show="data.attendance_status=='P'">Present</label>
+                                                                                                    <label style="color:red" ng-show="data.attendance_status=='A'">Absent</label>
+                                                                                                </td>
+
+                                                                                            </tr>
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <p style="font-size:14px;color: #930D59;"><b><u> Credit Approval Details </u></b></p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div>
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b> Approval Hierarchy Details </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                            <label style="font-weight:bold;color:#141478;font-size: 13px;">Product Credit Group</label><br />
+                                                            {{txtcredit_group}}
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                            <label style="font-weight:bold;color:#db2525;font-size: 13px;">L0 - CM</label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right"> ---- > </span><br />
+                                                            {{txtcredit_manager}}
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                            <label style="font-weight:bold;color:#871490;font-size: 13px;">L1 - RCM </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- > </span><br />
+                                                            {{txtregional_manager}}
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                            <label style="font-weight:bold;color:#12574f;font-size: 13px;">L2 - NCM </label> <span style="width:90px;text-align: right;font-weight: bold;" class="pull-right">&nbsp;&nbsp;&nbsp;&nbsp; ---- ></span><br />
+                                                            {{txtnational_manager}}
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                                            <label style="font-weight:bold;color:#f17a0b;font-size: 13px;">L3 - CH </label> <br />
+                                                            {{txtcredit_head}}
+                                                        </div>
+                                                        <div class="col-lg-2 col-sm-2 col-md-2">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b> Query Assigned to RM Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th class="text-center" style="width:5%;"> S.No </th>
+                                                            <th> Query Title </th>
+                                                            <th> Query Description </th>
+                                                            <th> Levels </th>
+                                                            <th> Query Created by </th>
+                                                            <th> Query Created on </th>
+                                                            <th> Query Closed Remarks</th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in rmquery_list">
+                                                            <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                            <td data-title="'Query Title'"> {{data.querytitle}} </td>
+                                                            <td data-title="'Query Description'">
+                                                                <button title="View Query Description'" ng-click="view_querydesc(data.appcreditquery_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td data-title="'Levels'"> L{{data.hierary_level}} </td>
+                                                            <td data-title="'Created by'"> {{data.created_by}} </td>
+                                                            <td data-title="'Created on'"> {{data.created_date}} </td>
+                                                            <td data-title="'Close Remarks'"> {{data.close_remarks}} </td>
+                                                            <td>
+                                                                <button title="Close'" ng-show="data.querystatus=='Open'" ng-click="query_close(data.appcreditquery_gid)" class="btn btn-danger">
+                                                                    Close
+                                                                </button>
+                                                                <label ng-show="data.querystatus!=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Closed</label>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b> Query Assigned to Credit Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th class="text-center" style="width:5%;"> S.No </th>
+                                                            <th> Query Title </th>
+                                                            <th> Query Description </th>
+                                                            <th> Levels </th>
+                                                            <th> Query Created by </th>
+                                                            <th> Query Created on </th>
+                                                            <th> Query Closed Remarks</th>
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in creditquery_list">
+                                                            <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                            <td data-title="'Query Title'"> {{data.querytitle}} </td>
+                                                            <td data-title="'Query Description'">
+                                                                <button title="View Query Description'" ng-click="view_querydesc(data.appcreditquery_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>
+                                                            <td data-title="'Levels'"> L{{data.hierary_level}} </td>
+                                                            <td data-title="'Created by'"> {{data.created_by}} </td>
+                                                            <td data-title="'Created on'"> {{data.created_date}} </td>
+                                                            <td data-title="'Close Remarks'"> {{data.close_remarks}} </td>
+                                                            <td>
+
+                                                                <label ng-show="data.querystatus=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Open</label>
+                                                                </label>
+                                                                <label ng-show="data.querystatus!=='Open'">
+                                                                    <label class="label label-default" style="color:black;">Closed</label>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p class="text-primary" style="font-size:14px;"><b> Approval Summary </b></p>
+                                            <hr />
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th class="text-center" style="width:5%;"> S.No </th>
+                                                            <th class="text-center"> Levels </th>
+                                                            <th> User Name </th>
+                                                            <th class="text-center"> Approval Status </th>
+                                                            <th> Approval Remarks </th>
+                                                            <th> Approval Date </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in creditapproval_list">
+                                                            <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                            <td class="text-center" data-title="'Levels'">L{{data.hierary_level}} </td>
+                                                            <td data-title="'User Name'"> {{data.approval_name}} </td>
+                                                            <td class="text-center" data-title="'Approval Status'" ng-switch="data.approval_status">
+                                                                <label class="label label-info" ng-switch-when='Submitted to Approval' style="font-size:10px;">Submitted to Approval</label>
+                                                                <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                                                <label class="label label-warning" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                                                                <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                                                <label class="label label-primary" ng-switch-when='Hold' style="font-size:10px;">Hold</label>
+                                                                <label ng-switch-when='-'>-</label>
+                                                            </td>
+                                                            <td data-title="'Approval Remarks'"> {{data.approval_remarks}} </td>
+                                                            <td data-title="'Approval Date'" ng-switch="data.approval_status">
+                                                                <p ng-switch-when='Approved'>{{data.approved_date}} </p>
+                                                                <p ng-switch-when='Pending'>-</p>
+                                                                <p ng-switch-when='Rejected'>{{data.rejected_date}} </p>
+                                                                <p ng-switch-when='Hold'>{{data.hold_date}} </p>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--<div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <p style="font-size:14px;color: #930D59;"><b><u> AC Details </u></b></p>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <div class="ng-scope dd-handle">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <p style="color:#141478;font-size: 15px;"><b> View Schedule Meeting </b></p>
+                                                                <hr />
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                    <label>AC Meeting Title </label> <br />
+                                                                    {{lblccmeeting_title}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Number </label><br />
+                                                                    {{lblccmeeting_no}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Date</label><br />
+                                                                    {{lblccmeeting_date}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                                    <label>AC Meeting Mode </label><br />
+                                                                    {{lblccmeeting_mode}}
+                                                                </div>
+                                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                                    <label>Meeting Time</label><br />
+                                                                    {{lblmeeting_time}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                    <label>AC Group Name</label><br />
+                                                                    {{lblccgroup_name}}
+                                                                </div>
+                                                                <div class="col-sm-5 col-md-5 col-lg-5">
+                                                                    <label>Other Samunnati Users </label><br />
+                                                                    {{lblotheruser_name}}
+                                                                </div>
+                                                                <div class="col-sm-2 col-md-2 col-lg-2" style="color:darkgray">
+                                                                    <label>Non Samunnati Users</label><br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                    <label>AC Admin</label><br />
+                                                                    {{lblccadmin_name}}
+                                                                </div>
+                                                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                                                    <label>Description </label><br />
+                                                                    <p ng-bind-html=trustAsHtml(lbldescription)></p>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="ng-scope dd-handle">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <p style="color:#141478;font-size: 15px;"><b> View Attendance Details </b></p>
+                                                                <hr />
+                                                                <div class="dd-handle ng-scope">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                            <p style="font-size:15px;color:darkblue;"><b>Committee Members Attendance</b></p>
+                                                                            <div class="table-responsive table-bordered">
+                                                                                <table class="table">
+                                                                                    <thead class="bg-gray text-white">
+                                                                                        <tr style="font-size: 13px;">
+                                                                                            <th class="text-center">S.No</th>
+                                                                                            <th>Group Name</th>
+                                                                                            <th>Name</th>
+                                                                                            <th class="text-center">Attendance </th>
+                                                                                            <th class="text-center">Approval Status</th>
+                                                                                            <th class="text-center">Approved Date</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="list in ccmember_list">
+                                                                                            <td class="text-center">{{$index+1}}</td>
+                                                                                            <td>{{list.ccgroup_name}}</td>
+                                                                                            <td>{{list.CCMember_name}}</td>
+                                                                                            <td class="text-center">
+                                                                                                <label style="color:green" ng-show="list.attendance_status=='P'">Present</label>
+                                                                                                <label style="color:red" ng-show="list.attendance_status=='A'">Absent</label>
+                                                                                            </td>
+                                                                                            <td ng-hide="list.attendance_status=='A'" class="text-center">
+                                                                                                {{list.approval_status}}
+                                                                                                &nbsp;
+                                                                                                <button ng-if="list.approval_status!='-'" title="View Remarks" type="button" class="btn btn-default" ng-click="cc_remarksview(list.ccmeeting2members_gid)">
+                                                                                                    <em class="fa fa-eye"></em>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                            <td ng-show="list.attendance_status=='A'" class="text-center">
+                                                                                                -
+                                                                                            </td>
+                                                                                            <td>{{list.approved_date}}</td>
+                                                                                        </tr>
+
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="dd-handle ng-scope">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                            <p style="font-size:15px;color:darkblue;"><b>Other Samunnati User Attendance</b></p>
+                                                                            <div>
+                                                                                <div class="table-responsive table-bordered">
+                                                                                    <table class="table">
+                                                                                        <thead class="bg-gray text-white">
+                                                                                            <tr style="font-size: 13px;">
+                                                                                                <th class="text-center">S.No</th>
+                                                                                                <th>Name</th>
+                                                                                                <th class="text-center">Attendance</th>
+
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            <tr ng-repeat="data in otheruser_list">
+                                                                                                <td class="text-center">{{$index+1}}</td>
+                                                                                                <td>{{data.employee_name}}</td>
+                                                                                                <td class="text-center">
+                                                                                                    <label style="color:green" ng-show="data.attendance_status=='P'">Present</label>
+                                                                                                    <label style="color:red" ng-show="data.attendance_status=='A'">Absent</label>
+                                                                                                </td>
+
+                                                                                            </tr>
+
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <br /><br />
+                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+        </div>
+    </div>
+    <br />
+    <script type="text/ng-template" id="/CommentDescriptionView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description View</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Description : </label>
+                                        <br />
+                                        <p>{{lblComment_desc}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/commentClose.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                                <br />
+                                <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                          id="input_13"  aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="!txtcloseremarks" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/queryDescriptionView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description View</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Description : </label>
+                                        <br />
+                                        <p>{{lblquery_desc}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/queryClose.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label"> Remarks </label>
+                                <br />
+                                <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                          id="input_13" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="!txtcloseremarks" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ProductQueryClose.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label"> Remarks <span style="color:red"> *</span> </label> 
+                                <br />
+                                <textarea ng-model="txtproduct_closeremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                          id="input_13" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="!txtproduct_closeremarks" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ProductqueryDescriptionView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description View</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Description : </label>
+                                        <br />
+                                        <p>{{lblquery_desc}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

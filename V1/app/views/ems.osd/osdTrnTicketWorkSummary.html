@@ -1,0 +1,606 @@
+﻿<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 86px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 86px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+    
+</script>
+<div ng-controller="osdTrnTicketWorkSummaryController">
+    <div class="row">
+        <div class="col-lg-9 col-md-9 col-sm-9">
+            <div class="tab">
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Alloted()" style="color:#871490;font-size:13px">
+                    <em class="fa fa-user fa-x" style="color:#871490;font-size: 18px;"></em>
+                    <br />
+                    Allotted
+                    <br />
+                    <div class="label" style="background-color:#871490;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_newticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Workinprogress()" onclick="openApplication(event, 'Work In Progress')" id="defaultOpen" style="color:#141478;font-size:13px">
+                    <em class="fa fa-tasks fa-x" style="color:#141478;font-size: 18px;"></em>
+                    <br />
+                    Work In Progress
+                    <br />
+                    <div class="label" style="background-color:#141478;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_transferticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="approvalpending()" style="color:#17ab15;font-size:13px">
+                    <em class="fa fa-thumbs-o-up" style="color:#17ab15;font-size: 18px;"></em>
+                    <br />
+                    Approval Pending
+                    <br />
+                    <div class="label" style="background-color:#17ab15;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{approvalpending_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Forward()" style="color:#1976d2;font-size:13px">
+                    <em class="fa fa-mail-forward fa-x" style="color:#1976d2;font-size: 18px;"></em>
+                    <br />
+                    External Transfer
+                    <br />
+                    <div class="label" style="background-color:#1976d2;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{forward_count}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="Completed()" style="color:#00796b;font-size:13px">
+                    <em class="fa fa-check fa-x" style="color:#00796b;font-size: 18px;"></em>
+                    <br />
+                    Completed
+                    <br />
+                    <div class="label" style="background-color:#00796b;padding-top:4px;font-size: 8px;padding-bottom:4px;">{{count_completedticket}}</div>
+                </button>
+                <button class="col-lg-2 col-md-2 col-sm-2" ng-click="RejectCancel()" style="color:#FF0000;font-size:13px">
+                    <em class="fa fa-times-circle text-white fa-x" style="color:#FF0000;font-size: 18px;"></em>
+                    <br />
+                    Rejected / Cancelled
+                    <br />
+                    <div class="label" style="background-color:#FF0000;padding-top:4px;font-size:8px;padding-bottom:4px;">{{rejectcancel_count}}</div>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-1 col-sm-1 col-md-1">
+            <div class="list-group-item picColor" style="height:88px;">
+                <div class="media-box">
+                    <!--<div class="pull-left" style="padding-top:6px;">
+                        <span>
+                            <em class="fa fa-times-circle text-white fa-2x" style="color:#C10B68;"></em>
+                        </span>
+                    </div>-->
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <em class="fa fa-times-circle text-white fa-x" style="color:#C10B68;font-size: 18px;"></em>
+                            <div style="font-size:13px;color:#C10B68;" ng-click="Close()"><b> Closed</b></div>
+                            <div class="label" style="background-color:#C10B68;padding-top:4px;padding-bottom:4px;font-size:8px;">{{count_closedticket}}</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2" style="height:88px;" ng-show="new">
+            <div class="list-group-item picColor button">
+                <div class="media-box">
+                    <br />
+                    <div class="pull-left">
+                        <span>
+                            <em class="fa fa-bell text-white fa-2x" style="color:#110F0F;"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <div class="pull-right label" style="font-size:11px;background-color:#FB9235;">New</div>
+                            <div style="font-size:13px;color:#110F0F;text-align:center;" ng-click="BankAlert()"><b>Bank Alert</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-sm-2 col-md-2" ng-show="old">
+            <div class="list-group-item picColor" style="height:88px;background-color:#F8FABD">
+                <div class="media-box">
+                    <br />
+                    <div class="pull-left">
+                        <span>
+                            <em class="fa fa-bell-slash text-white fa-2x" style="color:#110F0F;"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading">
+                            <div style="font-size:13px;color:#110F0F;text-align:center;" ng-click="BankAlert()"><b>Bank Alert</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel panel-default tabcontent" id="Work In Progress">
+        <div class="row">
+            <div class="col-lg-11 col-sm-11 col-md-11">
+                <h3 style="color:#141478;font-size:18px;"> &nbsp;&nbsp; Activity Management - Work In Progress </h3>
+            </div>
+            <div class="col-lg-1 col-sm-1 col-md-1" style="padding-top:15px">
+                <button title="Refresh" ng-click="Refresh()" class="btn btn-primary btn-sm">
+                    <em class="fa fa-refresh"></em>
+                </button>
+            </div>
+        </div>
+        <br />
+        <div class="table-responsive">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <table datatable="ng" class="table table-hover table-striped mb-mails">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th class="text-center" style="display:none">S.No</th>
+                            <th class="text-nowrap">Request Ref No</th>
+                            <th class="text-nowrap">Raised On / By</th>
+                            <th class="text-nowrap">Raised By Department</th>
+                            <th class="text-nowrap">Raised To Business Unit</th>
+                            <th class="text-nowrap">Activity Name</th>
+                            <th class="text-nowrap">Request Title</th>
+                            <th class="text-nowrap">Assigned Team</th>
+                            <th class="text-nowrap">Assigned To</th>
+                            <th class="text-nowrap">Aging</th>
+                            <th class="text-nowrap">Priority</th>
+                            <th class="text-nowrap">Request Status</th>
+                            <th class="text-nowrap">Business Unit Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in workinprogressdtl" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                            <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                            <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                            <td data-title="'Department Name'">{{data.departmentname}}</td>
+                            <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                            <td data-title="'Request Title'">{{data.request_title}}</td>
+                            <td data-title="'assigned_team'">{{data.assigned_team}}</td>
+                            <td data-title="'assigned_to'">{{data.assigned_to}}</td>
+                            <td data-title="'aging'">{{data.aging}}</td>
+                            <td data-title="'priority'">{{data.priority}}</td>
+                            <td data-title="'Request Status'">{{data.request_status}}</td>
+                            <td data-title="'Business Unit Status'">{{data.Businessactivity_Status}}</td>
+                            <td data-title="'Source'" ng-switch="data.source">
+                                <label style="font-size:10px" ng-switch-when="E-mail" class="label label-green">E-Mail</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_Api" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_API" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="BRS" class="label label-pink">BRS</label>
+                                <label style="font-size:10px" ng-switch-when="Internal" class="label label-primary">Internal</label>
+                            </td>
+                            <td class="text-nowrap" data-title="'Action'">
+                                <button title="View" ng-click="viewWorking(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid,data.request_refno,data.brs_flag)" class="btn btn-info">
+                                    <em class="fa fa-eye "></em>
+                                </button>
+                                <button title="Transfer Allocation" class="btn bg-pink-400"
+                                        ng-click="TransferAllocationwithRemarks(data.servicerequest_gid, data.assigned_team, data.assigned_to, data.assigned_membergid, data.assigned_supportteamgid,data.department_gid,data.departmentname,data.activitymaster_gid,data.activity_name)">
+                                    <em class="fa fa-external-link text-white"></em>
+                                </button>
+                                <button title="Assign Priority" style="background-color:#09385f;" class="btn btn-pink"
+                                        ng-click="Priority(data.servicerequest_gid,data.department_gid,data.departmentname)">
+                                    <em class="fa fa-plus"></em>
+                                </button>
+                                <button title="Self Allocation" class="btn btn-primary"
+                                        ng-click="SelfAllocation(data.servicerequest_gid, data.assigned_team, data.assigned_to,data.assigned_membergid,data.assigned_supportteamgid,data.department_gid,data.departmentname,data.activitymaster_gid,data.activity_name)">
+                                    <em class="fa fa-external-link text-white"></em>
+                                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+    <script type="text/ng-template" id="/transferallocationwithremarksmodal.html">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Transfer Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit Name <span style="color:red"></span></label>
+                            <p>{{department_name}}</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Activity Name<span style="color:red">*</span></label>
+                            <!--<select id="activity_name" name="activity_name" ng-options="m as m.activity_name for m in activitylist track by m.activitymaster_gid"
+                                    ng-model="cboactivity" class="chosen-select form-control" required chosen="" style="height:37px;"
+                                    size="1">
+                                <option value=""> -----Select Activity-----</option>
+                            </select>-->
+                            <select name="activity_name" ng-options="m.activitymaster_gid as m.activity_name for m in activitylist"
+                                    ng-model="cboactivity" class="chosen-select form-control" style="height:37px;"
+                                    size="1">
+                                <option value=""> -----Select Activity-----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Team <span style="color:red">*</span></label>
+                            <select chosen="" ng-options="m as m.team_name for m in supportdtllist track by m.supportteam_gid"
+                                    ng-model="cbosuppport_team" class="chosen-select form-control" required ng-change="onselectedchangeteam(team_name)"></select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer To <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen=""
+                                    ng-options="m.employee_name for m in teammembers_list track by m.employee_gid" required
+                                    ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <!--<div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Priority<span style="color:red">*</span></label>
+                            <select id="priority" name="priority" chosen="" ng-model="priority" required ng-change="onselectedchangepriority(priority)" class="chosen-select form-control">
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />-->
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea style="resize:vertical;" ng-model="team_description" placeholder="Enter Remarks" cols="23" maxlength="1000" class="form-control" wrap
+                                      required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="transferlist">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Team</th>
+                                            <th align="center" scope="col">Assigned Member</th>
+                                            <!--<th align="center" scope="col">Priority</th>-->
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in transferlistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_to}}
+                                            </td>
+                                            <!--<td align="left" scope="col" title="Priority">
+                                                {{data.priority}}
+                                            </td>-->
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="teamSubmitremarks()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+                    <!--<div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Priority</label>
+                            <select id="priority" name="priority" ng-model="priority" ng-change="onselectedchangepriority(priority)" class="chosen-select form-control">
+                                <option value=""> -----NON-----</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                                <option></option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row" ng-show="transferlist">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Team</th>
+                                            <th align="center" scope="col">Assigned Member</th>
+                                            <th align="center" scope="col">Priority</th>
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in transferlistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_to}}
+                                            </td>
+                                            <td align="left" scope="col" title="Priority">
+                                                {{data.priority}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>-->
+                    <!--</div>
+                    </div>
+                    <br />-->
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/prioritymodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Priority</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="prioritysubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit Name <span style="color:red"></span></label>
+                            <p>{{department_name}}</p>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Priority<span style="color:red">*</span></label>
+                            <select id="priority" name="priority" ng-model="priority" required ng-change="onselectedchangepriority(priority)" class="chosen-select form-control">
+                                <option value="">None</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+
+
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Priority Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Priority</th>
+                                            <th align="center" scope="col">Created By</th>
+                                            <th align="center" scope="col">Created Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in prioritylistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Priority">
+                                                {{data.priority}}
+                                            </td>
+                                            <!--<td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>-->
+                                            <td align="left" scope="col" title="Created By">
+                                                {{data.created_by}}
+                                            </td>
+                                            <td align="left" scope="col" title="Created Date">
+                                                {{data.created_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-click="prioritySubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/selfallocatemodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Self Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="managerformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit Name <span style="color:red"></span></label>
+                            <p>{{department_name}}</p>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Allocated To<span style="color:red">*</span></label>
+                            <select name="activity_name" chosen ng-options="m.manager_name for m in managerdtllist track by m.manager_gid"
+                                    ng-model="cbomanager" class="chosen-select form-control" style="height:37px;"
+                                    size="1">
+                                <option value=""> -----Select Manager Name-----</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea style="resize:vertical;" ng-model="manager_description" placeholder="Enter Remarks" cols="23" maxlength="1000" class="form-control" wrap
+                                      required
+                                      id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="transferlist">
+                        <
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Allocated Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Member Name</th>
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in allocatedlist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_membername}}
+                                            </td>
+
+
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="managerformsubmit.$invalid" ng-click="allocateSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Allocate</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

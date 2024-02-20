@@ -1,0 +1,135 @@
+<h3>
+    Digital Signature Summary
+</h3>
+<div ng-controller="DocDigitalSignatureSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <button title="Add Signature" class="btn btn-info btn-sm"
+                    ng-click="addSignature()">
+                <em class="fa fa-plus"></em>&nbsp;Add Signature
+            </button>
+        </div>
+    </div>
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+        <div class="panel-body">
+            <br />
+            <div class="table-responsive">
+                <table datatable="ng" class="table table-hover table-striped">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th>S.No</th>
+                            <th>Employee Name</th>
+                            <th>Created By</th>
+                            <th>Created Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in digitalsignaturelist">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Employee Name'">{{data.employee_name}}</td>
+                            <td data-title="'Created By'">{{data.created_by}}</td>
+                            <td data-title="'Created On'">{{data.created_date}}</td>
+                            <td data-title="'Action'" class="text-center">
+                                <button title="Digital Signature" ng-click="downloads(data.document_path,data.document_name)" class="btn btn-info">
+                                    <em class="fa fa-download"></em>
+                                </button>
+                                <!--<button title="View Digital Signature" ng-click="viewsignature(data.digitalsignature_gid)" class="btn btn-info">
+                                    <em class="fa fa-eye"></em>
+                                </button>-->
+                                <button title="Delete Digital Signature" ng-click="deletesignature(data.digitalsignature_gid)" class="btn btn-danger">
+                                    <em class="icon icon-trash "></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="text/ng-template" id="/addSignatureContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Add Signature</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="signatureformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label> Select Employee </label><br>
+                            <select name="employee_name" ng-model="cboemployee_name" required="" ng-options="m.employee_name for m in employee_list"
+                                    class="form-control" size="1" chosen="">
+                                <option value=""> ----- Select Employee Name ----- </option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label> Upload Signature </label>
+                            <div class="mda-form-group float-label">
+                                <input type="file" id="digitaldocupload" ng-model="digital_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="image/jpeg"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="signatureformsubmit.$invalid" ng-click="signaturesubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+        </div>
+    </script>
+
+    <!--<script type="text/ng-template" id="/viewSignatureContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2>&nbsp;View Signature</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="singnatureforview" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Employee Name</label><br>
+                            {{employee_name}}
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label> Employee Signature </label>
+                            <button title="Download Document" ng-click="downloads(document_path,document_name)" class="btn btn-info">
+                                <em class="fa fa-download"></em>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+        </div>
+    </script>-->
+</div>

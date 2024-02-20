@@ -1,0 +1,89 @@
+﻿
+<h3>
+    Mail Management
+</h3>
+<div ng-controller="mailManagementcontroller">
+    
+    <br />
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class=" table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>GENARATED DATE</th>
+                                    <th>CUSTOMER ID</th>
+                                    <th>CUSTOMER NAME</th>
+                                    <th>VERTICAL</th>
+                                    <th>ZONAL HEAD</th>
+                                    <th>BUSINESS HEAD</th>
+                                    <th>CLUSTER MANAGER</th>
+                                    <th>RELATIONSHIP MANAGER</th>
+                                    <th>CREDIT MANAGER</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-switch="data.mail_status" ng-repeat="data in customer_data|filter :searchtxt |limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Generated Date'">{{data.generated_date}}</td>
+                                    <td data-title="'Customer Id'">{{data.customercode}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Vertical Code'">{{data.vertical_code}}</td>
+                                    <td data-title="'Zonal Head'">{{data.zonalGid}}</td>
+                                    <td data-title="'Business Head'">{{data.businessHeadGid}}</td>
+                                    <td data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>
+                                    <td data-title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+                                    <td data-title="'Credit Manager'">{{data.creditmanagerName}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button ng-switch-when="Generated" title="Confirm Mail" ng-click="send(data.customeralert_gid)" class="btn btn-purple">
+                                            <em class="fa fa-send"></em>
+                                        </button>
+                                        <button title="History" ng-click="mailHistory(data.customer_gid)" class="btn btn-sm  bg-cyan-A700">
+                                            <em class="fa fa-history">&nbsp;<label style="color:red;">{{data.mail_count}}</label></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+
+            </div>
+            
+        </div>
+    </div>
+</div>

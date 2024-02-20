@@ -1,0 +1,265 @@
+﻿<h3>
+    Create Loan
+</h3>
+
+<div ng-controller="createLoan as dpick" class="ball-clip-rotate">
+
+    <style type="text/css">
+        .list-group-item:hover {
+            color: #000000;
+            background-image: linear-gradient(90deg, #d8eef5 0%, #adc9e7 35%, #88a9d9 100%);
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .panel-scroll {max-height:120px;overflow: auto;}
+    </style>
+
+    <div id="panelDemo8" class="panel panel-success ">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE LOAN
+        </div>
+
+        <div class="panel-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                    <div class="col-lg-6 col-md-6 col-sm-6 ">
+                        <input name="customer_gid" id="customer_gid" style="font-size:12px"
+                            placeholder="Enter Customer gid" ng-model="customer_gid" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body ng-scope">
+
+                <div class="row" style="display:none;">
+                    <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                        <div class="col-lg-8 col-md-8 col-sm-8 ">
+                            <input name="customer_gid" id="customer_gid" style="font-size:12px"
+                                placeholder="Enter Customer gid" ng-model="customer_gid" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pd-sm-10">
+                    <form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off"
+                        class="form-validate form-horizontal">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <!-- <label class="col-form-label control-label"><strong>Customer *</strong></label>
+                                    <select id="customer" name="customer" chosen="" ng-options="m.customername for m in customer_list"
+                                            ng-model="cbocustomergid" class="chosen-select form-control" required
+                                            ng-change="onselectedchangecustomer(customer)">
+                                        <option value=""> ---Select Customer Name--- </option>
+                                    </select> -->
+                                    <label class="col-form-label control-label"><strong>Customer *</strong></label>
+                                    <input type="text" name="customer" id="customer" ng-model="customer" required
+                                        ng-keyup="complete(customer)"  class="form-control" placeholder="Search Customer Name Here..." />
+                                       
+                                        <ul  class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                            <li  class="list-group-item" ng-repeat="m in customer_list"
+                                                ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                                        </ul>
+                                 
+                                    <label style="color:red;">{{message}}</label>
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label">
+                                        <label>Loan Ref No. *</label>
+                                        <input ng-model="loanRefNo" tabindex="0" maxlength="45" required
+                                            aria-required="true" aria-invalid="true"
+                                            class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                            style="">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label control-label"><strong>Zonal Head</strong></label>
+                                    <select id="zonal_name" name="vertical" dropzone="" ng-model="zonalHead"
+                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                        tabindex="0" aria-label="State" aria-expanded="false" size="1"
+                                        ng-disabled="true">
+                                        <option value=""> Select Zonal Head </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>
+
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <div class="mda-form-group float-label">
+                                        <label class="col-form-label control-label"><strong>Sanction Ref No.
+                                                *</strong></label>
+
+                                        <select id="sanction" name="sanction" chosen=""
+                                            ng-options="m.sanctionrefno for m in sanctiondtl"
+                                            ng-model="cbosanctionrefno" class="form-control" required
+                                            ng-change="sanctionrefnochange(sanction_Gid)">
+                                            <option value="">---Select Sanction Ref No.---</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        </br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <!--<div layout="row">-->
+
+
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+
+                                    <label class="col-form-label control-label"><strong>Business Head</strong></label>
+                                    <select id="businesshead_name" name="vertical" dropzone="" ng-model="businessHead"
+                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                        tabindex="0" aria-label="State" aria-expanded="false" size="1"
+                                        ng-disabled="true">
+                                        <option value=""> Select Business Head </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label control-label"><strong>Sanction Date *</strong></label>
+                                    <br />
+                                    <p ng-model="Sanction_Date">{{sanctionDate}}</p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+                                    <label class="col-form-label control-label"><strong>Cluster Manager</strong></label>
+                                    <select id="cluster_manager_name" name="vertical" dropzone=""
+                                        ng-model="clustermanager"
+                                        class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                        tabindex="0" aria-label="State" aria-expanded="false" size="1"
+                                        ng-disabled="true">
+                                        <option value=""> Select Cluster Manager </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5">
+
+                                    <label class="col-form-label control-label"><strong>Loan Facility Type
+                                            *</strong></label>
+
+                                    <select id="facility" name="facility" chosen=""
+                                        ng-options="m.facility_type for m in loan_list" ng-model="cbofacility"
+                                        class="form-control" required>
+                                        <option value="">---Select Loan Facility Type---</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--</div>-->
+                    </form>
+
+                    </br>
+                    <!--<div class=" row "></div>-->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <!--<div layout="row">-->
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label control-label"><strong>Relationship
+                                        Manager</strong></label>
+                                <select id="relationshipmgmt_name" name="vertical" dropzone=""
+                                    ng-model="relationshipMgmt"
+                                    class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                    tabindex="0" aria-label="State" aria-expanded="false" size="1" ng-disabled="true">
+                                    <option value=""> Select Relationship Manager </option>
+                                    <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                                        {{data.employee_name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5" ng-show="vertical_code">
+
+
+                                <label class="col-form-label control-label"><strong>Vertical</strong></label>
+                                <p ng-model="vertical_code">{{mdlheadsofcustomer.vertical_code}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 ">
+                            <!--<div layout="row">-->
+                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                <label class="col-form-label control-label"><strong>Credit Manager</strong></label>
+                                <select id="creditmanager_name" name="creditmanager" dropzone=""
+                                    ng-model="creditmgmt_name"
+                                    class="form-control ng-pristine ng-invalid-required ng-valid md-default-theme ng-touched"
+                                    tabindex="0" aria-label="State" aria-expanded="false" size="1" ng-disabled="true">
+                                    <option value=""> Select Credit Manager </option>
+                                    <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                                        {{data.employee_name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                            <div class="col-lg-1 col-md-1 col-sm-1">
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                </div>
+                <br />
+                <br />
+                <div class="ng-scope">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-click="loanSubmit()"
+                            ng-disabled="userform5.$invalid"><i class="fa fa-arrow-circle-right"></i>
+                            &nbsp;&nbsp;Submit</button>
+                        <button ng-click="loanback()" class="btn btn-info"><i
+                                class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+</div>

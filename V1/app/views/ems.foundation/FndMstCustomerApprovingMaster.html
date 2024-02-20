@@ -1,0 +1,419 @@
+﻿<h3>
+    Customer Approval Mapping
+</h3>
+<div ng-controller="FndMstCustomerApprovingMasterController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Customer Approval Mapping" class="btn btn-info btn-sm" ng-click="customerapprovingadd()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span>  Customer Approval Mapping
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>                                   
+                                    <th>Ref ID</th>
+                                    <th>Customer </th>
+                                    <th> Approver </th>
+                                    <!--<th> LMS Code</th>
+                                    <th> Bureau Code</th>-->
+                                    <th> Created By </th>
+                                    <th> Created Date </th>
+                                    <th> Status </th>
+                                    <th>Remarks</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in customerapproving_list ">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>                                  
+                                    <td data-title="'Customer Approving Code'">{{data.customerapproving_code}}</td>
+                                    <td data-title="'Customer Approving Name'">{{data.customer_name}}</td>
+                                    <!--<td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                               ng-click="showPopover(data.customerapproving_gid, data.customerapproving_name)">
+                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>-->
+                                    <!--<td data-title="'LMS Code'">{{data.lms_code}}</td>
+                                    <td data-title="'Bureau Code'">{{data.bureau_code}}</td>-->
+                                    <td data-title="'Customer Approving Name'">{{data.approver_name}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'">{{data.created_date}} </td>
+                                    <td data-title="'Status'" ng-switch="data.status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                               ng-click="showsPopover(data.customerapproving_gid,data.customerapproving_name)">
+                                            <em class="fa fa-info-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>  
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.status">
+                                        <button title="Edit" ng-click="editcustomerapproving(data.customerapproving_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Active' ng-click="Status_update(data.customerapproving_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-switch-when='Inactive' ng-click="Status_update(data.customerapproving_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                        <button title="Delete" ng-click="deletecustomerapproving(data.customerapproving_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addcustomerapproving.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Customer Approval Mapping
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addcustomerapproving" ng-submit="form.addcustomerapproving()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtcustomerapproving_code" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" disabled>
+                                    <label>Ref ID <span style="color:red">*</span></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <!--<label>Customer Approval Mapping <span style="color:red">*</span></label>
+                                <select id="customerapproving" name="customerapproving" chosen="" ng-model="customer_approving" required ng-change="onselectedchangecustomer(customer_approving)" class="chosen-select form-control">
+                                    <option value="Maker">Maker</option>
+                                    <option value="Checker">Checker</option>
+                                </select>-->
+                                <label class="col-form-label">Customer Name </label><span style="color:red">*</span>
+                                <br />
+                                <select name="Campaign_type" ng-options="m.customer_name for m in customerlist track by m.customer_gid"
+                                       required="" ng-model="cboCustomer" class="chosen-select form-control" chosen="" style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Customer-----</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Employee Name <span style="color:red">*</span></label>
+                                <select name="cboemployees" chosen="" tabindex="2" 
+                                        ng-options="m.employee_name for m in employee_list" required=""
+                                        ng-model="cboemployee" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-6 col-sm-6 col-sm-6">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtlms_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>LMS Code </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtbureau_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="txtbureau_code" maxlength="125" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group float-label">
+                            <textarea ng-model="txtaddremarks" style="resize:vertical;" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            <label>Remarks </label>
+                        </div>
+                    </div>
+                </div>
+ 
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addcustomerapproving.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/editcustomerapproving.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Customer Approval Mapping
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editcustomerapproving" ng-submit="form.editcustomerapproving()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group ">
+                                    <input ng-model="txteditcustomerapproving_code" maxlength="10" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="" disabled>
+                                    <label> Ref ID</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label">Customer Name </label><span style="color:red">*</span>
+                                <br />
+                                <input type="text" ng-model="txtcustomer_name" tabindex="0" class="form-control" disabled />
+                                <!--<select name="Campaign_type" ng-options="m.customer_gid as m.customer_name for m in customerlist" required
+                                        ng-model="txtcustomer_name" class="chosen-select form-control" ng-change="getdetails(txtcustomer_name)" chosen="" style="height:37px;"
+                                        size="1">
+                                    <option value=""> -----Select Customer-----</option>
+                                </select>-->   
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>Employee Name <span style="color:red">*</span></label>
+                                <select name="cboemployee" id="cboemployee" ng-options="m.employee_gid as m.employee_name for m in employee_list" chosen="" 
+                                        ng-model="cboemployee_edit" class="chosen-select form-control" style="height:37px;" required size="1"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                                <div class="mda-form-group">
+                                    <input ng-model="txteditlms_code" maxlength="125" tabindex="0" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>LMS Code </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                                <div class="mda-form-group ">
+                                    <input ng-model="txteditbureau_code" maxlength="125" tabindex="0" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row ">
+                            <div class="col-sm-6 col-sm-6 col-sm-6 ">
+                                <div class="mda-form-group ">
+                                    <input ng-model="txteditbureau_code" maxlength="125" tabindex="0" aria-invalid="true" class="mda-form-control form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Bureau Code </label>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="mda-form-group float-label">
+                            <br />
+                            <textarea ng-model="txteditremarks" style="resize:vertical;" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                            <label>Remarks </label>
+                        </div>
+                    </div>
+                </div>
+                 <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="edit.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/showemployee.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:center;">{{customerapproving_name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Employee Name : </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'Credit head'" style="width:2%; text-align:left"> {{employee_name}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/statuscustomerapproving.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statuscustomerapproving" ng-submit="form.statuscustomerapproving()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Customer Approval</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                {{customer_approving }}
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>Status  </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                        <span class="fa fa-circle"></span> Inactive
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statuscustomerapproving.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="customerapprovinginactivelog_list!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in customerapprovinginactivelog_list" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.status}}</td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/showremarks.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb; width:2%;text-align:center;"><i class="fa fa-info-circle" style="text-align: left;">&nbsp; Remarks</i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Remarks: </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'Credit head'" style="width:2%; text-align:left"> {{txteditremarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>   

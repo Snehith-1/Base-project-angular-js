@@ -1,0 +1,622 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        width: 100%;
+    }
+
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+            height: 58px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(140, 138, 141);
+                color: white;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #d5591e;
+                background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 58px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 58px;
+                color: black;
+            }
+
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+    /* Style for blinking the notification button */
+    .button {
+        background-color: #FCB77E;
+        padding: 17px 9px;
+        text-align: center;
+        text-decoration: double;
+    }
+
+
+    .button {
+        animation: glowing 2000ms infinite;
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+
+</script>
+<h3>
+    My Auditor Task
+</h3>
+<div ng-controller="AtmTrnAuditorMakerHoldAuditController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="tab">
+                    <button class="tablinks" onclick="openApplication(event, 'Auditor Maker Summary')" id="defaultOpen" ng-click="auditor_maker()"> Auditor Maker Summary </button>
+                    <button class="tablinks" onclick="openApplication(event, 'Auditor Checker Summary')" ng-click="auditor_checker()">Auditor Checker Summary </button>
+                    <button class="tablinks" onclick="openApplication(event, 'Auditor Approval Summary')" ng-click="auditor_approver()">Auditor Approval Summary </button>
+                </div>
+                <div id="Auditor Maker Summary" class="tabcontent">
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="list-group-item picColor" style="height:48px;background-color: #f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                    <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                        <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{openaudit_count}}</div>
+                                        <div style="font-size:14px;color:#000000;text-align:center;" ng-click="open_audit()"><b>Open Audits </b></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="list-group-item picColor" style="height:48px;background-color:#84cbdb;border:1px solid rgb(179, 177, 177)">
+                                    <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                        <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{auditsonhold_count}}</div>
+                                        <div style="font-size:14px;color:#000000;text-align:center;" ng-click="hold_audit()"><b> Hold Audits</b></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                    <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                        <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{closedaudit_count}}</div>
+                                        <div style="font-size:14px;color:#000000;text-align:center;" ng-click="closed_audit()"><b> Closed Audits</b></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                    <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                        <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">0{{taggedsample_count}}</div>
+                                        <div style="font-size:14px;color:#000000;text-align:center;" ng-click="tagged_items()"><b> Tagged Items </b></div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                    <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                        <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{completed_count}}</div>
+                                        <div style="font-size:14px;color:#000000;text-align:center;" ng-click="completed_audit()"><b>Completed Audits </b></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                        </div>
+                    </div>
+                    <br /><br/>
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th>S.No</th>
+                                        <th>Audit ref no</th>
+                                        <th>Audit Name</th>
+                                        <th>Audit Type</th>
+                                        <th>Audit Department</th>
+                                        <th>Audit Priority </th>
+                                        <th>Audit End Date </th>
+                                        <th>Assigned Information</th>
+                                        <th>Approval Status</th>
+                                        <th>Auditee Tracking Status</th>
+                                        <th>Visible </th>
+                                        <th>Hold Date</th>
+                                        <th>Hold By</th>                                     
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in myauditormaker_list">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Unique ref no'">{{data.audit_uniqueno}}</td>
+                                        <td data-title="'Audit Name'">{{data.audit_name}}</td>
+                                        <td data-title="'Audit Name'">{{data.audittype_name}}</td>
+                                        <td data-title="'Audit Name'">{{data.auditdepartment_name}}</td>
+                                        <td data-title="'Audit Name'">{{data.auditpriority_name}}</td>
+                                        <td data-title="'End Date '">{{data.due_date}}</td>
+                                        <td data-title="'Approval Information'" class="text-center">
+                                            <em class="fa fa-info-circle" ng-click=approvalinformation(data.auditcreation_gid) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td data-title="'Status'">{{data.approval_status}}</td>
+                                        <td data-title="'Tracking Status'" class="text-center">
+                                            <em class="fa fa-info-circle" ng-click=trackingstatus(data.auditcreation_gid) style="font-size:24px;align-content:center;"></em>
+                                        </td>
+                                        <td data-title="'Visible'">{{data.auditee_visible}}</td>
+                                        <td data-title="'Hold Date'">{{data.created_date}}</td>
+                                        <td data-title="'Hold Date'">{{data.created_by}}</td>                                      
+                                        <td data-title="'Action'" class="nowrap">
+                                            <button title="View 360" ng-show="data.status_update =='Hold'" ng-click="viewtask(data.auditcreation_gid)" class="btn bg-blue-500">
+                                                <em class="fa fa-retweet"></em>
+                                            </button>    
+                                            <button title="Status Update" ng-click="statusupdate(data.auditcreation_gid)" class="btn btn-green">
+                                                <em class="fa fa-arrow-circle-o-up"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/trackingstatus.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-info-circle"></i>
+                </span> Assigned Information
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="dd-handle ng-scope">
+                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+                <hr class="space" />
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive table-bordered">
+                                <div style="max-height:200px;overflow:auto;">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th align="center" scope="col">S.No</th>
+                                                <th align="center" scope="col">Auditee Checker</th>
+                                                <th align="center" scope="col">Auditee Approval Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td align="left" scope="col" title="Auditee Checker">{{data.auditeechecker_name}}</td>
+                                                <td align="left" scope="col" title="Auditee Approval Status'">{{data.auditeechecker_approvalstatus}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+    <script type="text/ng-template" id="/statusupdate.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span>
+                    <i class="fa fa-plus "></i>
+                </span> &nbsp; Status Update
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusupdate" ng-submit="form.status_update()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="row ">
+                                <div class="col-sm-4 col-sm-4 col-sm-4">
+                                    <label> Audit Name : </label>
+                                </div>
+                                <div class="col-sm-8 col-sm-8 col-sm-8">
+                                    {{txtaudit_name}}
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row ">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Status Update <span style="color:red">*</span></label>
+                                    <select id="statusupdate" name="statusupdate" chosen="" ng-model="status_update" required ng-change="onselectedchangeaudit(status_update)" class="chosen-select form-control">
+                                        <option value="Closed">Closed</option>
+                                        <option value="Reopen">Reopen</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <label>Remarks <span style="color:red"> *</span></label>
+                                    <textarea rows="4" style="resize:vertical;" placeholder="Enter Remarks..." aria-multiline="true" tabindex="0" aria-invalid="false" maxlength="1000"
+                                              required ng-model="txtremarks" class="form-control"></textarea>
+                                    <br />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="statusupdate.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Approvalinformation.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-info-circle"></i>
+                </span> Assigned Information
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <br>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label> Audit Period From </label><br /><span> {{lblauditperiod_fromdate}} </span>
+
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label> Audit Period To </label><br /><span> {{lblauditperiod_todate}} </span>
+
+                </div>
+            </div>
+
+            <div class="dd-handle ng-scope">
+                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+                <hr class="space" />
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive table-bordered">
+                                <div style="max-height:200px;overflow:auto;">
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th align="center" scope="col">S.No</th>
+                                                <th align="center" scope="col">Auditee Maker</th>
+                                                <th align="center" scope="col">Auditee Checker</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                <td align="left" scope="col" title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                <td align="left" scope="col" title="Auditee Checker'">{{data.auditeechecker_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label class="text-primary">Auditor Information</label>
+            <br />
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Maker </label>
+                    <br />
+                    <span> {{lblaudit_maker}} </span>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Checker </label><br /><span> {{lblaudit_checker}}</span>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Auditor Approver </label><br /><span> {{lblauditapprover_name}}</span>
+                </div>
+            </div>
+            <br /><br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/getApprovalRequest.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-thumbs-o-up"></em>&nbsp;Get Approval</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <br />
+                            <label class="col-form-label"><strong>Approval Type &nbsp;<span style="color:red;">*</span></strong></label>
+                            <div class="col">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="approvaltype" required=""
+                                               name="approvaltype" value="Sequence"
+                                               ng-model="approve_type" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Sequence
+                                    </label>
+                                    &nbsp;
+                                    <label>
+                                        <input type="radio" id="approvaltype" required=""
+                                               name="approval_type" value="Parallel"
+                                               ng-model="approve_type" />
+                                        <span class="fa fa-circle"></span>Parallel
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Approval Person <span style="color:red">*</span></label>
+                            <select name="approval_authority" id="approval_authority" chosen="" ng-options="m as m.employee_name for m in auditorchecker_list track by m.auditmapping_gid"
+                                    ng-change="Changed(cboapproval_membername)" ng-model="cboapproval_membername" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <!--Tagged Member View Code Starts-->
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Approval Members List</p>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div id="statictable">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Member Name</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center" ng-repeat="data in approvalmember">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Member Name" align="left">{{data.employee_name}}</td>
+                                                <td data-title="Action">
+
+                                                    <a title="Delete" class="btn btn-sm btn-danger" ng-click="ApprovalMembercancel(data.tmpapprovalmember_gid)">
+                                                        <span class="icon icon-trash "></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tagged Member View Code End-->
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea ng-model="approve_remarks" placeholder="Enter Remarks" rows="3" maxlength="1000" class="form-control"
+                                      required id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="getapprovalclick()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/raisequery.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-bolt"></em>&nbsp;Raise Query</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form name="raisequery" id="raisequery" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="pd-sm-10">
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label>Select User <span style="color:red">*</span></label>
+                            <select name="cboemployees" chosen="" tabindex="0" multiple="multiple"
+                                    ng-options="m.employee_name for m in employee_list" required=""
+                                    ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="mda-form-group float-label">
+                                <textarea ng-model="txtdescription" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                <label>Description *</label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/importexcel.html">
+        <div class="modal-header bg-blue-600 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-blue-600">
+                    <em class="fa fa-plus"></em>
+                    Import Excel
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px;">
+                                        <b> Click here to download Template </b>
+                                    </a>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label> Upload Excel : </label>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-4">
+                                    <input type="file" id="fileimport" ng-model="test_document"
+                                           onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                    &nbsp;
+                                </div>
+                                <div class="col-md-2 col-lg-2 col-sm-2">
+                                    <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                        <em class="icon-cloud-upload"></em>
+                                    </button>
+                                    <span>
+                                        <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                            <i class="fa icon-close"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="class">
+                        <br />
+                        <div class="text-center">
+                            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>
+
+
+

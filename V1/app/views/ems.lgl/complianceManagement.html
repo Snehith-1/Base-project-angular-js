@@ -1,0 +1,500 @@
+﻿<h3>
+    Compliance Management
+</h3>
+<style>
+
+    .blinking{
+    animation:blinkingicon 1.5s infinite;
+    
+}
+@keyframes blinkingicon{
+   50% {
+    opacity: 0;
+  }
+}
+
+  
+</style>
+<div ng-controller="complianceManagementcontroller">    
+    <div class="widget">
+       
+                <div class="card">
+                    <tabset justified="true">
+                        <tab id="id1" select="tab.activeTabId = 'Pending'" active="tabpending">
+                            <tab-heading title="Pending Cases">
+                                <em class="fa fa-clock-o fa-1x"></em>
+                                Pending <label class="label label-pink" ng-if="pending_count != '0'"> {{pending_count}}</label>
+
+                                <a ng-if="pendingtab_alert == 'Y' " title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                    <b>New</b>
+                                </a>
+                            </tab-heading>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        Showing 1 to {{totalDisplayedpending}} of {{pendingCount}} Entries
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        Show <input ng-model="$parent.pagecountpending" id="pagecountpending" type="number" />
+                                        <button class="btn" id="loadmorepending" ng-click="loadMorepending(pagecountpending)">Load More</button>
+                                        
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchtxtpending" placeholder="Search Here .." class="form-control input-sm" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>Request Ref No</th>
+                                            <th>Request Type</th>
+                                            <th>Request Date</th>
+                                            <th>Requested By / Department</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in requestcompliance_data">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                                            <td data-title="'Request Ref No'" style="text-align:center;">{{data.requestref_no}}</td>
+                                            <td data-title="'Request Type''">{{data.request_type}}</td>
+                                            <td data-title="'Request Date'" style="text-align:center;">{{data.request_date}}</td>
+
+                                            <td data-title="'Requested By'">{{data.requested_by}}</td>
+                                            <td data-title="Status" ng-switch="data.request_status">
+                                                <label class="label label-info" style="font-size:10px;" ng-switch-when="Pending">{{data.request_status}}</label>
+                                                <label class="label label-primary" style="font-size:10px;" ng-switch-when="Work In Progress">{{data.request_status}}</label>
+                                                <label class="label label-danger" style="font-size:10px;" ng-switch-when="Rejected">{{data.request_status}}</label>
+                                                <label class="label label-success" style="font-size:10px;" ng-switch-when="Completed">{{data.request_status}}</label>
+                                            </td>
+                                            <td data-title="'Action'" class="nowrap" style="text-align:center;">
+                                                <div ng-switch="data.response_flag">
+
+                                                    <button title="view360" ng-click="pendingview360(data.requestcompliance_gid);" class="btn bg-blue-500">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+
+                                                    <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                        <b>New</b>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                        </tab>
+                        <tab id="id4" select="tab.activeTabId = 'Work-InProgress'" active="tabworkinprogress" ng-click="workinprogress_load()">
+                            <tab-heading title="Work In Progress">
+                                <em class="fa fa-clock-o fa-1x"></em>
+                                Work In Progress <label class="label label-pink" ng-if="workinprogress_count != '0'"> {{workinprogress_count}}</label>
+
+                                <a ng-if="workinprogresstab_alert == 'Y' " title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                    <b>New</b>
+                                </a>
+                            </tab-heading>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        Showing 1 to {{totalDisplayedworkinprogress}} of {{workinprogressCount}} Entries
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        Show <input ng-model="pagecountworkinprogress" id="pagecountworkinprogress" type="number" />
+                                        <button class="btn" id="loadmoreworkinprogress" ng-click="loadMoreworkinprogress(pagecountworkinprogress)">Load More</button>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchtxtworkinprogress" placeholder="Search Here .." class="form-control input-sm" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>Request Ref No</th>
+                                            <th>Request Type</th>
+                                            <th>Request Date</th>
+                                            <th>Requested By / Department</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in requestcomplianceworkinprogress_data">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                                            <td data-title="'Request Ref No'"  style="text-align:center;">{{data.requestref_no}}</td>
+                                            <td data-title="'Request Type''">{{data.request_type}}</td>
+                                            <td data-title="'Request Date'"  style="text-align:center;">{{data.request_date}}</td>
+
+                                            <td data-title="'Requested By'">{{data.requested_by}}</td>
+                                            <td data-title="Status" ng-switch="data.request_status"  style="text-align:center;">
+                                                <label class="label label-info" style="font-size:10px;" ng-switch-when="Pending">{{data.request_status}}</label>
+                                                <label class="label label-primary" style="font-size:10px;" ng-switch-when="Work In Progress">{{data.request_status}}</label>
+                                                <label class="label label-danger" style="font-size:10px;" ng-switch-when="Rejected">{{data.request_status}}</label>
+                                                <label class="label label-success" style="font-size:10px;" ng-switch-when="Completed">{{data.request_status}}</label>
+  </td>
+                                            <td data-title="'Action'" class="nowrap">
+                                                <div ng-switch="data.response_flag">
+
+                                                    <button title="view360" ng-click="workinprogressview360(data.requestcompliance_gid);" class="btn bg-blue-500">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+
+                                                    <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                        <b>New</b>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                        
+                                </div></tab>
+
+                        <tab id="id5" select="tab.activeTabId = 'Tagged-Lawyer'" active="tabtaggedlawyer" ng-click="taggedlawyer_load()">
+                            <tab-heading title="Case Range Upto 16-30 Days">
+                                <em class="fa fa-clock-o fa-1x"></em>
+                                Tagged To Lawyer <label class="label label-pink" ng-if="taggedlawyer_count != '0'"> {{taggedlawyer_count}}</label>
+
+                                <a ng-if="taggedlawyertab_alert == 'Y' " title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                    <b>New</b>
+                                </a>
+                            </tab-heading>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        Showing 1 to {{totalDisplayedtaggedlawyer}} of {{taggedlawyerCount}} Entries
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        Show <input ng-model="pagecounttaggedlawyer" id="pagecounttaggedlawyer" type="number" />
+                                        <button class="btn" id="loadmoretaggedlawyer" ng-click="loadMoretaggedlawyer(pagecounttaggedlawyer)">Load More</button>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchtxttaggedlawyer" placeholder="Search Here .." class="form-control input-sm" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>Request Ref No</th>
+                                            <th>Request Type</th>
+                                            <th>Request Date</th>
+                                           
+                                            <th>Status</th>
+                                            <th>Requested By / Department</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in requestcompliancetaggedlawyer_data">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                                            <td data-title="'Request Ref No'"  style="text-align:center;">{{data.requestref_no}}</td>
+                                            <td data-title="'Request Type''">{{data.request_type}}</td>
+                                            <td data-title="'Request Date'" style="text-align:center;">{{data.request_date}}</td>
+
+                                            <!--<td id="show" style="text-align: right;text-decoration:underline;text-decoration-color:#49afcd;">
+                                                <label style="padding-right:29px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                       ng-click="showPopover(data.enquiry_gid,data.customer_name)">
+                                                   
+                                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                </label>
+
+                                            </td>-->
+                                        
+                                            <td style="text-align: right;text-decoration:underline;text-decoration-color:#49afcd;">
+                                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                       ng-click="showPopover(data.requestcompliance_gid,data.requestref_no)" >
+                                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                </label>
+                                                <!--<div style="position: absolute; z-index: 2075; display: block; color:black;"
+                                                     ng-show="data.popoverIsVisible">
+
+                                                    <div class="panel-body text-center">
+                                                        <div class="row">
+                                                            <table>
+                                                                <thead>
+                                                                    <tr style="text-align: left">
+                                                                        
+                                                                        <th class="nowrap" style="color:white;background:#7986cb;">&nbsp;&nbsp;Lawyer/LawFirm Name &nbsp;</th>
+                                                                        <th class="nowrap" style="color:white;background:#7986cb;">&nbsp;&nbsp;Status &nbsp;</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="loop in MdlLawyerSummary"
+                                                                        style="text-align: left;background-color:#E5EBEB;" class="lineclass">
+                                                                      
+                                                                        <td data-title="'Lawyer/LawFirm Name'">&nbsp;{{loop.lawyeruser_name}}&nbsp;</td>
+                                                                        <td data-title="'Status'">&nbsp;{{loop.request_status}}&nbsp;</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
+
+                                            </td>
+                                            <td data-title="'Requested By'">{{data.requested_by}}</td>
+                                            <td data-title="'Action'" class="nowrap"  style="text-align:center;">
+                                                <div ng-switch="data.response_flag">
+
+                                                    <button title="view360" ng-click="taggedlawyerview360(data.requestcompliance_gid)" class="btn bg-blue-500">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+                                                    
+                                                    <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                        <b>New</b>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+                        <tab id="id2" select="tab.activeTabId = 'Completed'" active="tabcompleted" ng-click="completed_load()">
+                            <tab-heading title="Completed">
+                                <em class="fa fa-clock-o fa-1x"></em>
+                                Completed <label class="label label-pink" ng-if="completed_count != '0'"> {{completed_count}}</label>
+                                <a ng-if="completedtab_alert == 'Y' "title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                        <b>New</b>
+                                </a>
+                               
+                                </tab-heading>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        Showing 1 to {{totalDisplayedcompleted}} of {{completedCount}} Entries
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        Show <input ng-model="pagecountcompleted" id="pagecountcompleted" type="number" />
+                                        <button class="btn" id="loadmorecompleted" ng-click="loadMorecompleted(pagecountcompleted)">Load More</button>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchtxtcompleted" placeholder="Search Here .." class="form-control input-sm" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>Request Ref No</th>
+                                            <th>Request Type</th>
+                                            <th>Requested By / Department</th>
+                                            <th>Status</th>
+                                            <th>Completed On / By</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in requestcompliancecompleted_data">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                                            <td data-title="'Request Ref No'" style="text-align:center;">{{data.requestref_no}}</td>
+                                            <td data-title="'Request Type''">{{data.request_type}}</td>
+
+                                            <td data-title="'Requested By'">{{data.requested_by}}</td>
+                                            <td data-title="Status" ng-switch="data.request_status">
+                                                <label class="label label-info" style="font-size:10px;" ng-switch-when="Pending">{{data.request_status}}</label>
+                                                <label class="label label-primary" style="font-size:10px;" ng-switch-when="Work In Progress">{{data.request_status}}</label>
+                                                <label class="label label-danger" style="font-size:10px;" ng-switch-when="Rejected">{{data.request_status}}</label>
+                                                <label class="label label-success" style="font-size:10px;" ng-switch-when="Completed">{{data.request_status}}</label>
+                                            </td>
+                                            <td data-title="'Completed On | By'" style="text-align:left;">{{data.updated_date}} / {{data.updated_by}}</td>
+                                            <td data-title="'Action'" class="nowrap"  style="text-align:center;">
+                                                <div ng-switch="data.response_flag">
+
+                                                    <button title="view360" ng-click="completedview360(data.requestcompliance_gid);" class="btn bg-blue-500">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+
+                                                    <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                        <b>New</b>
+                                                    </a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </tab>
+                        <tab id="id3" select="tab.activeTabId = 'Rejected'"  active="tabrejected"  ng-click="rejected_load()">
+                            <tab-heading title="Rejected">
+                                <em class="fa fa-clock-o fa-1x"></em>
+                                Rejected/Not Relevant <label class="label label-pink" ng-if="rejected_count != '0'"> {{rejected_count}}</label>
+
+                                <a ng-if="rejectedtab_alert == 'Y' " title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                    <b>New</b>
+                                </a>
+                            </tab-heading>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        Showing 1 to {{totalDisplayedrejected}} of {{rejectedCount}} Entries
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        Show <input ng-model="pagecountrejected" id="pagecountrejected" type="number" />
+                                        <button class="btn" id="loadmorecompleted" ng-click="loadMorerejected(pagecountrejected)">Load More</button>
+
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <div class="input-group">
+                                            <input type="text" ng-model="searchtxtrejected" placeholder="Search Here .." class="form-control input-sm" />
+                                            <span class="input-group-btn">
+                                                <button type="submit" class="btn btn-default btn-sm">
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table ng-table="tableParams2" class="table hover table-striped ">
+                                    <thead>
+                                        <tr class="bg-primary text-white">
+                                            <th style="display:none;">S.NO</th>
+                                            <th>Created Date</th>
+                                            <th>Request Ref No</th>
+                                            <th>Request Type</th>
+                                            <th>Requested By / Department</th>
+                                            <th>Status</th>
+                                            <th>Rejected On / By</th>
+                                            <th>Action</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in requestcompliancerejected_data">
+                                            <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                            <td data-title="'Created Date'" style="text-align:center;">{{data.created_date}}</td>
+                                            <td data-title="'Request Ref No'" style="text-align:center;">{{data.requestref_no}}</td>
+                                            <td data-title="'Request Type''">{{data.request_type}}</td>
+
+                                            <td data-title="'Requested By'">{{data.requested_by}}</td>
+                                            <td data-title="Status" ng-switch="data.request_status" style="text-align:center;">
+                                                <label class="label label-info" style="font-size:10px;" ng-switch-when="Pending">{{data.request_status}}</label>
+                                                <label class="label label-primary" style="font-size:10px;" ng-switch-when="Work In Progress">{{data.request_status}}</label>
+                                                <label class="label label-danger" style="font-size:10px;" ng-switch-when="Rejected">{{data.request_status}}</label>
+                                                <label class="label label-success" style="font-size:10px;" ng-switch-when="Completed">{{data.request_status}}</label>
+                                            </td>
+                                            
+                                            <td data-title="'Rejected On|By'" style="text-align:left;">{{data.updated_date}} / {{data.updated_by}}</td>
+                                            <td data-title="'Action'" class="nowrap">
+                                                <div ng-switch="data.response_flag">
+
+                                                    <button title="view360" ng-click="rejectedview360(data.requestcompliance_gid);" class="btn bg-blue-500">
+                                                        <em class="fa fa-retweet"></em>
+                                                    </button>
+
+                                                    <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                        <b>New</b>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                        </tab>
+                    </tabset>
+                </div>
+
+            </div>
+    <script type="text/ng-template" id="/addcompliance.html">
+        <div class="modal-header bg-indigo-300 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                {{requestref_no}}
+                &emsp;
+                <span class="close" ng-click="ok()">&times;</span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="complianceformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="panel-body text-center">
+                    <div class="row popborder">
+
+                        <table>
+                            <thead>
+                                <tr style="text-align: center;height:40px;">
+                                    <th style="color:white;background:#7986cb;width:2%;text-align:center;">Lawyer/LawFirm Name</th>
+                                    <th style="color:white;background:#7986cb;width:5%;text-align:center;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="loop in MdlLawyerSummary"
+                                    style="text-align: center;background-color:#E5EBEB;height:20px;">
+                                    <td data-title="'LAWYER/LAWFIRM NAME'" style="width:2%; text-align:center">{{loop.lawyeruser_name}}</td>
+                                    <td data-title="'STATUS'" style="width:3%; text-align:center">{{loop.request_status}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </script>
+        </div>
+   

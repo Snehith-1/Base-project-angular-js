@@ -1,0 +1,122 @@
+﻿@using ERP.CoreWeb;
+@{
+    var vUser = new CommonWeb().getUserLogin("SaleNoteUser");
+    ViewBag.hasUser = 1;
+    if (vUser == null)
+    {
+        ViewBag.hasUser = 0;
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPC Plastic Notes</title>
+    <link rel="shortcut icon" href="~/Image/if_stock_insert-note_24323.ico">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/Content/styles/Master_Style/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/responsive.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-material-design.min.css" rel="stylesheet" />
+    <link href="~/Content/ripples.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/demo.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/checkbox_radion.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Content/styles/Master_Style/stimulsoft.viewer.office2013.whitegreen.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/linq.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/jquery.cookie.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/bootstrap-dialog.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/Master_Scripts/jBootstrap-dialog.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/metisMenu.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/ripples.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/bootstrap-material-datetimepicker.js"></script>
+    <script src="~/Scripts/Master_Scripts/Highcharts/highcharts.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/Highcharts/modules/exporting.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/Stimulsoft/stimulsoft.reports.js"></script>
+    <script src="~/Scripts/Master_Scripts/Stimulsoft/stimulsoft.viewer.js"></script>
+    <script src="~/Scripts/Master_Scripts/jReportViewer.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/loadingoverlay.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/loadingoverlay_progress.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/jCommon.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/jMVCSaveTemp.min.js"></script>
+
+    <script src="~/Scripts/material.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.material.init();
+        });
+    </script>
+    <script src="~/Scripts/ripples.min.js"></script>
+    <script src="~/Scripts/Master_Scripts/jCustomPageMain.js"></script>
+    <script src="~/Scripts/Master_Scripts/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#auto-collapse-menu-demo').metisMenu();
+
+            //$('#wrapper').children('.overlay').off('click').on({
+            //    click: function () {
+            //        $('.is-open').click();
+            //    }
+            //});
+
+            $('#bodySystem').on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+                $($.fn.dataTable.tables(true)).DataTable()
+                    .columns.adjust()
+                    .responsive.recalc();
+            });
+        });
+    </script>
+    <script src="~/Scripts/Shared/j_Layout.min.js"></script>
+</head>
+<body id="bodySystem">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="#" class="navbar-brand btnHome" style="padding-right: 0px;"><span class="label" style="font-size:20px;background-color:#fff;color:#222;text-shadow: 2px 2px 3px #C1C1C1;">PPC Plastic</span> Notes</a>
+                @*@Html.ActionLink("<span>PPC</span> Plastic Reports", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right menuMain">
+                    <li><a href="#" class="btnJob">Job Manage</a></li>
+                    <li><a href="#" class="btnProject">Project Manage</a></li>
+                    <li><a href="#" class="btnReports">Report</a></li>
+                    <li><a href="#" class="btnProfile">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="margin-top:80px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <input type="hidden" class="mvcpath" value="@Url.Content("~")" />
+            <input type="hidden" class="hasUser" value="@ViewBag.hasUser" />
+        </footer>
+    </div>
+    <form id="form_pageSubmit" method="post"></form>
+    <form id="form_Load_Data" method="post" action="" target="ifdownload" enctype="multipart/form-data">
+        <input type="hidden" id="vdatapost" name="vdatapost" />
+    </form>
+    <iframe id="ifdownload" name="ifdownload" style="display:none;"></iframe>
+</body>
+</html>

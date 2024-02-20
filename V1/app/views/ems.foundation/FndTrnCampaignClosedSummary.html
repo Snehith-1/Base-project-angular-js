@@ -1,0 +1,332 @@
+﻿<a href="#/app/FndTrnCampaignSummary">
+    <button type="button" title="Back to Home" class="pull-right btn btn-sm btn-primary ">
+        <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+    </button>
+</a>
+<style>
+    .tabactivecolorstyle {
+        background-color: #84cbdb;
+    }
+</style>
+<h3>
+    Campaign Creation
+</h3>
+
+<div ng-controller="FndTrnCampaignClosedController">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <button type="button" title="Add Campaign Type" class="btn btn-info btn-sm" style="width:200px;height:50px; " ng-click="Create()">
+                            <span class="btn-label">
+                                <i class="fa fa-plus"></i>
+                            </span>Create New Campaign
+                        </button>
+                        <br />
+                    </div>
+                    <!--</div>
+                    <br />
+                    <div class="panel panel-default tabcontent">
+                        <br />
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">-->
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" id="opentab" class="btn btn-labeled" ng-click="Pending()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{campaignpending_count}}</b></div>
+                            <b style="font-size: 14px;">Pending Campaigns</b>
+                        </button>
+                        <br />
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" id="opentab" class="btn btn-labeled " ng-click="Reject()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{rejected_count}}</b></div>
+                            <b style="font-size: 14px;">Rejected Campaigns</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+
+                        <button type="button" class="btn btn-labeled" ng-click="Approved()" style="width:210px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{approved_count}}</b></div>
+                            <b style="font-size: 14px;">Approved/WIP Campaigns</b>
+                        </button>
+                        <br />
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12">
+                        <button type="button" class="btn btn-labeled tabactivecolorstyle" ng-click="Closed()" style="margin-left:10px; width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{closed_count}}</b></div>
+                            <b style="font-size: 14px;">Closed Campaigns</b>
+                        </button>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead class="text-nowrap">
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                        <th class="text-nowrap">S.No</th>
+                                        <th class="text-nowrap">Campaign Ref No</th>
+                                        <th class="text-nowrap">Campaign Name </th>
+                                        <th class="text-nowrap">Customer Name</th>
+                                        <th class="text-nowrap">Created By</th>
+                                        <th class="text-nowrap">Created Date</th>
+                                        <th class="text-nowrap">Campaign Status</th>
+                                        <th class="text-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in campaign_list">
+                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                        <td data-title="'Campaign Ref No'">{{data.campaign_code}}</td>
+                                        <td data-title="'Campaign Name'">{{data.campaign_name}}</td>
+                                        <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                        <td data-title="'Created By'">{{data.created_by}}</td>
+                                        <td data-title="'Created Date'">{{data.created_date}}</td>
+                                        <td data-title="'Created Date'">{{data.campaign_status}}</td>
+                                        <td class="nowrap" data-title="'Action'" style="text-align: center;">                                     
+                                            <button title="View" ng-click="viewcampaignclosed(data.campaign_gid)" class="btn btn-info">
+                                                <em class="fa fa-eye"></em>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/getApprovalmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-thumbs-o-up"></em>&nbsp;Get Approval</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <br />
+                            <label class="col-form-label"><strong>Approval Type &nbsp;<span style="color:red;">*</span></strong></label>
+                            <div class="col">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="approvaltype" required=""
+                                               name="approvaltype" value="Sequence"
+                                               ng-model="approval_type" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Sequence
+                                    </label>
+                                    &nbsp;
+                                    <label>
+                                        <input type="radio" id="approvaltype" required=""
+                                               name="approval_type" value="Parallel"
+                                               ng-model="approval_type" />
+                                        <span class="fa fa-circle"></span>Parallel
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Approval Person <span style="color:red">*</span></label>
+                            <select name="approval_authority" id="approval_authority" chosen="" ng-options="m as m.employee_name for m in employee_list track by m.employee_gid"
+                                    ng-change="coreChanged(cboapproval_member)" ng-model="cboapproval_member" class="chosen-select form-control"></select>
+                        </div>
+
+                    </div>
+                    <br />
+                    <!--Tagged Member View Code Starts-->
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Approval Members List</p>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div id="statictable">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Member Name</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center" ng-repeat="data in approvalmember">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Member Name" align="left">{{data.employee_name}}</td>
+                                                <td data-title="Action">
+
+                                                    <a title="Delete" class="btn btn-sm btn-danger" ng-click="ApprovalMembercancel(data.tmpapprovalmember_gid)">
+                                                        <span class="icon icon-trash "></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Tagged Member View Code End-->
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea ng-model="approval_remarks" placeholder="Enter Remarks" rows="3" maxlength="1000" class="form-control"
+                                      required id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="getapprovalclick()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/transferallocationmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-external-link"></em>&nbsp;Transfer Allocation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit Name <span style="color:red"></span></label>
+                            <p>{{department_name}}</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Team <span style="color:red">*</span></label>
+
+                            <select chosen="" ng-options="m as m.team_name for m in supportdtllist track by m.supportteam_gid"
+                                    ng-model="cbosuppport_team" class="chosen-select form-control" required ng-change="onselectedchangeteam(team_name)"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer To <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen=""
+                                    ng-options="m.employee_name for m in teammembers_list track by m.employee_gid" required
+                                    ng-model="cboemployee_name" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="transferlist">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Transfer Details </label>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead>
+                                        <tr>
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Assigned Team</th>
+                                            <th align="center" scope="col">Assigned Member</th>
+                                            <th align="center" scope="col">Assigned Date/Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in transferlistdtllist">
+                                            <td align="left" scope="col" title="S.No">
+                                                {{$index+1}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Team">
+                                                {{data.assigned_team}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Member">
+                                                {{data.assigned_to}}
+                                            </td>
+                                            <td align="left" scope="col" title="Assigned Date/Time">
+                                                {{data.assigned_date}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="teamSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/getReApprovalmodal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-thumbs-o-up"></em>&nbsp;Get Approval</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Approval Person <span style="color:red">*</span></label>
+
+                            <select name="approval_authority" id="approval_authority" chosen="" ng-options="m as m.employee_name for m in employee_list track by m.employee_gid"
+                                    ng-model="cboapproval_member" class="chosen-select form-control" required></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Remarks  &nbsp;<span style="color:red">*</span></label>
+                            <textarea ng-model="approval_remarks" placeholder="Enter Remarks" rows="3" maxlength="1000" class="form-control"
+                                      required id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="teamformsubmit.$invalid" ng-click="getreapprovalclick()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+</div>
+          

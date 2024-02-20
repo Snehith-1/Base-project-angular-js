@@ -1,0 +1,670 @@
+﻿
+<h3>
+    Hypothecation Details
+</h3>
+<div ng-controller="MstCadAppEditHypothecationAddController as dp">
+   
+    <div class="panel">
+        <div class="panel-body">
+
+            <!--<div class="tabcontent">-->
+                <!--<div>-->
+                    <!--<br />-->
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <form novalidate="" name="hypothecation" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <!--<br />-->
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Add Hypothecation Details </b></p>
+                                        <hr />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label><strong>Security Type</strong> <span style="color:red">*</span></label>
+                                            <select name="SecurityType" ng-options="m.security_type for m in securitytype_list" chosen=""
+                                                    ng-model="cboSecurityType" class="form-control" style="height:37px;"
+                                                    size="1">
+                                                <option value=""></option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Security Value  </label>
+                                            <br />
+                                            <input id="SecurityValue" ng-model="txtSecurity_Value" maxlength="20" class="form-control ng-pristine ng-valid ng-touched"
+                                                   ng-change="txtSecurityValuechange()" style="text-align:right;" pattern="^[\d,]+$">
+                                            <span style="font-style:italic;">Number in words:</span>
+                                            <span id="words_totalamount6" style="color:#003c96fc;" class="text-bold"></span>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Security Assessed On</label>
+                                            <br />
+                                            <p class="input-group">
+                                                <input type="text" id="SAO" name="date" ng-model="txtSecurityAssessed_date" datepicker-popup="{{dp.format}}"
+                                                       style="height:36px;" is-open="dp.open16" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                       close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                <span class="input-group-btn">
+                                                    <button type="button" ng-click="dp.calender16($event)" style="height:36px;" class="btn btn-default">
+                                                        <em class="fa fa-calendar"></em>
+                                                    </button>
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> Asset ID </label>
+                                            <br />
+                                            <input type="text" ng-model="txtasset_id" maxlength="20" tabindex="0" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> ROC Filling ID </label>
+                                            <br />
+                                            <input type="text" ng-model="txtroc_fillingid" maxlength="20" tabindex="0" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label class="col-form-label"> CERSAI Filling ID </label>
+                                            <br />
+                                            <input type="text" ng-model="txtCERSAI_fillingid" maxlength="20" tabindex="0" class="form-control" />
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label class="col-form-label"> Security Description </label>
+                                            <br />
+                                            <textarea ng-model="txtsecurity_desc" rows="2" class="form-control"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label class="col-form-label"> Observation Summary </label>
+                                            <br />
+                                            <textarea ng-model="txthypoobservation_summary" maxlength="5000" rows="2" class="form-control"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label class="col-form-label"> Primary Security </label>
+                                            <br />
+                                            <textarea ng-model="txtprimary_security" maxlength="5000" rows="2" class="form-control"
+                                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <br />
+                                            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Hypothecation Document Upload </b></p>
+                                            <hr />
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <label> Document Title </label> <span style="color:red">*</span>
+                                                <br />
+                                                <select name="DocumentTitle" style="height:37px;"
+                                                        ng-model="cbohypodoc_title" class="form-control ng-valid ng-touched ng-valid-parse"
+                                                        size="1">
+                                                    <option value=""></option>
+                                                    <option value="Document Observation"> Document Observation </option>
+                                                    <option value="Document Hypothecation"> Document Hypothecation </option>
+                                                    <option value="Document Legal Opinion"> Document Legal Opinion </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                                <div class="float-label">
+                                                    <strong>Upload Documents</strong>
+                                                    <br /><br />
+                                                    <input type="file" id="file" tabindex="5" multiple onchange="angular.element(this).scope().uploadhypothecationdoc(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           ng-model="txtbureau_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                            </div>
+                                            <br /><br />
+                                            <div class="row" ng-show="hypo_documentList!=null">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <br />
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th scope="col">Document Title</th>
+                                                                        <th scope="col">Document Name</th>
+                                                                        <th align="center" scope="col">
+                                                                            Action&nbsp;&nbsp;&nbsp;
+                                                                            <a download="" href="" title="Download All" id="btnpdf3" ng-click="downloadallhypo()">
+                                                                                <em class="icon-arrow-down"></em>&nbsp;
+                                                                            </a>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in hypo_documentList">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Document Title">{{data.document_title}}</td>
+                                                                        <td title="Document Name">{{data.document_name}}</td>
+                                                                        <td data-title="Action">
+                                                                            <button title="Download" class="btn btn-green btn-sm"
+                                                                                    ng-click="downloads(data.document_path,data.document_name)">
+                                                                                <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                <em class="fa fa-download"></em>
+                                                                            </button>
+                                                                            <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                            </button>
+                                                                            <a title="Delete" class="btn btn-sm btn-danger" ng-click="hypodoccancel(data.document_gid)">
+                                                                                <span class="icon icon-trash "></span>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br /><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <br />
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <br /><br />
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success" ng-disabled="hypothecation.$invalid" ng-click="SubmitHypothecation()">
+                                        <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+
+
+                    </div>
+                  
+                <!--</div>-->
+            <!--</div>-->
+           
+        </div>
+        <br/>
+        <div class="text-center">
+            <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addresstype.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-plus"></em>&nbsp;<label style="font-size:16px">Add Address</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <label><strong>Address Type </strong> <span style="color:red">*</span></label>
+                                <select chosen="" ng-options="m as m.address_type for m in addresstype_list track by m.address_gid"
+                                        ng-model="cboaddresstype" class="chosen-select form-control" required>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Primary Status </label> <span style="color:red">*</span>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="Yes" ng-model="rdbprimaryaddress" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="No" ng-model="rdbprimaryaddress" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 1 </strong> <span style="color:red">*</span></label>
+                                <input type="text" ng-model="txtaddressline1" tabindex="0" class="form-control" maxlength="300" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 2 </strong></label>
+                                <input type="text" ng-model="txtaddressline2" tabindex="0" class="form-control" maxlength="300" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Land Mark </strong></label>
+                                    <input type="text" ng-model="txtLand_Mark" tabindex="0" class="form-control" maxlength="100" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Postal Code </strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtpostal_code" tabindex="0" class="form-control" required
+                                           ng-pattern="/^[0-9]*$/" ng-change="onchangepostal_code()" maxlength="6" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>City </label>
+                                    <input type="text" ng-model="txtcity" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>Taluka</label>
+                                    <input type="text" ng-model="txttaluka" tabindex="0" class="form-control" disabled />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label><strong>District</strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtdistrict" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>State </label> <span style="color:red">*</span>
+                                    <br />
+                                    <input type="text" ng-model="txtstate" tabindex="0" class="form-control" disabled />
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>Country</label> <span style="color:red">*</span>
+                                    <input type="text" ng-model="txtcountry" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/.,]*$/" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userform1.$invalid" ng-click="addressSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/CICUpload.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-plus"></em>&nbsp;<label style="font-size:16px">Bureau Updates</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong> Bureau Name  </strong> <span style="color:red">*</span></label>
+                                <select name="BureauName" id="BureauName" chosen="" ng-options="m.bureauname_gid as m.bureauname_name for m in bureau_list"
+                                        ng-model="bureau_gid" class="chosen-select form-control" required>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Bureau Score <span style="color:red"> *</span> </label>
+                                <input type="text" ng-model="txtbureau_score" tabindex="0" class="form-control" required />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Score As On </label>
+                                <br />
+                                <p class="input-group">
+                                    <input type="date" id="SAO" name="SAO" ng-model="txtscore_on"
+                                           style="width:200px;height:35px" class="form-control">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <label> Observations </label>
+                                <br />
+                                <textarea rows="2" placeholder="Enter Observations..." maxlength="5000" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                          ng-model="txtobservations" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <label> Bureau Response </label>
+                                <br />
+                                <textarea rows="2" placeholder="Enter Bureau Response ..." maxlength="5000" aria-multiline="true" tabindex="0" aria-invalid="false"
+                                          ng-model="txtbureau_response" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="dd-handle ng-scope">
+                                <br />
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Upload report </b></p>
+                                <hr />
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="float-label">
+                                        <label>Upload Documents<span style="color:red"> *</span></label>
+                                        <br /><br />
+                                        <input type="file" id="file" tabindex="5" onchange="angular.element(this).scope().CICDocumentUpload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               ng-model="txtcic_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                </div>
+                                <br /><br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <br />
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-secondary">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Document Name</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in cicuploaddoc_list">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Document Name">{{data.document_name}}</td>
+                                                            <td data-title="Action">
+                                                                <button title="Download" class="btn btn-green btn-sm"
+                                                                        ng-click="downloads(data.document_path,data.document_name)">
+                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                    <em class="fa fa-download"></em>
+                                                                </button>
+                                                                <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                </button>
+                                                                <a title="Delete" class="btn btn-sm btn-danger" ng-click="uploaddocumentcancel(data.tmpcicdocument_gid)">
+                                                                    <span class="icon icon-trash "></span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="CICUploaddtlsUpdate.$invalid" ng-click="update_CICUploads()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/institutionaddresstype.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-plus"></em>&nbsp;<label style="font-size:16px">Add Address</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-9 col-md-9 col-sm-9">
+                                <label><strong>Address Type </strong> <span style="color:red">*</span></label>
+                                <select chosen="" ng-options="m as m.address_type for m in addresstype_list track by m.address_gid"
+                                        ng-model="cboaddresstype" class="chosen-select form-control" required>
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label>Primary Status </label> <span style="color:red">*</span>
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="Yes" ng-model="rdbprimaryaddress" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                    </label>
+                                    <label>
+                                        <input type="radio" id="primary" name="primaryaddress" required value="No" ng-model="rdbprimaryaddress" />
+                                        <span class="fa fa-circle"></span>No
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 1 </strong> <span style="color:red">*</span></label>
+                                <input type="text" ng-model="txtaddressline1" tabindex="0" class="form-control text-wrap" maxlength="300" required />
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <label><strong>Address Line 2 </strong></label>
+                                <input type="text" ng-model="txtaddressline2" tabindex="0" class="form-control" maxlength="300" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Land Mark </strong></label>
+                                    <input type="text" ng-model="txtLand_Mark" tabindex="0" class="form-control" maxlength="100" />
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label><strong>Postal Code </strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtpostal_code" tabindex="0" class="form-control" required
+                                           ng-pattern="/^[0-9]*$/" ng-change="onchangepostal_code()" maxlength="6" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>City </label>
+                                    <input type="text" ng-model="txtcity" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="mda-form-group">
+                                    <label>Taluka</label>
+                                    <input type="text" ng-model="txttaluka" tabindex="0" class="form-control" disabled />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label><strong>District</strong> <span style="color:red">*</span></label>
+                                    <input type="text" ng-model="txtdistrict" tabindex="0" class="form-control" disabled />
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>State </label> <span style="color:red">*</span>
+                                    <br />
+                                    <input type="text" ng-model="txtstate" tabindex="0" class="form-control" disabled />
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="mda-form-group">
+                                    <label>Country</label> <span style="color:red">*</span>
+                                    <input type="text" ng-model="txtcountry" tabindex="0" class="form-control" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/.,]*$/" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userform1.$invalid" ng-click="institutionaddressSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/HierarchyChange.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <!--<em style="font-size:16px" class="fa fa-plus"></em>&nbsp;--><label style="font-size:16px"> Acknowledge Hierarchy</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa icon-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <p class="text-primary" style="font-size:14px;"><b> Approval Hierarchy Details </b></p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#141478;font-size: 12px;">Level 0 - RM</label> <span style="text-align: right;font-weight: bold;" class="pull-right"> -- > </span><br />
+                                    {{rm_name}}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#db2525;font-size: 12px;">Level 1 - DRM</label> <span style="text-align: right;font-weight: bold;" class="pull-right"> -- > </span><br />
+                                    {{directreportingto_name}}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#871490;font-size: 12px;">Level 2 - CH  </label> <span style="text-align: right;font-weight: bold;" class="pull-right"> -- > </span><br />
+                                    {{clustermanager_name}}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#12574f;font-size: 12px;">Level 3 - RH </label> <span style="text-align: right;font-weight: bold;" class="pull-right"> -- ></span><br />
+                                    {{regionhead_name}}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#f17a0b;font-size: 12px;">Level 4 - ZH </label> <span style="text-align: right;font-weight: bold;" class="pull-right"> -- > </span><br />
+                                    {{zonalhead_name}}
+                                </div>
+                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                    <label style="font-weight:bold;color:#ee1c62;font-size: 12px;">Level 5 - BVH</label><br />
+                                    {{businesshead_name}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <p style="font-size: 12px;"><i><b style="color: #c90707;"> Note : Please check your hierarchy and in case of any changes,<span style="color:blue;"> Do not click Confirm button.</span> Reach out to Custopedia team to revise the hierarchy. </b></i></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-click="Update_hierarchy()">
+                            <i class="fa fa-check"></i>&nbsp; Confirm
+                        </button>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </script>
+</div>

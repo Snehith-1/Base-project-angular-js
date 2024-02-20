@@ -1,0 +1,1037 @@
+﻿<h3>
+    Compliance Management
+</h3>
+<style>
+    h4,
+    .h4 {
+        font-size: 16px;
+    }
+</style>
+
+<div ng-controller="Compliance2taglawyercontroller">
+    <div class="row">
+        <div class="col-lg-4 col-sm-4 col-md-4">
+            <div class="list-group-item">
+                <div class="media-box">
+                    <div class="pull-left">
+                        <span class="fa-stack">
+                            <em class="fa fa-circle fa-stack-2x text-green"></em>
+                            <em class="fa fa-upload fa-stack-1x fa-inverse text-white"></em>
+                        </span>
+                    </div>
+                    <div class="media-box-body clearfix" ng-click="updatestatus(relpath1)">
+
+                        <div class="media-box-heading">
+                            <b class="text-green m0">Update Status - {{relpath1}}</b> &nbsp;&nbsp;
+<u class="text-info m0"> Click Here</u>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div id="panelDemo8" class="panel panel-primary">
+                <div class="panel-heading ">
+                    <span class="btn-label">
+                        Request Compliance Details
+                    </span>
+                </div>
+                <md-content class="md-padding">
+                    <md-tabs md-dynamic-height="" md-border-bottom="">
+                     
+                        <md-tab label="Request Compliance">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Request  Ref No</strong><br />
+                                                    <p>{{requestref_no}}</p>
+                                                </div>
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Request Date</strong>
+                                                    <br />
+                                                    <p>{{request_date}}</p>
+                                                </div>
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Request type</strong>
+                                                    <br />
+                                                    <p>{{request_type}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Requested By</strong><br />
+                                                    <p>{{requested_by}}</p>
+                                                </div>
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Requester Branch</strong>
+                                                    <br />
+                                                    <p>{{branch_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4  col-sm-4 col-md-4">
+                                                    <strong class="mt0">Requester Department </strong>
+                                                    <br />
+                                                    <p>{{department_name}}</p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <strong>Description</strong>
+
+                                                    <p>{{txtremarks}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <b style="color:darkblue">
+                                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                        Uploaded Documents
+                                                    </b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+                                                <div class="col-lg-12 col-sm-12 col-md-12 table-responsive cell-border">
+                                                    <table class="table">
+
+                                                        <tbody>
+
+                                                            <tr ng-repeat="data in list">
+
+                                                                <td>
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td>
+                                                                    {{data.file_name}}
+                                                                </td>
+                                                                <td>
+                                                                    <a class="btn" download="" href="" id="btnpdf" ng-click="downloads(data.file_path,data.file_name)"><span class="fa fa-download"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                    </div>
+                                </div>
+                                <!--<div class="col-lg-5 col-md-5 col-sm-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <em class="icon icon-cloud-upload"></em>&nbsp;Upload Corrected Document
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>File Upload</label>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <input type="file" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div ui-scroll-viewport="" style="height:115px; overflow-y: auto;" class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-secondary table-bordered">
+
+                                            <tbody>
+                                                <tr ng-repeat="data in UploadDocumentList" width="100%">
+
+                                                    <td align="left" scope="col" title="'Document Name'">
+                                                        {{data.document_name}}
+                                                    </td>
+                                                    <td align="center" scope="col" data-title="'Action'">
+
+                                                        <button title="Delete Document"
+                                                                ng-click="deletedocument(data.document_gid)"
+                                                                class="btn btn-danger">
+                                                            <em class="fa fa-close"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-center">
+
+                            <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="correcteddoc_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div ui-scroll-viewport="" style="height:150px; overflow-y: auto;" class="row">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-secondary table-bordered">
+
+                                            <tbody>
+                                                <tr ng-repeat="data in file_list" width="100%">
+
+                                                    <td align="left" scope="col" title="'Document Name'">
+                                                        {{data.document_name}}
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn" ng-click="downloadsdocument(data.document_path,data.document_name)"><span class="fa fa-download"></span></a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+</md-content>
+
+
+</md-tab>
+                        <md-tab label="Upload Corrected Document">
+                            <md-content class="md-padding">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            <em class="icon icon-cloud-upload"></em>&nbsp;Upload Corrected Document
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label>File Upload</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <input type="file" filestyle="" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().upload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div ui-scroll-viewport="" style="height:115px; overflow-y: auto;" class="row">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-secondary table-bordered">
+
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in UploadDocumentList" width="100%">
+                                                                            <td style="text-align:center;">
+                                                                                {{$index+1}}
+                                                                            </td>
+                                                                            <td align="left" scope="col" title="'Document Name'">
+                                                                                {{data.document_name}}
+                                                                            </td>
+                                                                            <td align="center" scope="col" data-title="'Action'">
+
+                                                                                <button title="Delete Document"
+                                                                                        ng-click="deletedocument(data.document_gid)"
+                                                                                        class="btn btn-danger">
+                                                                                    <em class="fa fa-close"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="text-center">
+
+                                                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="correcteddoc_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div ui-scroll-viewport="" style="height:150px; overflow-y: auto;" class="row">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-secondary table-bordered">
+
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in file_list" width="100%">
+                                                                            <td style="text-align:center;">
+                                                                                {{$index+1}}
+                                                                            </td>
+                                                                            <td align="left" scope="col" title="'Document Name'">
+                                                                                {{data.document_name}}
+                                                                            </td>
+                                                                            <td>
+                                                                                <a class="btn" download="" href="" id="btnpdf" ng-click="downloadsdocument(data.document_path,data.document_name)"><span class="fa fa-download"></span></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </md-content>
+
+
+                        </md-tab>
+                        <md-tab label="Tagged Lawyer/LawFirm">
+                            <md-content class="md-padding">
+
+                                <div class="row" ng-repeat="data in taggedlist">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <br />
+                                        <div class="panel widget">
+
+                                            <div class="panel-heading text-white bg-green">
+                                                &nbsp;  <b > Lawyer / LawFirm : {{data.lawyeruser_name}}</b>
+                                            </div>
+                                            <br />
+
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12 ">
+
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label> Assigned Date </label><br />{{data.tagged_date}}
+
+                                                    </div>
+
+
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label> Email Address</label><br />{{data.email_address}}
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label> Tagged By </label><br />{{data.tagged_by}}
+
+                                                    </div>
+                                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                                        <label> Status</label><br />{{data.request_status}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12 ">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 ">
+                                                        <label> Remarks</label><br />{{data.seek_remarks}}
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <b style="color:darkblue">
+                                                            <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                            Uploaded Documents
+                                                        </b>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <div>
+                                                            <b style="color:darkblue">
+                                                                <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                                Uploaded Documents By Lawyer/Law Firm &nbsp;&nbsp;
+                                                            </b>
+                                                            <a ng-hide="data.hide" ng-click="data.hide=true">
+                                                                <button title="Click to View Document Details" ng-click="viewlawyerdocument(data.requestcompliance2lawyerdtl_gid,$index)">
+                                                                    <em class="fa fa-chevron-circle-down" style="font-size:14px;"></em>
+                                                                </button>
+                                                            </a>
+                                                            <a ng-show="data.hide" ng-click="data.hide=false">
+                                                                <button title="Click to Hide Document Details">
+                                                                    <em class="fa fa-chevron-circle-up" style="font-size:14px;"></em>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-6 col-sm-6 col-md-6">
+
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 table-responsive">
+
+                                                        <table id="statictable" class="row-border hover">
+                                                            <thead>
+                                                                <tr width="100%" class="bg-success text-white">
+                                                                    <th scope="col">S No.</th>
+                                                                    <th scope="col">Document Details</th>
+
+                                                                    <th scope="col">Action</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                <tr ng-repeat="data in taggeddoc_list">
+
+                                                                    <td>
+                                                                        {{$index+1}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{data.document_name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <a class="btn" download="" href="" id="btnpdf" ng-click="downloads(data.document_path,data.document_name)"><span class="fa fa-download"></span></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                                    <div ng-show="data.hide" class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                                                <div class="table-responsive">
+
+                                                                    <table id="statictable" class="row-border hover">
+                                                                        <thead>
+                                                                            <tr width="100%" class="bg-success text-white">
+                                                                                <th scope="col">S No.</th>
+                                                                                <th scope="col">Document Details</th>
+
+                                                                                <th scope="col">Action</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="subdata in data[data.requestcompliance2lawyerdtl_gid]" width="100%">
+                                                                                <td title="'S No.">{{$index+1}}</td>
+                                                                                <td title="'Due Date'">{{subdata.document_name}}</td>
+                                                                                <td>
+                                                                                    <a class="btn" download="" href="" id="btnpdf" ng-click="downloads(subdata.document_path,subdata.document_name)"><span class="fa fa-download"></span></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Internal Conversation">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="panel widget panel-primary">
+                                            <div class="panel-heading ">
+                                                <em class="fa fa-question-circle  fa-lg"> </em>&emsp;Query
+
+                                            </div>
+                                            <div ng-repeat="data in querieslog_list">
+                                                <div ng-switch="data.session_user">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            &nbsp;<div style="padding-left:200px;" ng-switch-when="Y" class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                                                    <small class="pull-right text-bold">{{data.created_date}}</small>
+                                                                    <div class="media-body">
+                                                                        <span class="media-heading">
+                                                                            <p class="m0">
+                                                                                <strong class="text-info">{{data.sender_name}}</strong>
+                                                                            </p>
+                                                                            <p class="m0">{{data.queries}}</p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div ng-switch-when="N" style="padding-right:200px;" class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                                                    <small class="pull-right text-bold">
+                                                                        {{data.created_date}}
+                                                                    </small>
+                                                                    <div class="media-body">
+                                                                        <span class="media-heading">
+                                                                            <p class="m0">
+                                                                                <strong class="text-info">{{data.sender_name}}</strong>
+                                                                            </p>
+                                                                            <p class="m0 ">{{data.queries}}</p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <br />
+                                                <div class="row text-center">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <textarea id="txtqueries"  rows="3" cols="60" ng-model="$parent.txtqueries"
+                                                                  placeholder="Enter Queries..." class="form-control" align="left"></textarea>
+                                                        <br />
+                                                        <button id="response_send" ng-disabled="!txtqueries" class="btn btn-green" ng-click="sendclick()">
+                                                            <i class="fa fa-send">&nbsp;Send</i>
+                                                        </button>
+                                                        <button id="response_cancel" ng-disabled="!txtqueries" class="btn btn-danger" ng-click="cancelclick()">
+                                                            <i class="fa fa-remove">&nbsp;Cancel</i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                        </div>
+
+                                        </div>
+                                </div>
+                                </md-content>
+</md-tab>
+                        <md-tab label="External Conversation">
+                            <md-content class="md-padding">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <div class="panel panel-primary ">
+                                            <div class="panel-heading bg-blue-A100">
+                                                <em class="fa fa-question-circle  fa-lg"> </em>&emsp;Lawyer Conversation
+                                                <div class="pull-right">
+                                                    <span ng-if="totalmsg_count!=0">
+                                                        <strong>{{totalmsg_count}}</strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div ng-show="lawyer_summary">
+                                                    <scrollable height="250" class="list-group">
+
+                                                        <a class="list-group-item" ng-click="ShowConversation(data.requestcompliance2lawyerdtl_gid,data.name_initial,data.newmsg_count,data.lawyeruser_name)" ng-repeat="data in conlawyer_list|filter:searchtxt">
+                                                            <div class="media-box">
+                                                                <div class="pull-left">
+                                                                    <div class="card-offset pull-right">
+
+                                                                        <button type="button" class="btn btn-info btn-circle btn-sm"><strong>{{data.name_initial}}</strong></button>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="media-box-body clearfix">
+                                                                    <div class="pull-right">
+                                                                        <span class="badge badge-xs bg-pink" ng-if="data.newmsg_count!=0">{{data.newmsg_count}}</span>
+                                                                    </div>
+
+                                                                    <strong class="media-box-heading text-primary">
+                                                                        {{data.lawyeruser_name}}
+                                                                    </strong>
+
+
+                                                                    <p class="mb-sm">
+                                                                        <medium>{{data.lastconversation}}</medium>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <a class="list-group-item" ng-click="ShowConversation(requestcompliance_gid,'LG',groupnewmsg_count,'Lawyer Group')" ng-if="lawyer_count>1">
+                                                            <div class="media-box">
+                                                                <div class="pull-left">
+                                                                    <div class="card-offset pull-right">
+                                                                        <button type="button" class="btn btn-info btn-circle btn-sm"><strong>LG</strong></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media-box-body clearfix">
+                                                                    <div class="pull-right">
+                                                                        <span class="badge badge-xs bg-pink" ng-if="groupnewmsg_count!=0">{{groupnewmsg_count}}</span>
+                                                                    </div>
+
+                                                                    <strong class="media-box-heading text-pink">
+                                                                        Lawyer Group
+                                                                    </strong>
+
+
+                                                                    <p class="mb-sm">
+                                                                        <medium>{{grouplastconversation}}</medium>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </scrollable>
+                                                    <div class="panel-footer clearfix">
+                                                        <div class="input-group">
+                                                            <input type="text" placeholder="Search Lawyer..." ng-model="searchtxt" class="form-control input-sm" />
+                                                            <span class="input-group-btn">
+                                                                <button type="submit" class="btn btn-default btn-sm">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="panel" ng-hide="lawyer_summary">
+                                                    <div class="panel-heading">
+                                                        <div class="media-box">
+                                                            <div class="pull-left">
+                                                                <div class="card-offset">
+                                                                    <button type="button"
+                                                                            class="btn btn-info btn-circle btn-sm">
+                                                                        <strong>{{name_initial}}</strong>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-box-body clearfix">
+                                                                <div class="pull-right">
+                                                                    <span class="badge badge-xs bg-pink" ng-if="newmsg_count!=0">{{newmsg_count}}</span>
+
+                                                                </div>
+                                                                <strong class="media-box-heading text-primary">
+                                                                    {{lawyeruser_name}}
+                                                                </strong><br>
+                                                                <div ng-if="name_initial=='LG'">
+                                                                    <i>
+                                                                        You;
+                                                                        <span ng-bind-html="group_member">
+
+                                                                        </span>
+
+
+                                                                    </i>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="media-box-body">
+                                                            <div class="list-group">
+                                                                <div ng-repeat="data in conversationList">
+                                                                    <div ng-switch="data.myself_flag">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                                &nbsp;<div style="padding-left:200px;" ng-switch-when="Y" class="col-lg-12 col-md-12 col-sm-12">
+                                                                                    <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                                                                        <small class="pull-right text-bold">{{data.created_date}}</small>
+                                                                                        <div class="media-body">
+                                                                                            <span class="media-heading">
+                                                                                                <p class="m0">
+                                                                                                    <strong class="text-info">{{data.user_name}}</strong>
+
+                                                                                                </p>
+                                                                                                <p class="m0" ng-bind-html="data.msgconversation"></p>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div ng-switch-when="N" style="padding-right:200px;" class="col-lg-12 col-sm-12 col-md-12">
+                                                                                    <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                                                                        <small class="pull-right text-bold">
+                                                                                            {{data.created_date}}
+                                                                                        </small>
+                                                                                        <div class="media-body">
+                                                                                            <span class="media-heading">
+                                                                                                <p class="m0">
+                                                                                                    <strong class="text-info">{{data.user_name}}</strong>&nbsp;&nbsp;
+                                                                                                    <a ng-if="data.msgview_flag == 'N'" title="New" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                                                                                                        <b>New</b>
+                                                                                                    </a>
+                                                                                                </p>
+                                                                                                <p class="m0 " ng-style="data.msgview_flag == 'N'?{'color':'red'}:{}" ng-bind-html="data.msgconversation"></p>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div ng-show="name_initial=='LG'" class="panel-footer">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                                                    <textarea id="message_content" ng-model="$parent.message_content" placeholder="Reply here..." class="form-control"></textarea>
+                                                                </div>
+                                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                    <button type="button" ng-disabled="!message_content" ng-click="LawyerConversation()" class="btn btn-effect-ripple btn-green">Send </button>
+                                                                    <button type="button" ng-click="CloseConversation()" class="btn btn-effect-ripple btn-danger">Close </button>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+                                                    </div>
+                                                    <div ng-show="name_initial!='LG'" class="panel-footer">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="col-lg-10 col-sm-10 col-md-10">
+                                                                    <textarea id="message_content" ng-model="$parent.message_content" placeholder="Reply here..." class="form-control"></textarea>
+                                                                </div>
+                                                                <div class="col-lg-2 col-sm-2 col-md-2">
+                                                                    <button type="button" ng-disabled="!message_content" ng-click="LawyerindividualConversation()" class="btn btn-effect-ripple btn-green">Send </button>
+                                                                    <button type="button" ng-click="CloseConversation()" class="btn btn-effect-ripple btn-danger">Close </button>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                </md-content>
+</md-tab>
+                    </md-tabs>
+                </md-content>
+
+               
+            </div>
+        </div>
+    </div>
+
+
+    <br />
+
+
+
+
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="text-center">
+                <!--<button type="button" class="btn btn-success btn-md" ng-disabled="userform.$invalid" ng-click="requestSubmit(requestcompliance_gid)"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;-->
+                <!--<button type="button" class="mb-sm btn btn-warning" ng-disabled="userform.$invalid" ng-click="requestquery(requestcompliance_gid)"><i class="fa fa-question-circle"></i>&nbsp;&nbsp;Query</button>&nbsp;&nbsp;-->
+                <button ng-click="requestback(relpath1)" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <script type="text/ng-template" id="/uploadcorrecteddocument.html">
+        <div class="modal-header bg-green-200">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-green-200">
+                    <i class="fa fa-upload"><b> Upload Corrected Document</b></i>
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <div class="row" style="display:none;">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                </div>
+            </div>
+            <div class="pd-sm-10">
+                <form novalidate="" name="userform3" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 ">
+                            <div class="col-lg-5 col-sm-5 col-md-5">
+                                <strong>Upload Corrected Document</strong>
+                            </div>
+                            <div class="col-lg-5 col-sm-5 col-md-5">
+
+                                <input type="file" id="addupload" ng-model="test_document" onchange="angular.element(this).scope().uploaddoc(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 ">
+                            <div class="col-lg-12 col-sm-12 col-md-12 ">
+                                <div class="mda-form-group float-label">
+                                    <div class="mda-form-group">
+                                        <textarea ng-model="txtcorrected_remarks" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Remarks <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="userform3.$invalid" ng-click="documentupload()">
+                        <i class="fa fa-upload"></i> &nbsp;&nbsp;Upload
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/lawyeruploadContent.html">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-send (alias)"></em>&nbsp;Send Information To Assigned Lawyer</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="panel-body">
+                <form method="post">
+                    <div class="row">
+                        <div class="text-center">
+                            <label style="font-size:14px;">Assign Lawyer : {{lawyeruser_name}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <b style="color:darkblue">
+                                    <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                    Document Upload
+                                </b>
+                                <div class="dd-handle ng-scope" style="height:405px;">
+                                    <div class="row">
+                                        <div class="col-lg-10 col-sm-12 col-md-12">
+                                            <input type="file" id="addupload" ng-model="test_document"
+                                                   onchange="angular.element(this).scope().uploadseek(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                                                   accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <br />
+                                        <div class="col-lg-11 col-sm-12 col-md-12">
+                                            <div ui-scroll-viewport="" style="height:345px; overflow-y: auto;" class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="table-responsive table-bordered bg-teal-100">
+                                                        <table class="table">
+                                                            <thead class="bg-teal-500">
+                                                                <tr>
+                                                                    <th>Document Name</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="uploadseek in uploadseek_list">
+
+                                                                    <td>{{uploadseek.document_name}}</td>
+                                                                    <td>
+                                                                        <button title="Cancel" class="btn btn-default btn-sm"
+                                                                                ng-click="uploadcancel(uploadseek.tmpseek_documentgid)">
+                                                                            <em class="fa fa-close"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <b style="color:darkblue">
+                                    <em class="fa text-primary fa-lg"></em>&emsp;
+                                    Remarks
+                                </b>
+                                <div text-angular="" ng-model="$parent.seeklawyerremarks"
+                                     placeholder="Enter Remarks..." name="wysiswyg-editor" class="btn-group-justified"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button ng-click="assignconfirm()" class="btn btn-success">
+                <i class="fa fa-check (alias)">
+                </i>&nbsp;Send
+            </button>
+            <button ng-click="ok()" class="btn btn-danger">
+                <i class="fa fa-close (alias)">
+                </i>&nbsp;Cancel
+            </button>
+        </div>
+        <br />
+    </script>
+    <script type="text/ng-template" id="/statusupdation.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                    <em class="fa fa-upload"></em>
+                    Update Status
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4  col-sm-4 col-md-4">
+                            <strong class="mt0">Request  Ref No</strong><br />
+                            <p>{{requestref_no}}</p>
+                        </div>
+                        <div class="col-lg-4  col-sm-4 col-md-4">
+                            <strong class="mt0">Request Date</strong>
+                            <br />
+                            <p>{{request_date}}</p>
+                        </div>
+                        <div class="col-lg-4  col-sm-4 col-md-4">
+                            <strong class="mt0">Request type</strong>
+                            <br />
+                            <p>{{request_type}}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <label><strong>Status </strong></label>
+                            <select name="cbostatus" ng-model="cbostatus" class="form-control ng-valid ng-touched ng-valid-parse"
+                                    size="1">
+                                <option value=""> ---Select Status--- </option>
+                               
+                                <option value="Rejected"> Rejected / Not Relevent </option>
+                                <option value="Completed"> Completed</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12" ng-show="cbostatus=='Rejected'">
+
+                            <label><strong>Remarks </strong> <span style="color:red">*</span></label>
+                            <textarea name="txtrejected_remarks"
+                                      ng-model="txtrejected_remarks" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12" ng-show="cbostatus=='Completed'">
+
+                            <label><strong>Remarks </strong> <span style="color:red">*</span></label>
+                            <textarea name="txtcompleted_remarks"
+                                      ng-model="txtcompleted_remarks" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="mandatoryfields">
+
+                    <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+
+                        <label style="color:red;"> Enter Remarks</label>
+                        <br />
+                    </div>
+                </div>
+
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="submit()" ng-disabled!="cbostatus.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Update</span>
+                        </a>
+                        <a class="btn btn-danger" ng-click="ok()">
+                            <em class="fa fa-close"></em>
+                            <span>Cancel</span>
+                        </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </script>
+</div>
+

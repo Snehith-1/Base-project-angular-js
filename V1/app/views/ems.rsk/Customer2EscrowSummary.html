@@ -1,0 +1,485 @@
+﻿<h3>
+    Customer Escrow Management
+</h3>
+<div ng-controller="customer2EscrowSummary as dp">
+
+    <div class="card">
+        <div class="card-heading ">
+            <div class="card-title text-center text-primary "><strong>{{customerdetails.customer_urnedit}} - {{customerdetails.customerCodeedit}}/{{customerdetails.customerNameedit}}</strong></div>
+            <hr />
+        </div>
+        <div class="card-body">
+            <div class="row" ng-show="IsCreate">
+
+                <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="btn-label">
+                                <i class="fa fa-plus"></i>
+                            </span>Create Escrow
+
+                            <div class="pull-right ">
+                                <span class="btn-label btn-danger">
+                                    <i class="fa fa-close" title="Close" ng-click="close()"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="panel-body bg-gray-lighter">
+                            <div class="pd-sm-10">
+                                <form novalidate="" name="userform5" id="userform5" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Customer URN</label><br />
+                                                {{urn}}
+
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Customer Code</label><br />
+                                                {{customercode}}
+
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Customer Name</label><br />
+                                                {{customername}}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label class="col-form-label control-label">Sanction Ref.No.&nbsp;<span style="color:red">*</span></label>
+                                                <select name="sanctionrefno" chosen="" ng-options="m.sanctionrefno for m in sanctiondtl"
+                                                        ng-model="cbosanction" ng-change="sanctionrefnochange(sanctionrefno)" class="chosen-select form-control" required>
+
+                                                    <option value="">---Select---</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label class="col-form-label control-label"><strong>Sanction Date </strong></label>
+                                                <br />
+                                                <p ng-model="Sanction_Date">{{sanctionDate}}</p>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label class="col-form-label control-label"><strong>Facility Type</strong></label>
+                                                <br />
+                                                <p ng-model="facilitytype">{{facilitytype}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row ">
+                                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Disbursement Date &nbsp;<span style="color:red">*</span></label>
+                                                <p class="input-group">
+                                                    <input type="text" datepicker-popup="{{dp.format}}" ng-model="txtdisbursementDate" is-open="dp.opendisbursement"
+                                                           datepicker-options="dp.dateOptions" ng-required="true"
+                                                           close-text="Close" class="form-control" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calenderDisbursement($event)" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Transaction Ref No. &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="transactionRefNo" tabindex="0" maxlength="45"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Transaction Date &nbsp;<span style="color:red">*</span></label>
+                                                <p class="input-group">
+                                                    <input type="text" datepicker-popup="{{dp.format}}" ng-model="transactionDate" is-open="dp.openTransaction"
+                                                           datepicker-options="dp.dateOptions" ng-required="true"
+                                                           close-text="Close" class="form-control" />
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dp.calenderTransaction($event)" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Dealer Name &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="dealername" tabindex="0" maxlength="128"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Escrow Collection Account No &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="escrow_accountno" tabindex="0" maxlength="20"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Master Account No. &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="master_accountno" tabindex="0" maxlength="20"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Sender Customer Account Name &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="sendercustomer_accountname" tabindex="0" maxlength="128"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Sender Customer Account No. &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="sendercustomer_accountno" tabindex="0" maxlength="20"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Sender Branch IFSC &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="sendbranch_ifsc" tabindex="0" maxlength="11" min="11"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Beneficiary Customer Account Name &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="beneficiarycustomer_accountname" tabindex="0" maxlength="128"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Reference &nbsp;<span style="color:red">*</span></label>
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" required  name="reference" value="RTGS" ng-model="reference" />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>RTGS
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" required name="reference" value="NEFT" ng-model="reference" />
+                                                        <span class="fa fa-circle"></span>NEFT
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Remittance Info &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="remittance" tabindex="0" maxlength="512"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>Amount &nbsp;<span style="color:red">*</span></label>
+                                                <input id="txtInput" ng-model="amount" required tabindex="0" type="text"
+                                                       class="form-control ng-pristine ng-valid ng-touched" ng-pattern="/^([0-9\s])+(,[0-9\s]+)*$/" style="text-align:right;" ng-change="amountschange()">
+                                                <label><span style="color:#ff001882;">* Accept Number Format Only</span></label>
+                                                <div id="word"></div>
+
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <label>Credit Time (Days) &nbsp;<span style="color:red">*</span></label>
+                                                <input ng-model="creditTime" tabindex="0" type="number" maxlength="3" size="3"
+                                                       required aria-required="true" aria-invalid="true"
+                                                       class="form-control mb-2 mr-sm-2 ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <label>Remarks &nbsp;<span style="color:red">*</span></label>
+                                                <textarea ng-model="remarks" required  placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="text-center">
+                                            <a class="btn btn-success" ng-click="escrowSubmit()" ng-disabled="userform5.$invalid">
+                                                <em class="fa fa-arrow-right"></em>
+                                                <span>Submit</span>
+                                            </a>
+                                            <a class="btn btn-danger" ng-click="close()">
+                                                <em class="fa fa-close"></em>
+                                                <span>Close</span>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row" ng-show="IsView">
+
+                <div class="col-lg-12 col-sm-12 col-md-12 modal-body ng-scope">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="btn-label">
+                                <i class="fa fa-eye"></i>
+                            </span>View Escrow
+                            <div class="pull-right ">
+                                <span class="btn-label btn-danger">
+                                    <i class="fa fa-close"  title="Close" ng-click="ViewClose()"></i>
+                                </span>
+                            </div>
+                           
+                        </div>
+                        <div class="panel-body bg-gray-lighter">
+                            <div class="pd-sm-10">
+
+                                <div class="row ">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Customer URN</label><br />
+                                            {{escrowview.customer_urn}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Customer Code</label><br />
+                                            {{escrowview.customer_code}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Customer Name</label><br />
+                                            {{escrowview.customer_name}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row ">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label class="col-form-label control-label">Sanction Ref.No.</label><br />
+                                            {{escrowview.sanction_refno}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label class="col-form-label control-label"><strong>Sanction Date </strong></label>
+                                            <br />
+                                            {{escrowview.sanction_date}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label class="col-form-label control-label"><strong>Facility Type </strong></label>
+                                            <br />
+                                            {{escrowview.facility_type}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row ">
+                                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Disbursement Date </label><br />
+                                            {{escrowview.disbursement_date}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Transaction Ref No.</label><br />
+                                            {{escrowview.transactionref_no}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Transaction Date </label><br />
+                                            {{escrowview.transaction_date}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Dealer Name</label><br />
+                                            {{escrowview.dealer_name}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Escrow Collection Account No</label><br />
+                                            {{escrowview.escrow_account_no}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Master Account No </label><br />
+                                            {{escrowview.master_account_no}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Sender Customer Account Name</label><br />
+                                            {{escrowview.sender_customer_account_name}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Sender Customer Account No</label><br />
+                                            {{escrowview.sender_customer_account_no}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Sender Branch IFSC </label><br />
+                                            {{escrowview.sender_branch_IFSC}}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Beneficiary Customer Account Name</label><br />
+                                            {{escrowview.beneficiary_customer_account_name}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Reference </label><br />
+                                            {{escrowview.reference}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Remittance Info</label><br />
+                                            {{escrowview.remittance_info}}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Amount</label><br />
+                                            {{escrowview.amount}}
+
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Credit Time </label><br />
+                                            {{escrowview.credit_time}}
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <label>Remarks</label>
+                                            <p>{{escrowview.remarks}}</p>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="text-center">
+                                        <a class="btn btn-danger" ng-click="ViewClose()">
+                                            <em class="fa fa-close"></em>
+                                            <span>Close</span>
+                                        </a>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <button title="Create Escrow" ng-hide="IsCreate" class="btn btn-info btn-sm"
+                            ng-click="escrowCreate()">
+                        <em class="fa fa-plus"></em>&nbsp;Create Escrow
+                    </button>
+                </div>
+            </div>
+          
+            <br />
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.NO</th>
+                            <th>Sanction Ref.No.</th>
+                            <th>Sanction Date</th>
+                            <th>Disbursement Date</th>
+                            <th>Transaction Ref.No.</th>
+                            <th>Transaction Date</th>
+                            <th>Esrow Account No.</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in escrowlist">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Sanction Ref.No.'">{{data.sanction_refno}}</td>
+                            <td data-title="'Sanction Date'">{{data.sanction_date}}</td>
+                            <td data-title="'Disbursement Date'">{{data.disbursement_date}}</td>
+                            <td data-title="'Transaction Ref.No.'">{{data.transactionref_no}}</td>
+                            <td data-title="'Transaction Date'">{{data.transaction_date}}</td>
+                            <td data-title="'Escrow Account No'">{{data.escrow_account_no}}</td>
+                            <td data-title="'Amount'">{{data.amount}}</td>
+                            <td>
+                                <button title="View" class="btn btn-info btn-sm"
+                                        ng-click="escrowView(data.escrow_gid)">
+                                    <em class="icon icon-eye"></em>
+                                </button>
+                                <button title="delete" class="btn btn-danger btn-sm"
+                                        ng-click="escrowDelete(data.escrow_gid)">
+                                    <em class="fa fa-trash"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div class="row">
+                <div class="text-center" >
+                    <a class="btn btn-info" href="#/app/customerManagement">
+                        <em class="fa fa-arrow-left"></em>
+                        <span>Back</span>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+     </div>
+</div> 

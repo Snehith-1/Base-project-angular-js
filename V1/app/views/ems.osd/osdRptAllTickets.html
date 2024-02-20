@@ -1,0 +1,250 @@
+﻿<h3>
+    Report
+</h3>
+<div ng-controller="osdRptAllTicketsController as dpick">
+
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">          
+                <div class="col-lg-4  col-sm-4 col-md-4" ng-show="single" style="display:none">
+                    <label>Business Unit  Name </label>&nbsp;
+
+                    <p>{{lbldepartmentgid}}</p>
+                </div>
+                <div class="col-lg-4  col-sm-4 col-md-4" ng-show="single">
+                    <label>Business Unit  Name </label>&nbsp;
+                    <p>{{lbldepartmentname}}</p>
+                </div>
+                <div class="col-lg-4  col-sm-4 col-md-4"  ng-show="multiple">
+                    <label>Business Unit  Name </label>&nbsp;
+                    <select name="department" id="department" ng-options="m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdept(cbodepartment)"
+                            ng-model="cbodepartment" class="chosen-select form-control" style="height:37px;" size="1">
+                        <option value=""> ----- Select Business Unit  -----</option>
+                    </select>
+
+                </div>
+           
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Activity</strong><br />
+                <select id="select_value_label_93" name="activity_name"   dropzone="" ng-model="activitymaster_gid" required=""
+                        class="chosen-select form-control"  size="1">
+                    <option value="">--Select Activity--</option>
+                    <option data-ng-repeat="data in activity_list" value="{{data.activitymaster_gid}}">
+                        {{data.activity_name}}
+                    </option>
+                </select>
+
+
+            </div>
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Assigned Team</strong>
+                <select name="activity_name"
+                        tabindex="1" 
+                        ng-model="supportteam_gid" class="chosen-select form-control">
+                    <option value="">--Select Team--</option>
+                    <option data-ng-repeat="data in supportdtl" value="{{data.supportteam_gid}}">
+                        {{data.team_name}}
+                    </option>
+                </select>
+
+            </div>
+           
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+            <!--<div class="col-lg-4  col-sm-4 col-md-4">
+        <strong class="mt0">Request Ref.No</strong><br />
+        <input ng-model="ref_no" type="text" placeholder="Enter Request Ref.No"
+               maxlength="150" class="form-control ng-pristine ng-valid ng-touched" required>
+
+
+    </div>
+    <div class="col-lg-4  col-sm-4 col-md-4">
+        <strong class="mt0">Raised By</strong>
+        <select id="zonal_name" name="vertical" dropzone="" ng-model="raisedmember_gid" required=""
+                class="form-control ng-valid ng-touched ng-valid-parse"
+                tabindex="0" aria-label="State" aria-expanded="false" size="1">
+            <option value="">--Select Raised Person--</option>
+            <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                {{data.employee_name}}
+            </option>
+        </select>
+
+    </div>-->
+            <div class="col-lg-4  col-sm-4 col-md-4">
+                <strong class="mt0">Assigned Member</strong><br />
+                <select id="zonal_name"    name="vertical" dropzone="" ng-model="assignedmember_gid" required=""
+                        class="chosen-select form-control"
+                        tabindex="0" aria-label="State" aria-expanded="false" size="1">
+                    <option value="">---Select Assigned Member---</option>
+                    <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}">
+                        {{data.employee_name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Ticket Status</strong>
+                <select name="activity_name"
+                        ng-model="ticket_status" class="chosen-select form-control">
+                    <option value="">--Select Ticket Status--</option>
+                    <option value="Allotted">Allotted</option>
+                    <option value="Work-In-Progress">Work-In-Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Closed">Closed</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Rejected">Rejected</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Raised On</strong><br />
+                <p class="input-group">
+
+                    <input type="text" id="dob" name="date" ng-model="raised_date" datepicker-popup="{{dpick.format}}"
+                           style="height:30px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                           close-text="Close" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dpick.open($event)" style="height:30px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Source</strong>
+                <select name="source"
+                        ng-model="ticket_source" class="chosen-select form-control">
+                    <option value="">--Select Source--</option>
+                    <option value="Internal">Internal</option>
+                    <option value="E-Mail">E-Mail</option>
+                    <option value="BRS">BRS</option>
+                    <option value="Kotak_Api">Kotak_Api</option>                  
+
+                </select>
+
+            </div>
+
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <br />
+                <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="userform.$invalid" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="userform.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="userform.$invalid" ng-click="export()" title="Export Excel"><i class="fa fa-file"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;
+            </div>
+
+        </div>
+    </div>
+   
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+
+        <div class="panel-body">
+
+            <!--<div class="row">
+        <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" maxlength="5" ng-pattern="/^\d+$/" />
+                    <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                    <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                               class="form-control input-sm" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>-->
+
+            <br />
+            <div class="table-responsive">
+                <table datatable="ng" class="table hover table-striped">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th class="text-center" style="display:none">S.No</th>
+                            <th>Request Ref.No</th>
+                            <th>Business Unit Name</th>
+                            <th style="width:160px;">Raised On</th>
+                            <th>Raised By</th>
+                            <th>Activity Name</th>
+                            <th>Request Title</th>
+                            <th>Assigned Team</th>
+                            <th>Assigned Member</th>
+                            <th>Request Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in servicerequestsummary | limitTo:limit">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <td data-title="'Request Ref.No'">{{data.request_refno}}</td>
+                            <td data-title="'Business Unit Name'">{{data.department_name}}</td>
+                            <td data-title="'Raised On'">{{data.raised_date}}</td>
+                            <td data-title="'Raised By'">{{data.raised_by}}</td>
+                            <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                            <td data-title="'Request Title'">{{data.request_title}}</td>
+                            <td data-title="'Assigned Team'">{{data.assigned_team}}</td>
+                            <td data-title="'Assigned Member'">{{data.assigned_to}}</td>
+                            <td data-title="'Request Status'" ng-switch="data.request_status1">
+                                <label ng-switch-when="Allotted" class="label label-warning">Allotted</label>
+                                <label ng-switch-when="Work-In-Progress" class="label label-info">Work-In-Progress</label>
+                                <label ng-switch-when="Reopen-Work-In-Progress" class="label label-info">Reopen - Work-In-Progress</label>
+                                <label ng-switch-when="Completed" class="label label-success">Completed</label>
+                                <label ng-switch-when="Reopen-Completed" class="label label-success">Reopen - Completed</label>
+                                <label ng-switch-when="Closed" class="label label-success">Closed</label>
+                                <label ng-switch-when="Reopen-Closed" class="label label-success">Reopen - Closed</label>
+                                <label ng-switch-when="Rejected" class="label label-danger">Rejected</label>
+                                <label ng-switch-when="Cancelled" class="label label-danger">Cancelled</label>
+                            </td>
+                            <td data-title="'Source'" ng-switch="data.source">
+                                <label style="font-size:10px" ng-switch-when="E-mail" class="label label-green">E-Mail</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_Api" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_API" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="BRS" class="label label-pink">BRS</label>
+                                <label style="font-size:10px" ng-switch-when="Internal" class="label label-primary">Internal</label>
+                            </td>
+                            <td class="nowrap" data-title="'Action'">
+                                <button title="View" ng-click="viewNew(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid)" class="btn btn-info">
+                                    <em class="fa fa-eye "></em>
+                                </button>
+                                <!--<button title="PDF" ng-click="viewPDF(data.servicerequest_gid)" class="btn btn-info">
+            <em class="fa fa-angle-right "></em>
+        </button>-->
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div class="text-right">
+                <button class="btn btn-success btn-md" ng-click="incrementLimit()">More</button>
+
+                <button class="btn btn-warning btn-md" ng-click="decrementLimit()">Less</button>
+              
+            </div>
+            <br />
+        </div>
+    </div>
+    <!-- END panel-->
+</div>

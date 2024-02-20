@@ -1,0 +1,162 @@
+<h3>
+    Product Revoke
+</h3>
+<style>
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 48px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 56px;
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .tab button.active {
+        background-color: #d5591e;
+        background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(ApplicationName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+</script>
+<div ng-controller="AgrMstProductRevokeSummaryController">
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            <div class="tab nowrap">
+                <button class="tablinks" onclick="openApplication(event, 'Product Rejected')" id="defaultOpen" ng-click="rejected_applications()" style="color:#FF0000;font-size:13px">
+                    <em class="icon-close fa-x" style="color:#FF0000;font-size: 15px;"></em>  Product Rejected
+                    <div class="pull-right label" style="padding-top:4px;font-size: 8px;padding-bottom:4px;color:#FF0000;font-size:14px;"> - {{creditreject_count}}</div>
+                </button>
+                <button class="tablinks" ng-click="hold_applications()" style="color:#107E13;font-size:13px">
+                    <em class="icon-control-pause fa-x" style="color:#107E13;font-size: 15px;"></em> Product Hold
+                    <div class="pull-right label" style="padding-top:4px;font-size: 8px;padding-bottom:4px;font-size:14px;color:#107E13;"> - {{credithold_count}}</div>
+                </button>
+                <button class="tablinks" ng-click="business_revoked()" style="color:#C91E20;font-size:13px">
+                    <em class="fa fa-exchange fa-x" style="color:#C91E20;font-size: 15px;"></em>  Product Revoked
+                    <div class="pull-right label" style="padding-top:4px;font-size: 8px;padding-bottom:4px;color:#C91E20;font-size:14px;"> - {{creditrevoked_count}}</div>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <div class="list-group-item picColor" style="height:50px;">
+                <div class="media-box">
+                    <div class="media-box-body clearfix">
+                        <div class="media-box-heading" style="padding-top:6px;">
+                            <div class="pull-right label" style="padding-top:6px;padding-bottom:4px;font-size:8px;color:#C10B68;font-size:14px;"> {{lstotalcount}}</div>
+                            <div style="font-size:14px;color:#C10B68;"><b> Total Applications  - </b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="panel" id="Product Rejected">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;" class="text-center"> S.No</th>
+                                    <th> Submitted Date </th>
+                                    <th> Submitted By </th>
+                                    <th> Application Number</th>
+                                    <th> Applicant Name </th>
+                                    <th> Vertical</th>
+                                    <th> Region</th>
+                                    <th> Product Credit Group</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in creditrejectedappl_list">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center"> {{$index+1}} </td>
+                                    <td data-title="'Submitted Date'">{{data.created_date}}</td>
+                                    <td data-title="'Submitted By'"> {{data.created_by}} </td>
+                                    <td data-title="'Application Number'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.customer_name}} </td>
+                                    <td data-title="'Vertical'"> {{data.vertical_name}} </td>
+                                    <td data-title="'Region'"> {{data.region}} </td>
+                                    <td data-title="'Product Product Group'"> {{data.creditgroup_name}} </td>
+                                    <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                        <button title="View" ng-click="applcreation_view(data.application_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Revoke" ng-click="Rejected_revoke(data.application_gid,data.created_gid)" style="background-color:#B61E5C;" class="btn btn-purple">
+                                            <em class="fa fa-exchange"></em>
+                                        </button>
+                                        <button title="History" ng-show="data.history_flag=='Y'" ng-click="revoke_history(data.application_gid)" class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <button title="History" ng-show="data.history_flag=='N'" disabled class="btn btn-purple">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br />
+    </div>
+
+</div>

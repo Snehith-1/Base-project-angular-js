@@ -1,0 +1,1186 @@
+﻿<h3>
+    My Campaign
+    <a href="#/app/FndTrnMyCampaignOpen">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-primary ">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+
+        </button>
+    </a>
+</h3>
+<div ng-controller="FndTrnMyCampaignEditController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-edit"></i>
+            </span> Edit My Campaign
+        </div>
+        <div class="dd-handle ng-scope">
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <br />
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Campaign Details </b></p>
+                                <hr />
+
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Campaign Ref No </label>
+                                    <br />
+                                    {{campaignrefno}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Campaign Name</label>
+                                    <br />
+                                    {{campaign_name}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Campaign Type </label>
+                                    <br />
+                                    {{campaign_type}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Campaign Start Date </label>
+                                    <br />
+                                    {{start_date}}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Campaign End Date</label>
+                                    <br />
+                                    {{end_date}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold"> Assesment Date </label>
+                                    <br />
+                                    {{assesment_date}}
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+
+                    </div>
+                    <br />
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12">
+
+
+                                <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Customer Details </b></p>
+                                <hr />
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Customer Name </label>
+                                    <br />
+                                    {{customer_name}}
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label class="col-form-label"> Contact Person Name </label>
+                                    <br />
+                                    {{contactperson_fn}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold"> Contact Person Mobile Number </label>
+                                    <br />
+                                    {{contactperson_mobile}}
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3">
+                                    <label style="font-weight:bold">Contact Person Email Address</label>
+                                    <br />
+                                    {{contactperson_email}}
+                                </div>
+
+                            </div>
+                        </div>                        
+                </div>
+                    <br />
+            <div id="panelDemo6" class="panel panel-default"  ng-show="ShowSinglefrm">
+                <div id="panelDemo4" class="panel panel-default">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" style="">
+                        &emsp;<b style="color:darkblue;font-size:15px;">
+                            <label>Single Form </label>
+                        </b>
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo4=true" class="pull-right">
+                            <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo4 = !panelDemo4" class="ng-scope" tabindex="0">
+                                <em ng-show="panelDemo4" class="glyphicon glyphicon-chevron-down" aria-hidden="false" style=""></em>
+                                <em ng-show="!panelDemo4" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" style=""></em>
+                            </a>
+                        </paneltool>
+                    </div>
+                    <div collapse="panelDemo4" class="panel-wrapper collapse" style="height: 0px;">
+                        <div class="panel-body">
+                            <div class="panel">
+
+                                <div class="row">
+                                    <form novalidate="" name="singleformsubmit" ng-submit="form.singleformsubmit()" autocomplete="off" class="form-validate form-horizontal">
+                                        <div class="col-lg-12 col-sm-12 col-md-12" ui-scroll-viewport="" style="height:300px; overflow-y: auto;" ng-hide="form_details">
+                                            <div class="row">
+                                                <div data-ng-repeat="choice in choices" ng-switch="choice.answer_type">
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="List">
+                                                        <div class="col-sm-12">
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                                                <label class="col-form-label"> {{choice.question}} </label>
+                                                                <span ng-if="choice.importance == 'Yes'" style="color:red">*</span>
+                                                                <span ng-if="choice.importance == 'No'" style="color:red"></span>
+                                                            </div>
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <select class="form-control" required style="font-weight:normal" ng-if="choice.importance == 'Yes'" ng-model="choice.type" ng-options="item for item in choice.answer_desc"></select>
+                                                                <select class="form-control" style="font-weight:normal" ng-if="choice.importance == 'No'" ng-model="choice.type" ng-options="item for item in choice.answer_desc"></select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                                                        <div class="col-sm-12">
+                                                            <br />
+                                                            <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                                            <label class="col-form-label"> {{choice.question}} </label>
+                                                            <span ng-if="choice.importance == 'Yes'" style="color:red">*</span>
+                                                            <span ng-if="choice.importance == 'No'" style="color:red"></span>
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <input class="form-control" type="text" ng-if="choice.importance == 'Yes'" ng-model="choice.name" name="" style="resize:vertical;font-weight:normal;" required rows="2" aria-multiline="true">
+                                                                <input class="form-control" type="text" ng-if="choice.importance == 'No'" ng-model="choice.name" name="" style="resize:vertical;font-weight:normal;" rows="2" aria-multiline="true">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio_Button">
+                                                        <div class="col-sm-12">
+                                                            <br />
+                                                            <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                                            <label class="col-form-label"> {{choice.question}} </label>
+                                                            <span ng-if="choice.importance == 'Yes'" style="color:red">*</span>
+                                                            <span ng-if="choice.importance == 'No'" style="color:red"></span>
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <div ng-repeat="radioOption in choice.answerdesc_list">
+                                                                    <label for="rbvalue_{{radioOption.id}}">
+                                                                        <input id="rbvalue_{{radioOption.id}}" type="radio" ng-model="$parent.SelectedId"
+                                                                               value="{{radioOption.name}}" ng-checked=radioOption.check ng-change="onSingleTaskSelect(radioOption.name,radioOption.id,choice.question,'Radio_Button')" />&nbsp;{{radioOption.name}}
+                                                                    </label>
+
+                                                                </div>
+                                                                <!--<div class="col-sm-12">
+                                                                    <div ng-repeat="radioOption in choice.answerdesc_list">
+                                                                        <input type="radio" id="{{radioOption.id}" name="radioList" value="{{radioOption.name}}" required ng-if="choice.importance == 'Yes'" ng-model="choice.selected">
+                                                                        <input type="radio" id="{{radioOption.id}" name="radioList" value="{{radioOption.name}}" ng-if="choice.importance == 'No'" ng-model="choice.selected">
+
+                                                                        <label class='dynamic-text' name="" style="font-weight:normal">{{radioOption.name}}</label>
+
+                                                                        <editor></editor>
+                                                                    </div>
+
+
+                                                                </div>-->
+
+
+
+                                                            </div>
+                                                    </div>
+                                                        </div>
+                                                   
+                                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio Button">
+                                                        <div class="col-sm-12">
+                                                            <br />
+                                                            <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                                            <label class="col-form-label"> {{choice.question}} </label>
+                                                            <span ng-if="choice.importance == 'Yes'" style="color:red">*</span>
+                                                            <span ng-if="choice.importance == 'No'" style="color:red"></span>
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <div ng-repeat="radioOption in choice.answerdesc_list">
+                                                                    <label for="rbvalue_{{radioOption.id}}">
+                                                                        <input id="rbvalue_{{radioOption.id}}" type="radio" ng-model="$parent.SelectedId"
+                                                                               value="{{radioOption.name}}" ng-checked=radioOption.check ng-change="onSingleTaskSelect(radioOption.name,radioOption.id,choice.question,'Radio Button')" />&nbsp;{{radioOption.name}}
+                                                                    </label>
+
+                                                                </div>
+                                                            
+
+
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                                                        <div class="col-sm-12">
+                                                            <br />
+                                                            <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                                            <label class="col-form-label"> {{choice.question}} </label>
+                                                            <span ng-if="choice.importance == 'Yes'" style="color:red">*</span>
+                                                            <span ng-if="choice.importance == 'No'" style="color:red"></span>
+                                                            <br />
+                                                            <div class="col-sm-12">
+                                                                <input type="text" tabindex="0" required maxlength="10" ng-if="choice.importance == 'Yes'" ng-model="choice.name" ng-pattern="/^[0-9]*$/"
+                                                                       aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                                                <input type="text" tabindex="0" maxlength="10" ng-if="choice.importance == 'No'" ng-model="choice.name" ng-pattern="/^[0-9]*$/"
+                                                                       aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                    
+                                            </div>
+
+
+                                            <div class="text-center">
+                                                <br />
+                                                <button type="button" ng-hide="form_submit" ng-disabled="singleformsubmit.$invalid" class="btn btn-success btn-md" ng-click="mycampaign_submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <br />
+
+                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;" ng-hide="form_summary">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="table-responsive">
+                                                    <table datatable="ng" class="table table-hover table-striped">
+                                                        <thead>
+                                                            <tr class="text-white" style="background-color:#09385f;">
+                                                                <th class="text-center" style="display:none"> S.No </th>
+                                                                <th>Campaign Ref No</th>
+                                                                <th>Campaign Name</th>
+                                                                <th>Campaign Type</th>
+                                                                <th>Action</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr ng-repeat="data in singleformanswer_list">
+                                                                <td data-title="'S.No'" style="display:none" class="text-center">{{$index+1}}</td>
+                                                                <td data-title="'Campaign Ref No'">{{data.campaign_code}}</td>
+                                                                <td data-title="'Campaign Name'">{{data.campaign_name}}</td>
+                                                                <td data-title="'Campaign Type'">{{data.campaigntype_name}}</td>
+                                                                <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                                    <button title="View" ng-click="viewcampaign(data.mycampaignsingle_gid)" class="btn btn-info">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>
+
+                                                                    <button title="Edit" ng-click="editcampaign(data.mycampaignsingle_gid)" class="btn btn-green">
+                                                                        <em class="fa fa-edit"></em>
+                                                                    </button>
+                                                                </td>
+
+                                                            </tr>
+
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="panelDemo6" class="panel panel-default">
+                <div ng-class="{'panel-heading-collapsed':panelDemo3}" class="panel-heading panel-heading-collapsed" style="">
+                    &emsp;<b style="color:darkblue;font-size:15px;">
+                        <label>Multiple Form</label>
+                    </b>
+                    <paneltool tool-collapse="tool-collapse" ng-init="panelDemo6=true" class="pull-right">
+                        <a href="#" tooltip="Expand / Collapse" ng-click="panelDemo6 = !panelDemo6" class="ng-scope" tabindex="0">
+                            <em ng-show="panelDemo6" class="glyphicon glyphicon-chevron-down" aria-hidden="false" style=""></em>
+                            <em ng-show="!panelDemo6" class="glyphicon glyphicon-chevron-up ng-hide" aria-hidden="true" style=""></em>
+                        </a>
+                    </paneltool>
+                </div>
+                <div collapse="panelDemo6" class="panel-wrapper collapse" style="height: 0px;">
+                    <div class="panel-body">
+                        <div class="panel">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+
+
+
+                                <div class="row">
+                                    <tabset justified="true">
+                                        <tab>
+                                            <tab-heading>
+                                                <em class="fa  fa-check-circle  fa-1x"></em> My Activity &nbsp;
+                                                <label class="label label-info" ng-if="approvalcount.dependencyapprovalcount!='0'">{{approvalcount.dependencyapprovalcount}}</label>
+                                            </tab-heading>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-6 col-sm-12">
+                                                    <a class="btn btn-sm btn-deafult" style="background-color:#09385f;color:white;" ng-click="AddMultiple()"><span class="fa fa-plus" /> Add </a>
+                                                </div>
+                                                <div>
+                                                    <!--<button type="button" class="btn btn-success btn-md pull-right" title="Sample Import Excel" ng-click="importexcel()">
+                                                        <i class="fa fa-file-excel-o">&nbsp;Excel Add</i>
+                                                    </button>-->
+                                                    <a class="btn btn-sm btn-deafult" style="background-color:#09385f;color:white;" ng-click="importexcel()"><span class="fa fa-plus" /> Excel Add </a>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-2 col-md-6 col-sm-14">
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+
+                                                    <div class="table-responsive table-bordered" ng-style="SampleDynamicTabledata.length > 9 && {'height':'450px'}" style="overflow-y:auto;" ng-show="invisible">
+                                                        <table datatable="ng" class="table table-hover table-striped">
+                                                            <tr class="text-white" style="background-color:#09385f;">
+
+                                                                <th>S.No</th>
+                                                                <th style="word-break:break-all;" ng-repeat="(key, val) in SampleDynamicTabledata[0]">{{stripAddr(key)}}</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                            <tbody>
+                                                                <tr ng-repeat="row in SampleDynamicTabledata ">
+                                                                    <td>{{$index +1}}</td>
+                                                                    <td ng-repeat="column in row">
+                                                                        {{ column }}
+                                                                    </td>
+
+                                                                    <td data-title="'Action'">
+
+                                                                        <button title="Edit" ng-click="editmultipleform(row.Reference_No)" class="btn btn-green">
+                                                                            <em class="fa fa-edit"></em>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </tab>
+
+                                        <tab>
+                                            <tab-heading>
+                                                <em class="fa fa-history  fa-1x"></em> Team Activity
+                                            </tab-heading>
+                                            <div>
+                                               
+                                                <div class="table-responsive table-bordered" ng-style="SampleDynamicTabledata1.length > 9 && {'height':'450px'}" style="overflow-y:auto;" ng-show="invisibleTeam">
+                                                    <table datatable="ng" class="table table-hover table-striped">
+                                                        <tr class="text-white" style="background-color:#09385f;">
+
+                                                            <th>S.No</th>
+                                                            <th style="word-break:break-all;" ng-repeat="(key, val) in SampleDynamicTabledata1[0]">{{stripAddr(key)}}</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                        <tbody>
+                                                            <tr ng-repeat="row in SampleDynamicTabledata1 ">
+                                                                <td>{{$index +1}}</td>
+                                                                <td ng-repeat="column in row">
+                                                                    {{ column }}
+                                                                </td>
+                                                                <td data-title="'Action'">
+                                                                    <button title="View" ng-click="viewmultiplecampaign(row.Reference_No)" class="btn btn-info">
+                                                                        <em class="fa fa-eye"></em>
+                                                                    </button>
+                                                                   
+                                                                </td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </tab>
+
+                                    </tabset>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+                        <div class="dd-handle ng-scope">
+                            <p class="text-primary" style="font-size:14px;"><b> Raise Query Summary </b></p>
+                            <hr />
+                            <div class="row ">
+                                <div class="col-md-12 col-lg-12 col-sm-12">
+
+
+                                    <div class="col-md-12 col-lg-12 col-sm-12">
+                                        <br />
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th>S.No</th>
+                                                        <th>Query Title</th>
+                                                        <th>Query Description/Response</th>
+                                                        <th>Query Raised By</th>
+                                                        <th>Query Raised Date</th>
+                                                        <th>Query Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in mycampiagnraisequery_list">
+                                                        <td class="text-center"> {{$index+1}} </td>
+                                                        <td data-title="'Checklist UniqueNO'" style="text-align:left;">{{data.query_title}}</td>
+                                                        <!--<td data-title="'Entity Name'" style="text-align:left;">{{data.query_description}}</td>-->
+                                                        <td data-title="'Query Description & RM Response'">
+                                                            <button title="View Query Description'" ng-click="view_campaignquerydesc(data.query_description,data.queryresponse_remarks,data.query_responseby)" class="btn btn-info">
+                                                                <em class="fa fa-eye"></em>
+                                                            </button>
+                                                        </td>
+                                                        <td data-title="'Entity Name'" style="text-align:left;">{{data.created_by}}</td>
+                                                        <td data-title="'Audit Department Name'" style="text-align:left;">{{data.created_date}}</td>
+                                                        <td data-title="'Query Status'" ng-switch="data.raisequery_status">
+                                                            <div class="label label-success" style="font-size:12px;" ng-switch-when="Closed">{{data.raisequery_status}}</div>
+                                                            <div class="label label-info" style="font-size:12px;" ng-switch-when="Query Raised">{{data.raisequery_status}}</div>
+                                                        </td>
+
+                                                        <td data-title="'Action'" ng-switch="data.raisequery_status">
+                                                            <button title="Close" ng-switch-when='Query Raised' ng-click="mycampaignquery_close(data.mycampaignraisequery_gid)" class="btn btn-danger btn-sm">
+                                                                Close
+                                                            </button>
+                                                            <button title="Close" ng-switch-when='Closed' disabled class="btn btn-danger btn-sm">
+                                                                Close
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="row">
+                            <div class="text-center">
+                                <button ng-click="proceedtoapprove()" ng-disabled="campaign_status == 'Pending for Final Approval'" class="btn btn-success"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Proceed To Approval</button>
+                                <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/myModalContent.html">
+        <div class="modal-header bg-primary ng-scope">
+
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span>Add
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10" ui-scroll-viewport="" style="height:300px; overflow-y: auto;">
+                    <div class="row">
+                        <div data-ng-repeat="multichoice in multichoices" ng-switch="multichoice.answer_type">
+
+
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{multichoice.question}} </label>
+                                        <span ng-if="multichoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="multichoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input class="form-control" ng-if="multichoice.importance == 'Yes'" type="text" ng-model="multichoice.name" name="" style="resize:vertical;font-weight:normal;" required rows="2" aria-multiline="true">
+                                        <input class="form-control" ng-if="multichoice.importance == 'No'" type="text" ng-model="multichoice.name" name="" style="resize:vertical;font-weight:normal;" rows="2" aria-multiline="true">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{multichoice.question}} </label>
+                                        <span ng-if="multichoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="multichoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input type="text" tabindex="0" required maxlength="10" ng-if="multichoice.importance == 'Yes'" ng-model="multichoice.name" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <input type="text" tabindex="0" maxlength="10" ng-if="multichoice.importance == 'No'" ng-model="multichoice.name" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="MultipleSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/EditMultiple.html">
+        <div class="modal-header bg-primary ng-scope">
+
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Multiple Form
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" id="userformsubmit1" ng-submit="userformsubmit1" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10" ui-scroll-viewport="" style="height:300px; overflow-y: auto;">
+                    <div class="row">
+                        <div data-ng-repeat="multichoice in editmultichoices" ng-switch="multichoice.answer_type">
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{multichoice.question}} </label>
+                                        <span ng-if="multichoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="multichoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input class="form-control" type="text" ng-if="multichoice.importance == 'Yes'" ng-model="multichoice.name" ng-init="multichoice.name=multichoice.multipleform_answer" name="" style="resize:vertical;font-weight:normal;" required rows="2" aria-multiline="true">
+                                        <input class="form-control" type="text" ng-if="multichoice.importance == 'No'" ng-model="multichoice.name" ng-init="multichoice.name=multichoice.multipleform_answer" name="" style="resize:vertical;font-weight:normal;" rows="2" aria-multiline="true">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{multichoice.question}} </label>
+                                        <span ng-if="multichoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="multichoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input type="text" tabindex="0" required maxlength="10" ng-if="multichoice.importance == 'Yes'" ng-model="multichoice.name" ng-init="multichoice.name=multichoice.multipleform_answer" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <input type="text" tabindex="0" maxlength="10" ng-if="multichoice.importance == 'No'" ng-model="multichoice.name" ng-init="multichoice.name=multichoice.multipleform_answer" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="MultipleUpdate()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+
+
+
+
+    <script type="text/ng-template" id="/EditSingleform.html">
+        <style>
+            input:-moz-placeholder {
+                color: black;
+                opacity: 1;
+            }
+        </style>
+        <div class="modal-header bg-primary ng-scope">
+
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Single Form
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="userformsubmit" ng-submit="user" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10" ui-scroll-viewport="" style="height:300px; overflow-y: auto;">
+                    <div class="row">
+                        <div data-ng-repeat="singlechoice in singlechoices" ng-switch="singlechoice.answer_type">
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="List">
+                                <br />
+                                <div class="col-sm-12">
+                                    <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{singlechoice.question}} </label>
+                                        <span ng-if="singlechoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="singlechoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12"> {{singlechoice.list_desc}}
+                                        <select class="form-control" ng-if="singlechoice.importance == 'Yes'" required style="font-weight:normal" ng-model="singlechoice.type" ng-init="singlechoice.type=singlechoice.singleform_answer" ng-options="item for item in singlechoice.answer_desc"></select>
+                                        <select class="form-control" ng-if="singlechoice.importance == 'No'" style="font-weight:normal" ng-model="singlechoice.type" ng-init="singlechoice.type=singlechoice.singleform_answer" ng-options="item for item in singlechoice.answer_desc"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                                <div class="col-sm-12">
+                                    <br />
+                                    <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{singlechoice.question}} </label>
+                                        <span ng-if="singlechoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="singlechoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input class="form-control" type="text" ng-if="singlechoice.importance == 'Yes'" ng-model="singlechoice.name" ng-init="singlechoice.name=singlechoice.singleform_answer"  style="resize:vertical;font-weight:normal;" required rows="2" aria-multiline="true">
+                                        <input class="form-control" type="text" ng-if="singlechoice.importance == 'No'" ng-model="singlechoice.name" ng-init="singlechoice.name=singlechoice.singleform_answer"  style="resize:vertical;font-weight:normal;" rows="2" aria-multiline="true">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio_Button">
+                                <br />
+                                <div class="col-sm-12">
+                                    <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{singlechoice.question}} </label>
+                                        
+                                        <span ng-if="singlechoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="singlechoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    
+
+                                    <div class="col-sm-12">
+        <div ng-repeat="radioOption in singlechoice.answerdesc_list" >
+                <label for="rbvalue_{{radioOption.id}}">
+                    <input id="rbvalue_{{radioOption.id}}" type="radio" ng-model="$parent.SelectedId"
+                           value="{{radioOption.name}}" ng-checked=radioOption.check  ng-change="onTaskSelect(radioOption,singlechoice.mycampaignsingle_gid)"/>&nbsp;{{radioOption.name}}
+                </label>
+
+        </div>
+
+
+    </div>
+
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio Button">
+                                <br />
+                                <div class="col-sm-12">
+                                    <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{singlechoice.question}} </label>
+                                        <span ng-if="singlechoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="singlechoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <div ng-repeat="radioOption in singlechoice.answerdesc_list">
+                                            
+
+                                            <label for="rbvalue_{{radioOption.id}}">
+                                                <input id="rbvalue_{{radioOption.id}}" type="radio" ng-model="$parent.SelectedId"
+                                                       value="{{radioOption.name}}" ng-checked=radioOption.check ng-change="onTaskSelect(radioOption,singlechoice.mycampaignsingle_gid)" />&nbsp;{{radioOption.name}}
+                                            </label>
+
+                                        </div>
+
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                                <br />
+                                <div class="col-sm-12">
+                                    <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                    <div class="col-sm-12">
+                                        <label class="col-form-label"> {{singlechoice.question}}</label>
+                                        <span ng-if="singlechoice.importance == 'Yes'" style="color:red">*</span>
+                                        <span ng-if="singlechoice.importance == 'No'" style="color:red"></span>
+                                    </div>
+                                    <br />
+                                    <div class="col-sm-12">
+                                        <input type="text" ng-if="singlechoice.importance == 'Yes'" tabindex="0" required maxlength="10" ng-model="singlechoice.name" ng-init="singlechoice.name=singlechoice.singleform_answer" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                        <input type="text" ng-if="singlechoice.importance == 'No'" tabindex="0" maxlength="10" ng-model="singlechoice.name" ng-init="singlechoice.name=singlechoice.singleform_answer" ng-pattern="/^[0-9]*$/"
+                                               aria-required="true" aria-invalid="true" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="userformsubmit.$invalid" ng-click="singleUpdate()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ViewSingleform.html">
+        <style>
+            input:-moz-placeholder {
+                color: black;
+                opacity: 1;
+            }
+        </style>
+        <div class="modal-header bg-primary ng-scope">
+
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-eye "></i>
+                </span>View Single Form
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+
+            <div class="pd-sm-10" ui-scroll-viewport="" style="height:300px; overflow-y: auto;">
+                <div class="row">
+                    <div data-ng-repeat="singlechoice in singlechoices" ng-switch="singlechoice.answer_type">
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="List">
+                            <br />
+                            <div class="col-sm-12">
+                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{singlechoice.question}} </label>
+                                    <!--<span ng-if="singlechoice.importance == Yes" style="color:red">*</span>-->
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{singlechoice.type=singlechoice.singleform_answer}}
+                                    <!--<select class="form-control"  style="font-weight:normal"  ng-model="singlechoice.type" ng-init="singlechoice.type=singlechoice.singleform_answer" ng-options="item for item in selectOptions"></select>-->
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                            <div class="col-sm-12">
+                                <br />
+                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{singlechoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{singlechoice.name=singlechoice.singleform_answer}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio_Button">
+                            <br />
+                            <div class="col-sm-12">
+                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{singlechoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{singlechoice.name=singlechoice.singleform_answer}}
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Radio Button">
+                            <br />
+                            <div class="col-sm-12">
+                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{singlechoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{singlechoice.name=singlechoice.singleform_answer}}
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                            <br />
+                            <div class="col-sm-12">
+                                <!--<label class="col-form-label">{{$index+1}}.</label>-->
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{singlechoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{singlechoice.name=singlechoice.singleform_answer}}
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/ViewMultiple.html">
+        <div class="modal-header bg-primary ng-scope">
+
+
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-eye "></i>
+                </span>View Multiple Form
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10" ui-scroll-viewport="" style="height:300px; overflow-y: auto;">
+                <div class="row">
+                    <div data-ng-repeat="multichoice in editmultichoices" ng-switch="multichoice.answer_type">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Text">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{multichoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{multichoice.name=multichoice.multipleform_answer}}
+                                    <!--<input class="form-control" type="text" ng-model="multichoice.name" ng-init="multichoice.name=multichoice.multipleform_answer" name="" style="resize:vertical;font-weight:normal;" required rows="2" aria-multiline="true">-->
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-6" ng-switch-when="Number">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <label class="col-form-label"> {{multichoice.question}} </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-12">
+                                    {{multichoice.name=multichoice.multipleform_answer}}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                <div class="text-center">
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+<script type="text/ng-template" id="/importexcel.html">
+    <div class="modal-header bg-blue-600 ng-scope">
+        <h4 id="myModalLabel" class="modal-title">
+            <span class="btn-label bg-blue-600">
+                <em class="fa fa-plus"></em>
+                Sample Import Excel
+            </span>
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="pd-sm-10">
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px;">
+                                    <b> Click here to download Template </b>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label> Upload Excel : </label>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                <input type="file" id="fileimport" ng-model="test_document"
+                                       onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                &nbsp;
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                    <em class="icon-cloud-upload"></em>
+                                </button>
+                                <span>
+                                    <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                        <i class="fa icon-close"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/statusQuestionnarie.html">
+    <div class="modal-header bg-primary ng-scope">
+
+        <h4>
+            &emsp;
+            <span class="btn-label bg-primary">
+                <i class="fa fa-thumbs-up"></i>
+            </span>Status
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <form novalidate="" name="statusQuestionnarie" ng-submit="form.statusQuestionnarie()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="row ">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row ">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label> Questionnarie</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            {{Questionnarie_name }}
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row ">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <label>Status  </label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                </label>
+                                <label>
+                                    <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                    <span class="fa fa-circle"></span> Inactive
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="mda-form-group float-label">
+                                <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                <label>Remarks<span style="color:red"> *</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <br />
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="statusQuestionnarie.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive" ng-show="statusQuestionnarieinactivelog_list!=null">
+                <div style="max-height:300px;overflow:auto;">
+                    <table class="table table-striped table-secondary">
+                        <thead class="bg-gray text-white">
+                            <tr width="100%">
+                                <th align="center" scope="col">S.No</th>
+                                <th align="center" scope="col">Status</th>
+                                <th align="center" scope="col">Updated By</th>
+                                <th align="center" scope="col">Updated Date</th>
+                                <th align="center" scope="col">Remarks</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in statusQuestionnarieinactivelog_list" width="100%">
+                                <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                <td align="left" scope="col" title="'Status'">{{data.status}}</td>
+                                <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+    <script type="text/ng-template" id="/mycampaignqueryDescriptionView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & Query Response View</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Description : </label>
+                                        <br />
+                                        <p>{{lblquery_desc}}</p>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Response : </label>
+                                        <br />
+                                        <p>{{lblqueryresponse_remarks}}</p>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Response By : </label>
+                                        <br />
+                                        <p>{{lblquery_responseby}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/mycampaignqueryClose.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                                <br />
+                                <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

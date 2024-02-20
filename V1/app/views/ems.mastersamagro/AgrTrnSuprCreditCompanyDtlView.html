@@ -1,0 +1,809 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Credit Underwriting
+</h3>
+<div ng-controller="AgrTrnSuprCreditCompanyDtlViewController as dp">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <em class="fa fa-eye"></em>&nbsp; Credit Company View
+            <button type="button" title="Window Close" class="pull-right btn btn-sm btn-default" ng-click="close()">
+                <em class="fa fa-close text-danger fa-1x">&nbsp;Close</em>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="overflow-x: hidden;">
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b>  Company Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label>Institution Name</label>
+                                                                <p>{{txtinstitution_name}}</p>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label> Stakeholder Type  </label>
+                                                                <p>{{txtstakeholder_type}}</p>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label>ERP Id Status </label>
+                                                                <p>{{txturn_status}}</p>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label>ERP Id </label>
+                                                                <p>{{txturn_number}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> Genetic Code by Business Team </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope" style="background-color: rgb(227, 231, 230);">
+                                                        <div class="row">
+                                                            <div class="col-lg-4 col-sm-4 col-md-4 text-center">
+                                                                <label>Genetic Code </label>
+                                                            </div>
+                                                            <div class="col-lg-2 col-sm-2 col-md-2 text-center">
+                                                                <label>Status </label>
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 col-md-6 text-center">
+                                                                <label>Observation(s) </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="dd-handle ng-scope" ng-repeat="data in geneticcode_list">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                                                    {{data.geneticcode_name}}
+                                                                </div>
+                                                                <div class="col-lg-2 col-sm-2 col-md-2 text-center">
+                                                                    {{data.geneticcode_status}}
+                                                                </div>
+                                                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                                                    {{data.geneticcode_remarks}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> Economic Capital Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <label style="font-size: 13px;"><u> Social Capital : </u></label>
+                                                        <br />
+                                                        <p ng-bind-html=trustAsHtml(txtsocial_capital)></p>
+                                                        <hr />
+                                                        <label style="font-size: 13px;"><u> Trade Capital : </u></label>
+                                                        <br />
+                                                        <p ng-bind-html=trustAsHtml(txttrade_capital)></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> PSL Data Flagging </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <br />
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>Start up as of loan sanction date</label>
+                                                                    <p>{{txtstartloan_date}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> Occupation </label>
+                                                                    <p>{{txtoccupation}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> Line of Activity </label>
+                                                                    <p>{{txtline_activity}}</p>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                                    <label> BSR code </label>
+                                                                    <p>{{txtbsr_code}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> PSL Category </label>
+                                                                    <p>{{txtpsl_category}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> Weaker section</label>
+                                                                    <p>{{txtweaker_section}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>PSL purpose</label>
+                                                                    <p>{{txtpsl_purpose}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label> Total sanction from financial institutions </label>
+                                                                    <p>{{txttotal_financialinstitution}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label> PSL Sanction Limit </label>
+                                                                    <p>{{txtpsl_sanctionlimit}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                                                    <label> Nature of Entity </label>
+                                                                    <p>{{txtnature_entity}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label> Indulges in Marketing Activities (for FPOs only)  </label>
+                                                                    <p>{{txtmarketing_activities}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label>Investment in Plant and Machinery</label>
+                                                                    <p>{{txtplant_machienery}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>Turnover </label>
+                                                                    <p>{{txtturnover}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> MSME Classification </label>
+                                                                    <p>{{txtmsme_classification}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> Date of Loan Sanction </label>
+                                                                    <p>{{txtloansanction_date}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label> Date of Entity Incorporation</label>
+                                                                    <p>{{txtentityincorporate_date}}</p>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                    <label> Whether entity HQ is in a metropolitan city </label>
+                                                                    <p>{{txthq_city}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <label>Client Details </label>
+                                                                    <p>{{txtclient_details}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> Supplier Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                        <thead style="background-color:#dde6e9;">
+                                                                            <tr>
+                                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                                <th> Supplier Name </th>
+                                                                                <th> Relationship Vintage Details </th>
+                                                                                <th> Start Date </th>
+                                                                                <th> End Date </th>
+                                                                                <th> Purchase Amount </th>
+                                                                                <th> Bank Debit Amount  </th>
+                                                                                <th> Relationship with the Supplier </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in supplierdtls_list" width="100%">
+                                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                <td title="Supplier Name">{{data.supplier_name}} </td>
+                                                                                <td title="Relationship Vintagee">
+                                                                                    <b>Relationship Vintage (years) : </b> {{data.relationship_vintage_year}} <br />
+                                                                                    <b>Relationship Vintage (months)  : </b> {{data.relationship_vintage_month}}  <br />
+                                                                                </td>
+                                                                                <td title="Start Date">{{data.start_date}} </td>
+                                                                                <td title="End Date">{{data.end_date}}</td>
+                                                                                <td title="Purchase Amount" style="text-align:right;">{{data.purchase_amount}} </td>
+                                                                                <td title="Bank Debit Amount" style="text-align:right;">{{data.bankdebit_amount}} </td>
+                                                                                <td title="Relationship with the Supplier" class="text-center">
+                                                                                    <button title="View" ng-click="relationship_supplier(data.creditsupplier_gid)" class="btn btn-info">
+                                                                                        <em class="fa fa-eye"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> Buyer Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                        <thead style="background-color:#dde6e9;">
+                                                                            <tr>
+                                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                                <th> Buyer Name </th>
+                                                                                <th> Limit Details </th>
+                                                                                <th> Top Buyer </th>
+                                                                                <th> Bill Tenure in days </th>
+                                                                                <th> Margin-%  </th>
+                                                                                <th> Start Date</th>
+                                                                                <th> End Date  </th>
+                                                                                <th> Purchase Amount </th>
+                                                                                <th> Bank Credit Details </th>
+                                                                                <th>Relationship with Borrower / End Use Monitoring</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in Buyerdtls_list" width="100%">
+                                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                <td title="Buyer Name">{{data.buyer_name}} </td>
+                                                                                <td title="Limit Details">
+                                                                                    <b>Buyer limit : </b> {{data.buyer_limit}} <br />
+                                                                                    <b>Availed limit : </b> {{data.availed_limit}}  <br />
+                                                                                    <b>Balance limit : </b> {{data.balance_limit}} <br />
+                                                                                </td>
+                                                                                <td title="Top Buyer">{{data.top_buyer}} </td>
+                                                                                <td title="Bill Tenure in days">{{data.bill_tenuredays}}</td>
+                                                                                <td title="Margin-%">{{data.margin}} </td>
+                                                                                <td title="Start Date">{{data.start_date}} </td>
+                                                                                <td title="End Date">{{data.end_date}}</td>
+                                                                                <td title="Purchase Amount" style="text-align:right;">{{data.purchase_amount}} </td>
+                                                                                <td title="Bank Credit Details">
+                                                                                    <b>Bank Credit Date : </b> {{data.bankcredit_date}} <br />
+                                                                                    <b>Bank Credit Value : </b> {{data.bankcredit_value}}  <br />
+                                                                                    <b>Deduction at Source : </b> {{data.source_deduction}} <br />
+                                                                                </td>
+                                                                                <td title="Relationship with Borrower / End Use Monitoring" class="text-center">
+                                                                                    <button title="View" ng-click="relationship_buyer(data.creditbuyer_gid)" class="btn btn-info">
+                                                                                        <em class="fa fa-eye"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                        background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b> Bank Account Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                        <thead style="background-color:#dde6e9;">
+                                                                            <tr>
+                                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                                <th> IFSC Code </th>
+                                                                                <th> Bank Details </th>
+                                                                                <th> Bank Account Number Details </th>
+                                                                                <th> Joint Account Details </th>
+                                                                                <th> Documents </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in BankacctDtl_list" width="100%">
+                                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                <td title="IFSC Code">{{data.ifsc_code}} </td>
+                                                                                <td title="Bank Details">
+                                                                                    <b>Bank Name : </b> {{data.bank_name}} <br />
+                                                                                    <b>Branch Name : </b> {{data.branch_name}}  <br />
+                                                                                    <b>Bank Address : </b> {{data.bank_address}} <br />
+                                                                                    <b>MICR Code : </b> {{data.micr_code}}
+                                                                                </td>
+                                                                                <td title="Bank Details">
+                                                                                    <b>Bank Account Number : </b> {{data.bankaccount_number}} <br />
+                                                                                    <b>Confirm Account Number : </b> {{data.confirmbankaccountnumber}}  <br />
+                                                                                    <b>Account Holder Name : </b> {{data.accountholder_name}} <br />
+                                                                                    <b>Account Type : </b> {{data.bankaccounttype_name}}
+                                                                                </td>
+                                                                                <td title="Joint Account Details">
+                                                                                    <b>Joint Account : </b> {{data.joinaccount_status}}  <br />
+                                                                                    <b>Joint Account Holder Name : </b> {{data.jointaccountholder_name}} <br />
+                                                                                    <b>Is Cheque Book Facility Available : </b> {{data.chequebook_status}} <br />
+                                                                                    <b>Account Open Date : </b> {{data.accountopen_date}}
+                                                                                </td>
+                                                                                <td title="Documents" class="text-center">
+                                                                                    <a class="btn btn-primary" title="Documents" ng-click="uploadeddoc_bankacctdtl(data.creditbankdtl_gid)"><span class="fa fa-file-text-o"></span></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                        background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b>Existing Bank Facility </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                        <thead style="background-color:#dde6e9;">
+                                                                            <tr>
+                                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                                <th> Bank Name / Facility Type </th>
+                                                                                <th> Sanction Details </th>
+                                                                                <th> Instalment / Outstanding Details </th>
+                                                                                <th> Overdue Details </th>
+                                                                                <th> Remarks </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in ExistingBankacctDtl_list" width="100%">
+                                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                <td title=" Bank Name / Facility Type">
+                                                                                <b>Bank Name : </b> {{data.bank_name}}
+                                                                                <br />
+                                                                                <b>Facility Type : </b> {{data.facility_type}}
+                                                                                <br />
+                                                                                </td>
+                                                                                <td title="Sanction Details">
+                                                                                    <b>Facility Sanctioned On : </b> {{data.facilitysanctioned_on}} <br />
+                                                                                    <b>Type of existing funded : </b> {{data.fundedtypeindicator_name}}  <br />
+                                                                                    <b>Sanctioned Limit : </b> {{data.sanctioned_limit}} <br />
+                                                                                </td>
+                                                                                <td title="Instalment / Outstanding Details">
+                                                                                    <b>Instalment Frequency : </b> {{data.instalmentfrequency_name}}  <br />
+                                                                                    <b>Instalment amount : </b> {{data.instalment_amount}} <br />
+                                                                                    <b>Outstanding Amount : </b> {{data.outstanding_amount}} <br />
+                                                                                    <b>Record Date : </b> {{data.record_date}}
+                                                                                </td>
+                                                                                <td title="Overdue Details">
+                                                                                    <b>Overdue amount : </b> {{data.overdue_amount}}  <br />
+                                                                                    <b>Overdue if any (DPD) : </b> {{data.overdue_dpd}} <br />
+                                                                                    <b>Account Classification : </b> {{data.account_classification}}
+                                                                                </td>
+                                                                                <td title="Remarks" class="text-center">
+                                                                                    <button title="View" ng-click="Existingbank_remarks(data.existingbankfacility_gid)" class="btn btn-info">
+                                                                                        <em class="fa fa-eye"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b>  Repayment Track Record </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="table-responsive">
+                                                                    <table ng-table="tableParams2" class="table table-striped table-bordered">
+                                                                        <thead style="background-color:#dde6e9;">
+                                                                            <tr>
+                                                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                                                <th> Lender Type </th>
+                                                                                <th> Bank Details </th>
+                                                                                <th> Sanction Details </th>
+                                                                                <th> Amount Details </th>
+                                                                                <th> Original Tenure Details </th>
+                                                                                <th> Balance Tenure Details </th>
+                                                                                <th> Overdue Details </th>
+                                                                                <th> Remarks </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr ng-repeat="data in RepaymentDtl_list" width="100%">
+                                                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                                                <td title="Lender Type">{{data.lender_type}} </td>
+                                                                                <td title="Bank Details">
+                                                                                    <b> {{data.bank_name}} </b><br />
+                                                                                    <b> IFSC Code : </b> {{data.ifsc_code}} <br />
+                                                                                    <b> NBFC Name : </b> {{data.nbfc_name}} <br />
+                                                                                    <b> Branch Name : </b>  {{data.branch_name}} <br />
+                                                                                    <b> Facility Type :  </b>{{data.facility_type}}
+                                                                                </td>
+                                                                                <td title="Sanction Details">
+                                                                                    <b> Sanction Reference ID : </b> {{data.sanctionreference_id}} <br />
+                                                                                    <b> Sanctioned on : </b> {{data.sanctioned_on}}  <br />
+                                                                                    <b> Sanctioned Amount  : </b> {{data.sanction_amount}}  <br />
+                                                                                    <b> Account status as on : </b> {{data.accountstatus_on}}  <br />
+                                                                                </td>
+                                                                                <td title="Amount Details">
+                                                                                    <b> Current Outstanding Amount : </b> {{data.currentoutsatnding_amount}}  <br />
+                                                                                    <b> Instalment Frequency  : </b>  {{data.instalment_frequency}} <br />
+                                                                                    <b> Instalment Amount : </b> {{data.instalment_amount}} <br />
+                                                                                    <b> Demand Due Date : </b> {{data.demanddue_date}}
+                                                                                </td>
+                                                                                <td title="Original Tenure Details">
+                                                                                    <b> Year : </b> {{data.oringinaltenure_year}} <br />
+                                                                                    <b> Month : </b> {{data.oringinaltenure_month}}  <br />
+                                                                                    <b> Days :  </b> {{data.oringinaltenure_days}}
+                                                                                </td>
+                                                                                <td title="Balance Tenure Details">
+                                                                                    <b> Year : </b> {{data.balancetenure_year}} <br />
+                                                                                    <b> Month : </b> {{data.balancetenure_month}}  <br />
+                                                                                    <b> Days : </b> {{data.balancetenure_days}}
+                                                                                </td>
+                                                                                <td title="Overdue Details">
+                                                                                    <b> Account Classification : </b> {{data.account_classification}} <br />
+                                                                                    <b> Overdue Amount : </b> {{data.overdue_amount}}  <br />
+                                                                                    <b> Number of Days Overdue : </b> {{data.numberofdays_overdue}}
+                                                                                </td>
+                                                                                <td title="Remarks" class="text-center">
+                                                                                    <button title="View" ng-click="repayment_remarks(data.creditrepaymentdtl_gid)" class="btn btn-info">
+                                                                                        <em class="fa fa-eye"></em>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom:-10px;">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div id="panelDemo9" class="panel panel-primary">
+                                        <div class="panel-heading" style="background-color: #d5591e;
+                                            background-image: linear-gradient(316deg, rgb(238 181 49) 0%,  rgb(171 225 166) 74%);color:#000000;"><b>  Credit Observation Details </b></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="dd-handle ng-scope" ng-repeat="data in creditobservation_list">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <br />
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label>Credit Observations</label>
+                                                                    <p>{{data.credit_policy}}</p>
+                                                                </div>
+                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                    <label> Complied / NonComplied  </label>
+                                                                    <p>{{data.complied_status}}</p>
+                                                                </div>
+                                                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                                                    <label>Observations </label>
+                                                                    <p>{{data.observation}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/Remarksdetails.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Remarks </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitsupplier()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label style="font-size:13px;"> Remarks : </label>
+                                        <br />
+                                        <p>{{repayment_remarks}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/ExistingRemarksdetails.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Remarks </label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitsupplier()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label style="font-size:13px;"> Remarks : </label>
+                                        <br />
+                                        <p>{{existing_remarks}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/SupplierRelationship.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Relationship with the Supplier</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitsupplier()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label style="font-size:13px;"> Relationship with the Supplier : </label>
+                                        <br />
+                                        <p>{{txtrelationship_supplier}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/SupplierRelationshipMonitoring.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Relationship with Borrower / End Use Monitoring</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitsupplier()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label style="font-size:13px;"> Relationship with Borrower : </label>
+                                        <br />
+                                        <p>{{txtrelationship_borrower}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label style="font-size:13px;"> End Use Monitoring : </label>
+                                        <br />
+                                        <p>{{txtenduse_monitoring}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Bankacctdocuments.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">cheque leaf Documents</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">S.No</th>
+                                            <th scope="col">Document Title</th>
+                                            <th scope="col">Uploaded By / On </th>
+                                            <!-- <th scope="col">Action</th> -->
+                                            <th align="center" scope="col">
+                                                Action&nbsp;&nbsp;&nbsp;
+                                                <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall()">
+                                                    <em style="font-size: 1.5em;" class="icon-arrow-down"></em>&nbsp;
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in chequeleaf_list">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <td title="Document Title">{{data.document_title}}</td>
+                                            <td title="uploded Name">{{data.uploaded_by}} / {{data.updated_date}} </td>
+                                            <td data-title="Action">
+                                                <button title="Download" class="btn btn-green btn-sm"
+                                                        ng-click="download_chequeleafdoc(data.chequeleaf_path,data.chequeleaf_name)">
+                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+
+                                                    <em class="fa fa-download"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

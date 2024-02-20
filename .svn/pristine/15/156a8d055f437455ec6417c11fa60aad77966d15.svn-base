@@ -1,0 +1,467 @@
+<h3>
+    Re-Despatch 360  View
+</h3>
+<div ng-controller="idasTrnReDespatch360View as dp">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <em class="fa fa-plus"></em>&nbsp; Retrieval Request
+                    </div>
+                    <div class="panel-body">
+                        <form name="Retrievalform" id="Retrievalform" novalidate="" class="form-validate mb-lg"
+                            autocomplete="off">
+                            <div class="row">
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label">Requested Date &nbsp;</label>
+                                        <p class="input-group">
+                                            {{requested_date}}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label control-label"><strong>Requested By
+                                                &nbsp;</strong></label>
+                                        <br>
+                                        {{requestedby_name}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label">Approved Date &nbsp;</label>
+                                        <br>
+                                        {{approved_date}}
+                                    </div>
+                                    <div class="col-lg-2 col-sm-2 col-md-2">
+
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-s-5">
+                                        <label class="col-form-label control-label"><strong>Approved By
+                                                &nbsp;</strong></label>
+                                        <br>
+                                        {{approvalby_name}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-md-1">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label control-label"><strong> Retrieval Type &nbsp;
+                                            </strong></label><br />
+
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" disabled required name="retrieval_type"
+                                                    value="Temporary" ng-model="retrieval_type" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Temporary
+                                            </label>
+                                            <label>
+                                                <input type="radio" disbaled required name="retrieval_type"
+                                                    value="Permanent" ng-model="retrieval_type" />
+                                                <span class="fa fa-circle"></span>Permanent
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-md-1">
+
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label control-label">
+                                            <strong>
+                                                Retrieval Reason &nbsp;
+                                            </strong>
+                                        </label>
+                                        <br>
+                                        {{requested_for}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-sm-1 col-md-1">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label control-label">
+                                            <strong>
+                                                Remarks &nbsp;
+                                            </strong>
+                                        </label>
+                                        <p>
+                                            {{req_remarks}}
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <em class="icon icon-cloud-upload"></em>&nbsp;Uploaded Document
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div ui-scroll-viewport="" style="height:220px; overflow-y: auto;" class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary table-bordered">
+
+                                                <tbody>
+                                                    <tr ng-repeat="data in uploaddocument" width="100%">
+                                                        <td>
+                                                            {{$index+1}}
+                                                        </td>
+                                                        <td align="left" scope="col" title="'Document Name'">
+                                                            <a
+                                                                ng-click="downloadsdocument(data.document_path,data.document_name)">{{data.document_name}}</a>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <em class="fa fa-plus"></em>&nbsp; Document Received Details
+                    </div>
+
+                    <div class="panel-body" >
+                      
+                        <div >
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>
+                                            <strong>
+                                                Vendor
+                                            </strong>
+                                        </label>
+                                        <br>
+                                        <span style="color:brown"><strong>Crown</strong></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>
+                                            <strong>
+                                              Vendor Contact Person
+                                            </strong>
+                                        </label><br>
+                                        {{contactperson_name}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>
+                                            <strong>
+                                                Mobile No
+                                            </strong>
+                                        </label><br>
+                                        {{mobile_no}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label>
+                                            <strong>
+                                                Document Received Type &nbsp;
+                                            </strong>
+                                        </label>
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" disabled required name="documentretrieved_type"
+                                                    value="Courier" ng-model="documentretrieved_type" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Courier
+                                            </label>
+                                            <label>
+                                                <input type="radio" disbaled required name="documentretrieved_type"
+                                                    value="Direct" ng-model="documentretrieved_type" />
+                                                <span class="fa fa-circle"></span>Direct
+                                            </label>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>
+                                            <strong>
+                                                Document Received Date
+                                            </strong>
+                                        </label><br>
+                                        {{documentretrieved_date}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>
+                                            <strong>
+                                                Document Received To
+                                            </strong>
+                                        </label><br>
+                                        {{documentreceivedto_name}}
+
+                                    </div>
+                                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br>
+                    
+
+                    </div>
+                
+                 
+                    <br>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+<br>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <em class="fa fa-plus"></em>&nbsp; Re-Despatch Details
+                </div>
+
+                <div class="panel-body" >
+                  
+                    <div >
+
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>
+                                        <strong>
+                                           Re-Despatch Ref No.
+                                        </strong>
+                                    </label><br>
+                                    {{redespatch_gid}}
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>
+                                        <strong>
+                                            Vendor
+                                        </strong>
+                                    </label>
+                                    <br>
+                                    <span><strong>Crown</strong></span>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>
+                                        <strong>
+                                          Vendor Contact Person
+                                        </strong>
+                                    </label><br>
+                                    {{contact_person}}
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                               
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>
+                                        <strong>
+                                            Re-Despatched Date 
+                                        </strong>
+                                    </label><br>
+                                    {{redespatched_date}}
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>
+                                        <strong>
+                                            Re-Despatched By
+                                        </strong>
+                                    </label><br>
+                                    {{redespatchedby_name}}
+
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-1">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p>
+                                        {{remarks}}
+                                    </p>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                    <br>
+                   
+                    <div  class="dd-handle ng-scope" >
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+            
+                                    Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                    <button class="btn" id="loadmore" ng-disabled="!pagecount" ng-click="loadMore(pagecount)">Load More</button>
+            
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+    
+                        <div  class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                
+                                <div class="table-responsive">
+                
+                                    <table  class="table row-border hover">
+                                        <thead>
+                                            <tr width="100%" class="bg-primary text-white">
+                                                <th width="5%" scope="col">S.No</th>
+                                                <th width="15%" scope="col">URN/Customer Name</th>
+                                                <th width="10%" scope="col">File Stamp Ref No.</th>
+                                                <th width="10%" scope="col">Box Stamp Ref No.</th>
+                                                <th width="10%" scope="col">Boxed On</th>
+                                                <th width="15%" scope="col">Despatch Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="subdata in RetrivedDtls_list|filter :searchtxt|limitTo:totalDisplayed " width="100%">
+                                                <td title="'S.No'">{{$index+1}}</td>
+                                                <td title="Customer Name">{{subdata.customer_name}}</td>
+                                                <td title="'File Stamp Ref No.">{{subdata.batchref_no}}</td>
+                                                <td data-title="'Box Stamp Ref No.'">{{subdata.boxref_no}}</td>
+                                                <td data-title="Boxed On">{{subdata.cartonbox_date}}</td>
+                                                <td data-title="Despatch Details"> <span>
+                                                  <strong>Despatched by</strong>   {{subdata.despatched_by}} <strong> On</strong> {{subdata.despatch_date}}<br>
+                                                  <strong>Despatched to</strong>   {{subdata.contact_person}}
+                                                </span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            
+             
+                <br>
+            </div>
+          
+           
+
+            <div>
+                <div align="center">
+
+                    
+                    <button ng-click="back()" class="btn btn-info"><i
+                            class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

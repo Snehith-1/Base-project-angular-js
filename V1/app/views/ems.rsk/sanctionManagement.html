@@ -1,0 +1,187 @@
+﻿<h3>
+    Sanction Management
+</h3>
+<div ng-controller="sanctionManagementcontroller">
+    <div class="row">
+        <!--<div class="col-lg-2 col-sm-2 col-md-2">
+            <button title="Add" class="btn btn-info btn-sm"
+                    ng-click="addSanction()">
+                <em class="fa fa-plus"></em>&nbsp;Add Sanction
+            </button>
+        </div>-->
+        <!--<div class="col-lg-4 col-sm-4 col-md-4">
+            <button title="Excel Import" class="btn btn-green btn-sm" ng-hide="btnimport"
+                    ng-click="importExcel()">
+                <em class="fa fa-file-excel-o"></em>&nbsp;Excel Import
+            </button>
+            <input type="file" id="excelImport" name="file" ng-model="uploadexcel" class="form-control"
+                    onchange="angular.element(this).scope().loadFile(this.files)" ng-show="test" />
+            <br/>
+            <input type="button" value="Click Here to Import Data" class="btn btn-green btn-sm" 
+                   ng-click="handleFile()" ng-show="test" />
+            <input type="button" value="Cancel" class="btn btn-danger btn-sm" ng-show="test" ng-click="uploadcancel()"/>
+        </div>-->
+    </div>
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">URN No.</th>
+                            <th class="text-nowrap">Customer Name</th>
+                            <th class="text-nowrap">Sanction Ref.No</th>
+                            <th class="text-nowrap">Sanction Date</th>
+                            <th class="text-nowrap">Sanction Amount</th>
+                            <!--<th class="text-nowrap">Sanction Limit</th>-->
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in sanctionlist|filter :searchtxt|limitTo:totalDisplayed">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                            <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                            <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                            <td data-title="'Sanction Date'">{{data.sanction_date}}</td>
+                            <td data-title="'Sanction Amount'" style="text-align:right;">{{data.sanction_amount}}</td>
+                            <!--<td data-title="'Sanction Limit'" style="text-align:right;">{{data.sanction_limit}}</td>-->
+                            <td class="text-nowrap">
+                                <!--<button title="View" class="btn btn-success btn-sm"
+                            ng-click="viewsanction(data.customer2sanction_gid)">
+                        <em class="fa fa-eye"></em>
+                    </button>-->
+                                <!--<button title="Edit" class="btn btn-success btn-sm"
+                            ng-click="editsanction(data.customer2sanction_gid)">
+                        <em class="fa fa-edit"></em>
+                    </button>-->
+                                <button title="Document CheckList" class="btn btn-pink btn-sm"
+                                        ng-click="documetnchecklistsanction(data.customer2sanction_gid)">
+                                    <em class="fa fa-file-text-o"></em>
+                                </button>
+                                <button title="Delete" class="btn btn-danger btn-sm" style="display:none"
+                                        ng-click="deletesanction(data.customer2sanction_gid)">
+                                    <em class="fa fa-trash"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script type="text/ng-template" id="/sanctionEditModalContent.html">
+        <div class="modal-header bg-green-200 ng-scope">
+
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+                </span>Edit Sanction Details
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="sanctionEditform" id="sanctionEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="mda-form-group">
+                                        <select name="subcategory" ng-model="cboeditcustomergid" required=""
+                                                class="mda-form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                            <option value="">----- Select Customer ----</option>
+                                            <option data-ng-repeat="data in customer_list" value="{{data.customer_gid}}"
+                                                    style="width:250px;">
+                                                {{data.customername}}
+                                            </option>
+                                        </select>
+                                        <label>Customer Name <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditsanctionRefNo" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                                        <label>Sanction Ref.No <span style="color:red">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div>
+                                        <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                            <label for="input_13">Sanction Date <span style="color:red">*</span></label>
+                                            <input type="date" id="fromDate" name="fromdate" ng-model="txteditSanctionDate" required ng-click='test(txteditSanctionDate)'>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditSanctionAmount" type="text" class="mda-form-control ng-pristine ng-valid ng-touched">
+                                        <label>Sanction Amount</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="mda-form-group">
+                                        <input ng-model="txteditSanctionLimit" type="text" class="mda-form-control ng-pristine ng-valid ng-touched"
+                                               ng-disabled="disablepersonaldetails">
+                                        <label>Sanction Limit</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="sanctionformUpdate()" ng-disabled="sanctionEditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

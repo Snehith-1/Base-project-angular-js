@@ -1,0 +1,1467 @@
+﻿<style>
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        position: fixed;
+        width: 98%;
+        z-index: 121;
+        top: 121px;
+    }
+    /* Mobile View */
+@media  screen and (min-width:200px) and (max-width:300px) {
+    .tab{
+        position: absolute;
+        width: auto;
+        margin-top: 40px;
+        top: 0px;
+        transform: translate(0);
+        -webkit-transform: translate3d(0,0,0);
+        }
+    .page1{ margin-top: 260px;}
+}
+@media  screen and (min-width:300px) and (max-width:400px) {
+.tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 40px;
+}
+.page1 { 
+    margin-top: 220px;
+}
+}
+@media  screen and (min-width:400px) and (max-width:447px) {
+    .tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 40px;
+    }
+    .page1 { 
+    margin-top: 200px;
+}
+}
+@media  screen and (min-width:448px) and (max-width:480px) {
+    .tab {
+        position: absolute;
+    width: auto;
+    z-index: 121px;
+        margin-top: 30px; 
+        top: 0px;}
+    .page1{margin-top: 150px;}
+}
+@media  screen and (min-width:481px) and (max-width:500px) {
+    .tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 80px;
+}
+    .page1{ margin-top: 200px;}
+}
+@media  screen and (min-width:500px) and (max-width:600px){
+.tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 90px;
+}
+.page1 {
+    margin-top: 200px;
+}
+}
+@media  screen and (min-width:600px) and (max-width:607px){
+    .tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 90px;
+}
+    .page1{
+        margin-top: 200px;
+    }
+}
+@media  screen and (min-width:608px) and (max-width:726px){
+.tab {
+    position: absolute;
+    width: auto;
+    z-index: 121px;
+    top: 0px;
+    margin-top: 90px;
+}
+.page1 {
+    margin-top: 150px;
+}
+}
+@media  screen and (min-width:727px) and (max-width:767px){
+    .tab{
+        position: absolute;
+        width: auto;
+        z-index: 121px;
+        margin-top: 90px;top: 0px;
+    }
+    .page1{
+        margin-top: 150px;
+    }
+}
+@media  screen and (min-width:768px) and (max-width:800px){
+    .tab{
+        position: absolute;
+        width: auto;
+        z-index: 121px;
+        margin-top: 0px;top: 0px;
+    }
+    .page1{
+        margin-top: 70px;
+    }
+}
+@media  screen and (min-width:801px) and (max-width:900px){
+    .tab{
+        margin-top: 0px;top: 0px;
+    }
+    .page1{
+        margin-top: 50px;
+    }
+}
+@media  screen and (min-width:900px) and (max-width:1157px){
+    .tab{
+        margin-top: 0px;top: 0px;
+    }
+    .page1{ margin-top: 50px;}
+}
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(140, 138, 141);
+                color: white;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #d5591e;
+                background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+<div ng-controller="MstApplicationProductChargesEdit as dp">
+    <div class="tab">
+        <button class="tablinks" onclick="openApplication(event, 'General Information')" ng-click="general_Tab()">General Info</button>
+        <button class="tablinks" onclick="openApplication(event, 'Add Company Information')" ng-click="company_add()">Company Info</button>
+        <button class="tablinks" onclick="openApplication(event, 'Individual Demographics')" ng-click="Individual_add()">Individual Info</button>
+        <button class="tablinks" onclick="openApplication(event, 'Add Group(s)')" ng-click="Group_add()">Group Info </button>
+        <button class="tablinks" onclick="openApplication(event, 'Economic Capital')" ng-click="EconomicCapital_add()" ng-hide="social_tradetab">Economic Capital</button>
+        <button class="tablinks" onclick="openApplication(event, 'Facilities & Charges')" id="defaultOpen" ng-hide="product_chargetab"> Facilities & Charges</button>
+        <button class="tablinks" onclick="openApplication(event, 'Hypothecation')" ng-click="Hypothecation_add()"> Hypothecation </button>
+        <button class="tablinks" onclick="openApplication(event, 'Done')" ng-click="doneclick()">Done</button>
+    </div>
+    <div class="panel page1">
+        <div class="panel-body">
+            <div id="Facilities & Charges" ng-hide="product_chargetab" class="tabcontent">
+                <div>
+                    <br />
+                    <form name="SaveProduct" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Overall Recommendation of Limit Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Overall limit amount <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" class="form-control" id="Overalllimitamount" name="Overalllimitamount" ng-model="txtOveralllimit_amount"
+                                               ng-change="Overalllimit_amountchange()" style="text-align:right" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required />
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount7" style="color:#003c96fc;" class="text-bold"></span>
+
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label">
+                                            Validity of overall limit (years) <span style="color:red"> *</span>
+                                        </label>
+                                        <br />
+                                        <input type="text" ng-model="txtvalidityoveralllimit_year" tabindex="0" class="form-control" ng-change="calculatelimit()" required ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Validity of overall limit(month) <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text" ng-model="txtvalidityoveralllimit_months" tabindex="0" class="form-control" required ng-change="calculatelimit()" ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Validity of overall limit (days) <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text" ng-model="txtvalidityoveralllimit_days" tabindex="0" class="form-control" required ng-change="calculatelimit()" ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Calculation of overall limit validity </label>
+                                        <br />
+                                        <input type="text" ng-model="txtcalculationoveralllimit_validity" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Loan Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Facility Requested On <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="FRO" name="date" ng-model="txteditfacilityreqon_date" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open11" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender11($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Product Type <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <select name="loanproduct_name" ng-options="m.loanproduct_name  for m in loanproductlist"
+                                                ng-model="cboProductTypelist" class="form-control" style="height:37px;" chosen=""
+                                                size="1" ng-change="producttype()">
+                                            <option value=""> ----- Select Product Type -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Product Sub Type  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="loansubproduct_name" ng-options="m.loansubproduct_name for m in loansubproductlist"
+                                                ng-model="cboProductSubTypelist" class="form-control" style="height:37px;" chosen=""
+                                                size="1">
+                                            <option value=""> ----- Select Product Sub Type -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Loan Type  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="loan_type" ng-options="m.loan_type for m in loantypelist"
+                                                ng-model="cboLoanTypelist" class="form-control" style="height:37px;" chosen=""
+                                                size="1">
+                                            <option value=""> ----- Select Loan Type -----</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Facility Loan Amount <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" class="form-control" id="loanamount" name="loanamount" ng-model="txtloanfaility_amount"
+                                               ng-change="txtfacility()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount1" style="color:#003c96fc;" class="text-bold"></span>
+                                        <div ng-hide="amount_validation">
+                                            <label style="color:red;">Amount Exceeded From Overall Limit </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label">Remaining </label>
+                                        <br />
+                                        <p class="text-primary form-control" ng-disabled="true">
+                                            {{txtOveralllimit_amount - txtloanfaility_amount}}
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Rate of Interest  <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditrate_interest" tabindex="0" class="form-control" step="0.01" maxlength="6" />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Penal Interest  <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditpanel_interest" tabindex="0" class="form-control" step="0.01" maxlength="6" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Validity of the facility (years)   </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditvalidity_years" tabindex="0" class="form-control" ng-change="calculatefacility()" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Validity of the facility (months) </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditvalidity_months" tabindex="0" class="form-control" ng-change="calculatefacility()" " />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Validity of the facility (days) </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditvalidity_days" tabindex="0" class="form-control" ng-change="calculatefacility()" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Calculation of overall limit validity <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text" ng-model="txtoverallfacilityvalidity_limit" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Tenure of the product (years) <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtedittenure_years" tabindex="0" class="form-control" ng-change="calculatetenure()" ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Tenure of the product (months) <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtedittenure_months" tabindex="0" class="form-control" ng-change="calculatetenure()" ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Tenure of the product (days)  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <input type="text" ng-model="txtedittenure_days" tabindex="0" class="form-control" ng-change="calculatetenure()" ng-pattern="/^[0-9]+$/" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Calculation of overall limit validity <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txteditoveralllimit_validity" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Scheme Type <span style="color:red"> *</span></label>
+                                        <br />
+                                        <p style="font-size:14px;">Financial statement method</p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Facility Type  <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <select name="FacilityType"
+                                                ng-model="cboFacilityTypelist" class="form-control" style="height:37px;"
+                                                size="1">
+                                            <option value=""> ----- Select Facility Type -----</option>
+                                            <option value="New"> New </option>
+                                            <option value="Existing"> Existing</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Facility mode  <span style="color:red"> *</span></label>
+                                        <br />
+                                        <select name="Facilitymode"
+                                                ng-model="cboFacilitymodelist" class="form-control" style="height:37px;"
+                                                size="1">
+                                            <option value=""> ----- Select Facility mode -----</option>
+                                            <option value="Revolving"> Revolving </option>
+                                            <option value="Non Revolving">Non Revolving </option>
+                                            <option value="Not Applicable"> Not Applicable</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label>Principal Frequency </label>
+                                        <br />
+                                        <select name="principalfrequency_name" ng-options="m.principalfrequency_name for m in principalfrequencylist"
+                                                ng-model="cboprincipalfrequency" class="form-control" style="height:37px;" chosen=""
+                                                size="1">
+                                            <option value=""> ----- Select Principal Frequency -----</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Interest Frequency  </label>
+                                        <br />
+                                        <select name="interestfrequency_name" ng-options="m.interestfrequency_name  for m in interestfrequencylist"
+                                                ng-model="cboInterestFrequency " class="form-control" style="height:37px;" chosen=""
+                                                size="1">
+                                            <option value=""> ----- Select Interest Frequency -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="cboProductTypelist.loanproduct_name == 'Agri Receivable Finance (ARF)'">
+                                        <label>Interest to be deducted upfront </label>
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="interest_status" name="interest_status" value="Yes" ng-model="rdbinterest_status" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="interest_status" name="interest_status" value="No" ng-model="rdbinterest_status" />
+                                                <span class="fa fa-circle"></span>No
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-hide="cboProductTypelist.loanproduct_name == 'Agri Receivable Finance (ARF)'">
+                                        <label>Interest to be deducted upfront </label>
+                                        <input type="text" ng-model="test" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="txttenure_days!='0'">
+                                        <label class="col-form-label"> Moratorium Applicable </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="MoratoriumApplicable" name="Moratorium Applicable" value="Yes"
+                                                       ng-model="rdbmoratorium_status" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="MoratoriumApplicable" name="Moratorium Applicable" value="No"
+                                                       ng-model="rdbmoratorium_status" />
+                                                <span class="fa fa-circle"></span>No
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="txttenure_days=='0'">
+                                        <label class="col-form-label"> Moratorium Applicable </label>
+                                        <br />
+                                        <input type="text" ng-model="test1" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="rdbmoratorium_status=='Yes'">
+                                        <label class="col-form-label"> Moratorium Type  <span style="color:red">*</span></label>
+                                        <br />
+                                        <select name="Moratoriumtype"
+                                                ng-model="cbomoratorium_type" class="form-control" style="height:37px;" size="1">
+                                            <option value=""> -----Select Moratorium Type -----</option>
+                                            <option value="Principal"> Principal </option>
+                                            <option value="Principal and interest"> Principal and interest </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="rdbmoratorium_status=='Yes'">
+                                        <label class="col-form-label"> Moratorium Start Date <span style="color:red">*</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="MSD" name="date" ng-model="txtmoratorium_startdate" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open12" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender12($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3" ng-show="rdbmoratorium_status=='Yes'">
+                                        <label class="col-form-label"> Moratorium End Date <span style="color:red">*</span></label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="MED" name="date" ng-model="txtmoratorium_enddate" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open13" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender13($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <br />
+                                        <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="add_loaddetails()"><span class="fa fa-plus" />  Add  </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br /><br />
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="row-border hover" id="statictable">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th style="width:5%;text-align:center;">S.No</th>
+                                                            <th> Facility Requested On </th>
+                                                            <th> Product Type </th>
+                                                            <th> Product Sub Type </th>
+                                                            <th> Facility Loan Amount </th>
+                                                            <th> Loan </th>
+                                                            <th> Facility </th>
+                                                            <th> Repayment </th>
+                                                            <th> Moratorium </th>
+                                                            <th style="width:6%;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in Loandtl_list">
+                                                            <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                            <td title="Facility Requested On">{{data.facilityrequested_date}} </td>
+                                                            <td title="Product Type">{{data.product_type}}</td>
+                                                            <td title="Product Sub Type ">{{data.productsub_type}} </td>
+                                                            <td title="Facility Loan Amount" style="text-align:right;">{{data.loanfacility_amount}}</td>
+                                                            <td title="Loan Details">
+                                                                <b>Loan Type : </b> {{data.loan_type}} <br />
+                                                                <b>Rate of Interest  : </b> {{data.rate_interest}}  <br />
+                                                                <b>Penal Interest : </b> {{data.penal_interest}}
+                                                            </td>
+                                                            <td title="Facility Loan Amount">
+                                                                <br />
+                                                                <b>Validity of the facility (overall limit validity) : </b> {{data.facilityoverall_limit}} <br />
+                                                                <b>Tenure of the product (overall limit validity) : </b>{{data.tenureoverall_limit}} <br />
+                                                                <b>Facility Type : </b> {{data.facility_type}}
+                                                                <b>Facility mode : </b> {{data.facility_mode}}
+                                                            </td>
+                                                            <td title="Repayment">
+                                                                <b>Principal Frequency  : </b> {{data.principalfrequency_name}} <br />
+                                                                <b>Interest Frequency : </b> {{data.interestfrequency_name}}  <br />
+                                                                <b>Interest to be deducted upfront : </b> {{data.interest_status}}
+                                                            </td>
+                                                            <td title="Moratorium">
+                                                                <b>Moratorium Type  : </b> {{data.moratorium_type}} <br />
+                                                                <b>Start Date : </b>{{data.moratorium_startdate}}  <br />
+                                                                <b>End Date : </b> {{data.moratorium_enddate}}
+                                                            </td>
+                                                            <td class="text-nowrap">
+                                                                <!--<button title="Edit" ng-click="productchargesloan_edit(data.application2loan_gid)" class="btn btn-green btn-xs">
+                                                                    <em class="fa fa-edit"></em>
+                                                                </button>-->
+                                                                <button title="Delete" ng-click="productchargesloan_delete(data.application2loan_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope" ng-show="buyer_status=='Y'">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Select the List of Buyers Details</b></p>
+                                    <hr />
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Buyer <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <select name="Buyer" ng-options="m.buyer_name  for m in buyerlist" ng-change="buyer()" chosen=""
+                                                ng-model="cboBuyer" class="form-control" style="height:37px;"
+                                                size="1">
+                                            <option value=""> ----- Select Buyer -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Buyer Limit<span style="color:red"> *</span>  </label>
+                                        <br />
+                                        <input type="text" ng-model="txtbuyer_limit" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Availed Limit <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtavailed_limit" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Balance Limit <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtbalance_limit" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Bill Tenure in Days  <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtbill_tenuredays" tabindex="0" class="form-control" />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Margin % <span style="color:red"> *</span> </label>
+                                        <br />
+                                        <input type="text" ng-model="txtmargin" tabindex="0" class="form-control" />
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <br />
+                                        <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="add_buyerdtl()"><span class="fa fa-plus" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr>
+                                                            <th>S.No</th>
+                                                            <th>Buyer</th>
+                                                            <th>Buyer Limit</th>
+                                                            <th>Availed limit</th>
+                                                            <th>Balance limit</th>
+                                                            <th>Bill Tenure in Days</th>
+                                                            <th>Margin %</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="list in buyerdtl_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{list.buyer_name}}</td>
+                                                            <td>{{list.buyer_limit}}</td>
+                                                            <td>{{list.availed_limit}}</td>
+                                                            <td>{{list.balance_limit}}</td>
+                                                            <td>{{list.bill_tenure}}</td>
+                                                            <td>{{list.margin}}</td>
+                                                            <td>
+                                                                <button title="Edit" ng-click="buyerdtl_edit(list.application2buyer_gid)" class="btn btn-green btn-xs">
+                                                                    <em class="fa fa-edit"></em>
+                                                                </button>
+                                                                <button title="Delete" ng-click="buyerdtl_delete(list.application2buyer_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Purpose of Loan </b></p>
+                                    <hr />
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label><strong>End Use / Purpose</strong><span style="color:red"> *</span> </label>
+                                        <div text-angular="" ng-model="txtenduse_purpose" maxlength="3000" required
+                                             placeholder="Type End Use / Purpose Description..." name="wysiswyg-editor2" class="btn-group-justified">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br /><br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Service Charges Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Processing Fee </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="processingfee" ng-model="txtprocessing_fee" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange1()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount51" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Collection Type </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="CollectionType1" name="Collection Type1" ng-change="collectdeduct()" value="Collect" ng-model="rdbprocessing_collectiontype" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="CollectionType1" name="Collection Type1" value="Deduct" ng-change="collectdeduct()" ng-model="rdbprocessing_collectiontype" />
+                                                <span class="fa fa-circle"></span>Deduct
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Documentation Charges </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="doc_charges" ng-model="txtdoc_charges" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange2()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount52" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Collection Type </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="CollectionType2" name="Collection Type2" ng-change="collectdeduct()" value="Collect" ng-model="rdbdoccharge_collectiontype" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="CollectionType2" name="Collection Type2" ng-change="collectdeduct()" value="Deduct" ng-model="rdbdoccharge_collectiontype" />
+                                                <span class="fa fa-circle"></span>Deduct
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Field Visit Charges </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="fieldvisit_charges" ng-model="txtfieldvisit_charges" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange3()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount53" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Collection Type </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="CollectionType3" name="Collection Type3" ng-change="collectdeduct()" value="Collect" ng-model="rdbfieldvisit_collectiontype" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="CollectionType3" name="Collection Type3" ng-change="collectdeduct()" value="Deduct" ng-model="rdbfieldvisit_collectiontype" />
+                                                <span class="fa fa-circle"></span>Deduct
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Adhoc Fee </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="adhoc_fee" ng-model="txtadhoc_fee" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange4()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount54" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Collection Type </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="CollectionType4" name="Collection Type4" ng-change="collectdeduct()" value="Collect" ng-model="rdbadhoc_collectiontype" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="CollectionType4" name="Collection Type4" ng-change="collectdeduct()" value="Deduct" ng-model="rdbadhoc_collectiontype" />
+                                                <span class="fa fa-circle"></span>Deduct
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Term Life Insurance </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="life_insurance" ng-model="txtlife_insurance" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange5()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount55" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2">
+                                        <label class="col-form-label"> Collection Type </label>
+                                        <br />
+                                        <div class="radio c-radio">
+                                            <label>
+                                                <input type="radio" id="CollectionType5" name="Collection Type5" ng-change="collectdeduct()" value="Collect" ng-model="rdblifeinsurance_collectiontype" />
+                                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Collect
+                                            </label>
+                                            <label>
+                                                <input type="radio" id="CollectionType5" name="Collection Type5" ng-change="collectdeduct()" value="Deduct" ng-model="rdblifeinsurance_collectiontype" />
+                                                <span class="fa fa-circle"></span>Deduct
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label class="col-form-label"> Personal Accident Insurance </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input id="acct_insurance" ng-model="txtacct_insurance" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtamountchange6()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" required style="text-align:right;">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount56" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Total Collectible </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" id="total_collect" ng-model="txttotal_collect" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Total Deductible </label> <span style="color:red">*</span>
+                                        <br />
+                                        <input type="text" id="total_deduct" ng-model="txttotal_deduct" tabindex="0" class="form-control" disabled />
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope" style="background-color: #f9f8f8;" ng-show="collateral_status=='Y'">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Collateral Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label><strong>Source Type </strong> <span style="color:red">*</span></label>
+                                        <select name="SourceType"
+                                                ng-model="cboSourceType" class="form-control" style="height:37px;"
+                                                size="1" required>
+                                            <option value=""> ----- Select Source Type -----</option>
+                                            <option value="Fixed">Fixed</option>
+                                            <option value="Moving">Moving</option>
+                                            <option value="Property">Property</option>
+                                            <option value="Deposit">Deposit</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label"> Guideline Value </label>
+                                        <br />
+                                        <input id="GuidelineValue" ng-model="txtguidelinevalue" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtguidelinevaluechange()" style="text-align:right;" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount2" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Guideline Value assessed on </label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="GVAO" name="date" ng-model="txtguideline_date" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open8" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender8($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label"> Market Value </label>
+                                        <br />
+                                        <input id="MarketValue" ng-model="txtmarketValue" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtMarketValuechange()" style="text-align:right;" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount3" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Market Value assessed on </label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="MVAO" name="date" ng-model="txtmarketvalue_date" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open14" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender14($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Forced Source Value </label>
+                                        <br />
+                                        <input id="ForcedSourceValue" ng-model="txtforcedsource_value" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtForcedSourceValuechange()" style="text-align:right;" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount4" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label"> Collateral FSV  </label>
+                                        <br />
+                                        <input id="CollateralSSVvalue" ng-model="txtcollateralSSV_value" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtCollateralSSVvaluechange()" style="text-align:right;" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount5" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label">Forced Value Assessed  On </label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="FVAO" name="date" ng-model="txtforcedvalueassessed_on" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open15" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender15($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label><strong>Observation Summary </strong> <span style="color:red">*</span></label>
+                                        <br />
+                                        <div text-angular="" ng-model="txtcolateralobservation_summary" required
+                                             placeholder="Type Observation Summary Description..." name="wysiswyg-editor4" class="btn-group-justified">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Collateral Document Upload </b></p>
+                                        <hr />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label> Document Title </label> <span style="color:red">*</span>
+                                            <br />
+                                            <select name="DocumentTitle" style="height:37px;"
+                                                    ng-model="cboDocumentTitle" class="form-control"
+                                                    size="1">
+                                                <option value=""> -----Select Document Title -----</option>
+                                                <option value="Document Observation "> Document Observation </option>
+                                                <option value="Document Collateral"> Document Collateral </option>
+                                                <option value="Document Legal Opinion"> Document Legal Opinion </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <div class="float-label">
+                                                <strong>Upload Documents</strong>
+                                                <br /><br />
+                                                <input type="file" id="file" tabindex="5" onchange="angular.element(this).scope().upload_doc(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       ng-model="txtdocument" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                        </div>
+                                        <br /><br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <br />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in CollateralDocumentList">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">{{data.document_title}}</td>
+                                                                    <td title="Document Name">{{data.document_name}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-green btn-sm"
+                                                                                ng-click="downloads(data.document_path,data.document_name,data.migration_flag)">
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.document_name,data.migration_flag)">
+                                                                            <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                        </button>
+                                                                        <a title="Delete" class="btn btn-sm btn-danger" ng-click="uploaddocumentcancel(data.document_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="row">
+                                <div class="text-center">
+                                    <a class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;" ng-click="add_Collateral()"><span class="fa fa-plus" />  Add  </a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <br />
+                                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Collateral Summary </b></p>
+                                                        <hr />
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th>Source Type</th>
+                                                                        <th>Guideline Value</th>
+                                                                        <th>Guideline Value assessed on</th>
+                                                                        <th>Market Value</th>
+                                                                        <th>Market Value assessed on</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in Collateral_list">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Source Type">{{data.source_type}}</td>
+                                                                        <td title="Guideline Value">{{data.guideline_value}}</td>
+                                                                        <td title="Guideline Value assessed on">{{data.guideline_date}}</td>
+                                                                        <td title="Market Value">{{data.market_value}}</td>
+                                                                        <td title="Market Value assessed on">{{data.marketvalue_date}}</td>
+                                                                        <td>
+                                                                            <!--<button title="Edit" ng-click="edit_Collateraldtls(data.application2collateral_gid)" class="btn btn-green btn-xs">
+                                                                                <em class="fa fa-edit"></em>
+                                                                            </button>-->
+                                                                            <button title="Delete" ng-click="delete_Collateraldtls(data.application2collateral_gid)"
+                                                                                    class="btn btn-danger btn-xs ">
+                                                                                <em class="fa fa-trash-o"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br /><br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="dd-handle ng-scope">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <br />
+                                    <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Hypothecation Details </b></p>
+                                    <hr />
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label><strong>Security Type</strong></label> <span style="color:red">*</span>
+                                        <select name="SecurityType" ng-options="m.security_type for m in securitytype_list"
+                                                ng-model="cboSecurityType" class="form-control" style="height:37px;" chosen="" size="1">
+                                            <option value=""> ----- Select Security Type -----</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <label class="col-form-label"> Security Description </label>
+                                        <br />
+                                        <textarea ng-model="txtsecurity_desc" rows="2" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-5 col-md-5 col-sm-5">
+                                        <label class="col-form-label"> Security Value  </label>
+                                        <br />
+                                        <input id="SecurityValue" ng-model="txtSecurity_Value" class="form-control ng-pristine ng-valid ng-touched"
+                                               ng-change="txtSecurityValuechange()" style="text-align:right;" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                        <span style="font-style:italic;">Number in words:</span>
+                                        <span id="words_totalamount6" style="color:#003c96fc;" class="text-bold"></span>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <label class="col-form-label"> Security Assessed On</label>
+                                        <br />
+                                        <p class="input-group">
+                                            <input type="text" id="SAO" name="date" ng-model="txtSecurityAssessed_date" datepicker-popup="{{dp.format}}"
+                                                   style="height:36px;" is-open="dp.open16" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                   close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="dp.calender16($event)" style="height:36px;" class="btn btn-default">
+                                                    <em class="fa fa-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Asset ID </label>
+                                        <br />
+                                        <input type="text" ng-model="txtasset_id" tabindex="0" class="form-control" maxlength="20" />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> ROC Filling ID </label>
+                                        <br />
+                                        <input type="text" ng-model="txtroc_fillingid" tabindex="0" class="form-control" maxlength="20" />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> CERSAI Filling ID </label>
+                                        <br />
+                                        <input type="text" ng-model="txtCERSAI_fillingid" tabindex="0" class="form-control" maxlength="20" />
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label"> Observation Summary </label>
+                                        <br />
+                                        <div text-angular="" ng-model="txthypoobservation_summary"
+                                             placeholder="Type End Use / Purpose Description..." name="wysiswyg-editor3" class="btn-group-justified">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label class="col-form-label"> Primary Security </label>
+                                        <br />
+                                        <textarea ng-model="txtprimary_security" rows="2" class="form-control"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="dd-handle ng-scope">
+                                        <br />
+                                        <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp;  Hypothecation Document Upload </b></p>
+                                        <hr />
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <label> Document Title </label> <span style="color:red">*</span>
+                                            <br />
+                                            <select name="DocumentTitle" style="height:37px;"
+                                                    ng-model="cbohypodoc_title" class="form-control"
+                                                    size="1">
+                                                <option value=""> -----Select Document Title -----</option>
+                                                <option value="Document Observation"> Document Observation </option>
+                                                <option value="Document Hypothecation"> Document Hypothecation </option>
+                                                <option value="Document Legal Opinion"> Document Legal Opinion </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6 col-md-6">
+                                            <div class="float-label">
+                                                <strong>Upload Documents</strong>
+                                                <br /><br />
+                                                <input type="file" id="hypofile" tabindex="5" multiple onchange="angular.element(this).scope().uploadhypothecationdoc(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                       ng-model="txthypo_document" data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2 col-md-2">
+                                        </div>
+                                        <br /><br />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <br />
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped table-secondary">
+                                                            <thead class="bg-gray text-white">
+                                                                <tr width="100%">
+                                                                    <th scope="col">S.No</th>
+                                                                    <th scope="col">Document Title</th>
+                                                                    <th scope="col">Document Name</th>
+                                                                    <th scope="col">Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr ng-repeat="data in HypothecationDocumentList">
+                                                                    <td title="S.No">{{$index+1}}</td>
+                                                                    <td title="Document Title">{{data.document_title}}</td>
+                                                                    <td title="Document Name">{{data.document_name}}</td>
+                                                                    <td data-title="Action">
+                                                                        <button title="Download" class="btn btn-green btn-sm"
+                                                                                ng-click="downloads(data.document_path,data.document_name)">
+                                                                            <em class="fa fa-download"></em>
+                                                                        </button>
+                                                                        <button title="View" class="btn btn-info btn-sm" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                            <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                        </button>
+                                                                        <a title="Delete" class="btn btn-sm btn-danger" ng-click="hypodoccancel(data.document_gid)">
+                                                                            <span class="icon icon-trash "></span>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br /><br />
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="text-center">
+                                    <a class="btn btn-lg btn-deafult" style="background-color:#09385f;color:white;font-size: 13px;" ng-click="add_Hypothecationdtls()"><span class="fa fa-plus" />  Add  </a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <br />
+                                                        <p class="text-primary" style="font-size:16px;"><b> Hypothecation Summary </b></p>
+                                                        <hr />
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray text-white">
+                                                                    <tr width="100%">
+                                                                        <th scope="col">S.No</th>
+                                                                        <th>Security Type</th>
+                                                                        <th>Security Value</th>
+                                                                        <th>Security Assessed On</th>
+                                                                        <th>Asset ID</th>
+                                                                        <th>ROC Filling ID</th>
+                                                                        <th scope="col">Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in Hypothecation_list">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="Security Type">{{data.security_type}}</td>
+                                                                        <td title="Security Value">{{data.security_value}}</td>
+                                                                        <td title="Security Assessed On">{{data.securityassessed_date}}</td>
+                                                                        <td title="Asset ID">{{data.asset_id}}</td>
+                                                                        <td title="ROC Filling ID">{{data.roc_fillingid}}</td>
+                                                                        <td>
+                                                                            <button title="Delete" ng-click="delete_Hypothecationdtls(data.application2hypothecation_gid)"
+                                                                                    class="btn btn-danger btn-xs ">
+                                                                                <em class="fa fa-trash-o"></em>
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="row text-center">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <br />
+                                <button type="button" class="btn btn-primary" ng-disabled="!txtOveralllimit_amount" ng-click="saveProduct_charges()">
+                                    <em class="fa fa-save"></em>&nbsp;&nbsp;Save as Draft
+                                </button>
+                                <button type="button" class="btn btn-success" ng-disabled="SaveProduct.$invalid"
+                                        ng-click="Submitproduct()">
+                                    <i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit
+                                </button>
+                            </div>
+                        </div>
+                        <br />
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="Individual Demographics" class="tabcontent">
+            <br />
+            <div ng-show="Individual_dtls">
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <h3>Kindly Fill the General Details</h3>
+                            <br />
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Add Group(s)" class="tabcontent">
+            <br/>
+            <div ng-show="Group_dtls">
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <h3>Kindly Fill the General Details</h3>
+                            <br />
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>                              
+        </div>
+        <div id="Economic Capital" class="tabcontent">
+            <br />
+            <div ng-show="EconomicCapital_dtls">
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <h3>Kindly Fill the General Details</h3>
+                            <br />
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div id="Facilities & Charges" class="tabcontent">
+            <br />
+            <div ng-show="ProductCharges_dtls">
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <h3>Kindly Fill the Borrower Details</h3>
+                            <br />
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="Hypothecation" class="tabcontent">
+            <br />
+            <div ng-show="Hypothecation_dtls">
+                <div class="dd-handle ng-scope" style="background-color: #f9f8f8;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <h3>Kindly Fill the Borrower Details</h3>
+                            <br />
+
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+        </div>
+        <br />
+    </div>
+</div>

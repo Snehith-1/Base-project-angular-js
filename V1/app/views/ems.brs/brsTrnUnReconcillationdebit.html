@@ -1,0 +1,219 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        width: 100%;
+    }
+
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+            height: 58px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(140, 138, 141);
+                color: white;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #d5591e;
+                background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 58px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 58px;
+                color: black;
+            }
+
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+    /* Style for blinking the notification button */
+    .button {
+        background-color: #FCB77E;
+        padding: 17px 9px;
+        text-align: center;
+        text-decoration: double;
+    }
+
+
+    .button {
+        animation: glowing 2000ms infinite;
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+
+</script>
+<h3>
+    Un Reconciliation Debit Summary
+</h3>
+<div ng-controller="brsTrnUnReconcillationdebitController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="tab">
+                    <button class="tablinks" onclick="openApplication(event, 'Reconciliation')" ng-click="recon()">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{reconc_count}}</b></div>
+                        <b style="font-size: 14px;">  Reconciliation Summary</b>
+                    </button>
+                    <button class="tablinks" onclick="openApplication(event, 'Unreconciliation')" id="defaultOpen" ng-click="unrecon()">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{unreconc_count}}</b></div>
+                        <b style="font-size: 14px;">  Unreconciliation Summary</b>
+                    </button>
+
+                </div>
+                <br />
+                <div id="Unreconciliation" class="tabcontent">
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <button type="button" id="opentab" class="btn btn-labeled tabactivecolorstyle" ng-click="unrecon()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177);">
+                                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{unreconcredit_count}}</b></div>
+                                    <b style="font-size: 14px;"> Un Recon Credit</b>
+                                </button>
+                                <br />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <button type="button" id="pendingtab" class="btn btn-labeled " ng-click="recondebit()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177); background-color: #84cbdb;">
+                                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{unrecondebit_count}}</b></div>
+                                    <b style="font-size: 14px;"> Un Recon Debit</b>
+                                </button>
+                                <br />
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="table-responsive">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table datatable="ng" class="table table-hover table-striped">
+                                <thead>
+                                    <tr class="text-white" style="background-color:#09385f;">
+                                    <tr class="text-white" style="background-color: #09385f;">
+                                        <th class="text-center" style="display:none"> S.No </th>
+                                        <th> Bank Name </th>
+                                        <th> Transaction Reference Number </th>
+                                        <th> Transaction Date </th>
+                                        <th> Transaction Particulars </th>
+                                        <th> Amount</th>
+                                        <th> CR-DR </th>
+                                        <th>Knockoff-Status</th>
+                                        <th>Created By</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in uncocillationdebit_list">
+                                        <td data-title="'S.No'" style="text-align: center; width: 10%; display: none;"> {{$index+1}} </td>
+                                        <td data-title="'Bank Name'">{{data.bank_name }}</td>
+                                        <td data-title="' Transaction Reference Number'">{{data.banktransc_refno }}</td>
+                                        <td data-title="'Transaction Date'">{{data.trn_date }}</td>
+                                        <td data-title="'Transaction Particulars'">{{data.transact_particulars }}</td>
+                                        <td data-title="'Amount'">{{data.transact_val}}</td>
+                                        <td data-title="' CR-DR'">{{data.cr_dr}}</td>
+                                        <td data-title="'Knockoff-Status'" ng-switch="data.knockoff_status">
+                                            <label style="font-size:10px" ng-switch-when="Pending" class="label label-info">Pending</label>
+                                        </td>
+                                        <td data-title="'Created By'">{{data.created_by}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+

@@ -1,0 +1,316 @@
+<h3>
+    Defferal Management
+</h3>
+
+<div ng-controller="AgrTrnSuprRMDeferralCloseQueryController">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);color:#ffffff">
+            <h5> Raise Query - {{lbldocumentcode}} / {{lbldocumenttype_name}}</h5>
+        </div>
+
+        <div class="panel-body">
+            <form novalidate="" name="querycreate" ng-submit="form.querycreate()" autocomplete="off" class="form-validate mb-lg">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div>
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p class="text-primary" style="font-size:14px;"><b> Application Details - {{lblapplicant_name}}</b></p>
+                                        <hr />
+                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                            <label style="font-weight:bold">Application Reference Number</label>
+                                            <br />
+                                            <p>{{lblapplref_no}}</p>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                            <label style="font-weight:bold"> Application Region </label>
+                                            <br />
+                                            <p>{{lblappl_state}}</p>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                            <label style="font-weight:bold">Overall Limit Requested</label>
+                                            <br />
+                                            <p>{{lbloveralllimit_request}}</p>
+                                        </div>
+                                        <div class="col-lg-3 col-sm-3 col-md-3">
+                                            <label style="font-weight:bold"> Current Application Stage </label>
+                                            <br />
+                                            <p>{{lblcurrentappl_stage}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <p class="text-primary" style="font-size:14px;"><b> Scanned Document - Query Summary </b></p>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th class="text-center" style="width:5%;"> S.No </th>
+                                                    <th> Query To </th>
+                                                    <th> Query Title </th>
+                                                    <th> Query Description & RM Response </th>
+                                                    <th> Query Raised by </th>
+                                                    <th> Query Raised date </th>  
+                                                    <th> Uploaded Documents </th>
+                                                    <th> Query Status </th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in query_list">
+                                                    <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                    <td data-title="' Query To'"> {{data.query_toname}} </td>
+                                                    <td data-title="'Query Title'"> {{data.query_title}} </td>
+                                                    <td data-title="'Query Description & RM Response'">
+                                                        <button title="View Query Description'" ng-click="view_querydesc(data.query_description,data.query_responseremarks)" class="btn btn-info">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                    <td data-title="'Query Raised by'"> {{data.created_by}} </td>
+                                                    <td data-title="'Query Raised date'"> {{data.created_date}} </td>  
+                                                    <td data-title="'Uploaded Documents'">
+                                                        <button title="View" ng-click="defferaldoc_view(data.tagquery_gid)" class="btn btn-info">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                    <td data-title="'Query Status'" ng-switch="data.query_status">
+                                                        <div class="label label-success" style="font-size:12px;" ng-switch-when="Closed">{{data.query_status}}</div>
+                                                        <div class="label label-info" style="font-size:12px;" ng-switch-when="Query Raised">{{data.query_status}}</div>
+                                                    </td>
+                                                    <td data-title="'Action'" ng-switch="data.query_status">
+                                                        <button title="Close" ng-switch-when='Query Raised' ng-click="query_close(data.tagquery_gid)" class="btn btn-danger btn-sm">
+                                                            Close
+                                                        </button>
+                                                        <button title="Close" ng-switch-when='Closed' disabled class="btn btn-danger btn-sm">
+                                                            Close
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="dd-handle ng-scope">
+                                    <p class="text-primary" style="font-size:14px;"><b> Physical Document - Query Summary </b></p>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped">
+                                            <thead>
+                                                <tr class="text-white" style="background-color:#09385f;">
+                                                    <th class="text-center" style="width:5%;"> S.No </th>
+                                                    <th> Query To </th>
+                                                    <th> Query Title </th>
+                                                    <th> Query Description & RM Response </th>
+                                                    <th> Query Raised by </th>
+                                                    <th> Query Raised date </th>
+                                                    <th> Uploaded Documents </th>
+                                                    <th> Query Status </th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in physicalquery_list">
+                                                    <td data-title="'S.No'" class="text-center" style="width:5%;"> {{$index+1}}</td>
+                                                    <td data-title="' Query To'"> {{data.query_toname}} </td>
+                                                    <td data-title="'Query Title'"> {{data.query_title}} </td>
+                                                    <td data-title="'Query Description & RM Response'">
+                                                        <button title="View Query Description'" ng-click="view_querydesc(data.query_description,data.query_responseremarks)" class="btn btn-info">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                    <td data-title="'Query Raised by'"> {{data.created_by}} </td>
+                                                    <td data-title="'Query Raised date'"> {{data.created_date}} </td>
+                                                    <td data-title="'Uploaded Documents'">
+                                                        <button title="View" ng-click="defferaldoc_view(data.tagquery_gid)" class="btn btn-info">
+                                                            <em class="fa fa-eye"></em>
+                                                        </button>
+                                                    </td>
+                                                    <td data-title="'Query Status'" ng-switch="data.query_status">
+                                                        <div class="label label-success" style="font-size:12px;" ng-switch-when="Closed">{{data.query_status}}</div>
+                                                        <div class="label label-info" style="font-size:12px;" ng-switch-when="Query Raised">{{data.query_status}}</div>
+                                                    </td>
+                                                    <td data-title="'Action'" ng-switch="data.query_status">
+                                                        <button title="Close" ng-switch-when='Query Raised' ng-click="query_close(data.tagquery_gid)" class="btn btn-danger btn-sm">
+                                                            Close
+                                                        </button>
+                                                        <button title="Close" ng-switch-when='Closed' disabled class="btn btn-danger btn-sm">
+                                                            Close
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <br /><br />
+                        <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                    <br />
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+
+    <script type="text/ng-template" id="/queryDescriptionView.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Query Description & RM Response View</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> Query Description : </label>
+                                        <br />
+                                        <p>{{lblquery_desc}}</p>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label> RM Response : </label>
+                                        <br />
+                                        <p>{{lblquery_responseremarks}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/document_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px"> Documents</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th scope="col">S.No</th>
+                                            <!--<th scope="col">Document Title</th>-->
+                                            <th scope="col">Document Name</th>
+                                            <th scope="col">Uploaded By / On </th>
+                                            <!-- <th scope="col">Action</th> -->
+                                            <th align="center" scope="col">
+                                                Action&nbsp;&nbsp;&nbsp;
+                                                <a download="" href="" title="Download All" id="btnpdf1" ng-click="downloadall()">
+                                                    <em style="font-size: 1.5em;" class="icon-arrow-down"></em>&nbsp;
+                                                </a>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in queryuploaddocument">
+                                            <td title="S.No">{{$index+1}}</td>
+                                            <!--<td title="Document Title">{{data.document_title}}</td>-->
+                                            <td title="Documen
+                                            <td title="Document Name">{{data.file_name}}</td>
+                                            <td title="Uploaded By / On">{{data.created_by}} / {{data.created_date}} </td>
+                                            <td data-title="Action">
+                                                <button title="Download" class="btn btn-green btn-sm"
+                                                        ng-click="download_doc1(data.file_path,data.file_name)"><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                    <em class="fa fa-download"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/queryClose.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa icon-close"></em>&nbsp;<label style="font-size:16px">Close query</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="queryform" ng-submit="form.submitquery()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-form-label"> Remarks <span style="color:red"> *</span></label>
+                                <br />
+                                <textarea ng-model="txtcloseremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                          id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success" ng-disabled="queryform.$invalid" ng-click="submit()"><i class="fa fa-check"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                        <br />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

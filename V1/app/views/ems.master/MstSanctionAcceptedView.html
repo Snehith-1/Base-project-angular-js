@@ -1,0 +1,817 @@
+<h3>
+    Sanction - View
+</h3>
+<div ng-controller="MstSanctionAcceptedViewController">
+    <!--<div>-->
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;font-size:14px;font-weight :bold;">
+                            <h5>{{sanctionto_name}}</h5>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="background-color:#3646b8;color:white;padding-top:10px;padding-bottom:10px;">
+                            <h5>{{application_no}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="dd-handle">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                                <hr />
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Sanction Ref No</label>
+                                    <p>{{sanction_refno}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Sanction Amount</label>
+                                    <p>{{sanction_amount}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Maker Submitted By</label>
+                                    <p>{{makersubmitted_by}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Maker Submitted Date</label>
+                                    <p>{{makersubmitted_on}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" ng-if="checkerletter_flag=='Y'">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Checker Submitted By</label>
+                                    <p>{{checkerupdated_by}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Checker Submitted Date</label>
+                                    <p>{{checkerupdated_on}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Approved By</label>
+                                    <p>{{approved_by}}</p>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>Approved Date</label>
+                                    <p>{{approved_date}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="panelDemo18">
+                                <div class="dd-handle">
+                                    <b style="font-size:14px;" class="text-primary"> &nbsp;&nbsp;Approval Log </b>
+                                    <hr />
+                                    <div class="table-responsive">
+                                        <table class="table hover table-striped ">
+                                            <thead>
+                                                <tr class="text-white bg-gray-light">
+                                                    <th>S.No</th>
+                                                    <th align="center">Submitted Date</th>
+                                                    <th align="center">Status</th>
+                                                    <th align="center">Submitted By</th>
+                                                    <th align="center">Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in sanctiontocheckerlist">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Submitted Date'" class="text-nowrap">{{data.created_date}}</td>
+                                                    <td data-title="'Status'">{{data.sanction_status}}</td>
+                                                    <td data-title="'Submitted By'">{{data.created_by}}</td>
+                                                    <td data-title="'Submitted By'">{{data.remarks}}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="panelDemo9" class="panel panel-default">
+                                <div class="panel-heading">
+
+                                    <b class="text-primary"> Sanction Details </b>
+                                </div>
+                                <div class="panel-body">
+                                    <div>
+
+                                        <div class="modal-body ng-scope">
+                                            <div class="pd-sm-10">
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction </label>
+                                                            <p>{{application_type}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction To</label>
+                                                            <p>{{sanctionto_name}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Address</label>
+                                                            <p>{{contactperson_address}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <br />
+                                                <!--<div class="row" ng-show="customer_pnl">-->
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Contact Person Name </label>
+                                                            <p>{{contactperson_name}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Contact Person Number</label>
+                                                            <p>{{contactperson_number}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Email ID</label>
+                                                            <p>{{contactpersonemail_address}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction From (Validity) </label>
+                                                            <p>{{sanctionfrom_date}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction Till (Validity)</label>
+                                                            <p>{{sanctiontill_date}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction Date</label>
+                                                            <p>{{sanction_date}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <br />
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Paycard Solutions </label>
+                                                            <p>{{paycard}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Sanction Type</label>
+                                                            <p>{{sanction_type}}</p>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Nature of Proposal</label>
+                                                            <p>{{natureof_proposal}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <br />
+
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label>Branch Name </label>
+                                                            <p>{{branch_name}}</p>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                                            <label>E & S Declaration Available</label>
+                                                            <p>{{esdeclaration_status}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div ng-show="esdeclaration_status == 'Yes'">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                    <br />
+                                                                    <strong class="ng-binding w3-text-indigo">
+                                                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                                        E & S Declaration Documents
+                                                                    </strong>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <br />
+                                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-secondary">
+                                                                                    <thead class="bg-gray text-white">
+                                                                                        <tr width="100%">
+                                                                                            <th scope="col">Document Title</th>
+                                                                                            <th scope="col">Document Name</th>
+                                                                                            <th scope="col">Uploaded Date</th>
+                                                                                            <th scope="col">Uploaded By</th>
+                                                                                            <th scope="col">
+                                                                                                Action&nbsp;&nbsp;&nbsp;
+                                                                                                <a download="" href="" title="Download All" id="btnpdf4" ng-click="downloadallESdoc()">
+                                                                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                                                                </a>
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="data in UploadCADES_DocumentList" width="100%">
+                                                                                            <td title="Document Title">{{data.document_type}}</td>
+                                                                                            <td title="Document Name">{{data.document_name}}</td>
+                                                                                            <td title="Uploaded Date">{{data.updated_date}}</td>
+                                                                                            <td title="Uploaded By">{{data.uploaded_by}}</td>
+                                                                                            <td data-title="Action" class="nowrap">
+                                                                                                <button title="Download" class="btn btn-green btn-xs"
+                                                                                                        ng-click="downloadsCAM(data.document_path,data.document_name)">
+                                                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                                    <em class="fa fa-download"></em>
+                                                                                                </button>
+                                                                                                <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div ng-show="esdeclaration_status == 'No'">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                    <br />
+                                                                    <strong class="ng-binding w3-text-indigo">
+                                                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                                        Deviation Mail Documents
+                                                                    </strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <br />
+                                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped table-secondary">
+                                                                                    <thead class="bg-gray text-white">
+                                                                                        <tr width="100%">
+                                                                                            <th scope="col">Document Title</th>
+                                                                                            <th scope="col">Document Name</th>
+                                                                                            <th scope="col">Uploaded Date</th>
+                                                                                            <th scope="col">Uploaded By</th>
+                                                                                            <th scope="col">
+                                                                                                Action&nbsp;&nbsp;&nbsp;
+                                                                                                <a download="" href="" title="Download All" id="btnpdf3" ng-click="downloadall()">
+                                                                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                                                                </a>
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="data in DeviationCADMail_DocumentList" width="100%">
+                                                                                            <td title="Document Title">{{data.document_type}}</td>
+                                                                                            <td title="Document Name">{{data.document_name}}</td>
+                                                                                            <td title="Uploaded Date">{{data.updated_date}}</td>
+                                                                                            <td title="Uploaded By">{{data.uploaded_by}}</td>
+                                                                                            <td data-title="Action" class="nowrap">
+                                                                                                <button title="Download" class="btn btn-green btn-xs"
+                                                                                                        ng-click="downloadsCAM(data.document_path,data.document_name)">
+                                                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                                    <em class="fa fa-download"></em>
+                                                                                                </button>
+                                                                                                <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                                </button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                                <br />
+                                                                <strong class="ng-binding w3-text-indigo">
+                                                                    <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                                    Sanction Documents
+                                                                </strong>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <br />
+                                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                                            <div class="table-responsive">
+                                                                <table class="table table-striped table-secondary">
+                                                                    <thead class="bg-gray text-white">
+                                                                        <tr width="100%">
+                                                                            <th scope="col">S.No</th>
+                                                                            <th scope="col">Document Title</th>
+                                                                            <th scope="col">Document Name</th>
+                                                                            <th align="center" scope="col">
+                                                                                Action&nbsp;&nbsp;&nbsp;
+                                                                                <a download="" href="" title="Download All" id="btnpdf2" ng-click="downloadallsanction()">
+                                                                                    <em class="icon-arrow-down"></em>&nbsp;
+                                                                                </a>
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr ng-repeat="data in sanctionuploaddocument_list">
+                                                                            <td title="S.No">{{$index+1}}</td>
+                                                                            <td title="Document Name">{{data.document_title}}</td>
+                                                                            <td title="Document Title">{{data.document_name}}</td>
+                                                                            <td data-title="Action" class="nowrap">
+                                                                                <button title="Download" class="btn btn-green btn-xs"
+                                                                                        ng-click="downloads(data.document_path,data.document_name)">
+                                                                                    <a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                                                    <em class="fa fa-download"></em>
+                                                                                </button>
+                                                                                <button title="View" class="btn btn-info btn-xs" ng-click="documentviewer(data.document_path,data.document_name)">
+                                                                                    <a download="" href="" style="display:none;"></a>  <em class="fa fa-file"></em>
+                                                                                </button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="dd-handle ng-scope">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="overflow-x: hidden;">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="text-center" style="font-size:14px;"><b> <span style="font-size:16px;color:#0a1b72;">  Product Details </span> </b></p>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="dd-handle ng-scope">
+                                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;  Overall Recommendation of Limit Details </b></p>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                            <label> Overall limit amount </label>
+                                                            <p>{{txtoveralllimit_amt}}</p>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <label> Validity of overall limit (years) </label>
+                                                            <p>{{txtvalidity_year}}</p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                            <label> Validity of overall limit (month) </label>
+                                                            <p>{{txtvalidity_month}}</p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-sm-2">
+                                                            <label>Validity of overall limit (days) </label>
+                                                            <p>{{txtvalidity_days}}</p>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                                            <label> Calculation of overall limit validity </label>
+                                                            <p>{{txtcalculation_limitvalidity}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Loan Details </b></p>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-success">
+                                        <thead style="background-color:#dde6e9;">
+                                            <tr>
+                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                <th> Facility Requested On </th>
+                                                <th> Product Type </th>
+                                                <th> Product Sub Type </th>
+                                                <th> Facility Loan Amount </th>
+                                                <th> Loan </th>
+                                                <th> Facility </th>
+                                                <th> Repayment </th>
+                                                <th> Moratorium </th>
+                                                <th> Purpose of Loan / Other </th>
+                                                <!--<th> Action </th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in loandtls_list" width="100%">
+                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                <td title="Facility Requested On">{{data.facilityrequested_date}} </td>
+                                                <td title="Product Type">{{data.product_type}}</td>
+                                                <td title="Product Sub Type ">{{data.productsub_type}} </td>
+                                                <td title="Facility Loan Amount" style="text-align:right;">{{data.loanfacility_amount}}</td>
+                                                <td title="Loan Details">
+                                                    <b>Loan Type : </b> {{data.loan_type}} <br />
+                                                    <b>Rate of Interest : </b> {{data.rate_interest}}  <br />
+                                                    <b>Margin : </b> {{data.roi_margin}}  <br />
+                                                    <b>Penal Interest : </b> {{data.penal_interest}}
+                                                    <b>Scheme Type : </b> {{data.scheme_type}}
+                                                </td>
+                                                <td title="Facility Loan Amount">
+                                                    <b>Validity of the facility (overall limit validity) : </b> {{data.facilityoverall_limit}} <br />
+                                                    <b>Tenure of the product/Credit Period (overall limit validity) : </b>{{data.tenureoverall_limit}} <br />
+                                                    <b>Facility Type : </b> {{data.facility_type}}
+                                                    <b>Facility mode : </b> {{data.facility_mode}}
+                                                </td>
+                                                <td title="Repayment">
+                                                    <b>Principal Frequency  : </b> {{data.principalfrequency_name}} <br />
+                                                    <b>Interest Frequency : </b> {{data.interestfrequency_name}}  <br />
+                                                    <b>Interest to be deducted upfront : </b> {{data.interest_status}}
+                                                </td>
+                                                <td title="Moratorium">
+                                                    <b>Moratorium Type  : </b> {{data.moratorium_type}} <br />
+                                                    <b>Start Date : </b>{{data.moratorium_startdate}}  <br />
+                                                    <b>End Date : </b> {{data.moratorium_enddate}}
+                                                </td>
+                                                <td title="Purpose of Loan / Other" class="text-center">
+                                                    <button title="View" ng-click="PurposeofLoanOther_view(data.application2loan_gid)" class="btn btn-info">
+                                                        <em class="fa fa-eye"></em>
+                                                    </button>
+                                                </td>
+                                                <!--<td title="Add">
+                                                    <button title="View" ng-click="add_product(data.application2loan_gid)" style="background-color:#09385f;" class="btn btn-info">
+                                                        <em class="fa fa-plus"></em>
+                                                    </button>
+                                                </td>-->
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dd-handle ng-scope" ng-if="productdetails.length > 0">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp;  Product Details </b></p>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-success">
+                                        <thead style="background-color:#dde6e9;">
+                                            <tr>
+                                                <th style="width:5%;text-align:center;">S.No</th>
+                                                <th> Product Type / Sub Type </th>
+                                                <th> ODLIM (in Rs.)</th>
+                                                <th> Interchangeability </th>
+                                                <th> Report Structure </th>
+                                                <th> Condition On ODLIM</th>
+                                                <th> Documented Limit (in Rs) </th>
+                                                <th> Date of Expiry</th>
+                                                <!--<th> Action </th>-->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in productdetails" width="100%">
+                                                <td title="S.No" style="text-align:center;">{{$index+1}}</td>
+                                                <td title="Product Type / Sub Type">{{data.product_type}} / {{data.productsub_type}} </td>
+                                                <td title="ODLIM" style="text-align:right;">{{data.odlim_amount}}</td>
+                                                <td title="Interchangeability">{{data.interchangeability}} </td>
+                                                <td title="Report Structure">{{data.report_structure}}</td>
+                                                <td title="Condition On ODLIM">{{data.odlim_condition}} </td>
+                                                <td title="Documented Limit" style="text-align:right;"> {{data.documented_limit}} </td>
+                                                <td title="Date of Expiry"> {{data.dateof_Expiry}} </td>
+                                                <!--<td title="Action">
+                                                    <button title="Edit" ng-click="edit_product(data.limitproductinfodtl_gid, loandtls_list,txtSanctionAmount,data.documented_limit)" class="btn btn-success">
+                                                        <em class="fa fa-edit"></em>
+                                                    </button>
+                                                </td>-->
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; RM Buyer Details </b></p>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Buyer</th>
+                                                <th scope="col">Buyer Limit</th>
+                                                <th scope="col">Availed Limit</th>
+                                                <th scope="col">Balance Limit</th>
+                                                <th scope="col">Bill Tenure in Days</th>
+                                                <th scope="col">Margin %</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in rmbuyer_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Buyer">{{data.buyer_name}}</td>
+                                                <td title="Buyer Limit">{{data.buyer_limit}}</td>
+                                                <td title="Availed Limit">{{data.availed_limit}}</td>
+                                                <td title="Balance Limit">{{data.balance_limit}}</td>
+                                                <td title="Bill Tenure in Days">{{data.bill_tenure}}</td>
+                                                <td title="Margin %">{{data.margin}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dd-handle ng-scope">
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Credit Buyer Details </b></p>
+                                <hr />
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-secondary">
+                                        <thead class="bg-gray text-white">
+                                            <tr width="100%">
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Buyer</th>
+                                                <th scope="col">Buyer Limit</th>
+                                                <th scope="col">Availed Limit</th>
+                                                <th scope="col">Balance Limit</th>
+                                                <th scope="col">Bill Tenure in Days</th>
+                                                <th scope="col">Margin %</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in creditbuyer_list">
+                                                <td title="S.No">{{$index+1}}</td>
+                                                <td title="Buyer">{{data.buyer_name}}</td>
+                                                <td title="Buyer Limit">{{data.buyer_limit}}</td>
+                                                <td title="Availed Limit">{{data.availed_limit}}</td>
+                                                <td title="Balance Limit">{{data.balance_limit}}</td>
+                                                <td title="Bill Tenure in Days">{{data.bill_tenure}}</td>
+                                                <td title="Margin %">{{data.margin}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="panelDemo10" class="panel panel-default">
+                                <div ng-class="{'panel-heading-collapsed':panelDemo10}" class="panel-heading">
+                                    <b class="text-primary"> Sanction Letter </b>
+                                    <paneltool tool-collapse="tool-collapse" ng-init="panelDemo10=true"></paneltool>
+                                </div>
+                                <div collapse="panelDemo10" class="panel-wrapper">
+                                    <div class="panel-body">
+
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-2 col-md-2 col-sm-2">
+
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                                    <div class="dd-handle">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <label ng-click="downloaddocument(lspath,lsname)" class="pull-right">
+                                                                        <a style="font-size:13px;" download="" href="" id="btnpdf" style="display:none;"> Click Here to Download </a>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <p ng-bind-html="content" style="padding-left:20px;padding-right:20px;" class="text-justify"></p>
+                                                    </div>
+                                                    <br />
+
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-sm-2">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <br />
+                        <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <script type="text/ng-template" id="/PurposeOfLoanOther.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-file-text-o"></em>&nbsp;<label style="font-size:16px">Purpose of Loan / Other Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <p class="text-primary" style="font-size:14px;"><b>&nbsp; Purpose of Loan </b></p>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label> Purpose of Loan</label>
+                                            <br />
+                                            <p>{{txtpurposeof_loan}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="dd-handle ng-scope">
+                                        <p class="text-primary" style="font-size:14px;"><b>&nbsp; Program and Value Chain Details </b></p>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Program </label>
+                                                    <br />
+                                                    <p>{{program}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Product </label>
+                                                    <br />
+                                                    <p>{{product_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Sector / Strategic Business Unit </label>
+                                                    <br />
+                                                    <p>{{sector_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Category </label>
+                                                    <br />
+                                                    <p>{{category_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Variety </label>
+                                                    <br />
+                                                    <p>{{variety_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Botanical Name  </label>
+                                                    <br />
+                                                    <p>{{botanical_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <label> Alternative Names </label>
+                                                    <br />
+                                                    <p>{{alternative_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Remarksproduct.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;&nbsp;<label style="font-size:16px">Remarks</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <label> Remarks</label>
+                                            <br />
+                                            <p>{{lbllimitinfo_remarks}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>
+

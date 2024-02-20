@@ -1,0 +1,1114 @@
+﻿<h3>
+    Document Verification - Maker
+</h3>
+<style>
+    .blinking {
+        animation: 20s blinker linear infinite;
+        -webkit-animation: 20s blinker linear infinite;
+        -moz-animation: 20s blinker linear infinite;
+    }
+
+    @-moz-keyframes blinker {
+        0% {
+            opacity: 1.0;
+        }
+
+        50% {
+            opacity: 0.0;
+        }
+
+        100% {
+            opacity: 1.0;
+        }
+    }
+
+    @-webkit-keyframes blinker {
+        0% {
+            opacity: 1.0;
+        }
+
+        50% {
+            opacity: 0.0;
+        }
+
+        100% {
+            opacity: 1.0;
+        }
+    }
+
+    @keyframes blinker {
+        0% {
+            opacity: 1.0;
+        }
+
+        50% {
+            opacity: 0.0;
+        }
+
+        100% {
+            opacity: 1.0;
+        }
+    }
+</style>
+<div ng-controller="idasTrnMkrChkrDocVerify as dp">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p class="lead bb text-primary text-bold text-center">
+                {{customerName}}
+                <label style="font-weight:bold">/</label>{{customercode}}
+            </p>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 ">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Customer Details</p>
+                    <div class="col-lg-9">
+                        <label class="col-form-label">Address</label>
+                        <br />
+                        <p style="font-size:14px;">
+                            {{contactperson}}<br />{{addressline1}}<br />
+                            {{addressline2}}
+                            <br />{{mobileno}}
+                        </p>
+
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <div>
+                            <label style="font-size:12px;color:white; text-align:center;width:70px;height:18px;" class="label-danger"><strong>LSA Status</strong></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="rdb_lsastatus" value="Yes" ng-model="rdb_lsastatus" ng-change="onselectedlsastatus(rdb_lsastatus)" ng-disabled="maker_status!='Maker Pending' && checker_status!='Checker Pending'" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                </label>
+                                <label>
+                                    <input type="radio" name="rdb_lsastatus" value="No" ng-model="rdb_lsastatus" ng-change="onselectedlsastatus(rdb_lsastatus)" ng-disabled="maker_status!='Maker Pending' && checker_status!='Checker Pending'" />
+                                    <span class="fa fa-circle"></span>No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label"> URN No :</label>
+                        <br />
+                        <p style="font-size:14px;">{{Customerurn}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Cluster Manager</label>
+                        <br />
+                        <p ng-model="ClusterMgr" style="font-size:14px;">{{clusterManager}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Relationship Manager</label>
+                        <br />
+                        <p style="font-size:14px;">{{relationshipmgmt}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Credit Manager</label>
+                        <br />
+                        <p style="font-size:14px;">{{creditManager}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Zonal Head</label>
+                        <br />
+                        <p ng-model="zonalHeadName" style="font-size:14px;">{{zonalHeadName}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Business Head</label>
+                        <br />
+                        <p style="font-size:14px;">{{businessHeadName}}</p>
+                    </div>
+                </div>
+            </div>
+            <p class="lead bb text-purple text-bold" style="font-size:16px;">Sanction Details</p>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Ref No.</label>
+                        <br />
+                        <p ng-model="sanctionref_no" style="font-size:14px;">{{sanctionrefno}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sancion Date</label>
+                        <br />
+                        <p style="font-size:14px;">{{SanctionDate}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Amount</label>
+                        <br />
+                        <p ng-model="sanction_amount" style="font-size:14px;">{{SanctionAmount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Facility </label>
+                        <br />
+                        <p ng-model="facility_type" style="font-size:14px;">{{FacilityType}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Vertical</label>
+                        <br />
+                        <p style="font-size:14px;">{{verticalCode}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Collateral Details</label>
+                        <br />
+                        <p ng-model="collateral_security" style="font-size:14px;">{{collateral_security}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Upload Common Document</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <button type="button" ng-click="FileShow()" class="btn btn-info btn-xs">
+                            <span class="icon icon-cloud-upload"></span>&nbsp;&nbsp;Upload File
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div ng-show="DivFile">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label>Document Title</label>&nbsp;<span style="color:red">*</span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <input type="text" ng-model="txtdocument_title" rows="1" tabindex="0" min="0" aria-required="true"
+                                   aria-invalid="true" class="form-control" maxlength="256" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label>File Upload</label>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <input type="file" id="commonupload" ng-model="common_document" ng-disabled="!txtdocument_title"
+                                   onchange="angular.element(this).scope().commondocumentupload(this.files, angular.element(this).scope().commondocumentupload, this.name)"
+                                   data-classbutton="btn btn-default" multiple data-classinput="form-control inline" data-button-text="Select"
+                                   accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="text-center">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th align="center" scope="col">S.No</th>
+                                                        <th align="center" scope="col">Document Title</th>
+                                                        <th align="center" scope="col">Document Name</th>
+                                                        <th align="center" scope="col">Upload By/On</th>
+                                                        <th align="center" scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in commondocument" width="100%">
+                                                        <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                                        <td align="left" scope="col" title="'Document Title'">{{data.document_title}}</td>
+                                                        <td align="left" scope="col" title="'Document Name'">{{data.document_name}}</td>
+                                                        <td align="left" scope="col" title="'Upload By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                                        <td align="left" scope="col" data-title="'Action'">
+                                                            <button title="Download Document" ng-click="downloadsdocument(data.document_path,data.document_name)" class="btn btn-info">
+                                                                <em class="fa fa-download"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                                            </button>
+                                                            <button title="Delete Document" ng-click="deletedocument(data.uploaddocument_gid)" class="btn btn-danger">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Mail Management</p>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-6 col-lg-6 col-sm-6">
+
+
+                        <button title="Send Mail" ng-click="mailconversation()" class="btn btn-info">
+                            <em class="fa fa-send (alias)"></em>
+                        </button>
+                        &nbsp;&nbsp;
+
+                        <button title="Export Excel" ng-click="export()" class="btn btn-success ">
+                            <em class="fa fa-file-excel-o"></em><a download="" href="" id="btnpdf" style="display:none;"></a>
+                        </button>
+                        &nbsp;&nbsp;
+
+
+                        <button title="Import" ng-click="openpanel()" class="btn btn-pink">
+                            <em class="icon icon-cloud-upload"></em>
+                        </button>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <br />
+
+            <div class="row" ng-hide="show">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-1 col-lg-1 col-sm-1">
+                        <span>File Upload</span>
+
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2">
+                        <input type="file" id="addupload" ng-model="test_document"
+                               onchange="angular.element(this).scope().uploadallocation1(this.files, angular.element(this).scope().documentupload, this.name)"
+                               data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                               accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                        &nbsp;
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-sm-2">
+                        <button ng-click="cancel()" class="btn btn-danger">
+                            <i class="fa fa-close"></i>&nbsp;&nbsp;Cancel
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                        <div class="table-responsive">
+                            <table class="row-border hover" id="statictable">
+
+                                <thead>
+                                    <tr class="bg-success text-white">
+                                        <th width="3%">S.No</th>
+                                        <th width="10%">Sent On</th>
+                                        <th width="10%">Sent By</th>
+                                        <th width="10%">Subject</th>
+                                        <th width="10%">Sent To</th>
+                                        <th width="10%">Sent From</th>
+                                        <th width="10%">Attachment</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="data in senddata">
+                                        <td class="text-center">
+                                            {{$index+1}}
+                                        </td>
+                                        <td>
+                                            {{data.created_date}}
+                                        </td>
+                                        <td>
+                                            {{data.created_by}}
+                                        </td>
+
+                                        <td>
+                                            {{data.subject}}
+                                        </td>
+                                        <td>
+                                            {{data.to_mail}}
+                                        </td>
+                                        <td>
+                                            {{data.from_mail}}
+                                        </td>
+                                        <td>
+                                            <a ng-click="exportattach(data.document_path,data.document_name)">IDAS Document Check List.xls</a>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12  ">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Scanned Document Details</p>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-lg-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <button ng-click="DocumentConfirm()" class="btn btn-success">
+                            <i class="icon icon-check"></i>&nbsp;&nbsp;Document Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+
+                        <div>
+                            <table datatable="ng" class="row-border hover">
+
+                                <thead>
+                                    <tr class="bg-primary-light text-white">
+                                        <th width="5%">
+                                            S.No
+                                        </th>
+                                        <th width="8%">
+                                            Check All &nbsp;
+                                            <input type="checkbox" id="c2" ng-model="all" ng-change="checkallDocument(all);">
+                                        </th>
+                                        <th width="10%">Document Record ID</th>
+                                        <th width="15%">Document Code/Name</th>
+                                        <th width="15%">Verified By/Date</th>
+                                        <th width="5%">Query to RM</th>
+                                        <th width="10%">Status</th>
+                                        <th width="8%">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr ng-repeat="data in documentation_list" id="DocumentVerifiedBy" >
+                                        <td width="5%">
+                                            {{$index+1}}
+
+                                        </td>
+                                        <td width="8%" align="center">
+                                            <input type="checkbox" id="c1"
+                                                   value={{data.checked}} ng-model="data.checked" ng-if="data.maker_status!='Maker Confirmed'">
+                                        </td>
+                                        <td width="5%" data-title="Document Record ID">{{data.documentrecord_id}}</td>
+                                        <td width="15%" data-title="Document Code/Name">{{data.document_code}}/{{data.document_name}}</td>
+                                        <td width="20%" data-title="Verified Date/By">
+                                            <strong>Maker:</strong>
+                                            {{data.maker_name}}/{{data.maked_on}}<br />
+                                            <strong>Checker:</strong>
+                                            {{data.checker_name}}/{{data.checked_on}}
+                                        </td>
+                                        <td width="5%">
+                                            <label ng-if="data.scanrmconversation_count!='0'">
+                                                <em class="fa fa-check success"></em>
+                                            </label>
+                                            <label ng-if="data.scanrmconversation_count=='0'">
+                                                -
+                                            </label>
+
+
+                                        </td>
+                                        <td width="10%" data-title="Status">
+                                            <div ng-switch="data.maker_status">
+                                                <label ng-switch-when="Maker Confirmed" class="label label-success">Maker Confirmed</label>
+                                                <label ng-switch-when="Maker Pending" class="label label-warning">Maker Pending</label>
+                                            </div>
+                                            <div ng-switch="data.checker_status">
+                                                <label ng-switch-when="Checker Confirmed" class="label label-success">Checker Confirmed</label>
+                                                <label ng-switch-when="Checker Pending" class="label label-warning">Checker Pending</label>
+                                            </div>
+
+                                        </td>
+                                        <td width="8%" data-title="Action">
+                                            <div ng-switch="data.maker_status">
+                                                <label ng-if="data.externalresponse_count != '0'" title="New RM Response" class="label label-primary ">New</label>
+                                                <label ng-if="data.internalresponse_count != '0'" title="New Checker Response" class="label label-info">New</label>
+
+
+                                                <!--<button popover="{{data.comments}}" popover-trigger="mouseenter" class="btn btn-info">
+                                                    <em class="fa fa-comment-o"></em>
+                                                </button>-->
+
+                                                <button title="Document Conversation" ng-switch-when="Maker Confirmed" ng-click="docConMkr(data.sanctiondocument_gid,data.scanconversation_count)" class="btn btn-success">
+                                                    <em class="icon icon-directions"></em>
+                                                </button>
+                                                <button title="Document Conversation" ng-switch-when="Maker Pending" ng-click="docConMkr(data.sanctiondocument_gid,data.scanconversation_count)" class="btn btn-pink">
+                                                    <em class="icon icon-directions"></em>
+                                                </button>
+
+                                                <!--<span class="circle circle-primary" ng-if="data.conversation_count != '0'" title="Has Conversation"></span>-->
+                                                <span ng-if="data.scanconversation_count != '0'" class="badge bg-gray-light ">{{data.scanconversation_count}}</span>
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <div id="DocumentConfirmationTab" class="panel panel-primary" ng-show="ShowMkrDocumentConfirmation">
+            
+                <div class="panel-heading">
+                    <em class="fa fa-retweet"></em>&nbsp; {{documentrecord_id}} <label style="font-weight:bold">/</label>{{document_name}}
+                    <button type="button" title="Window Close" class="pull-right btn btn-sm btn-default" ng-click="docconClose()">
+                        <em class="fa fa-close text-danger fa-1x">&nbsp;Close</em>
+                    </button>
+                </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <strong>  Document Comments : </strong>&nbsp;&nbsp;<label style="background-color:deeppink;color:white ;font-size:14px;" class="blinking ng-binding ng-scope">  {{doc_comments}} </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+                            <label>Document Date <span>*</span></label>
+                            <p class="input-group">
+                                <input type="text" id="document_date" datepicker-popup="{{dp.format}}" ng-model="document_date" is-open="dp.open1"
+                                       datepicker-options="dp.dateOptions" ng-required="true" ng-change="update()" style="height:35px;"
+                                       close-text="Close" class="form-control" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="dp.calender1($event)" class="btn btn-default" style="height:35px;">
+                                        <em class="fa fa-calendar"></em>
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3">
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label class="col-form-label control-label"><strong> Types Of Document </strong></label><br />
+                            <form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" required name="types_of_copy" value="Scan" ng-change="onchangecopy(types_of_copy)" ng-model="types_of_copy" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Scan
+                                    </label>
+                                    <label>
+                                        <input type="radio" required name="types_of_copy" ng-change="onchangecopy(types_of_copy)" value="Original" ng-model="types_of_copy" />
+                                        <span class="fa fa-circle"></span>Original
+                                    </label>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-sm-6 col-md-6  col-lg-6">
+                            <div class="panel panel-primary ">
+                                <h4 class="panel-heading" align="left">
+                                    <label class="text-white">Document Conversation - Maker & Checker</label><br />
+                                </h4>
+                            </div>
+
+                            <div id="panelDemo1" class="panel" ng-repeat="data in docconversationlistInternal">
+                                <div ng-class="{'panel-heading-collapsed':panelDemo1}" class="panel-heading bg-grey-100">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <div class="pull-left">
+                                                    <lable class="text-purple"><strong>Maker Query #{{data.query_no}}:({{data.docconversationref_no}})</strong></lable>
+                                                </div>
+                                                <div class="pull-right" ng-switch="data.flag">
+                                                    <span class="text-sm"> {{data.cad_name}}/{{data.cadquery_on}}</span>
+                                                    <br />
+                                                    &nbsp;
+                                                    <button title="View Documents" ng-if="data.uploaddocument_count != '0'"
+                                                            ng-click="PopupDownload(data.docconversation_gid)" class="btn btn-purple">
+                                                        <em class="icon icon-link"></em>
+                                                    </button>
+
+                                                    &nbsp;
+                                                    <button title="Send to RM" ng-switch-when="Y" ng-show="data.ref_count == '0'" ng-click="forwardedRaiseQuery(data.cad_query,data.docconversationref_no,data.rm_response)" class="btn btn-success">
+                                                        <em class="fa fa-mail-forward (alias)"></em>
+                                                    </button>
+                                                    &nbsp;
+                                                    <button type="button" ng-switch-when="Y" ng-show="data.ref_count == '0'" title="Copy Query" ng-click="btncopy(data.cad_query,data.rm_response)">
+                                                        <em class="fa fa-copy text-primary fa-sm"></em>
+                                                    </button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <p ng-bind-html="data.cad_query"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <paneltool tool-collapse="tool-collapse"></paneltool>
+                                </div>
+                                <div collapse="panelDemo1" class="panel-wrapper">
+
+                                    <div ng-switch="data.flag">
+                                        <div class="panel-heading" ng-switch-when="Y">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="col-lg-12">
+                                                        <div class="pull-left ">
+                                                            <lable class="text-purple"><strong>Checker Response #{{data.query_no}}:</strong></lable>
+
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <span class="text-sm">
+                                                                {{data.relationshipmgr_name}}/{{data.relationshipmgrquery_on}}
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-lg-12">
+                                                    <div class="col-lg-12">
+
+                                                        <p ng-bind-html="data.rm_response"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6 col-md-6  col-lg-6">
+
+                            <div class="panel panel-primary ">
+                                <h4 class="panel-heading" align="left">
+                                    <label class="text-white">Document Conversation - RM</label><br />
+                                </h4>
+
+                            </div>
+
+                            <div id="panelDemo1" class="panel" ng-repeat="data in docconversationlistExternal">
+                                <div ng-class="{'panel-heading-collapsed':panelDemo1}" class="panel-heading bg-grey-100">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <div class="pull-left">
+                                                    <lable class="text-purple"><strong>CAD Query #{{data.query_no}}:({{data.docconversationref_no}})</strong></lable>
+
+                                                </div>
+                                                <div class="pull-right" ng-switch="data.forwarded_flag">
+                                                    <span class="text-sm"> {{data.cad_name}}/{{data.cadquery_on}}</span>
+                                                    &nbsp;
+                                                    <button title="View Documents" ng-if="data.uploaddocument_count != '0'" ng-click="PopupDownload(data.docconversation_gid)" class="btn btn-purple">
+                                                        <em class="icon icon-link"></em>
+                                                    </button>
+                                                    <i class="fa fa-mail-forward (alias)" title="Fowarded By : {{data.forwarded_by_name}}&#013;Fowarded On:{{data.forwarded_on}}" ng-switch-when="Y"></i>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12">
+                                                <p ng-bind-html="data.cad_query"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <paneltool tool-collapse="tool-collapse"></paneltool>
+                                </div>
+                                <div collapse="panelDemo1" class="panel-wrapper">
+
+                                    <div ng-switch="data.flag">
+                                        <div class="panel-heading" ng-switch-when="Y">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="col-lg-12">
+                                                        <div class="pull-left">
+                                                            <lable class="text-pink"><strong>RM Response #{{data.query_no}}:</strong></lable>
+
+                                                        </div>
+                                                        <div class="pull-right">
+                                                            <span class="text-sm">
+                                                                {{data.relationshipmgr_name}}/{{data.relationshipmgrquery_on}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="col-lg-12">
+
+                                                        <p ng-bind-html="data.rm_response"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div ng-switch-when="N">
+                                            <form novalidate="" name="formReply" autocomplete="off" class="form-validate form-horizontal">
+                                                <div ng-show="data.hide">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="col-lg-12">
+
+                                                                <md-input-container flex="" class="md-default-theme" style="height: auto;">
+                                                                    <label for="input_13">Reply * </label>
+                                                                    <textarea ng-model="reply" required rows="2" md-maxlength="1000" class="ng-valid md-input ng-valid-md-maxlength ng-touched ng-dirty ng-valid-parse"
+                                                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                                </md-input-container>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+                                                    <div class="ng-scope row">
+                                                        <div class="text-left col-lg-12">
+                                                            <div class="col-lg-12">
+                                                                <button ng-click="raiseResponse(data.docconversation_gid,$index,reply)" ng-disabled="formReply.$invalid" class="btn btn-purple"><i class="fa fa-send (alias)"></i>&nbsp;&nbsp;Send</button>
+                                                                <button ng-click="data.hide=false" class="btn btn-danger"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+
+                                                        <div class="col-lg-12" ng-hide="data.hide">
+                                                            <button title="Reply Conversation" class="btn-pink" ng-click="data.hide=true">
+                                                                <em class="fa fa-mail-reply (alias) w3-text-pink"></em>&nbsp;
+                                                            </button>
+                                                            <span class="text-pink">Reply</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row" ng-show="shownoquery">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <button type="button" ng-click="raiseNoQuery()" class="btn btn-pink btn-sm mb">No Query</button>&nbsp;
+                            <button type="button" ng-click="ShowRaiseQuery()" class="btn btn-primary btn-sm mb">Raise Query</button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <div id="raisequery" ng-show="showraisequery">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="panel panel-primary ">
+                                    <h4 class="panel-heading" align="left">
+                                        <label class="text-white">Raise Query</label><br />
+                                    </h4>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <button type="button" ng-click="FileShow()" class="btn btn-info btn-xs">
+                                    <span class="icon icon-cloud-upload"></span>&nbsp;&nbsp;Upload File
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div ng-show="DivFile">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label>Document Title</label>&nbsp;<span style="color:red">*</span>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <input type="text" ng-model="txtdocument_title" rows="1" tabindex="0" min="0" aria-required="true"
+                                           aria-invalid="true" class="form-control" maxlength="256" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label>File Upload</label>
+                                </div>
+
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <input type="file" id="addupload" ng-model="test_document" ng-disabled="!txtdocument_title"
+                                           onchange="angular.element(this).scope().uploadallocation(this.files, angular.element(this).scope().documentupload, this.name)"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select"
+                                           accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div ng-repeat="data in uploaddocument" class="panel bg-grey-200">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label>{{data.document_title}}</label><br />
+                                    <span>{{data.document_name}}</span>
+                                    &nbsp;&nbsp;
+                                    <button title="Un-Tag" ng-click="UploadDocCancel(data.conversationdocument_gid)" class="btn btn-danger">
+                                        <em class="fa fa-remove (alias)"></em>
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div id="down" class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <form novalidate="" name="formRaiseQuery" autocomplete="off" class="form-validate form-horizontal">
+                                    <textarea ng-model="content" required rows="4" maxlength="1000" placeholder="Raise Query"
+                                              class="form-control ng-valid "
+                                              id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+
+                                    <br />
+                                    <button type="button" ng-click="raiseQueryChecker()" ng-disabled="formRaiseQuery.$invalid" class="btn btn-pink btn-sm mb">Send to Checker</button>&nbsp;
+                                    <button type="button" ng-click="raiseQueryRM()" ng-if="conversation_count!='0'" ng-disabled="formRaiseQuery.$invalid" class="btn btn-primary btn-sm mb">Send to RM</button>
+                                </form>
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <!--// final remark-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="panel panel-primary ">
+                                <h4 class="panel-heading" align="left">
+                                    <label class="text-white">Final Remarks</label>
+                                </h4>
+
+                            </div>
+                            <form novalidate="" name="formfinalremarks" autocomplete="off" class="form-validate form-horizontal">
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <select name="txtfinalremarks" ng-model="txtfinalremarks" class="form-control ng-valid ng-touched ng-valid-parse" required
+                                                size="1" ng-change="onchangeremarks(txtfinalremarks)">
+                                            <option value="">--- Select Final Remarks ---</option>
+                                            <option value="Query Cleared">Query Cleared </option>
+                                            <option value="Deferral Taken">Deferral Taken </option>
+                                            <option value="Others">Others </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-9 col-md-9 col-lg-9" ng-show="other_remarks">
+                                        <textarea ng-model="scanfinal_remarks" placeholder="Final Remarks - Conversation" rows="1" maxlength="1000"
+                                                  class="form-control" aria-required="true" style="resize:vertical;"
+                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <button ng-click="updateFinalRemarks()" ng-disabled="formfinalremarks.$invalid" class="btn btn-success">&nbsp;&nbsp;Update</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="text-center">
+                    <button ng-click="MkrVerify()" ng-disabled="txtfinalremarks==''" ng-if="maker_status=='Maker Pending'" class="btn btn-success">
+                        <i class="icon icon-check"></i>&nbsp;&nbsp;Document Confirm
+                    </button>
+
+                    <button ng-click="docconClose()" class="btn btn-danger"><i class="icon icon-close"></i>&nbsp;&nbsp;Close</button>
+
+                </div>
+            </div>
+
+
+            <br /><br />
+        </div>
+
+        <div class="ng-scope" id="down">
+            <div class="text-center">
+
+                <button ng-click="gotoback()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+        </div>
+
+        <br />
+    </div>
+
+    <script type="text/ng-template" id="/mailconversation.html">
+
+
+        <div class="modal-body ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <p class="lead bb text-primary text-bold text-center">
+                    Document Mail - Conversation
+                </p>
+            </h4>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-lg-6">
+                        <label>From :</label> no-reply@samunnati.com
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-lg-6">
+                        <label>To :</label>{{rmmail_id}}
+                    </div>
+                </div>
+            </div>
+
+
+            <div ng-show="mailbox.mail.cc" class="input-group form-group">
+                <span class="input-group-addon text-sm">CC:</span>
+                <input type="text" class="form-control" required="" ng-model="cc_mail" />
+            </div>
+            <div ng-show="mailbox.mail.bcc" class="input-group form-group">
+                <span class="input-group-addon text-sm">BCC:</span>
+                <input type="text" class="form-control" required="" ng-model="bcc_mail" />
+            </div>
+            <form novalidate="" name="userform5" ng-submit="form.submitForm1()" autocomplete="off">
+                <div class="input-group form-group">
+
+                    <span class="input-group-addon text-sm">Subject:</span>
+                    <input type="text" class="form-control" required="" ng-model="subject_mail">
+
+                </div>
+            </form>
+            <div class="btn-group btn-group-sm mb pull-left">
+                <strong>
+                    Attachment : <a ng-click="export()">IDAS Document Check List.xls</a>
+                </strong>
+            </div>
+            <div class="btn-group btn-group-sm mb pull-right">
+                <button type="button" ng-class="{'active':mailbox.mail.cc}" ng-click="mailbox.mail.cc = !mailbox.mail.cc" href="#" class="btn btn-default btn-sm">CC</button>
+                <button type="button" ng-class="{'active':mailbox.mail.bcc}" ng-click="mailbox.mail.bcc = !mailbox.mail.bcc" href="#" class="btn btn-default btn-sm">BCC</button>
+            </div>
+            <div class="imgcrop-area" style="height:250px;">
+                <p ng-bind-html="mailcontent"></p>
+            </div>
+            <br />
+            <div class="text-center">
+                <button ng-click="sendMail()" ng-disabled="userform5.$invalid" class="btn btn-success">
+                    <i class="fa fa-send (alias)">
+                    </i>&nbsp;Send
+                </button>
+                <button ng-click="ok()" class="btn btn-danger">
+                    <i class="fa fa-close (alias)">
+                    </i>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/DocumentConfirmationModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Document Confirmation</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form name="documentConfirmationform" id="documentConfirmationform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label>Document Date <span style="color:red;">*</span></label>
+                        <p class="input-group">
+                            <input type="date" id="phydocument_date" name="phydocument_date" ng-model="scandocument_date"
+                                   style="width:570px;height:35px" class="form-control" ng-change="futuredatecheck(scandocument_date)" required>
+                        </p>
+                    </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <label class="col-form-label control-label"><strong> Types Of Document <span style="color:red;">*</span></strong></label><br />
+                        <div class="radio c-radio">
+                            <label>
+                                <input type="radio" required name="types_of_copy" value="Scan" ng-model="types_of_copy" />
+                                &nbsp;&nbsp;<span class="fa fa-circle"></span>Scan
+                            </label>
+                            <label>
+                                <input type="radio" required name="types_of_copy" value="Original" ng-model="types_of_copy" />
+                                <span class="fa fa-circle"></span>Original
+                            </label>
+                        </div>
+                    </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label class="col-form-label control-label"><strong> Final Remarks <span style="color:red;">*</span></strong></label><br />
+                        <select name="txtfinalremarks" ng-model="txtfinalremarks" class="form-control ng-valid ng-touched ng-valid-parse" required
+                                size="1" ng-change="onchangeremarks(txtfinalremarks)">
+                            <option value="">--- Select Final Remarks ---</option>
+                            <option value="Query Cleared">Query Cleared </option>
+                            <option value="Deferral Taken">Deferral Taken </option>
+                            <option value="Others">Others </option>
+                        </select>
+                    </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-sm-12 col-md-12 col-lg-12" ng-show="other_remarks">
+                        <textarea ng-model="scanfinal_remarks" placeholder="Final Remarks - Conversation" rows="2" maxlength="1000"
+                                  class="form-control" aria-required="true" style="resize:vertical;"
+                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                    </div>
+                </div>
+                <br /> <br />
+                <div clas="row">
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="documentconfirmationSubmitMkr()" ng-disabled="documentConfirmationform.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Document Confirm</span>
+                        </a>
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/mailconversationdownload.html">
+
+
+        <div class="modal-body ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <p class="lead bb text-primary text-bold text-center">
+                    View Documents
+                </p>
+            </h4>
+
+            <div class="text-center">
+                <div class="dd-handle ng-scope">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-secondary">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Document Name</th>
+                                            <th align="center" scope="col">Document Title</th>
+                                            <th align="center" scope="col">Upload By/On</th>
+                                            <th align="center" scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in viewDocumentList" width="100%">
+                                            <td scope="col" title="'S.No'">{{$index+1}}</td>
+                                            <td align="left" scope="col" title="'Document Name'">{{data.document_name}}</td>
+                                            <td align="left" scope="col" title="'Document Title'">{{data.document_title}}</td>
+                                            <td scope="col" title="'Upload By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                            <td scope="col" data-title="'Action'">
+                                                <span class="fa fa-download" ng-click="downloads(data.document_path,data.document_name)" /><a download="" href="" id="btnpdf" style="display:none;"></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <button ng-click="ok()" class="btn btn-danger">
+                    <i class="fa fa-close (alias)">
+                    </i>&nbsp;Close
+                </button>
+            </div>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,178 @@
+﻿<style type="text/css">
+    .picColor:hover {
+        box-shadow: none;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+    }
+</style>
+
+<h3>
+    My Activity
+</h3>
+
+<div ng-controller="OsdTrnApprovalMyTicketController">
+
+    <div class="panel panel-default tabcontent">
+        <br />
+
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">                
+                    <div style="text-align:right;">                      
+                        &nbsp;&nbsp;  <a href="#/app/OsdTrnClosedMyTicket" title="Closed / Rejected" style="color:#141478;font-size:16px;">
+                            <u><b>Closed / Rejected</b></u>
+                        </a>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="Allotted()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{alloted_count}}</b></div>
+                        <b style="font-size: 14px;">Allotted</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+
+                    <button type="button" class="btn btn-labeled" ng-click="Work()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{workinprogress_count}}</b></div>
+                        <b style="font-size: 14px;">Work In Progress</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+
+                    <button type="button" class="btn btn-labeled" ng-click="Approval()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);background-color: #84cbdb;">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{approvalpending_count}}</b></div>
+                        <b style="font-size: 14px;">Approval Pending</b>
+                    </button>
+                    <br />
+                </div>
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="External()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{forward_count}}</b></div>
+                        <b style="font-size: 14px;">External Transfer</b>
+                    </button>
+                    <br />
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="Internal()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b> {{transfer_count}}</b></div>
+                        <b style="font-size: 14px;">Internal Transfer</b>
+                    </button>
+                    <br />
+
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-labeled" ng-click="Completed()" style="width:200px;height:50px;border:1px solid rgb(179, 177, 177);">
+                        <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"><b> {{completed_count}}</b></div>
+                        <b style="font-size: 14px;"> Completed</b>
+                    </button>
+                    <br />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <p style="color:#09385f;font-size: 17px;padding-top:20px"><b>Approval Pending Summary</b></p>
+                    <hr />
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-7">
+
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <br />
+                    <a style="background-color:#edb9b9;" class="ng-binding ng-scope label label-pink">
+                        <em class="fa"></em>
+                    </a>&nbsp;<label> - Color Indicates Reopen Cases</label>
+                    &nbsp;
+                    <button title="Refresh" ng-click="Refresh()" class="btn btn-primary btn-sm">
+                        <em class="fa fa-refresh"></em>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <table datatable="ng" class="table table-hover table-striped mb-mails">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th class="text-center" style="display:none">S.No</th>
+                            <th class="text-nowrap">Request Ref No</th>
+                            <th class="text-nowrap">Raised On / By</th>
+                            <th class="text-nowrap">Raised By Department</th>
+                            <th class="text-nowrap">Raised To Business Unit</th>
+                            <th class="text-nowrap">Activity Name</th>
+                            <th class="text-nowrap">Request Title</th>
+                            <th class="text-nowrap">Approval</th>
+                            <th class="text-nowrap">Aging</th>
+                            <th class="text-nowrap">Business Unit Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in allotedactivity_list" ng-style="data.reopen_flag == 'Y'?{'background-color':'#edb9b9'}:{}">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <td data-title="'Request Ref No'">{{data.request_refno}}</td>
+                            <td data-title="'Raised On / By'">{{data.raised_date}} / {{data.raised_by}}</td>
+                            <td data-title="'Raised Department'">{{data.raised_department}}</td>
+                            <td data-title="'Department Name'">{{data.departmentname}}</td>
+                            <td data-title="'Activity Name'">{{data.activity_name}}</td>
+                            <td data-title="'Request Title'">{{data.request_title}}</td>
+                            <td data-title="'Approval'" ng-switch="data.approval_status">
+                                <label ng-switch-when="Pending" class="label label-info">Initiated</label>
+                            </td>
+                            <td data-title="'aging'">{{data.aging}}</td>
+                            <td data-title="'Business Unit Status'">{{data.Businessactivity_Status}}</td>
+                            <td data-title="'Source'" ng-switch="data.source">
+                                <label style="font-size:10px" ng-switch-when="E-mail" class="label label-green">E-Mail</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_Api" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="Kotak_API" class="label label-warning">Kotak API</label>
+                                <label style="font-size:10px" ng-switch-when="BRS" class="label label-pink">BRS</label>
+                                <label style="font-size:10px" ng-switch-when="Internal" class="label label-primary">Internal</label>
+                            </td>
+                            <td data-title="'Action'" class="nowrap">
+                                <button title="view360" ng-click="view360(data.servicerequest_gid, data.bankalert_flag, data.bankalert2allocated_gid, data.customer_gid, data.customer_urn,data.request_refno);" class="btn bg-blue-500">
+                                    <em class="fa fa-retweet"></em>
+                                </button>
+                                <!--<button title="Transfer Allocation" class="btn bg-pink-400"
+                ng-click="TransferAllocation(data.servicerequest_gid, data.assigned_team, data.assigned_member,data.assigned_membergid,data.assigned_supportteamgid,data.department_gid,data.departmentname)">
+            <em class="fa fa-external-link text-white"></em>
+        </button>-->
+                                <!--<label ng-switch="data.getapproval_flag">
+            <button title="Get Approval" ng-switch-when="N" ng-click="getApprovalRequest(data.servicerequest_gid,'alloted')" class="btn bg-success">
+                <em class="fa fa-thumbs-o-up"></em>
+            </button>
+            <button title="Get Approval" ng-switch-when="Y" ng-click="getReApprovalRequest(data.servicerequest_gid,'alloted')" class="btn btn-green">
+                <em class="fa fa-thumbs-o-up"></em>
+            </button>
+        </label>-->
+                                <!--<label ng-switch="data.response_flag">
+            <a ng-switch-when="Y" title="view360" style="color:white;" class="blinking ng-binding ng-scope label label-pink">
+                <b>New</b>
+            </a>
+        </label>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+</div>

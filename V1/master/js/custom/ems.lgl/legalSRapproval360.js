@@ -1,0 +1,448 @@
+﻿(function () {
+    'use strict';
+
+    angular
+        .module('angle')
+        .controller('legalSRapproval360', legalSRapproval360);
+
+    legalSRapproval360.$inject = ['$rootScope', '$scope', '$modal', '$state', 'SweetAlert', 'AuthenticationService', 'ScopeValueService', '$http', 'SocketService', 'Notify', '$location', 'apiManage', '$route', '$cookies', '$filter', 'ngTableParams','cmnfunctionService'];
+
+    function legalSRapproval360($rootScope, $scope, $modal, $state, SweetAlert, AuthenticationService, ScopeValueService, $http, SocketService, Notify, $location, apiManage, $route, $cookies, $filter, ngTableParams,cmnfunctionService) {
+        /* jshint validthis:true */
+        var vm = this;
+        vm.title = 'legalSRapproval360';
+
+        activate();
+
+        function activate() {
+            var url = window.location.href;
+            var relPath = url.split("lstab=");
+            $scope.uploaddclickdiv = true;
+            var legalsr_gid = $location.search().lslegalsr_gid;
+            var auth_status = $location.search().lsauth_status;
+            var customer_gid = $location.search().customer_gid;
+           
+             $scope.legalsr_gid = legalsr_gid;
+            $scope.auth_status = auth_status;
+            //$scope.legalsr_gid = localStorage.getItem('legalsr_gid');
+            //$scope.auth_status = localStorage.getItem('auth_status');
+
+
+            var params = {
+
+                customer_gid: customer_gid,
+                legalsr_gid: legalsr_gid
+            }
+
+            var url = "api/raiseLegalSR/Getcustomerdetails";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.customerdetails = resp.data;
+                $scope.remarks = resp.data.remarks;
+            });
+            var url = 'api/raiseLegalSR/GetDemandNoticedtl';
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.demandnotice_list = resp.data.demandnotice_list;
+                $scope.demand_status = resp.data.demand_status;
+
+
+            });
+            var url = "api/raiseLegalSR/getsamgdetails";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.customer_name = resp.data.customer_name;
+                $scope.constitution = resp.data.constitution;
+                $scope.financed_by = resp.data.financed_by;
+                $scope.deal_year = resp.data.deal_year;
+                $scope.address = resp.data.address;
+                $scope.business_activity = resp.data.business_activity;
+                $scope.email_id = resp.data.email_id;
+                $scope.primary_securities = resp.data.primary_securities;
+                $scope.collateral_securities = resp.data.collateral_securities;
+                $scope.details_UDC_PDC = resp.data.details_UDC_PDC;
+                $scope.unit_working_status = resp.data.unit_working_status;
+                $scope.other_banker_exposures = resp.data.other_banker_exposures;
+                $scope.cibil_data = resp.data.cibil_data;
+                $scope.restructuring_data = resp.data.restructuring_data;
+                $scope.status_current_overdue = resp.data.status_current_overdue;
+                $scope.other_group_companies = resp.data.other_group_companies;
+                $scope.meeting_details = resp.data.meeting_details;
+                $scope.cycles_sanctiondated = resp.data.cycles_sanctiondated;
+                $scope.limit_sanction = resp.data.limit_sanction;
+                $scope.churing_account = resp.data.churing_account;
+                $scope.created_date = resp.data.created_date;
+                $scope.statuslegal_action = resp.data.statuslegal_action;
+                $scope.instances_PTP = resp.data.instances_PTP;
+                $scope.demandnotice_details = resp.data.demandnotice_details;
+                $scope.other_banker_borrower = resp.data.other_banker_borrower;
+                $scope.auth_remarks_list = resp.data.auth_remarks_list;
+                $scope.created_date = resp.data.created_date;
+                $scope.created_by = resp.data.created_by;
+              
+               
+                
+            });
+
+            var url = "api/raiseLegalSR/getcustomerPromoter";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.customerPromotorlist = resp.data.customerPromoter;
+            });
+            
+            var url = 'api/raiseLegalSR/getcustomerGuarantors';
+
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.guarantors_list = resp.data.customerGuarantors;
+                $scope.remarks = resp.data.remarks;
+            });
+
+
+            var url = "api/CustomerDashboard/Getcustomerloandetails";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.loandetails = resp.data.loandtl;
+            });
+
+            var url = "api/CustomerDashboard/Getcustomerdocumentdetails";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.filename_list = resp.data.filename_list;
+            });
+
+            var url = "api/CustomerDashboard/Getcustomermaildetails";
+            SocketService.getparams(url, params).then(function (resp) {
+                $scope.composemail_list = resp.data.composemail;
+            });
+            var param1 = {
+                raiselegalSR_gid: $scope.legalsr_gid
+            }
+            
+            var url = 'api/raiseLegalSR/Getcontactdtl';
+           
+            SocketService.getparams(url, param1).then(function (resp) {
+                $scope.contactdetailsRM = resp.data.contactdetailsRM;
+            });
+            var param = {
+                legalsr_gid: $scope.legalsr_gid
+            }
+            var url = "api/raiseLegalSR/getlegalSRapprovals";
+            SocketService.getparams(url, param).then(function (resp) {
+             
+                $scope.approvals = resp.data.approvallist;
+            });
+
+            var url = "api/raiseLegalSR/getcollateralinfo";
+            SocketService.getparams(url, param).then(function (resp) {
+
+                $scope.customerCollateral = resp.data.customerCollateral;
+            });
+            var url = "api/raiseLegalSR/getrequesteddtl";
+            SocketService.getparams(url, param).then(function (resp) {
+
+                $scope.requesteddetails = resp.data;
+            });
+            
+        }
+
+        $scope.uploadclick = function () {
+            $scope.uploadddiv = true;
+            $scope.uploaddclickdiv = false;
+        }
+
+        $scope.cancelupload = function () {
+            $scope.uploadddiv = false;
+            $scope.uploaddclickdiv = true;
+            $("#addupload").val('');
+        }
+
+        $scope.upload = function (val, val1, name) {
+            var item = {
+                name: val[0].name,
+                file: val[0]
+            };
+            var IsValidExtension = cmnfunctionService.fnCheckValidDocType(val[0].name, "");
+
+            if (IsValidExtension == false) {
+                Notify.alert("File format is not supported..!", {
+                    status: 'danger',
+                    pos: 'top-center',
+                    timeout: 3000
+                });
+                return false;
+            }
+            var frm = new FormData();
+            frm.append('fileupload', item.file);
+            frm.append('file_name', item.name);
+            frm.append('document_name', $scope.documentname);
+            frm.append('customer_gid', localStorage.getItem('customer_gid'));
+            frm.append('project_flag', "Default");
+            $scope.uploadfrm = frm;
+
+        }
+
+        $scope.handleFile = function () {
+            var url = 'api/CustomerDashboard/UploadDocument';
+
+            SocketService.postFile(url, $scope.uploadfrm).then(function (resp) {
+                $scope.filename_list = resp.data.filename_list;
+                $("#addupload").val('');
+
+                if (resp.data.status == true) {
+
+                    Notify.alert(resp.data.message, {
+                        status: 'success',
+                        pos: 'top-center',
+                        timeout: 3000
+                    });
+
+                }
+                else {
+                    Notify.alert('File Format Not Supported!', {
+                        status: 'info',
+                        pos: 'top-center',
+                        timeout: 3000
+                    });
+
+                }
+            });
+        }
+
+        $scope.downloads = function (val1, val2) {
+            console.log(val1);
+            var phyPath = val1;
+            var relPath = phyPath.split("StoryboardAPI");
+            var relpath1 = relPath[1].replace("\\", "/");
+            var hosts = window.location.host;
+            var prefix = location.protocol + "//";
+            var str = prefix.concat(hosts, relpath1);
+            var link = document.createElement("a");
+            var name = val2.split(".")
+            link.download = name[0];
+            var uri = str;
+            link.href = uri;
+            link.click();
+        }
+
+        $scope.createmail = function () {
+
+            var modalInstance = $modal.open({
+                templateUrl: '/CustomerCreateMailContent.html',
+                controller: ModalInstanceCtrl,
+                size: 'lg'
+            });
+            ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
+            function ModalInstanceCtrl($scope, $modalInstance) {
+                $scope.ok = function () {
+                    $modalInstance.close('closed');
+                };
+                $scope.close = function () {
+                    $modalInstance.close('closed');
+                }
+
+                $scope.sendcomposemail = function () {
+                    var params = {
+                        to_mail: $scope.tomail,
+                        cc_mail: $scope.ccmail,
+                        bcc_mail: $scope.bccmail,
+                        subject_mail: $scope.mailsubject,
+                        content_mail: $scope.mailcontent,
+                        customer_gid: localStorage.getItem('customer_gid')
+                    }
+
+                    var url = "api/CustomerDashboard/sendcomposemail";
+                    lockUI();
+                    SocketService.post(url, params).then(function (resp) {
+                        if (resp.data.status == true) {
+                            $modalInstance.close('closed');
+                            Notify.alert(resp.data.message, {
+                                status: 'success',
+                                pos: 'top-center',
+                                timeout: 3000
+                            });
+                            unlockUI();
+                            //var url = "api/CustomerDashboard/Getcustomermaildetails";
+                            //SocketService.getparams(url, params).then(function (resp) {
+                            //    $scope.composemail_list = resp.data.composemail;
+                            //});
+                            activate();
+                        }
+                        else {
+                            Notify.alert(resp.data.message, {
+                                status: 'Warning',
+                                pos: 'top-center',
+                                timeout: 3000
+                            });
+                            unlockUI();
+                        }
+
+                    });
+                }
+            }
+        }
+
+        $scope.viewMailContent = function (composemail_gid) {
+            var params = {
+                composemail_gid: composemail_gid
+            }
+
+            var modalInstance = $modal.open({
+                templateUrl: '/CustomerViewMailContent.html',
+                controller: ModalInstanceCtrl,
+                size: 'lg'
+            });
+            ModalInstanceCtrl.$inject = ['$scope', '$modalInstance'];
+            function ModalInstanceCtrl($scope, $modalInstance) {
+                $scope.ok = function () {
+                    $modalInstance.close('closed');
+                };
+                $scope.close = function () {
+                    $modalInstance.close('closed');
+                }
+                var url = "api/CustomerDashboard/Getcustomermail";
+                SocketService.getparams(url, params).then(function (resp) {
+                    console.log(resp);
+                    $scope.frommail_view = resp.data.from_mail;
+                    $scope.tomail_view = resp.data.to_mail;
+                    $scope.ccmail_view = resp.data.cc_mail;
+                    $scope.bccmail_view = resp.data.bcc_mail;
+                    $scope.mailsubject_view = resp.data.subject_mail;
+                    $scope.mailcontent_view = resp.data.content_mail;
+                    $scope.created_by = resp.data.created_by;
+                    $scope.created_date = resp.data.created_date;
+                });
+            }
+
+        }
+
+        $scope.legarSRapprove = function () {
+         
+            var params = {
+                legalsr_gid: $scope.legalsr_gid,
+                approval_remarks: $scope.txtremarks
+            }
+
+            var url = 'api/raiseLegalSR/legalSRApproval';
+            lockUI()
+            SocketService.post(url, params).then(function (resp) {
+                if (resp.data.status == true) {
+                    unlockUI()
+                    $scope.auth_status = localStorage.setItem('auth_status', 'Approved');
+                    activate();
+                    Notify.alert('Legal SR Approved Successfully..!!', 'success')
+                    $state.go('app.legalSRapproval')
+                }
+                else {
+                    unlockUI();
+                    Notify.alert('You are Not Able to Approve because Approval Hiearchy Not Assigned', 'warning')
+                }
+                activate();
+            });
+        }
+
+        $scope.legalSRreject = function () {
+            var params = {
+                legalsr_gid: $scope.legalsr_gid,
+                approval_remarks: $scope.txtremarks
+            }
+
+            var url = 'api/raiseLegalSR/legalSRreject';
+            lockUI()
+            SocketService.post(url, params).then(function (resp) {
+                if (resp.data.status == true) {
+                    unlockUI()
+                    $location.url('app/legalSRapproval?lstab=legalsr');
+                    Notify.alert('Legal SR in Hold', 'success')
+
+
+                }
+                else {
+                    unlockUI();
+                    Notify.alert('Error Occured While Updating the Status', 'warning')
+
+                }
+
+            });
+        }
+
+
+        $scope.legalSRrejected = function () {
+            var params = {
+                legalsr_gid: $scope.legalsr_gid,
+                approval_remarks: $scope.txtremarks
+            }
+
+            var url = 'api/raiseLegalSR/legalSRrejected';
+            lockUI()
+            SocketService.post(url, params).then(function (resp) {
+                if (resp.data.status == true) {
+                    unlockUI()
+                    $location.url('app/legalSRapproval?lstab=legalsr');
+                    Notify.alert('Legal SR Rejected', 'success')
+
+
+                }
+                else {
+                    unlockUI();
+                    Notify.alert('Error occured while reject', 'warning')
+
+                }
+
+            });
+        }
+
+       
+        //$scope.legarSRreapprove = function () {
+
+        //    var params = {
+        //        legalsr_gid: localStorage.getItem('legalsr_gid'),
+        //        approval_remarks: $scope.txtremarks
+        //    }
+
+        //    var url = 'api/raiseLegalSR/legalSRReApproval';
+        //    lockUI()
+        //    SocketService.post(url, params).then(function (resp) {
+        //        if (resp.data.status == true) {
+        //            unlockUI()
+        //            $scope.auth_status = localStorage.setItem('auth_status', 'Approved');
+        //            activate();
+        //            Notify.alert('Legal SR Approved Successfully..!!', 'success')
+        //        }
+        //        else {
+        //            unlockUI();
+        //            Notify.alert('Error Occured', 'warning')
+        //        }
+        //        activate();
+        //    });
+        //}
+
+
+        //$scope.legalSRrereject = function () {
+        //    var params = {
+        //        legalsr_gid: $scope.legalsr_gid,
+        //        approval_remarks: $scope.txtremarks
+        //    }
+
+        //    var url = 'api/raiseLegalSR/legalSRrereject';
+        //    lockUI()
+        //    SocketService.post(url, params).then(function (resp) {
+        //        if (resp.data.status == true) {
+        //            unlockUI()
+        //            Notify.alert('Legal SR in Hold', 'success')
+
+
+        //        }
+        //        else {
+        //            unlockUI();
+        //            Notify.alert('Error Occured While Updating the Status', 'warning')
+
+        //        }
+
+        //    });
+        //}
+
+
+        $scope.back = function () {
+            $state.go('app.legalSRapproval');
+           
+          
+        }
+
+
+
+    }
+})();

@@ -1,0 +1,80 @@
+﻿<a href="#/app/MstCibilSummary">
+    <button type="button" title="Back" class="pull-right btn btn-sm ">
+        <em class="fa fa-arrow-circle-left fa-1x"></em>
+    </button>
+</a>
+<h3>
+   CIBIL Log Details
+</h3>
+<div ng-controller="cibillogController">
+
+    <br />
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table ng-table="tableParams2" class="table hover table-striped ">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th>S.No</th>
+                            <th>Uploaded Date</th>
+                            <th>Account No</th>
+                            <th>Submitted On </th>
+                            <th>Name</th>
+                            <th>Indicator</th>
+                            <th >Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in cibillog_list | filter : searchtxt | limitTo:totalDisplayed ">
+                            <td data-title="'S.No'" style="text-align:center">{{$index+1}}</td>
+                            <td data-title="Uplaoded date" style="text-align:center">{{data.uploaded_date}}</td>
+                            <td data-title="Account No" style="text-align:center">{{data.account_no}}</td>
+                            <td data-title="Submitted On"  style="text-align:center">{{data.submitted_on}}</td>
+                            <td data-title="Name">{{data.name}}</td>
+                            <td data-title="Indicator" style="text-align:center">
+                                <label class="label label-success" ng-show="data.indicator=='01'" style="font-size:10px;">Borrower</label>
+                                <label class="label label-purple" ng-show="data.indicator=='03'" style="font-size:10px;">Guarantor</label>
+                            </td>
+                            <td data-title="Reason" >{{data.reason}}</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div>
+            <br />
+            <div class="text-center">
+                <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+
+</div>

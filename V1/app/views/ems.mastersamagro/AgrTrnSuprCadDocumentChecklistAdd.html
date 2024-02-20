@@ -1,0 +1,346 @@
+<style>
+    .formstatic {
+        position: fixed;
+        width: 22%;
+    }
+
+    .formstaticbtn:hover {
+        background-color: rgb(89, 86, 90);
+        color: rgb(31, 26, 102);
+        text-decoration: underline;
+        font-weight: bold;
+    }
+</style>
+<h3>
+    Document Checklist
+</h3>
+<div ng-controller="AgrTrnSuprCadDocumentChecklistAddController as form">
+    <div class="panel">
+        <form name="form.formValidate" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-heading" style="background-color: #191370;color:#ffffff">
+                        <b>Add Document Checklist </b>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12 col-lg-12">
+                                                        <div class="pull-right ">
+                                                            <a title="Color Indicates" style="background-color:#F0C5EB;" class="ng-binding ng-scope label">
+                                                                <em class="fa"></em>
+                                                            </a>&nbsp;<lable> - Color Indicates for Duplicate Tagged Document</lable>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row dd-handle ng-scope">
+                                                    <div class="row">
+                                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                                            <p class="text-primary" style="font-size:14px;"><b>Deferral Document Checklist </b></p>
+                                                        </div>
+                                                        <div class="col-sm-4 col-md-4 col-lg-4" ng-show="followup">
+                                                            <button title="Edit" ng-show="showdeferraledit" ng-click="buttonEditDeferralDocu()" class="btn btn-sm btn-green pull-right" tabindex="0">
+                                                                <em class="fa fa-pencil">&nbsp; Edit</em>
+                                                            </button>
+                                                            <button title="Close" ng-hide="showdeferraledit" ng-click="buttonCancelDeferralDocu()" class="pull-right btn btn-sm btn-danger" tabindex="0">
+                                                                <em class="fa fa-remove (alias)">&nbsp; Close</em>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+
+
+                                                    <div class="row" ng-show="showdeferraledit">
+                                                        <br />
+                                                        <div class="col-md-12 col-12 col-sm-12">
+                                                            <div class="table-responsive table-bordered">
+                                                                <table class="table">
+                                                                    <thead style="height:50px;">
+                                                                        <tr class="bg-gray-light text-white">
+                                                                            <th width="25%">Document Type</th>
+                                                                            <th>Document List Name</th>
+                                                                            <th>Tagged By</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody style="max-height:300px;overflow:auto;">
+                                                                        <tr ng-repeat="data in taggeddoc_list | filter:search" ng-style="data.documenttype_count > '1'?{'background-color':'#F0C5EB'}:{}">
+                                                                            <td width="25%" data-title="'Document Type'">{{data.documenttype_code}}</td>
+                                                                            <td data-title="'Document Name'">{{data.documenttype_name}}</td>
+                                                                            <td data-title="'Tagged By">{{data.taggedby}} <span ng-show= {{data.tagged_name!=''}}>-</span> {{data.tagged_name}}</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div ng-hide="showdeferraledit">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                <div class="col-md-6 col-6 col-sm-6">
+                                                                    <p class="text-bold" style="font-size:14px;"><u>Un-Tagged Document List</u></p>
+                                                                </div>
+                                                                <div class="col-md-6 col-6 col-sm-6">
+                                                                    <p class="text-bold" style="font-size:14px;"><u>Tagged Document List</u></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                    <input type="text" ng-model="search" class="mb form-control ng-valid ng-dirty ng-valid-parse ng-touched"
+                                                                           placeholder="Enter text to search..." />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                <div class="col-md-6 col-6 col-sm-6">
+                                                                    <div class="row">
+                                                                        <div class="table-responsive table-bordered">
+                                                                            <table class="table">
+                                                                                <thead class="align:left">
+                                                                                    <tr class="bg-gray-light text-white">
+                                                                                        <th width="20%">
+                                                                                            <input type="checkbox" id="c2" ng-model="all" ng-change="checkall(all);">
+                                                                                            Check All
+                                                                                        </th>
+                                                                                        <th>Document Type </th>
+                                                                                        <th>Document List Name</th>
+                                                                                    </tr>
+                                                                                </thead>
+
+                                                                            </table>
+                                                                            <div style="max-height:300px;overflow:auto;">
+                                                                                <table class="table">
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="data in documentlist_gid | filter : search">
+                                                                                            <td width="20%">
+                                                                                                &nbsp;
+                                                                                                <input type="checkbox" id="c1"
+                                                                                                       value={{data.checked}} ng-disabled="{{data.checked}}" ng-model="data.checked">
+                                                                                            </td>
+                                                                                            <td width="25%" data-title="'Document Type'">{{data.documenttype_name}}</td>
+                                                                                            <!--<td data-title="Document Name">{{data.documenttype_name}}</td>-->
+                                                                                            <td data-title="'Document Name'">{{data.document_name}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-6 col-sm-6">
+                                                                    <div class="row">
+                                                                        <div class="table-responsive table-bordered">
+                                                                            <table class="table">
+                                                                                <thead style="height:50px;">
+                                                                                    <tr class="bg-gray-light text-white">
+                                                                                        <th width="25%">Document Type</th>
+                                                                                        <th>Document List Name</th>
+                                                                                        <th>Tagged By</th>
+                                                                                        <th>Action</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody style="max-height:300px;overflow:auto;">
+                                                                                    <tr ng-repeat="data in taggeddoc_list | filter:search" ng-style="data.documenttype_count > '1'?{'background-color':'#F0C5EB'}:{}">
+                                                                                        <td width="25%" data-title="'Document Type'">{{data.documenttype_code}}</td>
+                                                                                        <!--<td data-title="Document Name">{{data.documenttype_name}}</td>-->
+                                                                                        <td data-title="'Document Name'">{{data.documenttype_name}}</td>
+                                                                                        <td data-title="'Tagged By">{{data.taggedby}} <span ng-show={{data.tagged_name!=''}}>-</span> {{data.tagged_name}}</td>
+                                                                                        <td>
+                                                                                            <button ng-disabled="(data.groupdocumentchecklist_gid == null) || (data.groupdocumentchecklist_gid == '')" title="Un-Tag" ng-click="untag(data.groupdocumentchecklist_gid)" class="btn btn-danger">
+                                                                                                <em class="fa fa-remove (alias)"></em>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <br /><br />
+                                                        <div class="row">
+                                                            <div class="text-center">
+                                                                <button ng-click="addDoc_checklist()" class="btn btn-success" style="background-color:#191370;"><i class="icon icon-plus"></i>&nbsp;&nbsp;Add</button>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+                                                    </div>
+                                                </div>
+
+                                                <br />
+                                                <div class="row dd-handle ng-scope">
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="row">
+                                                                    <div class="col-sm-8 col-md-8 col-lg-8">
+                                                                        <p class="text-primary" style="font-size:14px;"><b>Covenant Document Checklist </b></p>
+                                                                    </div>
+                                                                    <div class="col-sm-4 col-md-4 col-lg-4" ng-show="followup">
+                                                                        <button title="Edit" ng-show="showcovenentedit" ng-click="buttonEditCovenantDocu()" class="btn btn-sm btn-green pull-right" tabindex="0">
+                                                                            <em class="fa fa-pencil">&nbsp; Edit</em>
+                                                                        </button>
+                                                                        <button title="Close" ng-hide="showcovenentedit" ng-click="buttonCancelCovenantDocu()" class="pull-right btn btn-sm btn-danger" tabindex="0">
+                                                                            <em class="fa fa-remove (alias)">&nbsp; Close</em>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <hr />
+                                                                <div class="row" ng-show="showcovenentedit">
+                                                                    <div class="col-md-12 col-12 col-sm-12">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 col-12 col-sm-12">
+                                                                                <div class="table-responsive table-bordered">
+                                                                                    <table class="table">
+                                                                                        <thead style="height:50px;">
+                                                                                            <tr class="bg-gray-light text-white">
+                                                                                                <th width="25%">Document Type</th>
+                                                                                                <th>Document List Name</th>
+                                                                                                <th>Covenant Periods</th>
+                                                                                                <th>Tagged By</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody style="max-height:300px;overflow:auto;">
+                                                                                            <tr ng-repeat="data in covenant_taggeddoclist" ng-style="data.documenttype_count > '1'?{'background-color':'#F0C5EB'}:{}">
+                                                                                                <td width="25%" data-title="'Document Type'">{{data.documenttype_code}}</td>
+                                                                                                <td data-title="'Document Name'">{{data.documenttype_name}}</td>
+                                                                                                <td data-title="'Covenant Periods'">{{data.covenantperiod}}</td>
+                                                                                                <td data-title="'Tagged By'">{{data.taggedby}} <span ng-show={{data.tagged_name!=''}}>-</span> {{data.tagged_name}}</td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-hide="showcovenentedit">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 col-sm-12 col-lg-12">
+                                                                            <div class="pull-right ">
+                                                                                <a title="Color Indicates" style="background-color:#F0C5EB;" class="ng-binding ng-scope label">
+                                                                                    <em class="fa"></em>
+                                                                                </a>&nbsp;<lable> - Color Indicates for Duplicate Tagged Document</lable>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <br />
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                            <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                                    <label> Document Name </label><span style="color:red"> *</span>
+                                                                                    <select class="chosen-select form-control" chosen="" id="cadgroup_name" tabindex="0" ng-model="cbodocumentinfo"
+                                                                                            ng-options="m.document_name for m in covenant_documentlist" style="height:37px;" size="1" ng-change="changeDocumenttypeinfo(cbodocumentinfo)">
+                                                                                        <option value="">----- Document List Name -----</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                                                                    <label> Document Type </label>
+                                                                                    <p>
+                                                                                        {{txtdocumenttype_name}}
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                                                    <label> Covenant Periods </label><span style="color:red"> *</span>
+                                                                                    <select id="drop" name="myselect" required class="form-control" ng-model="cbocovenantperiod" style="width:220px;">
+                                                                                        <option class="placeholder" ng-selected="cbocovenantperiod == ''" value="">--Select Covenant Periods--</option>
+                                                                                        <option ng-selected="cbocovenantperiod == 1" value="1">Each month</option>
+                                                                                        <option ng-selected="cbocovenantperiod == 2" value="2">Every 3 months</option>
+                                                                                        <option ng-selected="cbocovenantperiod == 3" value="3">Every 6 months</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br /><br />
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                                    <br />
+                                                                                    <div class="text-center">
+                                                                                        <button ng-click="addCovenanatDoc_checklist(true,cbodocumentinfo,cbocovenantperiod)" ng-disabled="!cbodocumentinfo" class="btn btn-success" style="background-color:#191370;"><i class="icon icon-plus"></i>&nbsp;&nbsp;Add</button>
+                                                                                        <button title="Cancel" ng-click="covenantcancelclick()" class="btn btn-danger" tabindex="0">
+                                                                                            <em class="fa fa-remove (alias)">&nbsp; Cancel</em>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <br />
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 col-lg-12 col-sm-12">
+                                                                                    <div class="table-responsive table-bordered">
+                                                                                        <table class="table">
+                                                                                            <thead style="height:50px;">
+                                                                                                <tr class="bg-gray-light text-white">
+                                                                                                    <th width="25%">Document Type</th>
+                                                                                                    <th>Document List Name</th>
+                                                                                                    <th>Covenant Periods</th>
+                                                                                                    <th>Tagged By</th>
+                                                                                                    <th>Action</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody style="max-height:300px;overflow:auto;">
+                                                                                                <tr ng-repeat="data in covenant_taggeddoclist | filter:covenantsearch" ng-style="data.documenttype_count > '1'?{'background-color':'#F0C5EB'}:{}">
+                                                                                                    <td width="25%" data-title="'Document Type'">{{data.documenttype_code}}</td>
+                                                                                                    <td data-title="'Document Name'">{{data.documenttype_name}}</td>
+                                                                                                    <td data-title="'Covenant Periods'">{{data.covenantperiod}}</td>
+                                                                                                    <td data-title="'Tagged By'">{{data.taggedby}} <span ng-show={{data.tagged_name!=''}}>-</span> {{data.tagged_name}}</td>
+                                                                                                    <td width="10%">
+                                                                                                        <button ng-disabled="(data.groupcovdocumentchecklist_gid == null) || (data.groupcovdocumentchecklist_gid == '')" title="Un-Tag" ng-click="untag(data.groupcovdocumentchecklist_gid,true)" class="btn btn-danger">
+                                                                                                            <em class="fa fa-remove (alias)"></em>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <br />
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <br />
+                        </div>
+                        <div class="row">
+                            <div class="text-center">
+                                <br />
+                                <button ng-click="Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

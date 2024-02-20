@@ -1,0 +1,136 @@
+﻿<h3>
+    Release Management
+</h3>
+<div ng-controller="ReleaseMgmt">
+    <div id="panel-department" class="panel_test alert1">
+        <div>
+            <button class="btn btn-success" ng-click="readytorelease()">Create Release Plan</button>
+        </div>
+        <br />
+        <div class="panel">
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="bg-blue-grey-400 text-white">
+                                <th scope="col">S.No</th>
+                                <th scope="col">Release Ref No</th>
+                                <th scope="col">Target Release Date	</th>
+                                <!--<th scope="col">Release Remarks</th>-->
+                                <th scope="col">Issue Release Count</th>
+                                <th scope="col">Release Status</th>
+                                <th scope="col">Approval Status</th>
+                                <th scope="col">Done by</th>
+                                <th scope="col">Done On</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in tabledata" width="100%">
+                                <td title="'S.No'">{{$index + 1}}</td>
+                                <td title="'Release Reference Number'">{{data.releaseref_no}}</td>
+                                <td data-title="'Target Release Date'">{{data.release_date}}</td>
+                                <!--<td data-title="'Release Remarks'">{{data.release_remarks}}</td>-->
+                                <td data-title="'Issue Release Count'">{{data.issue_releasecount}}</td>
+                                <td data-title="'Release Status'">{{data.release_status}}</td>
+                                <td data-title="'Approval Status'">{{data.approval_status}}</td>
+                                <td data-title="'Done by'">{{data.done_by}}</td>
+                                <td data-title="'Done On'">{{data.done_on}}</td>
+                                <td data-title="'Action'">
+                                    <div ng-switch="data.release_status">
+                                        <button ng-click="view(data.release_gid)" title="View" class="btn btn-sm">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+
+                                        <button title="Update Status" ng-switch-when="Approval Done" ng-click="status(data.release_gid)" class="btn btn-sm bg-red-300">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                    </div>
+                                    <div ng-switch="data.changedetails_flag">
+                                        <div ng-switch-when="Y" class="pull-right ng-binding ng-scope label label-danger">
+                                            New
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div id="statusCompleted" class="w3-modal">
+
+        <div class="w3-animate-zoom panel-info w3-modal-content w3-round-large" style="width:400px;">
+            <div class="text-center w3-light-green text-uppercase">
+                <h5><label style="font-weight:bold;padding: 15px;">Release Details</label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('statusCompleted')"><b>X</b></big>
+            </div>
+            <form name="Releaseform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="col-sm-4">
+                    <label>Status * :</label>
+                </div>
+                <div class="col-sm-4">
+                    <label class="text-primary">Completed</label>
+                </div>
+
+                <div class="col-sm-8 ">
+                    <label>Remarks * :</label>
+                </div>
+                <div class="panel-body text-center">
+
+                    <textarea class="form-control" name="ReleaseRemarks" ng-model="ReleaseRemarks" required></textarea>
+                </div>
+                <div class="panel-body text-left ">
+                    <label>Done by * :</label>
+                    <input type="text" ng-model="DoneBy" name="DoneBy" class="form-control" maxlength="256" required />
+                </div>
+                <div class="panel-footer w3-center">
+                    <button class="btn btn-success " ng-disabled="Releaseform.$invalid" ng-click="MakeCompleted()">Submit</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div id="view" class="w3-modal">
+
+        <div class="w3-animate-zoom  panel-info w3-modal-content w3-round-large" style="width:650px;">
+            <div class="text-center w3-light-green text-uppercase">
+                <h5><label style="font-weight:bold;padding: 15px;">Issue to Release Details</label></h5>
+                <big class="w3-display-topright" style="padding: 15px;" ng-click="close('view')"><b>X</b></big>
+            </div>
+            <div class="table-responsive">
+                <table ng-table="issueTable" class="table" style="width:100%;">
+                    <thead>
+                        <tr class="text-center">
+                            <th style="width:10%;">S.No</th>
+                            <th style="width:10%;">Issue Ref No</th>
+                            <th style="width:10%;">Issue Date</th>
+                            <th style="width:20%;">Issue Title</th>
+                            <th style="width:20%;">Priority</th>
+                            <th style="width:15%;">Status</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="data in datas">
+                            <td title="'S.No'">{{$index + 1}}</td>
+                            <td>{{data.issue_refno}}</td>
+                            <td>{{data.issue_date}}</td>
+                            <td>{{data.issue_title}}</td>
+                            <td>{{data.priority}}</td>
+                            <td>{{data.issue_status}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

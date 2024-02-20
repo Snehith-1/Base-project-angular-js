@@ -1,0 +1,173 @@
+﻿<h3>
+    Reset Sanction Ref No Summary
+</h3>
+<div ng-controller="idasMstSanctioneset">
+
+    <div class="panel">
+        <div class="panel-body">
+
+          
+                    <div class="panel-body table-responsive dd-handle ng-scope">
+                        <table datatable="ng" class="row-border hover ">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th style="display:none">S.No</th>
+                                    <th align="center">Created Date</th>
+                                    <th align="center">URN</th>
+                                    <th align="center">Customer Name</th>
+                                    <th align="center">Sanction Ref.No</th>
+                                    <!-- <th align="center">Sanction Date</th>-->
+                                    <th align="center">Sanction Amount</th>
+                                    <th align="center">Vertical</th>
+                                    <th align="center">Created By</th>
+                                    <th align="center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in sanctionlist">
+                                    <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                                    <td data-title="'created date.'" class="text-nowrap">{{data.created_date}}</td>
+                                    <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Sanction Ref.No'">{{data.sanction_refno}}</td>
+                                    <!--<td data-title="'Sanction Date'">{{data.sanction_date}}</td>-->
+                                    <td data-title="'Sanction Amount'" style="text-align:right;">{{data.sanction_amount}}</td>
+                                    <td data-title="'Vertical'">{{data.vertical_code}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td class="text-nowrap" ng-switch="data.reset_flag">
+                                        
+                                        <button title="Reset Sanction Ref No" ng-click="sanction_cancel(data.customer2sanction_gid)" class="btn btn-info btn-sm">
+                                            <em class="fa fa-refresh"></em>
+                                        </button>
+                                        <button title="History" ng-switch-when="Y" ng-click="history(data.customer2sanction_gid)" class="btn bg-blue-grey-500 btn-sm">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                        <button title="History" ng-switch-when="N" ng-disabled="true"  class="btn bg-blue-grey-200 btn-sm">
+                                            <em class="fa fa-history"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+               
+        </div>
+    </div>
+    <script type="text/ng-template" id="/cancelsanction.html">
+        <div class="modal-header bg-green-200 ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                <span class="btn-label bg-green-200">
+
+                    Reset - Sanction Ref No
+                </span>
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label>Customer Name / URN </label><b style="color:darkblue"><br />{{lblcustomername}}/{{lblcustomer_urn}}</b>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Sanction Ref No</label>
+                                    <br />
+                                    <b style="color:darkblue"> {{lblsanction_refno}}</b>
+
+                                </div>
+
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <label>Sanction Date</label><br />
+                                    <b style="color:darkblue"> {{lblsanction_date}}</b>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <label>Sanction Amount</label><br />
+                                    <b style="color:darkblue"> {{lblsanction_amount}}</b>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Entity <span style="color:red">*</span></label>
+                                    <select name="cboentity_type" ng-model="cboentity_type" required="" ng-options="m.entity_gid as m.entity_name for m in entity_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1"></select>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Colending (If Applicable) <span style="color:red">*</span></label>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            &nbsp;&nbsp; <input type="radio" name="rdbcolanding" value="Yes" ng-model="rdbcolanding" required ng-click="rdbcolanding_yes()" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rdbcolanding" value="No" ng-model="rdbcolanding" required ng-click="rdbcolanding_no()" />
+                                            <span class="fa fa-circle"></span>No
+                                        </label>
+                                    </div>
+                                    <div ng-show="colandingyes">
+                                        <label>Name of the Colending </label>
+                                        <select name="txtcolander_name" ng-model="txtcolander_name" ng-click="remarks()"
+                                                class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                            <option value="">--- Select Colending Name ---</option>
+                                            <option value="DBS"> DBS</option>
+                                            <option value="AARYANDHAN"> AARYANDHAN</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <strong>Remarks</strong>
+                                    <textarea type="text" rows="2" ng-model="txtremarks" class="form-control" ng-click="remarks()" />
+                                </div>
+
+
+                            </div>
+                            <br />
+                        </div>
+                        <div class="class" ng-show="mandatoryremarks">
+                            <br />
+                            <div class="text-center">
+                                <label class="text-danger"> Enter Remarks</label>
+                            </div>
+                        </div>
+                        <div class="class">
+                            <br />
+                            <div class="text-center">
+                                <button class="btn btn-success" ng-click="reset()" ng-disabled="userform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Reset</span>
+                                </button>
+                                <a class="btn btn-danger" ng-click="close()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Close</span>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </script>
+
+</div>

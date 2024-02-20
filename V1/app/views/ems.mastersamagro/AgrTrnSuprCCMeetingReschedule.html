@@ -1,0 +1,188 @@
+﻿<h3>
+    AC - Schedule Meeting
+</h3>
+<div ng-controller="AgrTrnSuprCCMeetingRescheduleController as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-calendar-o"></em>&nbsp; AC - Reschedule Meeting
+        </div>
+        <div class="panel-body">
+            <form novalidate="" name="rescheduleform" ng-submit="form.submitForm()"  autocomplete="off" class="form-validate form-horizontal">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">  
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>AC Meeting Title </label> <span style="color:red">*</span>
+                                    <input ng-model="txteditccmeeting_title" tabindex="0" maxlength="50"  aria-required="true" aria-invalid="true"
+                                           placeholder="AC Meeting Title" class="form-control">
+
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>AC Meeting Number </label> <span style="color:red">*</span>
+                                    <input ng-model="txteditccmeeting_no" tabindex="0" maxlength="45"  aria-required="true" aria-invalid="true"
+                                           placeholder="AC Meeting Number" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <label>AC Meeting Date <span style="color:red"> *</span></label> 
+                                    <p class="input-group">
+                                        <input type="text" id="meeting_date" name="date" ng-model="txteditccmeeting_date" datepicker-popup="{{dp.format}}"
+                                               style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                               close-text="Close" class="form-control" placeholder="DD-MM-YYYY"/>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                   
+                                </div>
+
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                     <label>Start Time</label>
+                                        <input type="time" id="start_ime" name="start_ime" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                               ng-model="txteditstart_time"><span>hh:mm</span>
+                                   
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                      <label>End Time</label>
+                                        <input type="time" id="end_time" name="end_time" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                             ng-change="onchangetime()"  ng-model="txteditend_time" ><span>hh:mm</span>
+                                       
+                                </div>
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                    <label>AC Meeting Mode </label> <span style="color:red">*</span>
+                                    <div class="radio c-radio">
+                                        <label>
+                                            <input type="radio" id="rdbccmeeting_mode" name="rdbccmeeting_mode" value="Online"  ng-model="rdbeditccmeeting_mode" />
+                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Online
+                                        </label>
+                                        <label>
+                                            <input type="radio" id="rdbccmeeting_mode" name="rdbccmeeting_mode" value="Offline"  ng-model="rdbeditccmeeting_mode" />
+                                            &nbsp;&nbsp;
+                                            <span class="fa fa-circle"></span>Offline
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>AC Group Name <span style="color:red">*</span></label>
+                                    <select name="ccgroup_name" ng-model="cboeditccgroup_name" id="ccgroup_name" multiple
+                                        ng-options="m.ccgroup_name for m in ccgroup_list" 
+                                            chosen="" ng-change="onchangeccgroup()" class="chosen-select form-control" size="1" >
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>Others Samunnati Users</label>
+                                    <select name="otheruser_name" id="otheruser_name" chosen="" multiple 
+                                    ng-options="m.employee_name for m in employee_list"
+                                            ng-model="cboother_user" class="chosen-select form-control" size="1"></select>
+                                </div>                                
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                               
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label>AC Admin <span style="color:red"> *</span></label>
+
+                                    <select name="ccadmin_name" id="ccadmin_name" chosen="" multiple ng-options="m.employee_name for m in employee_list"
+                                            ng-model="cboccadmin_name" class="chosen-select form-control" size="1"></select>
+
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                    <label style="color:darkgray">Non-Samunnati Users </label>
+                                    <textarea ng-model="txtnon_users" tabindex="0" rows="1" maxlength="500" aria-invalid="true"
+                                              ng-disabled="true" placeholder="Enter Other Users..." class="form-control" />
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                                <br />
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <b style="color:darkblue">
+                                            <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                            AC Member List
+                                        </b>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12 table-responsive cell-border">
+
+                                        <table class="table">
+                                            <tbody>
+                                                <tr ng-repeat="data in ccmember_list">
+                                                    <td>
+                                                        {{$index+1}}
+                                                    </td>
+                                                    <td>
+                                                        {{data.ccgroup_name}}
+                                                    </td>
+                                                    <td>
+                                                        {{data.CCMember_name}}
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                     
+                        <br/>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <label>Description </label>
+                                    <div text-angular="" ng-model="txteditdescription" 
+                                         placeholder="Type Description..." maxlength="5000" name="editwysiswyg-editor" class="btn-group-justified">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br />
+                            <div class="text-center">
+                                <button type="button" class="btn btn-success btn-md" ng-click="reschedule()">
+                                    <em class="fa fa-check"></em>&nbsp; Update 
+                                </button>
+                                <button type="button" class="btn btn-info" ng-click="back()">
+                                    <em class="fa fa-arrow-left"></em>
+                                    <span>Back</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                    
+                </div>
+            </div>
+        </div>

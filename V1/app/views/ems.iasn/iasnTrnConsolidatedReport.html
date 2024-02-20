@@ -1,0 +1,110 @@
+﻿<h3>
+    Consolidated Report
+</h3>
+<div ng-controller="iasnTrnConsolidatedReport as dp">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label class="col-form-label">Email From Date </label>
+                <br />
+                <p class="input-group">
+                    <input type="text" id="emailfrom_date" name="emailfrom_date" ng-model="emailfrom_date" datepicker-popup="{{dp.format}}"
+                           style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4">
+                <label class="col-form-label">Email To Date </label>
+                <br />
+                <p class="input-group">
+                    <input type="text" id="emailto_date" name="emailto_date" ng-model="emailto_date" datepicker-popup="{{dp.format}}"
+                           style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4" style="padding-top:9px;">
+                <br/>
+                <button type="button" class="btn btn-green btn-md"
+                        ng-click="export()" title="Export Excel">
+                    <i class="fa fa-file-excel-o">"><a download="" href="" id="btnpdf" style="display:none;"></a></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="table-responsive">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <br />
+                <table datatable="ng" class="table table-hover table-striped mb-mails">
+                    <thead>
+                        <tr class="text-white" style="background-color:#09385f;">
+                            <th width="5%">
+                                S.No
+                            </th>
+                            <th width="10%">Workitem Ref No</th>
+                            <th width="10%">Mail Sent By</th>
+                            <th width="10%">Mail Sent Date</th>
+                            <th width="10%">Zone</th>
+                            <th width="10%">Status</th>
+                            <th width="10%">Status Updated By</th>
+                            <th width="10%">Status Updated Date</th>
+                            <th width="5%" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in WorkItem_List">
+                            <td class="text-center">{{$index+1}}</td>
+                            <td>
+                                {{data.workitemref_no}}
+                            </td>
+                            <td>
+                                {{data.rmemployee_name}}
+                            </td>
+                            <td>
+                                {{data.email_date}}
+                            </td>
+                            <td>
+                                {{data.zone_name}}
+                            </td>
+
+                            <td ng-switch="data.status">
+                                <label class="label label-primary" ng-switch-when='Pending' style="font-size:10px;">Pending</label>
+                                <label class="label label-success" ng-switch-when='Forward' style="font-size:10px;">Forward</label>
+                                <label class="label label-pink" ng-switch-when='Pushback' style="font-size:10px;">Pushback</label>
+                                <label class="label label-warning" ng-switch-when='Archival' style="font-size:10px;">Archived</label>
+                                <label class="label label-danger" ng-switch-when='Close' style="font-size:10px;">Close</label>
+                                <label class="label label-purple" ng-switch-when='Sent Mail' style="font-size:10px;">Sent Mail</label>
+                            </td>
+                            <td>
+                                {{data.Statusupdated_by}}
+                            </td>
+                            <td>
+                                {{data.Statusupdated_date}}
+                            </td>
+                            <td class="text-center">
+                                <div>
+
+                                    <button type="button" class="btn  btn-sm"
+                                            ng-click="view(data.email_gid)" title="View">
+                                        <em class="fa fa-eye">
+                                        </em>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

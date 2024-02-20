@@ -1,0 +1,304 @@
+﻿<h3>
+    Cheque Management 
+    
+</h3>
+<div ng-controller="FndMstcustomerAddChequeController as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>Add Cheque
+        </div>
+        <br>
+        <br>
+        <form novalidate="" name="submitmaker" ng-submit="form.submitmaker()" autocomplete="off" class="form-validate form-horizontal">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                        <div style="border-style:ridge; border-color: rgba(250, 250, 250, 0.2);">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-heading">
+                                        <p class="text-primary" style="font-size:16px;"><b> Cheque Details  </b></p>
+                                        <hr />
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-3 col-md-3 col-lg-3">
+                                                <br>
+                                                <label style="font-size:14px; color: navy;">Cheque Upload</label>
+                                                <br>
+                                                <div class="mda-form-group float-label">
+                                                    <strong>Upload Documents</strong>
+                                                    <input type="file" id="file" tabindex="5" onchange="angular.element(this).scope().UploadDocument(this.files, angular.element(this).scope().documentupload, this.name)"
+                                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9 col-md-9 col-lg-9">
+                                                <div>
+                                                    <br><br><br><br>
+                                                    <!--<ul class="list-inline" style="color: blue;">
+        <li ng-repeat="data in chequedocument_list" style="padding:5px">
+            <a style="font-size: 14px;" ng-click="downloads(data.document_path,data.document_name)">{{data.document_name}} <download ="" href="" id="btnpdf" style="display:none" ;></a>
+            <em class="icon-close" ng-click="delete_document(data.cheque2document_gid)" style="color: blue;"></em>
+        </li>
+    </ul>-->
+                                                    <ul class="list-inline" style="color: blue;">
+                                                        <li ng-repeat="data in chequedocument_list" style="padding:5px">
+                                                            <a download="" href="" id="btnpdf" class="m0" style="font-size: 14px;" ng-click="downloads(data.document_path,data.document_name)"> {{data.document_name}} </a>
+                                                            <em class="icon-close" ng-click="delete_document(data.cheque2document_gid)" style="color: blue;"></em>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div >
+                                        <div class="row"  ng-show="((chequedocument_list!=null) && (chequedocument_list==null))">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>Account Holder Name</label>
+                                                    <input type="text" class="form-control"  ng-model="txtaccountholder_name">
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>Account Number</label>
+                                                    <input type="text" class="form-control"  ng-model="txtaccount_number">
+                                                </div>
+                                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                                    <label>Name of the Bank </label>
+                                                    <input type="text" class="form-control"  ng-model="txtbank_name">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row" ng-show="((chequedocument_list!=null) && (chequedocument_list==null))">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label>Cheque Number</label>
+                                                    <input type="text" class="form-control"  ng-model="txtcheque_no">
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label>IFSC Code</label>
+                                                    <input type="text" class="form-control"  ng-model="txtifsc_code">
+                                                </div>
+                                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                                    <label>MICR</label>
+                                                    <input type="text" class="form-control"  ng-model="txtmicr">
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <label>Branch Address </label>
+                                                    <input type="text" class="form-control"  ng-model="txtbranch_address">
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row"  ng-show="((chequedocument_list!=null)&& (chequedocument_list==null))">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>Branch name</label>
+                                                    <input type="text" class="form-control"  ng-model="txtbranch_name">
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>City</label>
+                                                    <input type="text" class="form-control"  ng-model="txtcity">
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>District</label>
+                                                    <input type="text" class="form-control"  ng-model="txtdistrict">
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>State</label>
+                                                    <input type="text" class="form-control"  ng-model="txtstate">
+                                                </div>
+                                                <br>
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>Merged Banking Entity</label><span style="color:red">&nbsp;*</span>
+                                                    <select name="mergedbanking_entity" chosen="" id="mergedbanking_entity" ng-model="cbomergedbanking_entity" dropzone="" class="form-control ng-valid ng-touched ng-valid-parse"
+                                                            ng-options="m.bankname_name for m in bankname_list">
+                                                        <option value="">--Merged Banking Entity--</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>Cheque Type</label>
+                                                    <select name="" id="" class="form-control" ng-model="cbocheque_type">
+                                                        <option value=""> --Cheque Type-- </option>
+                                                        <option value="PDC"> PDC </option>
+                                                        <option value="UDC"> UDC </option>
+                                                    </select>
+                                                </div>
+                                                <!--<div class="col-sm-3 col-md-3 col-lg-3">
+                <label>Date of Cheque Type</label><span style="color:red">&nbsp;*</span>
+                <p class="input-group">
+                    <input type="text" id="enddate" name="date" ng-model="txtdate_chequetype" datepicker-popup="{{dp.format}}"
+                           style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                           close-text="Close" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>-->
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> Date of Cheque</label> <span style="color:red"></span>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="enddate" name="enddate" ng-model="txtdate_chequetype" datepicker-popup="{{dpick.format}}"
+                                                               style="height:37px;" is-open="dpick.opened3" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                               close-text="Close" class="form-control" ng-change="onchangebusinessstartdate()" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dpick.open3($event)" style="height:37px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                                    <label>CTS enabled</label><span style="color:red">&nbsp;</span>
+                                                    <div class="radio c-radio">
+                                                        <label>
+                                                            <input type="radio" id="emailaddress" name="cts_enabled" value="Yes" ng-model="rbocts_enabled" />
+                                                            &nbsp;&nbsp;<span class="fa fa-circle"></span>Yes
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" id="emailaddress" name="cts_enabled" value="No" ng-model="rbocts_enabled" />
+                                                            <span class="fa fa-circle"></span>No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <!--<div class="col-sm-3 col-md-3 col-lg-3">
+                <label>Date of Cheque Presentation</label><span style="color:red">&nbsp;*</span>
+                <p class="input-group">
+                    <input type="text" id="enddate" name="date" ng-model="txtdate_chequepresentation" datepicker-popup="{{dp.format}}"
+                           style="height:36px;" is-open="dp.open2" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                           close-text="Close" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dp.calender2($event)" style="height:36px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>-->
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> Date of Cheque Presentation</label> <span style="color:red"></span>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="enddate" name="enddate" ng-model="txtdate_chequepresentation" datepicker-popup="{{dpick.format}}"
+                                                               style="height:37px;" is-open="dpick.opened4" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                               close-text="Close" class="form-control" ng-change="onchangebusinessstartdate()" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dpick.open4($event)" style="height:37px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+
+
+                                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                                    <label>Status of Cheque Presentation</label><span></span>
+                                                    <textarea name="" id="" cols="" rows="2 " ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/]*$/" ng-model="txtstatus_chequepresentation" style="resize:vertical;" class="form-control" maxlength="1000"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <!--<div class="col-sm-3 col-md-3 col-lg-3">
+                <label>Date of Cheque Clearance/ Return</label><span style="color:red">&nbsp;*</span>
+                <p class="input-group">
+                    <input type="text" id="enddate" name="date" ng-model="txtdate_chequeclearance" datepicker-popup="{{dp.format}}"
+                           style="height:36px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                           close-text="Close" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dp.calender3($event)" style="height:36px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>-->
+                                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                                    <label class="col-form-label"> Date of Cheque Clearance/ Return</label> <span></span>
+                                                    <br />
+                                                    <p class="input-group">
+                                                        <input type="text" id="enddate" name="enddate" ng-model="txtdate_chequeclearance" datepicker-popup="{{dpick.format}}"
+                                                               style="height:37px;" is-open="dpick.opened5" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                               close-text="Close" class="form-control" ng-change="onchangebusinessstartdate()" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" ng-click="dpick.open5($event)" style="height:37px;" class="btn btn-default">
+                                                                <em class="fa fa-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    </p>
+                                                </div>
+
+                                                <div class="col-sm-9 col-md-9 col-lg-9">
+                                                    <label>Status of Cheque Clearance</label><span></span>
+                                                    <textarea rows="2" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/]*$/" ng-model="txtstatus_chequeclearance" style="resize:vertical;" class="form-control" maxlength="1000"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <label>Special condition if any in the instrument</label>
+                                                    <textarea cols="30" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/]*$/" ng-model="txtspecial_condition" style="resize:vertical;" rows="3" class="form-control" maxlength="2000"></textarea>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-6">
+                                                    <label>General Remarks</label>
+                                                    <textarea cols="30" ng-pattern="/^[ A-Za-z0-9)(}{\]\['\\/]*$/" ng-model="txtgeneral_remarks" style="resize:vertical;" rows="3" class="form-control" maxlength="2000"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <!--<div class="row">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <div class="row text-center">
+                                                    <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;" ng-click="add_cheque()">&nbsp;&nbsp;<span class="fa fa-plus">&nbsp;&nbsp;Add Cheque&nbsp;&nbsp;</a>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <br>
+                                    </div>
+
+                                    <br>
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <br>
+        <br>
+        <div class="row text-center">
+            <button type="button" class="btn btn-success btn-md" ng-disabled="submitmaker.$invalid" ng-click="add_cheque()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+            <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+        </div>
+        <br>
+        <br>
+    </div>
+
+</div>

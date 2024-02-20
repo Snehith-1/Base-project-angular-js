@@ -1,0 +1,275 @@
+﻿<h3>
+    Document Checklist
+</h3>
+<div ng-controller="documentCheckListController">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Customer & Sanction Details
+        </div>
+        
+      
+       
+        <div class="panel-body">
+              <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12 ">
+                <p class="lead bb text-purple text-bold" style="font-size:16px;">Customer Details</p>
+                <div class="col-lg-4">
+                    <label class="col-form-label">Customer Name :</label>
+                    <br />
+                    <p style="font-size:14px;">{{customerName}}</p>
+
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label"> URN No :</label>
+                    <br />
+                    <p style="font-size:14px;">{{Customerurn}}</p>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label"> Mobile No :</label>
+                    <br />
+                    <p style="font-size:14px;">{{mobileno}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                <div class="col-lg-4">
+                    <label class="col-form-label">Cluster Manager</label>
+                    <br />
+                    <p ng-model="ClusterMgr" style="font-size:14px;">{{clusterManager}}</p>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label">Relationship Manager</label>
+                    <br />
+                    <p style="font-size:14px;">{{relationshipmgmt}}</p>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label">Risk Manager</label>
+                    <br />
+                    <p style="font-size:14px;">{{riskmanager}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-lg-4">
+                    <label class="col-form-label">Credit Manager</label>
+                    <br />
+                    <p style="font-size:14px;">{{creditManager}}</p>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label">Zonal Head</label>
+                    <br />
+                    <p ng-model="zonalHeadName" style="font-size:14px;">{{zonalHeadName}}</p>
+                </div>
+                <div class="col-lg-4">
+                    <label class="col-form-label">Business Head</label>
+                    <br />
+                    <p style="font-size:14px;">{{businessHeadName}}</p>
+                </div>
+            </div>
+        </div>
+            <p class="lead bb text-purple text-bold" style="font-size:16px;">Sanction Details</p>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Ref No.</label>
+                        <br />
+                        <p ng-model="sanctionref_no" style="font-size:14px;">{{sanctionrefno}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sancion Date</label>
+                        <br />
+                        <p style="font-size:14px;">{{SanctionDate}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Sanction Amount</label>
+                        <br />
+                        <p ng-model="sanction_amount" style="font-size:14px;">{{SanctionAmount}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 ">
+
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Facility </label>
+                        <br />
+                        <p ng-model="facility_type" style="font-size:14px;">{{FacilityType}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Vertical</label>
+                        <br />
+                        <p style="font-size:14px;">{{verticalCode}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label class="col-form-label">Collateral Details</label>
+                        <br />
+                        <p ng-model="collateral_security" style="font-size:14px;">{{collateral_security}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <p class="lead bb text-purple text-bold" style="font-size:16px;">Document Check List</p>
+                    <div ng-show="IsVisible">
+                        <h4>
+                            IDAS
+                        </h4>
+                        <div class="panel-body">
+                            <div class="table-responsive table-bordered">
+                                <table class="table" style="padding: 0px 0px">
+                                    <thead class="bg-indigo-400">
+                                        <tr class="bg-primary-light text-white">
+                                            <th>S.No</th>
+                                            <th class="text-nowrap">Document Code</th>
+                                            <th class="text-nowrap">Document Name</th>
+                                            <th class="text-nowrap">Attachment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in idassanctiondocumentlist">
+                                            <td data-title="'S.No'">{{$index + 1}}</td>
+                                            <td data-title="'document Code'">{{data.document_code}}</td>
+                                            <td data-title="'document Name'">{{data.document_name}}</td>
+                                            <td class="text-nowrap" ng-switch="data.document_flag">
+                                                <div ng-switch-when='N'>
+                                                    <input type="file" id="addupload" multiple
+                                                           onchange="angular.element(this).scope().uploadidasdocument(this.files, angular.element(this).scope().documentupload, this.name, angular.element(this).scope().data.sanctiondocument_gid)"
+                                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                                                </div>
+                                                <div ng-switch-when='Y'>
+                                                    <a title="Download Attachment" download="" href="" id="btnpdf" ng-click="downloads(data.file_path,data.file_name)">{{data.file_name}}</a>&nbsp;&nbsp;
+                                                    <button title="Delete Document" ng-click="docdelete(data.sanctiondocument_gid)" class="btn">
+                                                        <i class="fa fa-close"></i>
+                                                    </button>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>
+                RISK
+            </h4>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <form name="sanctiondocument" id="sanctiondocument" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <fieldset>
+                        <div class="row">
+
+                            <div class="col-lg-6 col-md-6 col-sm-6 form-group">
+                                <label>Documentation List <span style="color:red">*</span></label>
+                                <select chosen="" ng-options="m as m.documentrefname for m in documentationlist track by m.customer2document_gid" 
+                                   ng-change="documentlist()"  ng-model="cbodocumentationname" class="chosen-select form-control" required>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6 form-group">
+                                <label>Remarks <span style="color:red">*</span></label>
+                                <textarea name="specificcondition" placeholder="Enter Remarks..." required
+                                          ng-model="txtremarks" class="form-control" rows="1"></textarea>
+                            </div>
+
+                            
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-6" ng-show="upload">
+                                    <label>Document Upload</label>
+                                    <input type="file" id="addrskupload" ng-model="test_document" multiple
+                                           onchange="angular.element(this).scope().uploaddocument(this.files, angular.element(this).scope().documentupload, this.name)" class="form-control"
+                                           data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" accept="images/jpg,images/jpeg,images/tif,images/tiff,images/pdf" />
+
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6" ng-show="photouploaded">
+                                    <label>Document Upload</label>
+                                    <div ng-repeat="data in Sanctiondocupload_list">
+                                        <!-- <p>{{$index+1}}</p>  -->
+                                        <p>{{$index+1}} {{data.file_name}}</p>
+                                    </div>
+                                </div>
+                          
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <br />
+                            <br />
+                            <button class="btn btn-success" ng-click="documentadd()" ng-disabled="sanctiondocument.$invalid">
+                                <em class="icon icon-plus"></em>
+                                <span>Add</span>
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div ng-hide="rskdocumentlist">
+                <div class="panel-body">
+                    <div class="table-responsive table-bordered">
+                        <table class="table" style="padding: 0px 0px">
+                            <thead class="bg-indigo-400">
+                                <tr class="bg-primary-light text-white">
+                                    <th>S.No</th>
+                                    <th class="text-nowrap">Document Code</th>
+                                    <th class="text-nowrap">Document Name</th>
+                                    <th class="text-nowrap">Remarks</th>
+                                    <th class="text-nowrap">Attachment</th>
+                                    <th class="text-nowrap">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in rsksanctiondocumentlist">
+                                    <td data-title="'S.No'">{{$index + 1}}</td>
+                                    <td data-title="'document Code'">{{data.documentaion_code}}</td>
+                                    <td data-title="'document Name'">{{data.documentation_name}}</td>
+                                    <td data-title="'Remarks'">{{data.document_remarks}}</td>
+                                    <td class="text-nowrap" ng-switch="data.document_flag">
+                                        <div ng-switch-when="N">
+                                            <label>-</label>
+                                        </div>
+                                        <div ng-switch-when="Y">
+                                            <a title="Download Attachment" download="" href="" id="btnpdf" ng-click="downloads(data.file_path,data.file_name)">{{data.file_name}}</a>
+                                        </div>
+
+                                    </td>
+                                    <td data-title="'Action'">
+                                        <button title="Delete" ng-click="docdelete(data.rsksanction_documentgid)" class="btn btn-danger">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+        </div>
+       
+        
+    </div>
+
+    <br />
+    <div class="row">
+        <div class="text-center">
+           
+            <a class="btn btn-info" ng-click="back()">
+                <em class="fa fa-arrow-left"></em>
+                <span>Back</span>
+            </a>
+
+        </div>
+    </div>
+</div>

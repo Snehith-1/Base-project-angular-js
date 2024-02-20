@@ -1,0 +1,366 @@
+﻿<style>
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 20px;
+        border: 8px solid transparent;
+        background-clip: content-box;
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #a8bbbf;
+        }
+</style>
+<h3>
+    AC Scheduled Meeting
+</h3>
+<div ng-controller="AgrTrnSuprCcScheduledMeetingSummarycontroller" class="calendar-app">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-10 col-md-6 col-sm-12">
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-12" style="padding-bottom: 16px;">
+                <a ng-click="completed_summary()">
+                    <b style="font-size: 14px;color:#09385f;"><em class="fa fa-file-text" style="font-size: 16px;"></em><u> AC Completed </u></b> <!-- &nbsp; <b> {{lblcompleted_count}} </b>  -->
+                </a>
+                <br />
+            </div>
+        </div>
+    </div> 
+    <div class="card">
+        <tabset justified="true">
+            <tab>
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    AC Scheduled Meeting Calender View
+                </tab-heading>
+                <div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <!-- START panel-->
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <!-- START calendar-->
+                                        <div calendar=""></div>
+                                        <!-- END calendar-->
+                                    </div>
+                                </div>
+                                <!-- END panel-->
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-md-6">
+                                <h4 align="center" class="text-pink">
+                                    Upcoming AC Scheduled Meeting - <now format="MMMM" class="text-primary"></now> <now format="yyyy" class="text-primary"></now>
+                                </h4>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div ui-scroll-viewport="" style="height:506px; overflow-y: auto;" class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12" ng-repeat="data in applicationadd_list">
+                                                <div class="list-group-item">
+                                                    <div class="media-box-body clearfix">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                                <h4 class="popover-title">Meeting Scheduled on <span class="text-primary"> {{data.ccmeeting_date}} / {{data.ccmeting_time}} </span> by {{data.updated_by}}</h4>
+                                                                <div class="popover-content">
+                                                                    <p><b>Cutomer Name : </b><span class="text-primary" style="font-size: 13px;">{{data.customer_name}}</span></p>
+                                                                    <p><b>Overall Limit : </b><span class="text-primary" style="font-size: 13px;">{{data.overalllimit_amount}}</span></p>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="ScheduledMeeting()">
+                <tab-heading>
+                    <em class="fa fa-user fa-1x"></em>  AC Scheduled Meeting Summary &nbsp;
+
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <div class="table-responsive">
+                                <table datatable="ng" class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="text-white" style="background-color:#09385f;">
+                                            <th class="text-center"> S.No</th>
+                                            <th> Application Number </th>
+                                            <th> Customer Name </th>
+                                            <!--  <th> Scheduled By</th> -->
+                                            <th> Created Date </th>
+                                            <th> Meeting Date</th>
+                                            <th> Meeting Time</th>
+                                            <th> Status</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in scheduledmeeting_list">
+                                            <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                            <td data-title="'Application Number'">{{data.application_no}}</td>
+                                            <td data-title="'Customer Name'"> {{data.customer_name}} </td>
+                                            <!-- <td data-title="'Scheduled By'"> {{data.ccgroup_name}} </td> -->
+                                            <td data-title="'Scheduled Date'">
+                                                {{data.scheduled_date}}
+                                            </td>
+                                            <td data-title="'Meeting Date'"> {{data.ccmeeting_date}} </td>
+                                            <td data-title="'Meeting Time'"> {{data.ccmeting_time}} </td>
+                                            <td data-title="'Approval Status'"> {{data.approval_status}} </td>
+                                            <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.now_date && data.ccmeeting_date">
+                                                <button title="View" ng-click="application_view(data.application_gid)" class="btn btn-info">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <!--<button title="Start Meeting" ng-show="data.ccmeeting_date != data.now_date" disabled ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>-->
+                                                <!--<button title="Start Meeting" ng-show="data.ccmeeting_date == data.now_date" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>-->
+                                                <button title="Start Meeting" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>
+                                                <button title="History" ng-click="history(data.application_gid)" class="btn btn-purple">
+                                                    <em class="fa fa-history"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="CCApprovalsummary()">
+                <tab-heading>
+                    <em class="fa fa-check-square-o fa-1x"></em> My Approval &nbsp;
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <div class="table-responsive">
+                                <table datatable="ng" class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="text-white" style="background-color:#09385f;">
+                                            <th class="text-center"> S.No</th>
+                                            <th> Application Number </th>
+                                            <th> Customer Name </th>
+                                            <!--  <th> Scheduled By</th> -->
+                                            <!--<th> Created Date </th>-->
+                                            <th> Meeting Date</th>
+                                            <th> Meeting Time</th>
+                                            <!--<th> Status </th>-->
+                                            <th> Approval Initiated Date </th>
+                                            <th> Approval Initiated By </th>
+                                            <th> Approval Status </th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in ccapproval_list">
+                                            <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                            <td data-title="'Application Number'">{{data.application_no}}</td>
+                                            <td data-title="'Customer Name'"> {{data.customer_name}} </td> 
+                                              <!-- <td data-title="'Scheduled By'"> {{data.ccgroup_name}} </td> -->
+                                            <!--<td data-title="'Scheduled Date'"> {{data.scheduled_date}}</td>-->
+                                            <td data-title="'Meeting Date'"> {{data.ccmeeting_date}} </td>
+                                            <td data-title="'Meeting Time'"> {{data.ccmeting_time}} </td>
+                                            <!--<td data-title="'Approval Status'"> {{data.approval_status}} </td>-->
+                                            <td data-title="'Approval Initiated Date'">I {{data.momupdated_date}} </td></td>
+                                            <td data-title="'Approval Initiated By'"> {{data.momupdated_by}} </td>
+                                            <td class="nowrap" data-title="'Assignment'" style="text-align: center;">
+                                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                       ng-click="assignment_view(data.application_gid)">
+                                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                </label>
+                                            </td>
+                                            <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.now_date && data.ccmeeting_date">
+                                                <button title="View" ng-click="application_view(data.application_gid)" class="btn btn-info">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <!--<button title="Start Meeting" ng-show="data.ccmeeting_date != data.now_date" disabled ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>
+                                                <button title="Start Meeting" ng-show="data.ccmeeting_date == data.now_date" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>-->
+                                                <button title="Start Meeting" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>
+                                                <button title="History" ng-click="history(data.application_gid)" class="btn btn-purple">
+                                                    <em class="fa fa-history"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="CCApprovalPending()">
+                <tab-heading>
+                    <em class="fa fa-check-square-o fa-1x"></em> AC Tagged &nbsp;
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <div class="table-responsive">
+                                <table datatable="ng" class="table table-hover table-striped">
+                                    <thead>
+                                        <tr class="text-white" style="background-color:#09385f;">
+                                            <th class="text-center"> S.No</th>
+                                            <th> Application Number </th>
+                                            <th> Customer Name </th>
+                                            <!--  <th> Scheduled By</th> -->
+                                            <!--<th> Created Date </th>-->
+                                            <th> Meeting Date</th>
+                                            <th> Meeting Time</th>
+                                            <!--<th> Status </th>-->
+                                            <th> Approval Initiated Date </th>
+                                            <th> Approval Initiated By </th>
+                                            <th> Approval Status </th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in ccapprovalpending_list">
+                                            <td data-title="'S.No'" class="text-center"> {{$index+1}} </td>
+                                            <td data-title="'Application Number'">{{data.application_no}}</td>
+                                            <td data-title="'Customer Name'"> {{data.customer_name}} </td> 
+                                              <!-- <td data-title="'Scheduled By'"> {{data.ccgroup_name}} </td> -->
+                                            <!--<td data-title="'Scheduled Date'"> {{data.scheduled_date}}</td>-->
+                                            <td data-title="'Meeting Date'"> {{data.ccmeeting_date}} </td>
+                                            <td data-title="'Meeting Time'"> {{data.ccmeting_time}} </td>
+
+
+                                            <!--<td data-title="'Approval Status'"> {{data.approval_status}} </td>-->
+                                            <td data-title="'Approval Initiated Date'">I {{data.momupdated_date}} </td></td>
+                                            <td data-title="'Approval Initiated By'"> {{data.momupdated_by}} </td>
+                                            <td class="nowrap" data-title="'Assignment'" style="text-align: center;">
+                                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                                       ng-click="assignment_view(data.application_gid)">
+                                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                                </label>
+                                            </td>
+                                            <td class="nowrap" data-title="'Action'" style="text-align: center;" ng-switch="data.now_date && data.ccmeeting_date">
+                                                <button title="View" ng-click="application_view(data.application_gid)" class="btn btn-info">
+                                                    <em class="fa fa-eye"></em>
+                                                </button>
+                                                <!--<button title="Start Meeting" ng-show="data.ccmeeting_date != data.now_date" disabled ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>
+                                                <button title="Start Meeting" ng-show="data.ccmeeting_date == data.now_date" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>-->
+                                                <button title="Start Meeting" ng-click="Start_meeting(data.application_gid)" class="btn bg-green-dark">
+                                                    <em class="icon-users"></em>
+                                                </button>
+                                                <button title="History" ng-click="history(data.application_gid)" class="btn btn-purple">
+                                                    <em class="fa fa-history"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </tab>
+        </tabset>
+
+    </div>
+    <script type="text/ng-template" id="/approvalstatus_view.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px"> Approval Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+                <form novalidate="" name="userform1" ng-submit="form.userform1()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="dd-handle ng-scope">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="font-size:15px;color:darkblue;"><b>Committee Members Attendance</b></p>
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr style="font-size: 13px;">
+                                                        <th class="text-center">S.No</th>
+                                                        <th>Group Name</th>
+                                                        <th>Name</th>
+                                                        <th class="text-center">Attendance </th>
+                                                        <th class="text-center">Approval Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="list in ccmember_list">
+                                                        <td class="text-center">{{$index+1}}</td>
+                                                        <td>{{list.ccgroup_name}}</td>
+                                                        <td>{{list.CCMember_name}}</td>
+                                                        <td class="text-center">
+                                                            <label style="color:green" ng-show="list.attendance_status=='P'">Present</label>
+                                                            <label style="color:red" ng-show="list.attendance_status=='A'">Absent</label>
+                                                        </td>
+                                                        <td ng-hide="list.attendance_status=='A'" class="text-center">
+                                                            {{list.approval_status}}
+                                                            &nbsp;
+                                                            <!--<button ng-if="list.approval_status!='-'" title="View Remarks" type="button" class="btn btn-default" ng-click="cc_remarksview(list.ccmeeting2members_gid)">
+                                                                <em class="fa fa-eye"></em>
+                                                            </button>-->
+                                                        </td>
+                                                        <td ng-show="list.attendance_status=='A'" class="text-center">
+                                                            -
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+
+</div>

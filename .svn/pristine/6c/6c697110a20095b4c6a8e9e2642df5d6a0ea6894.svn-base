@@ -1,0 +1,681 @@
+﻿<h3>
+    View Legal SR 
+    <a href="#/app/legalSR">
+        <button type="button" title="Back" class="pull-right btn btn-sm btn-info">
+            <em class="fa fa-arrow-circle-left fa-1x"></em>
+        </button>
+    </a>
+</h3>
+<div ng-controller="lawyerLegal360controller">
+     
+    <div class="">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <em class="fa fa-eye"></em>&nbsp;  Legal SR - Details
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form name="sanctionform" id="sanctionform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <fieldset>
+                                <div class="row">
+                                     
+                                    <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="form-group float-label">
+                                            <label>Request Date</label>
+                                            <p>{{assigned_date}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3">
+                                        <div class="form-group float-label">
+                                            <label>Request By</label>
+                                            <p>{{assignedlawyer_by}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <label>Remarks</label>
+                                        <p ng-bind-html="SLN_remarks">
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-secondary">
+                                                <thead class="bg-blue-grey-400 text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Document Name</th>
+                                                        <th scope="col">Uploaded By</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="seekdocument in seeklawyerdocument" width="100%">
+                                                        <td title="'S.No'">{{$index+1}}</td>
+                                                        <td title="'Document Name'">{{seekdocument.document_name}}</td>
+                                                        <td title="'Uploaded By'">{{seekdocument.created_by}}</td>
+                                                        <td data-title="'Action'" title="Download">
+                                                            <em class="fa fa-download"
+                                                                ng-click="downloads(seekdocument.document_path,seekdocument.document_name)">
+                                                            </em>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+
+                            
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="panel">
+            <div class="panel-body">
+                <div class="lead bb text-primary text-bold">
+                    &nbsp;  <em class="fa fa-user  text-primary fa-lg"></em> &nbsp;
+                    <label class="text-primary">  Customer Details</label>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-6 col-sm-6 col-md-6" style="color :brown ;font-size:130%;font-weight :bold;">
+                            {{customerdetails.customerNameedit}} / <label style="font-weight:bold">  </label> {{customerdetails.customer_urnedit}}
+                        </div>
+                        <div class="col-lg-3 col-sm-3 col-md-3">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <br />
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label style="font-weight:bold">Contact Person</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.contactPersonedit}}
+                        </div>
+
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label style="font-weight:bold">Contact Number</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.mobileNoedit}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label style="font-weight:bold">Address Line 1</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.addressline1edit}}
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label style="font-weight:bold">Address Line 2</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.addressline2edit}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Vertical</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.vertical_code}}
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Zonal Head</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.zonal_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Business Head</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.businesshead_name}}
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Cluster Manager</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.cluster_manager_name}}
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Relationship Manager</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.relationshipmgmt_name}}
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-md-2">
+                            <label class="col-form-label">Credit Manager</label>
+                        </div>
+                        <div class="col-lg-4 col-sm-4 col-md-4">
+                            {{customerdetails.creditmanager_name}}</p>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <br />
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="bb text-green text-bold">Promoters / Director Details</p>
+                            <!--<div class="panel-body table-responsive">-->
+                            <table class="table">
+                                <thead class="bg-indigo-400">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Promotor Name</th>
+                                        <th>Designation</th>
+                                        <th>Age</th>
+                                        <th>Mobile No.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="promotordata in customerPromotorlist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{promotordata.promoter_name}}</td>
+                                        <td>{{promotordata.designation}}</td>
+                                        <td>{{promotordata.promoter_age}}</td>
+                                        <td>{{promotordata.mobile}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!--</div>-->
+                        </div>
+
+                        <div class="col-lg-6 col-sm-6 col-md-6">
+                            <p class="bb text-green text-bold">Guarantor Details</p>
+                            <!--<div class="panel-body table-responsive">-->
+                            <table class="table">
+                                <thead class="bg-indigo-400">
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Gurantors Name</th>
+                                        <th>Age</th>
+                                        <th>Net Worth</th>
+                                        <th>Basic of NW</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="guarantordata in customerguarantorlist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{guarantordata.guarantors_name}}</td>
+                                        <td>{{guarantordata.guarantor_age}}</td>
+                                        <td>{{guarantordata.networth}}</td>
+                                        <td>{{guarantordata.basisofNW}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br />
+               
+            </div>
+
+            <br />
+        </div>
+         
+      
+    </div>
+
+
+    <div class="">
+        <div class="panel">
+           <br/>
+                <div class="lead bb text-primary text-bold">
+                    &nbsp;  <em class="fa fa-share-square-o  text-primary fa-lg"></em>   &nbsp;
+                    <label class="text-primary">  Loan Details</label>
+
+                </div>
+          
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-bordered bg-teal-100">
+                                <table class="table">
+                                    <thead class="bg-teal-500">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Loan Ref No.</th>
+                                            <th>Sanction Ref No.</th>
+                                            <th>Sanction Date</th>
+                                            <th>Loan Facility Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="loan in loandetails">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{loan.loanref_no}}</td>
+                                            <td>{{loan.sanction_refno}}</td>
+                                            <td>{{loan.sanction_date}}</td>
+                                            <td>{{loan.loan_title}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--<div class="container-lg">
+        <div class="panel">
+            <p class="lead bb text-primary text-bold">
+                <button class="md-fab md-button md-default-theme">
+                    <em class="fa icon-refresh fa-lg ng-scope"></em>
+                    <div class="md-ripple-container"></div>
+                </button> Loan Repayment
+            </p>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-bordered bg-indigo-100">
+                                <table class="table">
+                                    <thead class="bg-indigo-400">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Loan Ref No.</th>
+                                            <th>Sanction Date</th>
+                                            <th>Sanction Ref No.</th>
+                                            <th>Loan Facility Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="loan in loandetails">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{loan.loanref_no}}</td>
+                                            <td>{{loan.sanction_refno}}</td>
+                                            <td>{{loan.sanction_date}}</td>
+                                            <td>{{loan.loan_title}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>-->
+
+    <div class="container-lg" style="display:none;">
+        <div class="panel">
+            <p class="lead bb text-primary text-bold">
+                <button class="md-fab md-button md-default-theme">
+                    <em class="fa fa-file fa-lg ng-scope"></em>
+                    <div class="md-ripple-container"></div>
+                </button> Customer Documents
+            </p>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <div class="table-responsive table-bordered bg-teal-100">
+                                <table class="table">
+                                    <thead class="bg-teal-500">
+                                        <tr>
+                                            <th>S.No</th>
+                                            <th>Document Name</th>
+                                            <th>Uploaded Date</th>
+                                            <th>Uploaded By</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="document in filename_list">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{document.document_name}}</td>
+                                            <td>{{document.created_date}}</td>
+                                            <td>{{document.created_by}}</td>
+                                            <td>
+                                                <button title="Download" class="btn btn-default btn-sm"
+                                                        ng-click="downloads(document.document_path,document.document_name)">
+                                                    <em class="fa fa-download"></em>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-lg" style="display:none;">
+            <div class="panel">
+                <p class="lead bb text-primary text-bold">
+                    <button class="md-fab md-pink md-button  md-default-theme">
+                        <em class="fa fa-envelope fa-lg ng-scope"></em>
+                        <div class="md-ripple-container"></div>
+                    </button> Send Mail
+                </p>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="table-responsive table-bordered bg-indigo-100">
+                                    <table class="table">
+                                        <thead class="bg-indigo-400">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Mail Subject</th>
+                                                <th>Sent By</th>
+                                                <th>Send Date</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="composemail in composemail_list">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{composemail.subject_mail}}</td>
+                                                <td>{{composemail.created_by}}</td>
+                                                <td>{{composemail.created_date}}</td>
+                                                <td>
+                                                    <button title="View" class="btn btn-default btn-sm"
+                                                            ng-click="viewMailContent(composemail.composemail_gid)">
+                                                        <em class="fa fa-eye"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="container-lg" style="display:none;">
+            <div class="panel">
+
+                <md-content class="md-padding">
+                    <p class="text-bold text-primary" style="font-size: 21px;">
+                        <button class="md-fab md-button md-default-theme">
+                            <em class="fa icon-refresh fa-lg ng-scope"></em>
+                            <div class="md-ripple-container"></div>
+                        </button>  Demand Notice
+                    </p>
+
+                    <md-tabs md-dynamic-height="" md-border-bottom="" md-border-width="20px">
+
+                        <md-tab label="Demand Notice 1">
+                            <md-content class="md-padding">
+                                <p class="text-pink" style="text-decoration:underline; font-size:15px;">
+                                    Demand Notice 1
+                                </p>
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border  hover">
+                                            <thead>
+                                                <tr class="bg-teal-500 text-white">
+                                                    <th>S.NO</th>
+                                                    <th>URN No.</th>
+                                                    <th>OD Days</th>
+                                                    <th>DN Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in customerPromotorlist" class="bg-teal-100">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Promoter Name'">{{data.promoter_name}}</td>
+                                                    <td data-title="'Designation'">{{data.designation}}</td>
+                                                    <td data-title="'Age'">{{data.promoter_age}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Demand Notice 2">
+                            <md-content class="md-padding">
+                                <div class="">
+                                    <p class="text-pink" style="text-decoration:underline; font-size:15px;" ">
+                                        Demand Notice 2
+                                    </p>
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border hover">
+                                            <thead>
+                                                <tr class="bg-teal-500 text-white">
+                                                    <th>S.NO</th>
+                                                    <th>URN No.</th>
+                                                    <th>OD Days</th>
+                                                    <th>DN Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in customerPromotorlist">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Promoter Name'">{{data.promoter_name}}</td>
+                                                    <td data-title="'Designation'">{{data.designation}}</td>
+                                                    <td data-title="'Age'">{{data.promoter_age}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                        <md-tab label="Demand Notice 3">
+                            <md-content class="md-padding">
+                                <p class="text-pink" style="text-decoration:underline; font-size:15px;">
+                                    Demand Notice 3
+                                </p>
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <table datatable="ng" class="row-border bg-blue-grey-100 hover">
+                                            <thead>
+                                                <tr class="bg-teal-500 text-white">
+                                                    <th>S.NO</th>
+                                                    <th>URN No.</th>
+                                                    <th>OD Days</th>
+                                                    <th>DN Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in customerPromotorlist">
+                                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                                    <td data-title="'Promoter Name'">{{data.promoter_name}}</td>
+                                                    <td data-title="'Designation'">{{data.designation}}</td>
+                                                    <td data-title="'Age'">{{data.promoter_age}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row ">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <b style="color:darkblue">
+                            <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                            Document Upload
+                        </b>
+                        <div class="dd-handle ng-scope" style="height:425px;">
+                            <div class="row">
+                                <div class="col-lg-10 col-sm-12 col-md-12">
+                                    <label>Document Upload <span style="color:red">*</span></label>
+                                    <input type="file" id="addupload" name="file" ng-model="uploaddocument" class="form-control"
+                                           onchange="angular.element(this).scope().upload(this.files)" />
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="col-lg-11 col-sm-12 col-md-12">
+                                    <div ui-scroll-viewport="" style="height:345px; overflow-y: auto;" class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12">
+                                            <div class="table-responsive table-bordered bg-teal-100">
+                                                <table class="table">
+                                                    <thead class="bg-teal-500">
+                                                        <tr>
+                                                            <th>Document Name</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="uploadseek in filenamesr_list">
+                                                            <td>{{uploadseek.document_name}}</td>
+                                                            <td>
+                                                                <button title="Cancel" class="btn btn-default btn-sm"
+                                                                        ng-click="document_cancelclick(uploadseek.tmplegalsr_documentgid)">
+                                                                    <em class="fa fa-close"></em>                                                                    
+                                                                    <button title="download" class="btn btn-default btn-sm"
+                                                                            ng-click="downloads(uploadseek.tmplegalsr_documentgid)">
+                                                                        <em class="fa fa-cloud-download btn-md" ></em>
+                                                                    </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <b style="color:darkblue">
+                            <em class="fa text-primary fa-lg"></em>&emsp;
+                            Remarks
+                        </b>
+                        <div text-angular="" ng-model="$parent.seeklawyerremarks"
+                             placeholder="Enter Remarks..." name="wysiswyg-editor" class="btn-group-justified"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="row">
+        <div class="text-center">
+            <!--<a class="btn btn-success" ng-click="">
+                <em class="fa fa-check"></em>
+                <span>Submit</span>
+            </a>-->
+            <a class="btn btn-danger" href="#/app/legalSR">
+                <em class="fa fa-arrow-left"></em>
+                <span>Back</span>
+            </a>
+        </div>
+    </div>
+    
+    <script type="text/ng-template" id="/CustomerViewMailContent.html">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-eye"></em>&nbsp;View Sent Mail</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="close()" title="Close">
+                    <md-icon md-svg-src="app/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <div class="panel-body">
+                <form method="post">
+                    <div class="input-group form-group">
+                        <span class="input-group-addon text-sm">From:</span>
+                        <input type="text" ng-model="frommail_view" class="form-control" disabled="" />
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon text-sm">To:</span>
+                        <input type="text" ng-model="tomail_view" class="form-control" disabled="" />
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon text-sm">CC:</span>
+                        <input type="text" ng-model="ccmail_view" class="form-control" disabled="" />
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon text-sm">BCC:</span>
+                        <input type="text" ng-model="bccmail_view" class="form-control" disabled="" />
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon text-sm">Subject:</span>
+                        <input type="text" ng-model="mailsubject_view" class="form-control" disabled="" />
+                    </div>
+                </form>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group bg-grey-100">
+                            <p ng-bind-html="mailcontent_view"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+
+            <button ng-click="ok()" class="btn btn-danger">
+                <i class="fa fa-close (alias)">
+                </i>&nbsp;Close
+            </button>
+        </div>
+        <br />
+    </script>
+</div>

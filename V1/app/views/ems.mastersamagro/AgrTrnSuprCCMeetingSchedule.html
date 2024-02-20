@@ -1,0 +1,410 @@
+﻿<h3>
+    AC - Schedule Meeting
+</h3>
+<div ng-controller="AgrTrnSuprCCMeetingScheduleController as dpick">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-calendar-o"></em>&nbsp;  {{lblcustomer_name}} / {{lblapplication_no}}
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div>
+                        <div class="ng-scope dd-handle"  style="background-color:#f9f8f8">
+                            <div lass="panel-heading" style="color:#141478;font-size: 15px;">
+                                &nbsp;&nbsp;<b>Application Details</b>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <label><strong>RM Name</strong></label><br />
+                                        <p> {{lblsubmitted_by}}</p>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <label><strong>RM Submitted Date</strong></label><br />
+                                        <p> {{lblsubmitted_date}}</p>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <label><strong> Underwritten By</strong></label>
+                                        <br />
+                                        <p> {{lblccsubmitted_by}}</p>
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 col-lg-3">
+                                        <label><strong>Underwritten Date</strong></label>
+                                        <br />
+                                        <p> {{lblccsubmitted_date}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="lstab=='Pending'">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="ng-scope dd-handle">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="color:#141478;font-size: 15px;"><b> Schedule Meeting </b></p>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <form novalidate="" name="userform" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label>AC Meeting Title </label> <span style="color:red">*</span>
+                                                <input ng-model="txtccmeeting_title" tabindex="0" maxlength="100" required="" aria-required="true" aria-invalid="true"
+                                                       placeholder="AC Meeting Title" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label>AC Meeting Number </label> <span style="color:red">*</span>
+                                                <input ng-model="txtccmeeting_no" tabindex="0" maxlength="45" required="" aria-required="true" aria-invalid="true"
+                                                       placeholder="AC Meeting Number" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                                <label>AC Meeting Date <span style="color:red"> *</span></label>
+                                                <p class="input-group">
+                                                    <input type="text" id="meeting_date" name="date" ng-model="txtccmeeting_date" datepicker-popup="{{dpick.format}}"
+                                                           resource="" style="height:35px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                                                           placeholder="DD-MM-YYYY" close-text="Close" class="form-control" required=""/>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" ng-click="dpick.open($event)" style="height:30px;" class="btn btn-default">
+                                                            <em class="fa fa-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <div class="">
+                                                    <label>Start Time</label>
+                                                    <input type="time" id="start_ime" name="start_ime" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                                           ng-model="txtstart_time" min="01:00" max="24:00"><i>hh:mm</i>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <div>
+                                                    <label>End Time</label>
+                                                    <input type="time" id="end_ime" name="end_ime" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched"
+                                                         ng-change="onchangetime()"  ng-model="txtend_time" min="01:00" max="24:00"><i>hh:mm</i>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                                <label>AC Meeting Mode </label> <span style="color:red">*</span>
+                                                <div class="radio c-radio">
+                                                    <label>
+                                                        <input type="radio" id="Online" name="rdbccmeeting_mode" value="Online" required ng-model="rdbccmeeting_mode" />
+                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Online
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" id="Offline" name="rdbccmeeting_mode" value="Offline" required ng-model="rdbccmeeting_mode" />
+                                                        &nbsp;&nbsp;
+                                                        <span class="fa fa-circle"></span>Offline
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label>AC Group Name <span style="color:red">*</span></label>
+                                                <select name="cboccgroup_name" id="cboccgroup_name" chosen="" multiple ng-options="m.ccgroup_name for m in ccgroup_list"
+                                                        ng-model="cboccgroup_name" ng-change="onchangeccgroup()" class="chosen-select form-control" required></select>
+                                                <br />
+
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label>Others Samunnati Users</label>
+
+                                                <select name="otheruser_namae" id="otheruser_namae" chosen="" multiple ng-options="m.employee_name for m in employee_list"
+                                                        ng-model="cboother_user" class="chosen-select form-control"></select>
+
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">                                           
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label>AC Admin<span style="color:red"> *</span></label>
+                                                <select name="ccadmin_name" id="ccadmin_name" chosen="" multiple ng-options="m.employee_name for m in employee_list" required
+                                                        ng-model="cboccadmin_name" class="chosen-select form-control"></select>
+                                            </div>
+                                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                                <label style="color:darkgray">Non-Samunnati Users </label>
+                                                <textarea ng-model="txtnon_users" tabindex="0" rows="1" maxlength="500" aria-required="true" aria-invalid="true"
+                                                          ng-disabled="true" placeholder="Enter Email with , seperation" class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" />
+                                            </div>
+                                    </div>
+                                    </div>
+                                    <br/>
+                                    <div ng-show="memberlist">
+                                        <div class="row">
+                                            <br />
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <b style="color:darkblue">
+                                                        <em class="fa fa-file text-primary fa-lg"></em>&emsp;
+                                                        AC Member List
+                                                    </b>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row dd-handle ng-scope">
+                                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                                <div class="col-lg-12 col-sm-12 col-md-12 table-responsive cell-border">
+
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr class="" ng-repeat="data in ccmember_list">
+                                                                <td>
+                                                                    {{$index+1}}
+                                                                </td>
+                                                                <td>
+                                                                    {{data.CCMember_name}}
+                                                                </td>
+                                                                <td>
+                                                                    {{data.ccgroup_name}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <label>Description </label>
+                                                <div text-angular="" ng-model="txtdescription"
+                                                     placeholder="Type Description..." maxlength="5000" name="wysiswyg-editor" class="btn-group-justified">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row">
+                        <br />
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success" ng-disabled="userform.$invalid" ng-click="schedule()">
+                                &nbsp;
+                                <em class="fa fa-calendar-o"></em>
+                                <span>Schedule</span>
+                            </button>
+                            <button class="btn btn-info" type="button" ng-click="back()">
+                                <em class="fa fa-arrow-left"></em>&nbsp;&nbsp;
+                                <span>Back</span>
+                            </button>
+                            <br /><br />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" ng-show="lstab=='Scheduled'">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="ng-scope dd-handle">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="color:#141478;font-size: 15px;"><b> View Schedule Meeting </b></p>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-3 col-md-3 col-lg-3">
+                                            <label>AC Meeting Title </label> <br />
+                                            {{lblccmeeting_title}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>AC Meeting Number </label><br />
+                                            {{lblccmeeting_no}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>AC Meeting Date</label><br />
+                                            {{lblccmeeting_date}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>AC Meeting Mode </label><br />
+                                            {{lblccmeeting_mode}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2">
+                                            <label>Meeting Time</label><br />
+                                            {{lblmeeting_time}}
+                                        </div>
+                                        <div class="col-sm-1 col-md-1 col-lg-1 pull-right">
+                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                <button title="Reschedule" ng-click="reschedule(application_gid,ccschedulemeeting_gid)" class="btn bg-green">
+                                                    <em class="fa fa-edit"></em>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                       
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>AC Group Name</label><br />
+                                            {{lblccgroup_name}}
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>Other Samunnati Users </label><br />
+                                            {{lblotheruser_name}}
+                                        </div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2" style="color:darkgray">
+                                            <label>Non Samunnati Users</label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                            <label>AC Admin</label><br />
+                                            {{lblccadmin_name}}
+                                        </div>
+                                        <div class="col-sm-8 col-md-8 col-lg-8">
+                                            <label>Description </label><br />
+                                            <p ng-bind-html=trustAsHtml(lbldescription)></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <div>
+                                            <div class="row">
+                                                <br />
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <b style="color:darkblue;font-size: 14px;">
+                                                            <em class="fa fa-file fa-lg"></em>&emsp;
+                                                            AC Member List
+                                                        </b>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12 table-responsive ">
+                                                        <div class="dd-handle ng-scope">
+                                                            <table class="table">
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in lblccmember_list">
+                                                                        <td>
+                                                                            {{$index+1}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{data.CCMember_name}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{data.ccgroup_name}}
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div ng-show="lblccschedule_list!=null">
+                                <div class="row" ng-show="lblccschedule_list!=''">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <p style="color:#141478;font-size: 15px;"><b> Log - Schedule Meeting </b></p>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+
+                                        <div class="table-responsive table-bordered">
+                                            <table class="table" style="padding: 0px 0px">
+                                                <thead>
+                                                    <tr class="bg-gray-light text-white">
+                                                        <th>S.No</th>
+                                                        <th>AC Meeting Title</th>
+                                                        <th>AC Meeting Number</th>
+                                                        <th>AC Meeting Date</th>
+                                                        <th>AC Meeting Time</th>
+                                                        <th>AC Meeting Mode</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in lblccschedule_list">
+                                                        <td data-title="'S.No'">{{$index+1}}</td>
+                                                        <td data-title="'AC Meeting Title'">{{data.ccmeeting_title}}</td>
+                                                        <td data-title="'AC Meeting Number'">{{data.ccmeeting_no}}</td>
+                                                        <td data-title="'AC Meeting Date'">{{data.ccmeeting_date}}</td>
+                                                        <td data-title="'Time'">{{data.start_time}} - {{data.end_time}}</td>
+                                                        <td data-title="'AC Meeting Mode'">{{data.ccmeeting_mode}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <div class="row">
+                                <br />
+                                <div class="text-center">
+                                    <button class="btn btn-info" type="button" ng-click="schedulesback()">
+                                        <em class="fa fa-arrow-left"></em>&nbsp;&nbsp;
+                                        <span>Back</span>
+                                    </button>
+                                    <br /><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+    
+</div>

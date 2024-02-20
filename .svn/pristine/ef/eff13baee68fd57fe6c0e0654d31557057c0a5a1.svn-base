@@ -1,0 +1,172 @@
+﻿<h3>
+    Buyer Initiate Application
+</h3>
+<div ng-controller="AgrMstInitiateApplicationcontroller">
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                            <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;">
+                                <h5>{{onboardtl.buyer_name}}</h5>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" style="background-color:#3a4ccb;color:white;padding-top:10px;padding-bottom:10px;">
+                                <h5>{{onboardtl.buyer_id}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <form name="loan" ng-submit="form.submitForm2()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div id="panelDemo9" class="panel-primary">
+                                            <div class="panel-heading" style="background-color: #d5591e;
+                                             background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);color:black;">
+                                                <b>Application Details </b>
+                                            </div>
+                                            <br />
+                                            <div class="">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-striped table-secondary">
+                                                                <thead class="bg-gray">
+                                                                    <tr width="100%">
+                                                                        <th style="color:#000000;">S.No</th>
+                                                                        <th style="color:#000000;">ARN </th>
+                                                                        <th style="color:#000000;">Application Status</th>
+                                                                        <th style="color:#000000;">Onboarding</th>
+                                                                        <th style="color:#000000;">Product</th>
+                                                                        <th style="color:#000000;">Program</th>
+                                                                        <th style="color:#000000;">Initiated Date</th>
+                                                                        <th style="color:#000000;">Initiated Remarks</th>
+                                                                        <th style="color:#000000;">Initiated By</th>
+                                                                        <!--<th style="text-align: center;width:8%;color:#000000;"> Action</th>-->
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr ng-repeat="data in onboardapplicationList">
+                                                                        <td title="S.No">{{$index+1}}</td>
+                                                                        <td title="ARN">{{data.application_no}}</td>
+                                                                        <td title="Application Status">{{data.approval_status}}</td>
+                                                                        <td title="Onboarding">
+                                                                          <span ng-if="data.onboarding_status=='Proposal'">Credit</span>  
+                                                                          <span ng-if="data.onboarding_status=='Direct'">Advance</span>  
+                                                                        </td>
+                                                                        <td title="Product">{{data.product_name}}</td>
+                                                                        <td title="Program">{{data.program_name}}</td>
+                                                                        <td title="Initiated Date">{{data.initiated_date}}</td>
+                                                                        <td title="Initiated Remarks">{{data.initiated_remarks}}</td>
+                                                                        <td title="Initiated By">{{data.created_byname}}</td>
+                                                                        <!--<td style="text-align: center;width:8%;">
+                                                                <button title="View" ng-click="institution_view(data.institution_gid)" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                            </td>-->
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+
+                                                <div class="dd-handle">
+                                                    <label class="text text-primary" style="font-size:13px;">Initiate Application</label>
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label class="col-form-label"> Onboarding <span style="color:red"> *</span></label>
+                                                                <div class="radio c-radio">
+                                                                    <label>
+                                                                        <input type="radio" id="Onboarding" name="Onboarding" value="Proposal" ng-model="rdbOnboarding" ng-change="onselected_Onboarding()" required />
+                                                                        &nbsp;&nbsp;<span class="fa fa-circle"></span>Credit
+                                                                    </label>
+                                                                    <label>
+                                                                        <input type="radio" id="Onboarding" name="Onboarding" value="Direct" ng-model="rdbOnboarding" ng-change="onselected_Onboarding()" required />
+                                                                        <span class="fa fa-circle"></span>Advance
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label class="col-form-label"> Product Name  </label> <span style="color:red">*</span>
+                                                                <br />
+                                                                <select name="Product Type " ng-options="m.loanproduct_name  for m in loanproductlist"
+                                                                        ng-text-change="change()" ng-model="cboProductTypelist" class="form-control" style="height:37px;" chosen=""
+                                                                        required size="1" ng-change="validateproductdetails()">
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                                <label class="col-form-label">Program Name </label> <span style="color:red">*</span>
+                                                                <br />
+                                                                <select name="Product Sub Type" ng-options="m.loansubproduct_name for m in loansubproductlist"
+                                                                        required ng-model="cboProductSubTypelist" class="form-control" style="height:37px;" chosen=""
+                                                                        size="1">
+                                                                    <option value=""></option>
+                                                                </select>
+                                                            </div>
+                                                        </div> 
+                                                        
+                                                        <!--<div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <br />
+                                                            <em class="fa fa-warning text-danger" style="font-size:14px;" ng-show="alreadyadded">
+                                                                &nbsp; <span style="font-weight:bold;font-family:Roboto, sans-serif;"> Still this product & Program is pending for pmg approval. So you can't select. </span>
+                                                            </em>
+                                                        </div>-->
+                                                       
+                                                    </div>
+                                                    
+                                                    <br />
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <br />
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                        <label> Remarks <span style="color:red;">*</span></label>
+                                                                        <textarea ng-model="txtremarks" rows="4" class="form-control" style="resize:vertical;" required
+                                                                                  id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success" ng-disabled="loan.$invalid"
+                                            ng-click="initiate_onboard()">
+                                        <i class="fa fa-check"></i>&nbsp;&nbsp;Initiate
+                                    </button>&nbsp;&nbsp;
+                                    <button ng-click="back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                    <br />
+                                </div>
+
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

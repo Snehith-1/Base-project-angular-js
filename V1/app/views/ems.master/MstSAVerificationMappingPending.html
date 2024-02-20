@@ -1,0 +1,320 @@
+﻿<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        width: 100%;
+    }
+
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+            height: 58px;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(140, 138, 141);
+                color: white;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #d5591e;
+                background-image: linear-gradient(316deg, rgb(236 195 100) 0%, rgb(171 225 166) 74%);
+            }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+
+    .picColor:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: #144A6E;
+        border: 1px solid #A59F9D;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        text-decoration: underline;
+        text-decoration-color: #141478;
+    }
+
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f8f7f7;
+        height: 58px;
+    }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: rgb(226, 221, 221);
+                text-decoration: underline;
+                height: 58px;
+                color: black;
+            }
+
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #fff;
+        border-top: none;
+    }
+    /* Style for blinking the notification button */
+    .button {
+        background-color: #FCB77E;
+        padding: 17px 9px;
+        text-align: center;
+        text-decoration: double;
+    }
+
+
+    .button {
+        animation: glowing 2000ms infinite;
+    }
+</style>
+<script>
+    function openApplication(evt, ApplicationName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(ApplicationName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+
+
+</script>
+<h3>
+    SA Pending Assignments
+</h3>
+<div ng-controller="MstSAVerificationMappingPendingController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="panel panel-default">
+                <div class="tab">
+                    <button class="tablinks" onclick="openApplication(event, 'SA Verification pending Summary')" id="defaultOpen" ng-click="mapping_pending()">Pending Assignment </button>
+                    <button class="tablinks" onclick="openApplication(event, 'SA Verification Maker Summary')" ng-click="verification_pending()">Assignment Summary</button>
+                    <button class="tablinks" onclick="openApplication(event, 'SA Verification Approved Summary')" ng-click="verification_approved()"> Approved Summary </button>
+                    <button class="tablinks" onclick="openApplication(event, 'SA Verification Rejected Summary')" ng-click="verification_rejected()"> Rejected Summary </button>
+                    <button class="tablinks" onclick="openApplication(event, 'SA Verification Deferred Summary')" ng-click="verification_deferred()"> Deferred Summary </button>
+
+                </div>
+                <div id="SA Verification pending Summary" class="tabcontent">
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+
+
+                                            <div class="list-group-item picColor" style="height:48px;background-color: #84cbdb;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{institution_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="mapping_institution()"><b>Institution Pending </b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-2">
+
+                                            <div class="list-group-item picColor" style="height:48px;background-color:#f3f1f1;border:1px solid rgb(179, 177, 177)">
+                                                <div class="media-box-heading" style="padding-top:2px;padding-bottom:2px;">
+                                                    <div class="pull-right label" style="background-color:#838383;padding-bottom:4px;padding-top:4px;">{{individual_count}}</div>
+                                                    <div style="font-size:14px;color:#000000;text-align:center;" ng-click="mapping_individual()"><b> Individual Pending</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                                    </div>
+                                </div>
+                                <br /><br />
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="table-responsive">
+                                                <table datatable="ng" class="table table-hover table-striped">
+                                                    <thead>
+                                                        <tr class="text-white" style="background-color:#09385f;">
+                                                            <th> S.No </th>
+                                                            <th>SA Application ID </th>
+                                                            <th>Samunnati Associate Name </th>
+                                                            <th> Referred By</th>
+                                                            <th> Status</th>
+                                                            <th> Renewal Status</th>
+                                                            <th>Assigned Information</th>
+                                                            <th>Allocated By</th>
+                                                            <th>Submitted Date</th>
+                                                            <th> TAT </th>
+                                                            <th class="text-center">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in saOnboardSummary_list">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>{{data.sa_autogeneratedid}}</td>
+                                                            <td>{{data.sa_associatename}}</td>
+                                                            <td>{{data.referred_by}}</td>
+                                                            <td>{{data.approvalstatus}}</td>
+                                                            <td>{{data.renewal_status}}</td>
+                                                            <td data-title="'mapping Information'" class="text-center">
+                                                                <em class="fa fa-info-circle" ng-click=mappinginformation(data.sacontactinstitution_gid) style="font-size:24px;align-content:center;"></em>
+                                                            </td>
+                                                            <td>{{data.sa_updated_by}}</td>
+                                                            <td>{{data.sa_updated_date}}</td>
+                                                            <td>{{data.sa_tat}}</td>
+                                                            <td class="nowrap" data-title="'Action'" style="text-align: center;">
+                                                                <button title="View" ng-click="saverificationedit(data.sacontactinstitution_gid)"
+                                                                        style="text-align: center;" class="btn btn-info">
+                                                                    <em class="fa fa-eye"></em>
+                                                                </button>
+                                                                <button title="Assign" class="btn bg-deep-purple-400" ng-disabled="data.mapping_flag == 'Y'"
+                                                                        ng-click="saonboardingmapping(data.sacontactinstitution_gid)">
+                                                                    <em class="icon-users"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+    <script type="text/ng-template" id="/addauditmapping.html">
+        <div class="modal-header bg-primary ng-scope">
+            <h4 id="myModalLabel" class="modal-title">
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Assign SA
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addauditmapping" ng-submit="form.addauditmapping()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>SA Maker  <span style="color:red">*</span></label>
+                                <select name="cboemployees" chosen="" tabindex="2"
+                                        ng-options="m.employee_name for m in employee_list" required=""
+                                        ng-model="cboemployee" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+
+                        
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label>SA Checker <span style="color:red">*</span></label>
+                                <select name="cboemployees" chosen="" tabindex="2"
+                                        ng-options="m.employee_name for m in employee_list" required=""
+                                        ng-model="cboemployeechecker" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addauditmapping.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>                
+            </form>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/Approvalinformation.html">
+        <div class="modal-header bg-primary">
+            <h4 class="modal-title">
+                <i class="fa fa-info-circle">&nbsp; Assigned Information</i>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </h4>
+        </div>
+        <div class="modal-body">
+
+            <hr />
+            <label class="text-primary">Mapping Information</label>
+            <br />
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Maker </label>
+                    <br />
+                    <span> {{lblmaker_name}} </span>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label> Checker </label>
+                    <br />
+                    <span> {{lblchecker_name}}</span>
+
+                </div>
+
+            </div>
+            <br /><br />
+            <div align="center">
+                <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+            </div>
+            <br />
+        </div>
+    </script>
+</div>
+

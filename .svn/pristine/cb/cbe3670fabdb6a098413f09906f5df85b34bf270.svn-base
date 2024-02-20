@@ -1,0 +1,153 @@
+﻿<h3>
+    Loan Management
+</h3>
+<div ng-controller="loanmanagement">
+
+    <div>
+        <button type="button" title="Create Loan" class="btn btn-success btn-sm" ng-click="popuploan()">
+            <span class="btn-label">
+                <i class="fa fa-plus"></i>
+            </span>CREATE LOAN
+        </button>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+        
+                                Show <input ng-model="pagecount" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore"  ng-disabled="!pagecount" ng-click="loadMore(pagecount)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+        
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="table-responsive">
+
+                        <table class="table hover table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th style="display:none;">S.NO</th>
+                                    <th>LOAN REF NO</th>
+                                    <th>LOAN FACILITY TYPE</th>
+                                    <th>CUSTOMER</th>
+                                    <th>VERTICAL</th>
+                                    <th>SANCTION REF NO</th>
+                                    <th>SANCTION DATE</th>
+                                    <th>CREATED BY</th>
+                                    <th>CREATED DATE</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in loan_data |filter :searchtxt|limitTo:totalDisplayed ">
+                                    <td data-title="'S.No'" style="display:none;">{{$index+1}}</td>
+                                    <td data-title="'Loan Ref No'">{{data.loanRefNo}}</td>
+                                    <td data-title="'Loan Facility Type'">{{data.loanTitle}}</td>
+                                    <td data-title="'Customer'">{{data.customerName}}</td>
+                                    <td data-title="'Customer'">{{data.vertical_code}}</td>
+                                    <td data-title="'Sanction Ref No'">{{data.sanctionRefno}}</td>
+                                    <td data-title="'Sanction Date'">{{data.sanctionDate}}</td>
+                                    <td data-title="'Created By'">{{data.created_by}}</td>
+                                    <td class="nowrap" data-title="'Created Date'">{{data.created_date}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Update Loan Ref No" ng-click="PopupNewLoanRef(data.loan_gid,data.loanRefNo,data.customerName)" class="btn btn-info">
+                                            <em class="icon icon-share-alt"></em>
+                                        </button>
+                                        <button title="Edit" ng-click="edit(data.loan_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button title="Create Deferral" ng-click="createDeferral(data.loan_gid)" class="btn btn-default" style="background-color:wheat ;">
+                                            <em class="fa fa-long-arrow-right"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/updateLoanref.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools bg-success">
+                <h2><em class="icon icon-share-alt"></em>&nbsp;Update Loan Ref No. </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name  : </label>&nbsp;<span>{{customername}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Current Loan Ref No.: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{loanref_no}}</span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>New Loan Ref No. <span style="color:red;">*</span></label>
+                                    <input ng-model="txtnewloanrefno" required="" tabindex="0" aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="LoanRefUpdate()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Close</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+   
+</div>
+

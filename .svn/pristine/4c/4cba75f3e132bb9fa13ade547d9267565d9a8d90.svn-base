@@ -1,0 +1,305 @@
+<style>
+    .nav.nav-pills .active > a {
+        background-color: rgb(19,14,89);
+        background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);
+        color: #ffffff;
+    }
+</style>
+<h3>
+    Credit Underwriting
+</h3>
+<div ng-controller="MstCreditIndividualRepaymentEditController as form">
+    <div class="panel">
+        <div class="panel-heading" style="background-color:rgb(19,14,89);background: linear-gradient(90deg, rgba(19,14,89,1) 0%, rgba(65,65,185,1) 35%, rgba(0,212,255,1) 100%);color:#ffffff">
+            <h5> Edit Repayment Track Record </h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel-body">
+                        <div class="row">
+                            <form name="form.formValidate" ng-submit="form.submitForm()" novalidate="" class="form-validate form-horizontal">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                            <div class="dd-handle ng-scope">
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b> Repayment Track Record Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                                        <label class="col-form-label"> Lender Type <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <select name="lendertype_name" id="lendertype_name" chosen="" ng-options="m.lendertype_gid as m.lendertype_name for m in lendertype_list"
+                                                                type="text" class="form-control parsley-error" required="" ng-model="cboLenderType" ng-change="lendertype_change(cboLenderType)" >
+                                                            <option value=""> ----- Select From Dropdown -----</option>
+                                                        </select>
+                                                        <span ng-show="form.validateInput('lendertype_name', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="bank">
+                                                        <label class="col-form-label"> IFSC Code <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtifsc_code" name="IFSCCode" id="IFSCCode" required="" tabindex="0" class="form-control" ng-change="IFSCValidation()" />
+                                                        <span ng-show="form.validateInput('IFSCCode', 'required')" class="text-danger">This field is required</span>
+                                                        <label class="fa fa-check" style="color:green" ng-show="ifscvalidation"></label>&nbsp;<label style="font-weight:bolder;color:green" ng-show="ifscvalidation">Verified</label>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="nonbank">
+                                                        <label class="col-form-label"> IFSC Code </label>
+                                                        <br />
+                                                        <input type="text" ng-model="ifsc" name="IFSCCode" id="IFSCCode"class="form-control" disabled />
+                                                        </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="bank">
+                                                        <label class="col-form-label">Bank Name <span style="color:red"> *</span></label>
+                                                        <br />
+                                                        <input type="text" ng-model="txtBank_Name" name="BankName" id="BankName" tabindex="0" class="form-control" disabled ng-show="ifscvalidation" />
+                                                        <input type="text" ng-model="txtBank_Name" name="BankName" id="BankName" tabindex="0" class="form-control" ng-hide="ifscvalidation" />
+                                                        <span ng-show="form.validateInput('BankName', 'required')" class="text-danger">This field is required</span>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" ng-show="nonbank">
+                                                        <label class="col-form-label"> Bank Name </label>
+                                                        <br />
+                                                        <input type="text" ng-model="bank_disavled" name="IFSCCode" id="IFSCCode" class="form-control" disabled/>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-7 col-md-7 col-sm-7" ng-show="nonbank">
+                                                            <label class="col-form-label"> NBFC Name <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtNBFC_Name" name="NBFCName" id="NBFCName" required="" tabindex="0" class="form-control" />
+                                                            <span ng-show="form.validateInput('NBFCName', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-7 col-md-7 col-sm-7" ng-show="bank">
+                                                            <label class="col-form-label"> NBFC Name</label>
+                                                            <br />
+                                                            <input type="text" ng-model="nbfc_disabled" name="IFSCCode" id="IFSCCode" class="form-control" disabled />
+                                                        </div>
+                                                        <div class="col-lg-5 col-md-5 col-sm-5">
+                                                            <label class="col-form-label"> Branch Name </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBranchName" tabindex="0" class="form-control" disabled ng-show="ifscvalidation" />
+                                                            <input type="text" ng-model="txtBranchName" tabindex="0" class="form-control" ng-hide="ifscvalidation" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Facility Type </label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtfacility_type" name="FacilityType" id="FacilityType" tabindex="0" class="form-control" maxlength="20" />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Sanction Reference ID</label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtsanctionref_no" name="sanctionrefno" id="sanctionrefno" tabindex="0" class="form-control" maxlength="30" />
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <div ng-controller="MstCreditIndividualRepaymentEditController as dp">
+                                                                <label class="col-form-label"> Sanctioned on <span style="color:red"> *</span></label>
+                                                                <br />
+                                                                <p class="input-group">
+                                                                    <input type="text" id="Sanctionedon" name="Sanctionedon" ng-model="$parent.txtSanctioned_on" datepicker-popup="{{dp.format}}"
+                                                                           style="height:36px;" is-open="dp.open1" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY" required="" />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" ng-click="dp.calender1($event)" style="height:36px;" class="btn btn-default">
+                                                                            <em class="fa fa-calendar"></em>
+                                                                        </button>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <span ng-show="form.validateInput('Sanctionedon', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Sanctioned Amount <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtSanctioned_Amount" name="SanctionedAmount" id="SanctionedAmount" required="" tabindex="0" class="form-control" maxlength="12" 
+                                                            ng-change="SanctionedAmount()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;" />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="words_totalamount3" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <span ng-show="form.validateInput('SanctionedAmount', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <div ng-controller="MstCreditIndividualRepaymentEditController as dp">
+                                                                <label class="col-form-label"> Account status as on </label>
+                                                                <br />
+                                                                <p class="input-group">
+                                                                    <input type="text" id="Acctstatuson" name="Acctstatuson" ng-model="$parent.txtAcctstatus_on" datepicker-popup="{{dp.format}}"
+                                                                           style="height:36px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY" />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" ng-click="dp.calender3($event)" style="height:36px;" class="btn btn-default">
+                                                                            <em class="fa fa-calendar"></em>
+                                                                        </button>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <span ng-show="form.validateInput('Acctstatuson', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Current Outstanding Amount <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtcurrentoutstanding_Amt" name="currentoutstandingAmt" id="currentoutstandingAmt" required="" tabindex="0" class="form-control" maxlength="12" 
+                                                            ng-change="currentoutstandingAmt()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;"/>
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="words_totalamount1" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <span ng-show="form.validateInput('currentoutstandingAmt', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Instalment Frequency <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtInstalment_Frequency" name="InstalmentFrequency" id="InstalmentFrequency" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('InstalmentFrequency', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Instalment Amount <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtInstalment_Amount" name="InstalmentAmount" id="InstalmentAmount" required="" tabindex="0" class="form-control" maxlength="12" 
+                                                            ng-change="InstalmentAmount()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;" />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="words_totalamount2" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <span ng-show="form.validateInput('InstalmentAmount', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <div ng-controller="MstCreditIndividualRepaymentEditController as dp">
+                                                                <label class="col-form-label"> Demand Due Date </label>
+                                                                <br />
+                                                                <p class="input-group">
+                                                                    <input type="text" id="DemandDueDate" name="DemandDueDate" ng-model="$parent.txtDemandDue_Date" datepicker-popup="{{dp.format}}"
+                                                                           style="height:36px;" is-open="dp.open3" min-date="dp.minDate" datepicker-options="dp.dateOptions"
+                                                                           close-text="Close" class="form-control" placeholder="DD-MM-YYYY"/>
+                                                                    <span class="input-group-btn">
+                                                                        <button type="button" ng-click="dp.calender3($event)" style="height:36px;" class="btn btn-default">
+                                                                            <em class="fa fa-calendar"></em>
+                                                                        </button>
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                            <span ng-show="form.validateInput('DemandDueDate', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Original Tenure (Year) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtoriginaltenure_year" name="originalTenureyear" id="originalTenureyear" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('originalTenureyear', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Original Tenure (Month) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtoriginalTenure_month" name="originalTenuremonth" id="originalTenuremonth" required="" tabindex="0" class="form-control" maxlength="2" />
+                                                            <span ng-show="form.validateInput('originalTenuremonth', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Original Tenure (Days) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtoriginalTenure_days" name="originalTenuredays" id="originalTenuredays" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('originalTenuredays', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Balance Tenure (Year) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBalancetenure_year" name="BalanceTenureyear" id="BalanceTenureyear" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('BalanceTenureyear', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Balance Tenure (Month) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBalanceTenure_month" name="BalanceTenuremonth" id="BalanceTenuremonth" required="" tabindex="0" class="form-control" maxlength="2" />
+                                                            <span ng-show="form.validateInput('BalanceTenuremonth', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Balance Tenure (Days) <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtBalanceTenure_days" name="BalanceTenuredays" id="BalanceTenuredays" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('BalanceTenuredays', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Account Classification <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <select name="creditaccountclassification_name" id="creditaccountclassification_name" chosen="" ng-options="m.creditaccountclassification_gid as m.creditaccountclassification_name for m in creditaccountclassification_list"
+                                                                    type="text" class="form-control parsley-error" required="" ng-model="cboAcctClassification">
+                                                                <option value=""> ----- Select From Dropdown -----</option>
+                                                            </select>
+                                                            <span ng-show="form.validateInput('creditaccountclassification_name', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Overdue Amount <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtOverdue_Amount" name="OverdueAmount" id="OverdueAmount" required="" tabindex="0" class="form-control" maxlength="12"
+                                                            ng-change="OverdueAmount()" ng-pattern="/^[0-9,]+(\.[0-9]{1,2})?$/" step="0.01" style="text-align:right;" />
+                                                            <span style="font-style:italic;">Number in words:</span>
+                                                            <span id="words_totalamount4" style="color:#003c96fc;" class="text-bold"></span>
+                                                            <span ng-show="form.validateInput('OverdueAmount', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                                            <label class="col-form-label"> Number of Days Overdue <span style="color:red"> *</span></label>
+                                                            <br />
+                                                            <input type="text" ng-model="txtnoofdays_overdue" name="NumberofDaysOverdue" id="NumberofDaysOverdue" required="" tabindex="0" class="form-control" maxlength="5" />
+                                                            <span ng-show="form.validateInput('NumberofDaysOverdue', 'required')" class="text-danger">This field is required</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <div class="row"> 
+                                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <label> Remarks </label><span style="color:red"> *</span>
+                                                            <textarea style="resize:vertical;" rows="4" name="Remarks" id="Remarks" placeholder="Enter Remarks..." required="" aria-multiline="true" tabindex="0" aria-invalid="false"  maxlength="1000"
+                                                                ng-model="txtremarks" class="form-control" ></textarea>
+                                                                <span ng-show="form.validateInput('Remarks', 'required')" class="text-danger">This field is required</span>
+                                                            <br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                        </div>
+                                </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <br />
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success btn-md"  ng-click="update_repaymentdtl()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                                                <button ng-click="repaymentdtl_Back()" type="button" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

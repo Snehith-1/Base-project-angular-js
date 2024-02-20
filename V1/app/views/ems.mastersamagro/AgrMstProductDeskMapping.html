@@ -1,0 +1,380 @@
+﻿<h3>
+    Product Desk Mapping
+</h3>
+<div ng-controller="AgrMstProductDeskMappingController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button type="button" title="Add Product Desk" ng-hide="lsoneapipage=='OneApi'"class="btn btn-info btn-sm" ng-click="addproductdesk()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Product Desk
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="panel">
+        <br />
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white" style="background-color:#09385f;">
+                                    <th style="display:none;"> S.No </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> One API Code </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> Product Desk ID </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> Products </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> Product Desk Name </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> Product Desk Details </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;" ng-hide="lsoneapipage=='OneApi'"> LMS Code </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;" ng-hide="lsoneapipage=='OneApi'"> Bureau Code </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;" ng-hide="lsoneapipage=='OneApi'"> Created By </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;" ng-hide="lsoneapipage=='OneApi'"> Created Date </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;"> Status </th>
+                                    <th style="vertical-align: middle; text-align: center; margin: auto;" class="text-center" ng-hide="lsoneapipage=='OneApi'">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="data in ProductDesk ">
+                                    <td data-title="'S.No'" style="display:none;" class="text-center">{{$index+1}}</td>
+                                    <td data-title="'One API Code'">{{data.api_code}} </td>
+                                    <td data-title="'Product Desk ID'">{{data.productdesk_id}} </td>
+                                    <td data-title="'Producs'">{{data.products_name}} </td>
+                                    <td data-title="'Product Desk Name'">{{data.productdesk_name}}</td>
+                                    <td style="text-decoration:underline;text-decoration-color:#49afcd;text-align: center;">
+                                        <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                        ng-click="showPopover(data.productdesk_gid, data.productdesk_name)">
+                                            <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                        </label>
+                                    </td>  
+                                    <th data-title="'LMS Code'" ng-hide="lsoneapipage=='OneApi'"> {{data.productdesk_lms}} </th>
+                                    <th data-title="'Bureau Code'" ng-hide="lsoneapipage=='OneApi'"> {{data.productdesk_bureau}} </th>
+                                    <td data-title="'Created By'" ng-hide="lsoneapipage=='OneApi'">{{data.created_by}}</td>
+                                    <td data-title="'Created Date'" ng-hide="lsoneapipage=='OneApi'">{{data.created_date}} </td>
+                                    <td data-title="'Status'" ng-switch="data.productdesk_status">
+                                        <label class="label label-success" ng-switch-when='Active' style="font-size:10px;">Active</label>
+                                        <label class="label label-warning" ng-switch-when='Inactive' style="font-size:10px;">InActive</label>
+                                    </td>
+                                    <td class="nowrap" data-title="'Action'" ng-hide="lsoneapipage=='OneApi'"style="text-align: center;" ng-switch="data.productdesk_status">
+                                        <button title="Edit" ng-hide="lsoneapipage=='OneApi'"ng-click="editproductdesk(data.productdesk_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit"></em>
+                                        </button>
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Active' ng-click="Status_update(data.productdesk_gid)" class="btn btn-success">
+                                            <em class="fa fa-thumbs-up"></em>
+                                        </button>
+                                        <button title="Status" ng-hide="lsoneapipage=='OneApi'"ng-switch-when='Inactive' ng-click="Status_update(data.productdesk_gid)" class="btn btn-warning">
+                                            <em class="fa fa-thumbs-down"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <script type="text/ng-template" id="/addproductdesk.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-plus "></i>
+                </span> Add Product Desk
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="addproductdesk" ng-submit="form.addproductdesk()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Product Desk ID </label>                                 
+                                    <input type="text" ng-model="txtproductdesk_id" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />                           
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Products  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" tabindex="2"
+                                        ng-options="m as m.products_name for m in cboproducts_name track by m.products_gid" required=""
+                                        ng-model="txtcboproducts_name" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Product Desk Name <span style="color:red">*</span></label>                                   
+                                    <input type="text" maxlength="200" ng-model="txtproductdesk_name" placeholder="Enter Product Desk Name" required tabindex="0" class="form-control" />                              
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Product Desk Member(s)  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboproductdeskmember_list" required=""
+                                        ng-model="cboproductdesk_member" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Product Desk Manager(s)  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboproductdeskmanager_list" required=""
+                                        ng-model="cboproductdesk_manager" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> LMS Code </label>                                 
+                                    <input type="text" ng-model="txtproductdesk_lms" tabindex="0" class="form-control" placeholder="Enter LMS Code" />                           
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Bureau Code </label>                                 
+                                    <input type="text" ng-model="txtproductdesk_bureau" tabindex="0" class="form-control" placeholder="Enter Bureau Code" />                           
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+               
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="addproductdesk.$invalid" ng-click="submit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+
+                <br />
+            </form>
+        </div>
+    </script>
+ 
+    
+       <script type="text/ng-template" id="/editproductdesk.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-edit "></i>
+                </span>Edit Product Desk
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="editproductdesk" ng-submit="form.editproductdesk()" autocomplete="off" class="form-validate form-horizontal">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Product Desk ID </label>
+                                    <input type="text" ng-model="txteditproductdesk_id" tabindex="0" class="form-control" placeholder="Auto Generate" disabled />                            
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Products  <span style="color:red">*</span></label>
+                                <select id="cboproducts_name" name="cboproducts_name" chosen="" tabindex="2" ng-model="cboeditproducts_gid"
+                                        ng-options="m.products_gid as m.products_name for m in cboproducts_name" required=""
+                                        class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Product Desk Name <span style="color:red">*</span> </label>                                  
+                                    <input type="text" maxlength="200" ng-model="txteditproductdesk_name" required tabindex="0" class="form-control" />                              
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Product Desk Member(s)  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboproductdeskmember_editlist" required=""
+                                        ng-model="cboeditproductdesk_member" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-sm-12 col-lg-12 col-md-12">
+                                <label> Product Desk Manager(s)  <span style="color:red">*</span></label>
+                                <select name="cluster" chosen="" multiple="multiple" tabindex="2"
+                                        ng-options="m.employee_name for m in cboproductdeskmanager_editlist" required=""
+                                        ng-model="cboeditproductdesk_manager" class="chosen-select form-control"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> LMS Code </label>                                 
+                                    <input type="text" ng-model="txteditproductdesk_lms" tabindex="0" class="form-control" />                           
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">                             
+                                    <label class="col-form-label"> Bureau Code </label>                                 
+                                    <input type="text" ng-model="txteditproductdesk_bureau" tabindex="0" class="form-control" />                           
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="editproductdesk.$invalid" ng-click="update()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </script>
+  
+      <script type="text/ng-template" id="/showproductdesk.html">
+
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:center;"> {{productdesk_name}} </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <tr>
+    
+                            <td style="width:2%; text-align:left"><b> Product Desk Manager(s) :  </b> <br /></td>
+                        </tr>
+                        <tr style="text-align: left;height:20px;">
+                            <td data-title="'Product Desk Manager '" style="width:2%; text-align:left"> {{ProductDeskManager}}</td>
+                        </tr>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b> Product Desk Member(s) : </b> <br /></td>
+                        </tr>
+                        <tr  style="text-align: left;height:20px;">
+                            <td data-title="'Product Desk Member'" style="width:2%; text-align:left"> {{ProductDeskMember}}</td>
+                        </tr>
+                        
+                    </tbody>
+
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/ng-template" id="/statusproductdesk.html">
+        <div class="modal-header bg-primary ng-scope">
+
+            <h4>
+                &emsp;
+                <span class="btn-label bg-primary">
+                    <i class="fa fa-thumbs-up"></i>
+                </span>Status
+            </h4>
+        </div>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="statusproductdesk" ng-submit="form.statusproductdesk()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="row ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label> Product Desk Name </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                {{productdesk_name }}
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row ">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label>Status  </label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="radio c-radio">
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="Y" ng-model="rbo_status" ng-click="status_yes()" />
+                                        &nbsp;&nbsp;<span class="fa fa-circle"></span> Active
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rbo_status" value="N" ng-model="rbo_status" ng-click="status_no()" />
+                                        <span class="fa fa-circle"></span> Inactive
+                                    </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="mda-form-group float-label">
+                                    <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    <label>Remarks<span style="color:red"> *</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <br />
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="statusproductdesk.$invalid" ng-click="update_status()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+                <br />
+                <div class="table-responsive" ng-show="productdesklog!=null">
+                    <div style="max-height:300px;overflow:auto;">
+                        <table class="table table-striped table-secondary">
+                            <thead class="bg-gray text-white">
+                                <tr width="100%">
+                                    <th align="center" scope="col">S.No</th>
+                                    <th align="center" scope="col">Status</th>
+                                    <th align="center" scope="col">Updated By</th>
+                                    <th align="center" scope="col">Updated Date</th>
+                                    <th align="center" scope="col">Remarks</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in productdesklog" width="100%">
+                                    <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                    <td align="left" scope="col" title="'Status'">{{data.productdesk_status}}</td>
+                                    <td align="left" scope="col" title="'Updated By'">{{data.updated_by}}</td>
+                                    <td align="left" scope="col" title="'Updated Date'">{{data.updated_date}}</td>
+                                    <td align="left" scope="col" title="'Remarks'">{{data.remarks}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>   

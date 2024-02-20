@@ -1,0 +1,114 @@
+﻿<h3>
+    Case Allocation
+</h3>
+<div ng-controller="caseAllocationcontroller">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- START panel-->
+            <div id="panelDemo13" class="panel panel-default">
+                <div class="panel-body table-responsive">
+                    <table datatable="ng" class="row-border hover">
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>S.No</th>
+                                <th class="text-nowrap">Request Date</th>
+                                <th class="text-nowrap">URN No.</th>
+                                <th class="text-nowrap">Customer Name</th>
+                                <th class="text-nowrap">Request By</th>
+                                <th class="text-nowrap">Target Date</th>
+                                <th class="text-nowrap">Allocation Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in allocationdtl">
+                                <td>{{$index+1}}</td>
+                                <td data-title="'Request Date'">{{data.requested_date}}</td>
+                                <td data-title="'URN No.'">{{data.customer_urn}}</td>
+                                <td data-title="'Customer Name'">{{data.customername}}</td>
+                                <td data-title="'Request By'">{{data.requested_by}}</td>
+                                <td data-title="'Target Date'">{{data.target_date}}</td>
+                                <td data-title="'Allocation Status'" ng-switch="data.allocation_status">
+                                    <label class="label label-primary bg-purple-400" ng-switch-when=Allocated>Allocated</label>
+                                    <label class="label label-success" ng-switch-when=Completed>Completed</label>
+                                    <label ng-switch-default>-</label>
+                                </td>
+                                <td class="text-nowrap" ng-switch="data.completed_flag">
+                                    <button title="View" ng-click="View(data.allocationdtl_gid,data.customer_gid,data.allocation_status)" class="btn btn-info btn-sm">
+                                        <em class="fa fa-eye"></em>
+                                    </button>
+                                    <button title="Generate" class="btn btn-green btn-sm" ng-switch-default
+                                            ng-click="genereteallocation(data.allocationdtl_gid,data.customer_gid)">
+                                        <em class="fa fa-file"></em>
+                                    </button>
+                                    <button title="Generated" class="btn btn-success btn-sm" ng-switch-when="Y"
+                                            ng-click="Viewgenereteddtl(data.allocationdtl_gid,data.customer_gid)">
+                                        <em class="fa fa-file"></em>
+                                    </button>
+                                    <button title="Visit Report - Cancel" class="btn bg-blue-grey-400 btn-sm" ng-switch-when="Y"
+                                            ng-click="reportCanceldtl(data.allocationdtl_gid,data.customer_gid,data.customername)">
+                                        <em class="fa fa-file-pdf-o text-white"></em>
+                                    </button>
+                                    <button title="PDF" class="btn btn-danger btn-sm" ng-switch-when="Y"
+                                            ng-click="generetePDF(data.allocationdtl_gid,data.customer_gid)">
+                                        <em class="fa fa-file-pdf-o"></em>
+                                    </button>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="/reportCancelModal.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-file-pdf-o"></em>&nbsp; Visit Report - Cancel </h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="reportcancel" id="reportcancel" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 text-center">
+                                   <label class="text-primary">{{customername}}</label> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Enter Cancel Reason: <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Reason..." required
+                                              ng-model="txtcancel_reason" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="proceedReportCancel()" ng-disabled="reportcancel.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Click to Proceed</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

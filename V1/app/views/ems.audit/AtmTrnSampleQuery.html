@@ -1,0 +1,85 @@
+﻿<h3>
+    Sample Query
+</h3>
+<div ng-controller="AtmTrnSampleQueryController">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">
+        <div id="panelDemo9" class="panel panel-primary">
+            <div class="panel-heading" style="background-color: #5454b9;">
+                <div class="row">
+                    <div class="col-lg-11 col-md-11 col-sm-11">
+                        <b>Chat</b>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        <button type="button" class="btn btn-primary btn-md" style="color:#FFFFFF;background-color:#5454b9;font-size: 11px;" title="Refresh" ng-click="refresh()">
+                            <i class="fa fa-refresh"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div ui-scroll-viewport="" style="height:500px; overflow-y: auto;overflow-x: hidden;" class="row">
+                    <div ng-repeat="data in SampleQuerydetaillist">
+                        <div ng-switch="data.session_user">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    &nbsp;<div style="padding-left:500px;" ng-switch-when="Y" class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="media bb p bg-green-50" style="width:initial;border-radius:15px;">
+                                            <small class="pull-right text-bold">{{data.created_date}}</small>
+                                            <div class="media-body">
+                                                <span class="media-heading">
+                                                    <p class="m0">
+                                                        <strong>{{data.sender_name}}</strong>
+                                                    </p>
+                                                    <p class="m0 ">{{data.remarks}}</p>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="padding-right:500px;" ng-switch-when="N" class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="media bb p bg-deep-orange-50" style="width:initial;border-radius:15px;">
+                                            <small class="pull-right text-bold">
+                                                {{data.created_date}}
+                                            </small>
+                                            <div class="media-body">
+                                                <span class="media-heading">
+                                                    <p class="m0">
+                                                        <strong>{{data.sender_name}}</strong>
+                                                    </p>
+                                                    <p class="m0">{{data.remarks}}</p>
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                </div>
+
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="row" style="border-radius:20px;">
+                        <div class="col-lg-11 col-sm-11 col-md-11 text-center">
+                            <textarea id="txtqueries" name="txtremarks" rows="3" ng-model="txtqueries"
+                                  ng-show="samplequery_status =='Open'" placeholder="Type a new message..." class="form-control" style="border-radius:25px; resize:vertical; height:50px; "></textarea>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+
+                            <button id="response_send" ng-hide="samplequery_status =='Closed'" ng-disabled="!txtqueries" style="border-radius:50%; height:50px; width:50px;" class="btn btn-success" ng-click="replytoquery()">
+                                <i class="fa fa-send">&nbsp;</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="text-center">
+            <button ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+        </div>
+        <br /><br />
+    </div>
+</div>

@@ -1,0 +1,221 @@
+<h3>
+    Document Tagging
+</h3>
+<div ng-controller="idasTrnDocumentTaggingController">
+    <div class="panel">
+        <tabset justified="true">
+            <!--Tagged Customer-->
+            <tab ng-click="Tagged_customer()" select="tab.activateTabId = 'Taggedcustomer'" active="Taggedcustomer">
+                <tab-heading title="Tagged Customer">
+                    Document Tagged Customer &nbsp;
+                    <label class="label label-primary">{{tagged_count}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                                    <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th>S.NO</th>
+                                    <th>CUSTOMER URN</th>
+                                    <th>CUSTOMER NAME</th>
+                                    <th>VERTICAL</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in customer_data|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Vertical Code'">{{data.vertical_code}}</td>
+
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="View" class="btn btn-primary btn-sm"
+                                                ng-click="viewcustomerdocument(data.customer_gid)">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <!--UnTagged Customer-->
+            <tab ng-click="UnTagged_customer()" select="tab.activateTabId = 'UnTaggedcustomer'" active="UnTaggedcustomer">
+                <tab-heading title="UnTagged Customer">
+                    Pending Customer &nbsp;
+                    <label class="label label-primary">{{untagged_count}}</label>
+                </tab-heading>
+                <div class="panel-body">
+                    <div class="row">
+                        <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                    Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" ng-pattern="/^\d+$/" />
+                                    <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                                    <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table ng-table="tableParams2" class="table hover table-striped ">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th>S.NO</th>
+                                    <th>CUSTOMER URN</th>
+                                    <th>CUSTOMER NAME</th>
+                                    <th>VERTICAL</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in customer_data|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                                    <td data-title="'Customer Name'">{{data.customername}}</td>
+                                    <td data-title="'Vertical Code'">{{data.vertical_code}}</td>
+
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="View" class="btn btn-primary btn-sm"
+                                                ng-click="viewcustomerdocument(data.customer_gid)">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </tab>
+
+                   
+        </tabset>
+    </div>
+    <!--<div class="panel">
+        <div class="panel-body">
+           <br>
+           <div class="row">
+            <form name="pageloadform"  ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal" >
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+
+                    Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" ng-pattern="/^\d+$/"/>
+                    <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)" >Load More</button>
+                    <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                        <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                    </div> 
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div class="input-group">
+                        <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-sm">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                </div>
+            </form>
+            </div>
+       
+        <br/>
+           <div class="row">
+              <div class="col-lg-12">
+  
+                 <div>
+                    <div>
+                       <table ng-table="tableParams2"  class="table hover table-striped ">
+                          <thead>
+                           <tr class="bg-primary text-white">
+                              <th>S.NO</th>
+                              <th>CUSTOMER URN</th>
+                              <th>CUSTOMER NAME</th>
+                              <th>VERTICAL</th>
+                              <th>ACTION</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                           <tr ng-repeat="data in customer_data|filter:searchtxt |limitTo:totalDisplayed">
+                               <td data-title="'S.No'">{{$index+1}}</td>
+                               <td data-title="'Customer URN'">{{data.customer_urn}}</td>
+                               <td data-title="'Customer Name'">{{data.customername}}</td>
+                               <td data-title="'Vertical Code'">{{data.vertical_code}}</td>
+                               
+                               <td data-title="'Action'" class="nowrap">
+                                   <button title="View" class="btn btn-primary btn-sm"
+                                   ng-click="viewcustomerdocument(data.customer_gid)">
+                                       <em class="fa fa-eye"></em>
+                                   </button>
+                                
+                               </td>
+                           </tr>
+                       </tbody>
+                         
+                       </table>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>-->
+  
+    
+</div>

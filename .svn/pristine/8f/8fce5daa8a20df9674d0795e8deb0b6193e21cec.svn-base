@@ -1,0 +1,425 @@
+<h3>
+    Courier Management
+</h3>
+<style>
+    .blinking {
+        animation: blinkingicon 1.5s infinite;
+    }
+
+    @keyframes blinkingicon {
+        50% {
+            opacity: 0;
+        }
+    }
+</style>
+<div ng-controller="idasCourierMgmtsummary">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <div class="col-lg-8 col-sm-8 col-md-8">
+                <button title="Add Courier" class="btn btn-info btn-sm" ng-click="popupcourier()">
+                    <em class="fa fa-plus"></em>&nbsp;Add Courier
+                </button>
+            </div>
+            <div class="col-lg-4 col-sm-4 col-md-4">
+                <div style="text-align:right;">
+                    <em class="fa fa-file-text" style="color:#b31f1f;font-size:21px;"></em>
+                    &nbsp;<a href="#/app/idasCourierMgmtAckList" title="Pending Acknowledgement" style="color:#b31f1f;font-size:15px;">
+                        <u>
+                            <b>Pending Acknowledgement</b>
+                        </u>
+                    </a>
+                    &nbsp; <a ng-if="ack_status=='Pending'" style="color:white;" class="blinking ng-binding ng-scope label label-pink"><b> New</b></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <tabset justified="true">
+            <tab ng-click="tabcourierinward()" select="tab.activeTabId = 'CI'" active="tabci">
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    Courier Inward&nbsp;
+                    <label class="label label-primary" ng-if="courier_inward != '0'">{{courier_inward}}</label>
+                </tab-heading>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountci" id="pagecountci" type="number" />
+                                <button class="btn btn-info" id="loadmoreci" ng-disabled="!$parent.pagecountci" ng-click="loadMore($parent.pagecountci)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="5%" style="display: none;">S.No</th>
+                                    <th width="10%">Courier Ref No</th>
+                                    <th width="10%">Date Of Courier</th>
+                                    <th width="15%">Customer Name</th>
+                                    <th width="15%">Courier Sent By</th>
+                                    <th width="15%">Courier Received By</th>
+                                    <th width="10%">Created By/On</th>
+                                    <th width="10%">Status</th>
+                                    <th width="5%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in courierInward_List|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td data-title="'Courier Management Ref.No'">{{data.courierref_no}}</td>
+                                    <td data-title="'Date of Courier'">{{data.date_of_courier}}</td>
+                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                    <td data-title="Courier Sent By">{{data.sender_name}}</td>
+                                    <td data-title="Courier Received By">{{data.courierhandover_to}}</td>
+                                    <td data-title="'Created By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="Status">
+                                        <label class="label label-success" ng-if="data.ack_status=='Acknowledged'">Acknowledged</label>
+                                        <label class="label label-danger" ng-if="data.ack_status=='Pending'">Pending</label>
+                                    </td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="ViewCI"
+                                                ng-click="ViewCI(data.courierMgmt_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-if="data.ack_status=='Pending'" ng-click="editCI(data.courierMgmt_gid)"
+                                                class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="tabcourieroutward()" select="tab.activeTabId = 'CO'" active="tabco">
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    Courier Outward&nbsp;
+                    <label class="label label-primary" ng-if="courier_outward != '0'">{{courier_outward}}</label>
+                </tab-heading>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountco" id="pagecountco" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!$parent.pagecountco" ng-click="loadMore($parent.pagecountco)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="5%" style="display: none;">S.No</th>
+                                    <th width="10%">Courier Ref No</th>
+                                    <th width="10%">Date Of Courier</th>
+                                    <th width="15%">Customer Name</th>
+                                    <th width="15%">Courier Sent By</th>
+                                    <th width="15%">Courier Received By</th>
+                                    <th width="10%">Created By/On</th>
+                                    <th width="10%">Status</th>
+                                    <th width="5%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in courieroutward_List|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td data-title="'Courier Management Ref.No'">{{data.courierref_no}}</td>
+                                    <td data-title="'Date of Courier'">{{data.date_of_courier}}</td>
+                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                    <td data-title="Courier Sent By">{{data.sender_name}}</td>
+                                    <td data-title="Courier Received By">{{data.courierhandover_to}}</td>
+                                    <td data-title="'Created By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="Status">
+                                        <label class="label label-success" ng-if="data.ack_status=='Acknowledged'">Acknowledged</label>
+                                        <label class="label label-danger" ng-if="data.ack_status=='Pending'">Pending</label>
+                                    </td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="View"
+                                                ng-click="ViewCO(data.courierMgmt_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-if="data.ack_status=='Pending'" ng-click="editCO(data.courierMgmt_gid)"
+                                                class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="tabphysicalinward()" select="tab.activeTabId = 'PI'" active="tabpi">
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    Physical Inward&nbsp;
+                    <label class="label label-primary" ng-if="physical_inward != '0'">{{physical_inward}}</label>
+                </tab-heading>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountpi" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!$parent.pagecountpi" ng-click="loadMore($parent.pagecountpi)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="5%" style="display: none;">S.No</th>
+                                    <th width="10%">Courier Ref No</th>
+                                    <th width="10%">Date Of Courier</th>
+                                    <th width="15%">Customer Name</th>
+                                    <th width="15%">Courier Sent By</th>
+                                    <th width="15%">Courier Received By</th>
+                                    <th width="10%">Created By/On</th>
+                                    <th width="10%">Status</th>
+                                    <th width="5%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in courierphysicalInward_List|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td data-title="'Courier Management Ref.No'">{{data.courierref_no}}</td>
+                                    <td data-title="'Date of Courier'">{{data.date_of_courier}}</td>
+                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                    <td data-title="Courier Sent By">{{data.sender_name}}</td>
+                                    <td data-title="Courier Received By">{{data.courierhandover_to}}</td>
+                                    <td data-title="'Created By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="Status">
+                                        <label class="label label-success" ng-if="data.ack_status=='Acknowledged'">Acknowledged</label>
+                                        <label class="label label-danger" ng-if="data.ack_status=='Pending'">Pending</label>
+                                    </td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="View"
+                                                ng-click="ViewPI(data.courierMgmt_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-if="data.ack_status=='Pending'" ng-click="editPI(data.courierMgmt_gid)"
+                                                class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+            <tab ng-click="tabphysicaloutward()" select="tab.activeTabId = 'PO'" active="tabpo">
+                <tab-heading>
+                    <em class="fa fa-calendar fa-1x"></em>
+                    Physical Outward&nbsp;
+                    <label class="label label-primary" ng-if="physical_outward != '0'">{{physical_outward}}</label>
+                </tab-heading>
+                <div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+
+                                Show <input ng-model="$parent.pagecountpo" id="pagecount" type="number" />
+                                <button class="btn btn-info" id="loadmore" ng-disabled="!$parent.pagecountpo" ng-click="loadMore($parent.pagecountpo)">
+                                    <em class="fa fa-spinner"></em> Load More
+                                </button>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" ng-model="searchtxt" placeholder="Search Here .."
+                                           class="form-control input-sm" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default btn-sm">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped row-border hover">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="5%" style="display: none;">S.No</th>
+                                    <th width="10%">Courier Ref No</th>
+                                    <th width="10%">Date Of Courier</th>
+                                    <th width="15%">Customer Name</th>
+                                    <th width="15%">Courier Sent By</th>
+                                    <th width="15%">Courier Received By</th>
+                                    <th width="10%">Created By/On</th>
+                                    <th width="10%">Status</th>
+                                    <th width="5%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in courierphysicaloutward_List|filter:searchtxt |limitTo:totalDisplayed">
+                                    <td style="display:none;">
+                                        {{$index+1}}
+                                    </td>
+                                    <td data-title="'Courier Management Ref.No'">{{data.courierref_no}}</td>
+                                    <td data-title="'Date of Courier'">{{data.date_of_courier}}</td>
+                                    <td data-title="'Customer Name'">{{data.customer_name}}</td>
+                                    <td data-title="Courier Sent By">{{data.sender_name}}</td>
+                                    <td data-title="Courier Received By">{{data.courierhandover_to}}</td>
+                                    <td data-title="'Created By/On'">{{data.created_by}}/{{data.created_date}}</td>
+                                    <td data-title="Status">
+                                        <label class="label label-success" ng-if="data.ack_status=='Acknowledged'">Acknowledged</label>
+                                        <label class="label label-danger" ng-if="data.ack_status=='Pending'">Pending</label>
+                                    </td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="View"
+                                                ng-click="ViewPO(data.courierMgmt_gid)" class="btn btn-info">
+                                            <em class="fa fa-eye"></em>
+                                        </button>
+                                        <button title="Edit" ng-if="data.ack_status=='Pending'" ng-click="editPO(data.courierMgmt_gid)"
+                                                class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </tab>
+
+        </tabset>
+    </div>
+
+    <script type="text/ng-template" id="/updateURN.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-user"></em>&nbsp;Update Customer URN </h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Customer Name  : </label>&nbsp;<span>{{customername}}</span>
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Current URN: </label>&nbsp;<span class="text-primary" style="font-size:15px;">{{customer_urn}}</span>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>New Customer URN <span style="color:red;">*</span></label>
+                                    <input ng-model="txtnewcustomerURN" required="" tabindex="0" aria-required="true" aria-invalid="true"
+                                           class="form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                </div>
+                            </div>
+
+                            <div class="class">
+                                <div class="text-center">
+                                    <a class="btn btn-success" ng-click="UrnUpdate()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </a>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

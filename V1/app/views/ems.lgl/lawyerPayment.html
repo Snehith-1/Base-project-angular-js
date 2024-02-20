@@ -1,0 +1,68 @@
+﻿ <h3>
+    Lawyer Payment Summary
+</h3>
+<div ng-controller="lawyerPaymentcontroller">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="table-responsive">
+                <table ng-table="tableParams2" class="table hover table-striped ">
+                   
+                        <thead>
+                            <tr class="bg-primary-light text-white">
+
+                                <th>S.No</th>
+                                <th>Case Type</th>
+                                <th>Case Ref No</th>
+
+                                <th>Invoice Count</th>
+
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in invoicelist">
+                                <td data-title="'S.No'" style="text-align:center;">{{$index+1}} </td>
+                                <td data-title="Case Type">{{data.case_type}}</td>
+                                <td data-title="Case Ref No">{{data.caseref_no}}</td>
+                                <td data-title="Invoice Status" style="text-align:center;">{{data.invoice_count}}</td>
+                                <td style="text-align:center;">
+                                    <button title="View" class="btn btn-default bg-teal-500 btn-sm"
+                                            ng-click="viewinvoice(data.caseref_gid)">
+                                        <em class="fa fa-file-text-o"></em>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

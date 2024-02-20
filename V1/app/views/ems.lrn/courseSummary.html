@@ -1,0 +1,168 @@
+﻿<h3>
+    Course
+</h3>
+<div ng-controller="coursecontroller">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <button type="button" title="Add Course" class="btn btn-success btn-sm" ng-click="addcourse()">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>ADD COURSE
+                </button>
+            </div>
+            <div class="col-lg-0.2 col-md-0.2 col-sm-0.2">
+
+                </div>
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <button type="button" title="Add Featured course" class="btn btn-success btn-sm" ng-click="viewfeaturedcourse()">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>ADD FEATURED COURSE
+                </button>
+            </div>
+            <div class="col-lg-5.8 col-md-5.8 col-sm-5.8">
+            </div>
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- START panel-->
+                <div id="panelDemo13" class="panel panel-default">
+                    <div class="panel-body table-responsive">
+                        <table datatable="ng" class="row-border hover">
+                            <thead>
+                                <tr class="bg-success text-white">
+                                    <th>S.NO</th>
+                                    <th>COURSE REF NO</th>
+                                    <th>COURSE TITLE</th>
+                                    <th>COURSE AUTHOR</th>
+                                    <th>COURSE DURATION</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in course">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="'Vertical code'">{{data.coarse_code}}</td>
+                                    <td data-title="'Vertical Name'">{{data.coarse_name}}</td>
+                                    <td data-title="'Action'" class="nowrap">
+                                        <button title="Edit" ng-click="edit(data.course_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>                                      
+                                        <button title="Package" ng-click="tag(data.course_gid)" class="btn btn-green">
+                                            <em class="fa fa-tags "></em>
+                                        </button>
+                                        <button title="Tag as featured course" ng-click="tag(data.course_gid)" class="btn btn-green">
+                                            <em class="fa fa-tags "></em>
+                                        </button>
+                                        <button title="Add Section" ng-click="section(data.course_gid)" class="btn btn-green">
+                                            <em class="fa fa-edit "></em>
+                                        </button>
+                                        <button title="Delete" ng-click="delete(data.course_gid)" class="btn btn-danger">
+                                            <em class="icon icon-trash "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="/myModaledit.html">
+            <div class="modal-header bg-green-200">
+                <h4 id="myModalLabel" class="modal-title">
+                    &emsp;
+                    <span class="btn-label bg-green-200">
+                        <i class="fa fa-edit"></i>
+                    </span>Package
+                </h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="pd-sm-10">
+                    <div class="row" style="display:none">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                            <div class="mda-form-group">
+                                <input ng-model="verticalgid" required="" rows="2" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                <label>Package Code</label>
+                            </div>
+                        </div>
+                    </div>
+                    <form novalidate="" name="userform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                                <div class="mda-form-group">
+                                    <input ng-model="verticalCodeedit" name="verticalCodeedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Package Ref No * </label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group ">
+                                    <input ng-model="verticalNameedit" name="verticalNameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Package Title * </label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="verticalNameedit" name="verticalNameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Package Price * </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="verticalNameedit" name="verticalNameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Discounted Price * </label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                                <div class="mda-form-group float-label">
+                                    <input ng-model="verticalNameedit" name="verticalNameedit" required="" tabindex="0" aria-required="true" aria-invalid="true" class="mda-form-control ng-pristine ng-invalid ng-invalid-required ng-touched" style="">
+                                    <label>Author Cost * </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="text-center">
+                        <button type="button" ng-click="verticalUpdate(data.course_gid)" class="btn btn-success btn-md" ng-disabled="userform.$invalid">
+                            <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                        </button>&nbsp;&nbsp;
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </script>
+    </div>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,145 @@
+﻿<h3>
+    Sanction Management
+</h3>
+<div ng-controller="MstSanctionDtlSummaryController">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <button type="button" class="btn btn-info button-sm" ng-click="create_sanction()" ng-disabled="appsanction_list.length >= 1" title="Create Sanction">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span>
+                    Create Sanction
+                </button>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <div id="panelDemo5" class="panel panel-default">
+                    <div ng-class="{'panel-heading-collapsed':panelDemo5}" class="panel-heading" style="background-color: #c9dcc1">
+                        <b> Approval Details </b>
+                        <paneltool tool-collapse="tool-collapse" ng-init="panelDemo5=true"></paneltool>
+                    </div>
+                    <div collapse="panelDemo5" class="panel-wrapper">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="dd-handle ng-scope">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Maker Name </label>
+                                                    <p>{{maker_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Checker Name </label>
+                                                    <p>{{checker_name}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Approval Name </label>
+                                                    <p>{{approver_name}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Maker Submitted Date </label>
+                                                    <p>{{maker_approveddate}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Checker Submitted Date </label>
+                                                    <p>{{checker_approveddate}}</p>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                                    <label> Approved Date </label>
+                                                    <p>{{approver_approveddate}}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <div class="row">
+            <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table datatable="ng" class="table table-hover table-striped">
+                            <thead>
+                                <tr class="text-white nowrap" style="background-color:#09385f;">
+                                    <th> S.No </th>
+                                    <th> Application Ref No</th>
+                                    <th> Applicant Name</th>
+                                    <th> Sanction Ref No</th>
+                                    <th> CC Approved Date </th>
+                                    <th> Sanction Created Date </th>
+                                    <th align="center">Status</th>
+                                    <!--<th> Maker Status </th>
+                                    <th> Maker Name / Emp ID </th>
+                                    <th> Maker Date & Time </th>
+                                    <th> Checker Status </th>
+                                    <th> Checker Name / Emp ID </th>
+                                    <th> Checker Date & Time </th>-->
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in appsanction_list" ng-switch="data.sanction_status">
+                                    <td data-title="'S.No'"> {{$index+1}} </td>
+                                    <td data-title="'Application Ref No'"> {{data.application_no}} </td>
+                                    <td data-title="'Applicant Name'"> {{data.sanctionto_name}} </td>
+                                    <td data-title="'Sanction Ref No'"> {{data.sanction_refno}} </td>
+                                    <td data-title="'CC Approved Date'"> {{data.ccapproved_date}} </td>
+                                    <td data-title="'Sanction Created Date'"> {{data.created_date}} </td>
+                                    <td data-title="'Status'">
+                                        <label class="label label-success" ng-switch-when='Approved' style="font-size:10px;">Approved</label>
+                                        <label class="label label-warning" ng-switch-when='Checker Approval Pending' style="font-size:10px;">Checker Approval Pending</label>
+                                        <label class="label label-warning" ng-switch-when='Final Approval Pending' style="font-size:10px;">Final Approval Pending</label>
+                                        <label class="label label-purple" ng-switch-when='Pushback' style="font-size:10px;">
+                                            Pushback
+                                        </label>
+                                        <label class="label label-danger" ng-switch-when='Rejected' style="font-size:10px;">Rejected</label>
+                                    </td>
+                                    <!--<td data-title="'Maker Status'"> {{data.approval_status}} </td>
+                                    <td data-title="'Maker Name/Emp ID'"> {{data.creditgroup_name}} </td>
+                                    <td data-title="'Maker Date & Time'"> {{data.cadaccepted_date}} </td>
+                                    <td data-title="'Checker Status'"> {{data.approval_status}} </td>
+                                    <td data-title="'Checker Name/Emp ID '"> {{data.cadgroup_name}} </td>
+                                    <td data-title="'Checker Date & Time'"> {{data.approval_status}} </td>-->
+                                    <td align="center" class="nowrap" >
+                                        <button title="Edit Sanction" ng-click="edit(data.application2sanction_gid)" class="btn btn-green btn-sm">
+                                            <em class="icon-pencil"></em>
+                                        </button>
+                                        <!--<button title="Generate Addendum" ng-click="generate(data.application_gid)" style="background-color:#871490;" class="btn btn-pink">
+                                            <em class="fa fa-plus"></em>
+                                        </button>-->
+                                        <button title="Generate Sanction Letter" class="btn btn-info btn-sm"
+                                                ng-click="sanctionlettergenerate(data.application2sanction_gid)">
+                                            <em class="fa fa-reorder "></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="text-center">
+                <button type="button" ng-click="Back()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+</div>

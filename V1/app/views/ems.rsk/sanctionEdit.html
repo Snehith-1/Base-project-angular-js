@@ -1,0 +1,294 @@
+﻿<h3>
+    Edit Sanction
+</h3>
+<div ng-controller="sanctionEditcontroller as dp">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <em class="fa fa-edit"></em>&nbsp; Edit Sanction Details
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <form name="sanctionform" id="sanctionform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>Customer Name <span style="color:red">*</span></label>
+                                    <select id="customergid" name="editcustomergid" dropzone="" ng-model="customer_gid" required=""
+                                            ng-options="data.customer_gid as data.customername for data in customer_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse" disabled>
+                                        <option value=""> Select Customer </option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6">
+                                    <div class="form-group float-label">
+                                        <label>Sanction Ref.No <span style="color:red">*</span></label>
+                                        <input ng-model="txteditsanctionRefNo" class="form-control ng-pristine ng-valid ng-touched" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Sanction Date <span style="color:red">*</span></label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="txteditSanctionDate" is-open="dp.open1"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender1($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group float-label">
+                                        <label>Sanction Amount <span style="color:red">*</span></label>
+                                        <input id="txtInput" ng-model="txteditSanctionAmount" required type="text" ng-change="amountschange()"
+                                               class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+                                        <label><span style="color:#ff001882;">* Accept Number Format Only</span></label>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group float-label">
+                                        <label>Sanction Limit <span style="color:red">*</span></label>
+                                        <input id="txtSanctionLimit" ng-model="txteditSanctionLimit" type="text" ng-change="sanctionlimitchange()" 
+                                               class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;">
+                                        <label><span style="color:#ff001882;">* Accept Number Format Only</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Validity <span style="color:red">*</span></label>
+                                    <input ng-model="txtEditValidity" type="text" class="form-control ng-pristine ng-valid ng-touched">
+                                    <!--<p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="txtEditValidity" is-open="dp.open2"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender2($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>-->
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Expiry Date <span style="color:red">*</span></label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="txtEditExpiryDate" is-open="dp.open3"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender3($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 col-sm-4 col-md-4">
+                                    <label>Review Date <span style="color:red">*</span></label>
+                                    <p class="input-group">
+                                        <input type="text" datepicker-popup="{{dp.format}}" ng-model="txtEditReviewDate" is-open="dp.open4"
+                                               datepicker-options="dp.dateOptions" ng-required="true"
+                                               close-text="Close" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="dp.calender4($event)" class="btn btn-default">
+                                                <em class="fa fa-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-4 col-md-4 form-group">
+                                    <label>Approval Authority <span style="color:red">*</span></label>
+                                    <select name="approval_authority" ng-model="cboeditapproval_authority" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Approval Authority </option>
+                                        <option value="CC1"> CC1</option>
+                                        <option value="CC2"> CC2</option>
+                                        <option value="NA"> NA</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                                    <label>Nature of Proposal <span style="color:red">*</span></label>
+                                    <select name="natureofproposal" ng-model="cboEditnature_proposal" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Nature of Proposal </option>
+                                        <option value="Fresh"> Fresh</option>
+                                        <option value="Renewal"> Renewal</option>
+                                        <option value="Enhancement"> Enhancement</option>
+                                        <option value="Renewal & Enhancement"> Renewal & Enhancement</option>
+                                        <option value="NA"> NA</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                                    <label>Constitution <span style="color:red">*</span></label>
+                                    <select name="constitution" ng-model="cboEditconstitution" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Constitution </option>
+                                        <option value="Individual"> Individual</option>
+                                        <option value="Proprietorship"> Proprietorship</option>
+                                        <option value="Partnership"> Partnership</option>
+                                        <option value="LLP"> LLP</option>
+                                        <option value="Pvt Ltd"> Pvt Ltd</option>
+                                        <option value="Public Ltd"> Public Ltd</option>
+                                        <option value="Society/NGO/Trust"> Society/NGO/Trust</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                                    <label>Sanction Letter Authorized Signatory <span style="color:red">*</span></label>
+
+                                    <select id="authorizedsignatory" name="authorizedsignatory" dropzone="" ng-model="cboEditauthorizedsignatory" required=""
+                                            ng-options="data.employee_gid as data.employee_name for data in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Employee Name </option>
+
+                                    </select>
+
+                                    <!--<select name="authorizedsignatory" ng-model="cboEditauthorizedsignatory" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Employee Name </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_gid}}"
+                                                style="width:250px;">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>-->
+                                </div>
+
+                              
+                                <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+                                    <label>Type Of Facility <span style="color:red">*</span></label>
+                                    <select name="facilitytype" ng-model="cboEditfacilitytype" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Facility Type </option>
+                                        <option value="Account Receivable Finance"> Account Receivable Finance</option>
+                                        <option value="SHORT TERM LOAN - WC"> SHORT TERM LOAN - WC</option>
+                                        <option value="SHORT TERM LOAN - Others"> SHORT TERM LOAN - Others</option>
+                                        <option value="MEDIUM TERM LOAN - Equipment"> MEDIUM TERM LOAN - Equipment</option>
+                                        <option value="MEDIUM TERM LOAN - Infrastructure"> MEDIUM TERM LOAN - Infrastructure</option>
+                                        <option value="MEDIUM TERM LOAN - Live Stock"> MEDIUM TERM LOAN - Live Stock</option>
+                                        <option value="MEDIUM TERM LOAN - Agri & Allied"> MEDIUM TERM LOAN - Agri & Allied</option>
+                                        <option value="MEDIUM TERM LOAN - Working Cap"> MEDIUM TERM LOAN - Working Cap</option>
+                                        <option value="MEDIUM TERM LOAN - Bridge Finance"> MEDIUM TERM LOAN - Bridge Finance</option>
+                                        <option value="TERM LOAN - Equipment"> TERM LOAN - Equipment</option>
+                                        <option value="TERM LOAN - Infrastruture"> TERM LOAN - Infrastruture</option>
+                                        <option value="TERM LOAN - Live Stock"> TERM LOAN - Live Stock</option>
+                                        <option value="TERM LOAN - Agri & Allied Activity"> TERM LOAN - Agri & Allied Activity</option>
+                                        <option value="TERM LOAN - Long Term WC"> TERM LOAN - Long Term WC</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group float-label">
+                                        <label>Tenure-Months <span style="color:red">*</span></label>
+                                        <input id="txt_tenuremonths" ng-model="txtEdittenure_months" required type="text"
+                                               class="form-control ng-pristine ng-valid ng-touched">
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </fieldset>
+
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Revisied Limit <span style="color:red">*</span></label>
+                                    <div class="form-group float-label">
+                                        <input id="txtRevisedLimit" ng-model="txtEditRevisiedLimit" type="text" ng-change="revisedlimitchange()"
+                                                class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;" required/>
+                                        <label><span style="color:#ff001882;">* Accept Number Format Only</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label>Existing Limit <span style="color:red">*</span></label>
+                                    <div class="form-group float-label">
+                                        <input id="txtExistingLimit" ng-model="txtEditexistingLimit" type="text" ng-change="existinglimitchange()"
+                                                class="form-control ng-pristine ng-valid ng-touched" style="text-align:right;" required/>
+                                        <label><span style="color:#ff001882;">* Accept Number Format Only</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <label>Escrow Account <span style="color:red">*</span></label>
+                                        <div class="col">
+                                            <p class="mda-radio">
+                                                <input type="radio" name="radio_escrow" ng-model="cboEditEscrowAccount" value="Applicable">
+                                                <em class="bg-teal-500"></em> Applicable
+                                            </p>
+                                        </div>
+                                        <div class="col">
+                                            &nbsp; &nbsp;
+                                        </div>
+                                        <div class="col">
+                                            <p class="mda-radio">
+                                                <input type="radio" name="radio_escrow" ng-model="cboEditEscrowAccount" value="Not Applicable">
+                                                <em class="bg-teal-500"></em> Not Applicable
+                                            </p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                                    <label>Documentation List <span style="color:red">*</span></label>
+                                    <select name="documentationEdit" chosen="" multiple="multiple" ng-options="m.documentrefname for m in documentationdtl"
+                                            ng-model="documentationEditData" class="chosen-select form-control" required></select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group">
+                                    <label>Specific Conditions <span style="color:red">*</span></label>
+                                    <textarea name="specificcondition" placeholder="Enter Specific Conditions..." required
+                                              ng-model="txtEditspecificcondition" class="form-control" rows="4"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="row">
+                            <div class="text-center">
+                                <button class="btn btn-success" ng-click="sanctionformUpdate()" ng-disabled="sanctionform.$invalid">
+                                    <em class="fa fa-check"></em>
+                                    <span>Update</span>
+                                </button>
+                                <a class="btn btn-danger" ng-click="cancel()">
+                                    <em class="fa fa-close"></em>
+                                    <span>Cancel</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

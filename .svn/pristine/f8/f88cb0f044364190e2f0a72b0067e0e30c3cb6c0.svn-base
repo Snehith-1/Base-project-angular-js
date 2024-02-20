@@ -1,0 +1,1040 @@
+﻿<h3>
+    Checklist
+    <div class="pull-right">
+
+        <a href="#/app/AtmMstCheckpointGroupAdd" style="color:white;">
+            <button class="btn btn-primary">
+                <i class="fa fa-arrow-circle-left"></i>
+            </button>
+        </a>
+
+    </div>
+</h3>
+<div ng-controller="AtmMstCheckpointAddSummaryController">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2" ng-hide="IsVisible">
+            <button type="button" title="Add Checklist" class="btn btn-info btn-sm" ng-click="addcheckpoint()">
+                <span class="btn-label">
+                    <i class="fa fa-plus"></i>
+                </span> Add Checklist
+            </button>
+        </div>
+    </div>
+    <br />
+    <div ng-show="IsVisible3">
+        <div id="panelDemo8" class="panel panel-primary ">
+            <div class="panel-heading">
+                <span class="btn-label">
+                    <i class="fa fa-eye"></i>
+                </span> Checklist View
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Checkpoint Group </strong></label>
+                                <br />
+                                {{txtcheckpoint1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Checkpoint Intent </strong></label>
+                                <br />
+                                {{txtcheckpoint_intent1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Checkpoint Description </strong> </label>
+                                <br />
+                                {{txtcheckpoint_description1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Risk Category </strong>  </label>
+                                <br />
+                                {{cboriskcategory1}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Positive Conformity </strong>  </label>
+                                <br />
+                                {{cbopositiveconfirmity1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Note To Auditor </strong> </label>
+                                <br />
+                                {{txtnoteto_auditor1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Yes-Disposition </strong></label>
+                                <br />
+                                {{txtyes_disposition1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Yes-Score </strong></label>
+                                <br />
+                                {{txtyes_score1}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>No-Disposition </strong> </label>
+                                <br />
+                                {{txtno_disposition1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> No-Score </strong></label>
+                                <br />
+                                {{txtno_score1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Partial-Disposition</strong> </label>
+                                <br />
+                                {{txtpartial_disposition1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> Partial-Score </strong></label>
+                                <br />
+                                {{txtpartial_score1}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>NA-Disposition </strong> </label>
+                                <br />
+                                {{txtna_disposition1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong> NA-Score </strong></label>
+                                <br />
+                                {{txtna_score1}}
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <label><strong>Total Score</strong> </label>
+                                <br />
+                                {{txt_totalscore1}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="dd-handle ng-scope">
+                        <p style="font-size:14px;color:darkblue;"><b>&nbsp;&nbsp;Auditee Details </b></p>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive table-bordered">
+                                        <div style="max-height:200px;overflow:auto;">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Auditee Maker</th>
+                                                        <th scope="col">Auditee Checker</th>
+                                                        <!--<th scope="col">Action</th>-->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                        <td title="Auditee Checker">{{data.auditeechecker_name}}</td>
+                                                        <!--<td data-title="Action">
+                                                            <button title="Delete" ng-click="delete_auditee(data.multipleauditee_gid)"
+                                                                    class="btn btn-danger btn-xs ">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+                                                        </td>-->
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="dd-handle ng-scope">
+                        <p style="font-size:14px;color:darkblue;"><b>&nbsp;&nbsp;Checkpoint Details </b></p>
+                        <hr />
+                        <div class="row">
+                            <br />
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Checkpoint</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in checklist_list">
+                                                <td>{{$index+1}}</td>
+                                                <td style="word-wrap: break-word; display: inline-block; width: 60%;">{{data.checklist_name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="viewback()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="IsVisible2">
+        <div id="panelDemo8" class="panel panel-primary ">
+            <div class="panel-heading">
+                <span class="btn-label">
+                    <i class="fa fa-edit"></i>
+                </span> Checklist Edit
+            </div>
+            <div class="modal-body ng-scope">
+                <div class="row">
+                    <form name="checklist" id="checklist" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>Checkpoint Group </strong></label>
+                                    <br />
+                                    {{cbocheckpointgroup}}
+                                </div>
+                                <!--<div class="col-lg-2 col-md-2 col-sm-2 ">
+                                <label><strong>Checkpoint Group</strong></label>
+                                <br />-->
+                                <!--<select name="CheckpointGroup" id="CheckpointGroup" ng-options="m.checkpointgroup_name for m in checkpointgroupadd_list"-->
+                                <!--ng-model="cbocheckpointgroup" class="form-control" style="height:37px;" Disabled>-->
+                                <!--<input type="text" ng-model="cbocheckpointgroup" tabindex="0" class="form-control" disabled />-->
+                                <!--</select>-->
+                                <!--</div>-->
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label><strong>Checkpoint Intent </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txteditcheckpoint_intent" required tabindex="3" maxlength="3000" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label><strong>Checkpoint Description </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txteditcheckpoint_description" required tabindex="3" maxlength="15000" class="form-control" rows="3"></textarea>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-2 col-md-2 col-sm-2 ">
+                                    <label><strong>Risk Category </strong> <span style="color:red">*</span></label>
+                                    <select name="cboriskcategorydit" id="cboriskcategorydit" ng-options="m.riskcategory_gid as m.riskcategory_name for m in riskcategory_list" chosen=""
+                                            ng-model="cboriskcategoryedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2 ">
+                                    <label><strong>Positive Conformity </strong><span style="color:red">*</span> </label>
+                                    <select name="cbopositiveconfirmityedit" id="cbopositiveconfirmityedit" ng-options="m.positiveconfirmity_gid as m.positiveconfirmity_name for m in positiveconfirmity_data" chosen=""
+                                            ng-model="cbopositiveconfirmityedit" class="chosen-select form-control" style="height:37px;" required size="1">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8">
+                                    <label><strong>Note To Auditor </strong></label>
+                                    <textarea ng-model="txteditnoteto_auditor" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+                                    <label><strong>Yes-Disposition </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txtedityes_disposition" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>Yes-Score </strong> <span style="color:red">*</span></label>
+                                    <input type="number" ng-model="txtedityes_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+                                    <label><strong>No-Disposition </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txteditno_disposition" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>No-Score </strong> <span style="color:red">*</span></label>
+                                    <input type="number" ng-model="txteditno_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+                                    <label><strong>Partial-Disposition </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txteditpartial_disposition" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>Partial-Score </strong> <span style="color:red">*</span></label>
+                                    <input type="number" ng-model="txteditpartial_score" ng-change="changevalue()" style="text-align:center;" tabindex="0" maxlength="5" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-lg-10 col-md-10 col-sm-10">
+                                    <label><strong>NA-Disposition </strong> <span style="color:red">*</span></label>
+                                    <textarea ng-model="txteditna_disposition" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>NA-Score </strong> <span style="color:red">*</span></label>
+                                    <input type="number" ng-model="txteditna_score" ng-change="changevalue()" tabindex="0" style="text-align:center;" maxlength="5" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+                                <div class="col-sm-10 col-sm-10 col-sm-10">
+
+                                </div>
+
+                                <div class="col-lg-2 col-md-2 col-sm-2">
+                                    <label><strong>Total Score </strong> <span style="color:red">*</span></label>
+                                    <input type="number" ng-model="txtedit_totalscore" readonly style="text-align:right;" tabindex="0" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+
+                    </form>
+                </div>
+
+                <div class="row ">
+                    <br />
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="dd-handle ng-scope">
+                            <div class="row ">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <label class="col-form-label"> Checkpoint  </label>
+                                        <br />
+                                        <textarea ng-model="txtchecklist" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:7px;">
+                                        <br />
+                                        <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;" ng-click="checklist_edit(checkpointgroupadd_gid)"><span class="fa fa-plus" /></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <br />
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                        <table class="table">
+                                            <thead class="bg-gray text-white">
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Checkpoint</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in checklist_list">
+                                                    <td>{{$index+1}}</td>
+                                                    <td style="word-wrap: break-word; display: inline-block; width: 60%;">{{data.checklist_name}}</td>
+
+                                                    <td class="text-nowrap">
+                                                        <button title="Delete" ng-click="checklist_delete(data.checklist2checkpoint,data.checkpointgroupadd_gid)"
+                                                                class="btn btn-danger btn-xs ">
+                                                            <em class="fa fa-trash-o"></em>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <br />
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="dd-handle ng-scope" style="background-color: white;">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <p class="text-primary" style="font-size:14px;">
+                                <b>
+                                    &nbsp;&nbsp; Assigned Auditee Information
+                                </b>
+                            </p>
+                            <hr />
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-12 col-sm-12">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label><strong>Auditee Maker</strong><span style="color:red"> *</span> </label>
+                                        <select name="AuditMaker" id="AuditeeMaker" ng-options="m.employee_name for m in employee_list" chosen=""
+                                                ng-model="cboauditeemaker" class="chosen-select form-control" style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4">
+                                        <label class="col-form-label"> Auditee Checker <span style="color:red"> *</span></label>
+                                        <select name="AuditChecker" id="AuditeeChecker" ng-options="m.employee_name for m in employee1_list" chosen=""
+                                                ng-model="cboauditeechecker" class="chosen-select form-control" style="height:37px;">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-3 col-md-3" style="padding-top: 3px;">
+                                        <br>
+                                        <strong class="ng-binding w3-text-indigo">
+                                            <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white; height:35px; padding-top: 7px;" ng-click="add_auditee(checkpointgroupadd_gid)"><span class="fa fa-plus"> </span>  Add</a>
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Auditee Maker</th>
+                                                            <th scope="col">Auditee Checker</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                            <td title="Auditee Checker">{{data.auditeechecker_name}}</td>
+                                                            <td data-title="Action">
+                                                                <button title="Delete" ng-click="editdelete_auditee(data.multipleauditee_gid)"
+                                                                        class="btn btn-danger btn-xs ">
+                                                                    <em class="fa fa-trash-o"></em>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>             
+                <br />
+                <div class="row">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" ng-disabled="checklist.$invalid" ng-click="Update(id)"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Update</button>&nbsp;&nbsp;
+                        <button ng-click="edit_back()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="panelDemo8" class="panel panel-primary " ng-show="IsVisible1">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-11 col-md-11 col-sm-11">
+                    <span class="btn-label">
+                        <i class="fa fa-plus"></i>
+                    </span> Checklist Add
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                    <button type="button" class="btn btn-success btn-md pull-right" style="font-size: 12px;" title="Checkpoint Import Excel" ng-click="importexcel(checkpointgroup_gid)">
+                        <i class="fa fa-file-excel-o"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body ng-scope">
+            <div class="row">
+                <form name="checkpointadd" id="checkpointadd" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Checkpoint Group </strong></label>
+                                <br />
+                                {{cbocheckpointgroup}}
+                            </div>
+                            <!--<div class="col-lg-2 col-md-2 col-sm-2 ">
+                            <label><strong>Checkpoint Group</strong><span style="color:red"> *</span> </label>-->
+                            <!--<select name="CheckpointGroup" id="CheckpointGroup" ng-options="m.checkpointgroup_name for m in checkpointgroupadd_list"-->
+                            <!--ng-model="cbocheckpointgroup" class="form-control" style="height:37px;" Disabled>-->
+                            <!--<input type="text" ng-model="cbocheckpointgroup" tabindex="0" class="form-control" disabled />-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <label><strong>Checkpoint Intent </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtcheckpoint_intent" required tabindex="0" maxlength="5000" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <label><strong>Checkpoint Description </strong><span style="color:red">*</span></label>
+                                <textarea ng-model="txtcheckpoint_description" required tabindex="0" maxlength="5000" class="form-control" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Risk Category </strong> <span style="color:red">*</span> </label>
+                                <select name="RiskCategory" id="RiskCategory" ng-options="m.riskcategory_name for m in riskcategory_list" chosen=""
+                                        ng-model="cboriskcategory" class="chosen-select form-control" required style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Positive Conformity </strong><span style="color:red">*</span> </label>
+                                <select name="positiveconfirmity" id="positiveconfirmity" ng-options="m.positiveconfirmity_name for m in positiveconfirmity_data" chosen=""
+                                        ng-model="cbopositiveconfirmity" class="chosen-select form-control" required style="height:37px;">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <label>Note To Auditor <span style="color:red">*</span></label>
+                                <textarea name="Note To Auditor" required tabindex="0"
+                                          ng-model="txtnoteto_auditor" maxlength="5000" class="form-control" rows="1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>Yes-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtyes_disposition" required tabindex="0" maxlength="5000" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Yes-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtyes_score" ng-change="changevalueadd()" style="text-align:center;" tabindex="0" maxlength="10" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>No-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtno_disposition" required tabindex="0" maxlength="5000" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>No-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtno_score" ng-change="changevalueadd()" style="text-align:center;" maxlength="10" tabindex="0" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>Partial-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtpartial_disposition" required tabindex="0" maxlength="5000" class="form-control" rows="3"></textarea>
+
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Partial-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtpartial_score" ng-change="changevalueadd()" style="text-align:center;" maxlength="10" tabindex="0" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+                                <label><strong>NA-Disposition </strong> <span style="color:red">*</span></label>
+                                <textarea ng-model="txtna_disposition" required tabindex="3" maxlength="5000" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>NA-Score </strong> <span style="color:red">*</span></label>
+                                <input type="number" ng-model="txtna_score" ng-change="changevalueadd()" style="text-align:center;" maxlength="10" tabindex="0" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-12 col-sm-12">
+                            <div class="col-lg-10 col-md-10 col-sm-10">
+
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label><strong>Total Score </strong> <span style="color:red">*</span></label>
+                                <input type="text" readonly ng-model="txt_totalscore" style="text-align:right;" tabindex="0" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                </form>
+            </div>
+
+            <div class="row ">
+                <br />
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="dd-handle ng-scope">
+                        <div class="row ">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                <!--<div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="mda-form-group float-label">
+                                        <textarea ng-model="txtremarks" style="resize:vertical;" required rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                        <label>Check List *</label>
+                                    </div>
+                                </div>-->
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label class="col-form-label"> Checkpoint </label>
+                                    <br />
+                                    <textarea ng-model="txtchecklist" style="resize:vertical;" rows="4" aria-multiline="true" tabindex="0" aria-invalid="false" class="mda-form-control"></textarea>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-sm-3" style="padding-top:7px;">
+                                    <br />
+                                    <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white;padding-left:9px;" ng-click="checklist_add()"><span class="fa fa-plus" /></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br />
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+
+                                    <table class="table">
+                                        <thead class="bg-gray text-white">
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Checkpoint</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="data in checklistpoint_list">
+                                                <td>{{$index+1}}</td>
+                                                <td style="word-wrap: break-word; display: inline-block; width: 60%;">{{data.checklist_name}}</td>
+
+                                                <td class="text-nowrap">
+                                                    <button title="Delete" ng-click="delete_checkpoint(data.checklist2checkpoint)"
+                                                            class="btn btn-danger btn-xs ">
+                                                        <em class="fa fa-trash-o"></em>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br />
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="dd-handle ng-scope" style="background-color: white;">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <p class="text-primary" style="font-size:14px;">
+                            <b>
+                                &nbsp;&nbsp; Assigned Information
+                            </b>
+                        </p>
+                        <hr />
+                        <div class="row">
+                            <div class="col-sm-12 col-sm-12 col-sm-12">
+
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label><strong>Auditee Maker</strong><span style="color:red"> *</span> </label>
+                                    <select name="AuditMaker" id="AuditeeMaker" ng-options="m.employee_name for m in employee_list" chosen=""
+                                            ng-model="cboauditeemaker" class="chosen-select form-control" style="height:37px;">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <label class="col-form-label"> Auditee Checker <span style="color:red"> *</span></label>
+                                    <select name="AuditChecker" id="AuditeeChecker" ng-options="m.employee_name for m in employee1_list" chosen=""
+                                            ng-model="cboauditeechecker" class="chosen-select form-control" style="height:37px;">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3 col-sm-3 col-md-3" style="padding-top: 3px;">
+                                    <br>
+                                    <strong class="ng-binding w3-text-indigo">
+                                        <a class="btn btn-sm btn-default" style="background-color:#09385f;color:white; height:35px; padding-top: 7px;" ng-click="addauditee()"><span class="fa fa-plus"> </span>  Add</a>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="table-responsive table-bordered">
+                                        <div style="max-height:200px;overflow:auto;">
+                                            <table class="table">
+                                                <thead class="bg-gray text-white">
+                                                    <tr width="100%">
+                                                        <th scope="col">S.No</th>
+                                                        <th scope="col">Auditee Maker</th>
+                                                        <th scope="col">Auditee Checker</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                                        <td title="S.No">{{$index+1}}</td>
+                                                        <td title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                                        <td title="Auditee Checker">{{data.auditeechecker_name}}</td>
+                                                        <td data-title="Action">
+                                                            <button title="Delete" ng-click="delete_auditee(data.multipleauditee_gid)"
+                                                                    class="btn btn-danger btn-xs ">
+                                                                <em class="fa fa-trash-o"></em>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <br />
+
+           
+            <br />
+
+            <div class="row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-success btn-md" ng-disabled="checkpointadd.$invalid" ng-click="submitAdd()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                    <button ng-click="addcheckpoint()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-default ">
+            <br />
+            <div class="table-responsive">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table datatable="ng" class="table table-hover table-striped">
+                        <thead>
+                            <tr class="text-white" style="background-color:#09385f;">
+                                <th class="text-center"> S.No </th>
+                                <th class="text-center"> Checkpoint Group</th>
+                                <th class="text-center"> Checkpoint Intent / Description</th>
+                                <!--<th class="text-center"> Checkpoint Description </th>-->
+                                <th class="text-center">  Risk Category </th>
+                                <th class="text-center"> Positive Conformity </th>
+                                <th> Note To Auditor</th>
+                                <th>Assigned Information</th>
+                                <th class="text-center"> Yes-Score</th>
+                                <th class="text-center"> No-Score</th>
+                                <th class="text-center"> Partial-Score</th>
+                                <th class="text-center"> Na-Score</th>
+                                <th class="text-center"> Total Score</th>
+                                <th class="text-center"> Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in checkpointgroupadd_list">
+
+                                <td class="text-center"> {{$index+1}} </td>
+                                <td class="text-center"> {{data.checkpointgroup_name}} </td>
+                                <td align="center">
+                                    <em class="fa fa-info-circle" ng-click=checkpointintent(data.checkpointgroupadd_gid,data.checkpoint_intent) style="font-size:24px;align-content:center;"></em>
+                                </td>
+                                <!--<td align="center">
+                                    <em class="fa fa-info-circle" ng-click=description(data.checkpointgroupadd_gid,data.checkpoint_description) style="font-size:24px;align-content:center;"></em>
+                                </td>-->
+                                <td class="text-center">  {{data.riskcategory_name}}  </td>
+                                <td class="text-center"> {{data.positiveconfirmity_name}}</td>
+                                <td align="center">
+                                    <em class="fa fa-info-circle" ng-click=notetoauditor(data.checkpointgroupadd_gid,data.noteto_auditor) style="font-size:24px;align-content:center;"></em>
+                                </td>
+                                <td data-title="'Approval Information'" class="text-center">
+                                    <em class="fa fa-info-circle" ng-click=approvalinformation(data.checkpointgroupadd_gid) style="font-size:24px;align-content:center;"></em>
+                                </td>
+                                <td class="text-center">  {{data.yes_score }} </td>
+                                <td class="text-center">  {{data.no_score}} </td>
+                                <td class="text-center"> {{data.partial_score}}  </td>
+                                <td class="text-center">  {{data.na_score}} </td>
+                                <td class="text-center"> {{data.total_score}}  </td>
+                                <td data-title="'Action'" class="nowrap">
+                                    <button title="View" ng-click="view(data.checkpointgroupadd_gid)" class="btn btn-info">
+                                        <em class="fa fa-eye"></em>
+                                    </button>
+                                    <button title="Edit" ng-disabled="data.checkpointgroup_flag =='Y'" ng-click="edit(data.checkpointgroupadd_gid)" class="btn btn-green">
+                                        <em class="fa fa-edit"></em>
+                                    </button>
+                                    <button title="Delete" ng-disabled="data.checkpointgroup_flag =='Y'" ng-click="deletecheckpoint(data.checkpointgroupadd_gid)" class="btn btn-danger">
+                                        <em class="icon icon-trash "></em>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="text-center">
+                    <button ng-click="backcheckpoint()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+    <br />
+</div>
+<script type="text/ng-template" id="/checkpointintent.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-info-circle"></i>
+            </span> Checkpoint Intent / Description
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="dd-handle ng-scope">
+            <div class="row ">
+                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+
+                    <label>Checkpoint Intent:</label>
+                    <br />
+                    <p>  {{txtcheckpointintent}} </p>
+                </div>
+            </div>
+            <hr />
+            <div class="row ">
+                <div class="col-sm-12 col-sm-12 col-sm-12 ">
+                    <label>Checkpoint Description:</label>
+                    <br />
+                    <p>  {{txtcheckpointdescription}} </p>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br />
+    </div>
+</script>
+
+<script type="text/ng-template" id="/checkpointdescription.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-info-circle"></i>
+            </span> Checkpoint Description
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+
+        <div style="white-space: pre-wrap;width:100%; word-wrap: break-word;display: inline-block;">
+            {{txtcheckpointdescription}}
+        </div>
+
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/notetoauditor.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-info-circle"></i>
+            </span> Note To Auditor
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="dd-handle ng-scope">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <label> Note To Auditor : </label>
+                    <br />
+                    <p> {{txtnotetoauditor}}  </p>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br />
+    </div>
+</script>
+<script type="text/ng-template" id="/auditname.html">
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-edit "></i>
+            </span> Audit Name
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+        <div style="white-space: pre-wrap; width:100%; word-wrap: break-word;
+            display: inline-block;">
+            {{txtaudit_description}}
+        </div>
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/importexcel.html">
+    <div class="modal-header bg-blue-600 ng-scope">
+        <h4 id="myModalLabel" class="modal-title">
+            <span class="btn-label bg-blue-600">
+                <em class="fa fa-plus"></em>
+                Checkpoint Import Excel
+            </span>
+        </h4>
+    </div>
+    <div class="modal-body ng-scope">
+        <div class="pd-sm-10">
+            <br />
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <a ng-click="downloadtemplate_importexcel()" style="font-size: 13px" ;>
+                                    <b> Click here to download Template </b>
+                                </a>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <label> Upload Excel : </label>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-4">
+                                <input type="file" id="fileimport" ng-model="test_document"
+                                       onchange="angular.element(this).scope().excelupload(this.files, angular.element(this).scope().documentupload, this.name)"
+                                       data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+                                &nbsp;
+                            </div>
+                            <div class="col-md-2 col-lg-2 col-sm-2">
+                                <button title="Upload Excel" ng-click="uploadexcel()" class="btn btn-info">
+                                    <em class="icon-cloud-upload"></em>
+                                </button>
+                                <span>
+                                    <button title="Cancel Upload" ng-click="uploadexcelcancel()" class="btn btn-danger">
+                                        <i class="fa icon-close"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="class">
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="/Approvalinformation.html">
+    <!--<div class="modal-header bg-primary">
+                <h4 class="modal-title">
+                    <span class="btn-label bg-primary">
+                        <i class="fa fa-info-circle">&nbsp; Assigned Information</i>
+                       </span>
+                        <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+    </h4>
+            </div>-->
+    <div class="modal-header bg-primary">
+        <h4 class="modal-title">
+            <span class="btn-label bg-primary">
+                <i class="fa fa-info-circle"></i>
+            </span> Assigned Information
+            <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+        </h4>
+    </div>
+    <div class="modal-body">
+        <br>
+       
+
+        <div class="dd-handle ng-scope">
+            <p class="text-primary" style="font-size:16px;"><b>&nbsp;&nbsp; Assigned Auditee Details </b></p>
+            <hr class="space" />
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <div class="table-responsive table-bordered">
+                            <div style="max-height:200px;overflow:auto;">
+                                <table class="table">
+                                    <thead class="bg-gray text-white">
+                                        <tr width="100%">
+                                            <th align="center" scope="col">S.No</th>
+                                            <th align="center" scope="col">Auditee Maker</th>
+                                            <th align="center" scope="col">Auditee Checker</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in multipleauditee_list" width="100%">
+                                            <td align="left" scope="col" title="'S.No'">{{$index+1}}</td>
+                                            <td align="left" scope="col" title="Auditee Maker">{{data.auditeemaker_name}}</td>
+                                            <td align="left" scope="col" title="Auditee Checker'">{{data.auditeechecker_name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <br /><br />
+        <div align="center">
+            <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+        </div>
+        <br />
+    </div>
+</script>

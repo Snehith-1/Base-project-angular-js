@@ -1,0 +1,142 @@
+﻿<h3>
+    SOP Management
+</h3>
+<div ng-controller="sopdocumentmanagement">
+   
+    
+    <div class="panel">       
+        <div class="panel-body">   
+            <div ng-show="department_flag=='Y'">
+                <button title="Upload Document" class="btn btn-sm" style="background-color:#ff9800;color:white;"
+                        ng-click="popFileShow()">
+                    <em class="fa fa-plus"></em><b>&nbsp;Upload File</b>
+                </button>
+            </div>
+            <br />       
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+               <table class="table m0">
+                    <thead style="border-top:1px solid #F3F3F3;">
+                        <tr>
+                            <th  style="text-align:center;width:10%;font-size:14px;">S.No</th>
+                            <th style="width:40%;font-size:14px;" >Process / Department</th>
+                            <th style="width:20%;font-size:14px;">Created By</th>
+                            <th  style="text-align:center;width:20%;font-size:14px;">Created Date</th>                          
+                            <th class="text-nowrap"  style="text-align:center;font-size:14px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in sopdepartment_list | filter : searchtxt | limitTo:totalDisplayed">
+                            <td data-title="'S.No'"  style="text-align:center">{{$index+1}}</td>
+                            <td data-title="Process/Department" style="color:#206E98;"><b>{{data.sopdepartment_name}}</b></td>
+                            <td data-title="Created by">{{data.created_by}}</td>
+                <td data-title="Created Date" style="text-align:center">{{data.created_date}}</td>
+               
+             
+                <td data-title="Action"  style="text-align:center" class="text-nowrap">
+                    <button title="View Uploaded Document"  ng-click="viewdocument(data.sopdepartment_gid)" class="btn btn-info">
+                        <em class="fa fa-eye"></em>
+                    </button>
+
+                </td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
+         
+        </div>
+
+    </div>
+    <script type="text/ng-template" id="/Documentuploadcontent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Document Upload</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+
+        <div class="modal-body ng-scope">
+            <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <label>Process/Department <span style="color:red"> * </span></label>
+                           
+                            <select id="department" name="department_name" chosen=""
+                                    ng-options="m.sopdepartment_name for m in sopdepartment_list"
+                                    ng-model="cbosop_department" class="chosen-select form-control" required>
+                                <option value="">--------------------------Select Process/Department--------------------------- </option>
+                            </select>
+                        </div> 
+                        </div> 
+                    <br /> <br /> <br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-12 col-lg-12 col-sm-12">
+                            <label>SOP Name<span style="color:red"> * </span></label>
+                            <input type="text" ng-model="txtsop_name" required class="form-control" placeholder="Enter SOP Name" />
+                        </div> 
+                        </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <label>Code<span style="color:red"> * </span></label>
+                            <input type="text" ng-model="txtsop_code" required class="form-control" placeholder="Enter Code" />
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <label>Version No<span style="color:red"> * </span></label>
+                            <input type="text" ng-model="txtsop_versionno" required class="form-control" placeholder="Enter Version" />
+
+                        </div>
+                        </div>
+                    <br /> <br /> <br /><br />
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <div class="col-md-6 col-lg-6 col-sm-6">
+                            <p class="text-primary text-bold" style="font-size:15px;">File Upload <span style="color:red"> * </span> </p>
+                            <input type="file" id="addupload" ng-model="test_document" filestyle=""
+                              onchange="angular.element(this).scope().uploadfile(this.files, angular.element(this).scope().documentupload, this.name)" class="form-control"
+                                   data-classbutton="btn btn-default" data-classinput="form-control inline" data-button-text="Select" />
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div ng-show="warning" style="text-align:center"> 
+                    <label style="color:red"> Kindly upload the document</label>
+                </div>
+                <div clas="row">
+                    <div class="text-center">
+                        <button type="button" ng-click="submit()" class="btn btn-info" ng-disabled="documentAddform.$invalid">
+                            <span class="fa fa-upload"></span>&nbsp;&nbsp;Upload
+                        </button>
+                        <button type="button" ng-click="close()" class="btn btn-danger">Close</button>
+                        <br /><br />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>   
+</div>

@@ -1,0 +1,204 @@
+﻿<h3>
+    My Unrecon Closed Report
+</h3>
+<br />
+
+<div ng-controller="brsTrnMyUnReconClosedSummaryController as dpick">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="button" id="opentab" class="btn btn-labeled " ng-click="pending_rpt()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177);">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{pendingrpt_count}}</b></div>
+                    <b style="font-size: 14px;">Pending Report</b>
+                </button>
+                <br />
+            </div>
+            <!--<div class="col-lg-4 col-md-4 col-sm-4">
+        <button type="button" id="pendingtab" class="btn btn-labeled tabactivecolorstyle" ng-click="alloacted_rpt()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177);">
+            <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{allocatependingrpt_count}}</b></div>
+            <b style="font-size: 14px;">Allocated Pending Report</b>
+        </button>
+        <br />
+    </div>-->
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="button" id="pendingtab" class="btn btn-labeled tabactivecolorstyle" ng-click="closed_rpt()" style="width: 100%; height: 50px; border: 1px solid rgb(179, 177, 177); background-color: #84cbdb;">
+                    <div class="pull-right label" style="background-color:#838383;padding-top:5px;padding-bottom:5px;"> <b>{{closedrpt_count}}</b></div>
+                    <b style="font-size: 14px;">Closed Report</b>
+                </button>
+                <br />
+            </div>
+
+
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+            <div class="col-lg-4  col-sm-4 col-md-4">
+
+                <label> Bank Name <span style="color:red">*</span></label>
+
+
+                <select name="bankdtlname" chosen="" ng-options="m as m.bankname_name for m in bankdtllist track by m.bankname_gid"
+                        type="text" class="form-control parsley-error" ng-model="cboBankName" required="">
+                    <option value=""> ----- Select From Dropdown -----</option>
+                </select>
+
+                <span ng-show="form.validateInput('bankdtlname', 'required')" class="text-danger">This field is required</span>
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Amount Greater Than</strong><br />
+                <input type="number" id="annual_turnover1" ng-model="txtgrt_amount" ng-disabled="txtless_amount!=null"
+                       class="form-control ng-pristine ng-valid ng-touched"
+                       ng-pattern="/^[0-9]+$/"
+                        required style="text-align:right;"
+                       maxlength="15">
+                <!--<span style="font-style:italic;">Number in words:</span>-->
+                <span id="words_annualturnover1" style="color:#003c96fc;"
+                      class="text-bold"></span>
+            </div>
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Amount Lesser Than</strong><br />
+                <input type="number" id="annual_turnover2" ng-model="txtless_amount" ng-disabled="txtgrt_amount!=null"
+                       ng-pattern="/^[0-9]+$/"
+                       class="form-control ng-pristine ng-valid ng-touched"
+                        required style="text-align:right;"
+                       maxlength="15">
+                <!--<span style="font-style:italic;">Number in words:</span>-->
+                <span id="words_annualturnover2" style="color:#003c96fc;"
+                      class="text-bold"></span>
+            </div>
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">CR/DR</strong><br />
+                <select id="cr_dr" name="vertical" dropzone="" ng-model="cr_dr" required=""
+                        class="chosen-select form-control"
+                        tabindex="0" aria-label="State" aria-expanded="false" size="1">
+                    <option value="">---Select CR/DR---</option>
+                    <option value="CR">CR</option>
+                    <option value="DR">DR</option>
+
+                </select>
+            </div>
+
+            <!--<div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Knockoff Status</strong>
+                <select name="activity_name"
+                        ng-model="knockoff_status" class="chosen-select form-control">
+                    <option value="">--Select Knockoff Status--</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Matched">Matched</option>
+
+                </select>
+
+            </div>-->
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0">Transaction Date</strong><br />
+                <p class="input-group">
+
+                    <input type="text" id="dob" name="date" ng-model="trn_date" datepicker-popup="{{dpick.format}}"
+                           style="height:30px;" is-open="dpick.opened" min-date="dpick.minDate" datepicker-options="dpick.dateOptions"
+                           close-text="Close" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" ng-click="dpick.open($event)" style="height:30px;" class="btn btn-default">
+                            <em class="fa fa-calendar"></em>
+                        </button>
+                    </span>
+                </p>
+            </div>
+            <div class="col-lg-2  col-sm-2 col-md-2">
+                <strong class="mt0"></strong><br />
+                <button type="button" class="btn btn-green btn-md" style="background-color:#23b1e6;" ng-disabled="userform.$invalid" ng-click="search()" title="Search"><i class="fa fa-search"></i></button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-green btn-md" style="background-color:#0d87b5;" ng-disabled="userform.$invalid" ng-click="all()" title="Refresh"><i class="fa fa-refresh"></i></button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-green btn-md" style="background-color:#a2510b;" ng-disabled="userform.$invalid" ng-click="export()" title="Export Excel"><i class="fa fa-file"><a download="" href="" id="btnpdf" style="display:none;"></a></i></button>&nbsp;&nbsp;
+            </div>
+
+        </div>
+    </div>
+
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="table hover table-striped">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th class="text-center" style="display:none">S.No</th>
+                            <!--<th> Transaction Reference Number </th>-->
+                            <th>Bank Name</th>
+                            <th style="display:none">Branch Name  </th>
+                            <th style="display:none">Transaction No.</th>
+                            <th>Transaction Date</th>
+                            <th style="width:160px;">Transaction Particulars</th>
+                            <th>Amount</th>
+                            <!--<th>CR-DR</th>-->
+                            <th>Closed Date</th>
+                            <th>Employee Tagged</th>
+                            <th>Knockoff-Status</th>
+                            <!-- <th>Manual Knockoff Remarks</th> -->
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in MyUnreconciliationClose_list ">
+                            <td data-title="'S.No'" style="display:none">{{$index+1}}</td>
+                            <!--<td data-title="'Transaction Reference Number'">{{data.banktransc_gid }}</td>-->
+                            <td data-title="'Bank Name'">{{data.bank_name}}</td>
+                            <td data-title="'Branch Name'" style="display:none">{{data.department_name}}</td>
+                            <td data-title="'Transaction No.'" style="display:none">{{data.banktransc_refno}}</td>
+                            <td data-title="'Transaction Date'">{{data.trn_date}}</td>
+                            <td data-title="'Transaction Particulars'">{{data.transact_particulars}}</td>
+                            <td data-title="'Amount'">{{data.transact_val}}</td>
+                            <!--<td data-title="'CR-DR'">{{data.cr_dr}}</td>-->
+                            <td data-title="'Closed Date'">{{data.knockoff_date}}</td>
+                            <td data-title="'Employee Tagged'">{{data.taggedmember_name}}</td>
+                            <td data-title="'Knockoff-Status'" ng-switch="data.knockoff_status">
+                                <label style="font-size:10px" ng-switch-when="Matched" class="label label-success"> Matched</label>
+                                <label style="font-size:10px" ng-switch-when="AssignMatched" class="label label-pink">Assign Matched</label>
+                                <label style="font-size:10px" ng-switch-when="ManuallyMatched" class="label label-warning">Manually Matched</label>
+                                <!--<label style="font-size:10px" ng-switch-when="PartiallyMatched" class="label label-primary">Partial Matched</label>-->
+                                <label style="font-size:10px" ng-switch-when="Closed" class="label label-primary">Closed</label>
+
+                            </td>
+                            <!-- <td data-title="'manualknockoff_remarks'">{{data.manualknockoff_remarks}}</td> -->
+                            <td class="nowrap" data-title="'Action'">
+                                <button title="View" ng-click="view(data.banktransc_gid)" class="btn btn-info">
+                                    <em class="fa fa-eye "></em>
+                                    
+                                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <!--<div class="text-right">
+                <button class="btn btn-success btn-md" ng-click="incrementLimit()">More</button>
+
+                <button class="btn btn-warning btn-md" ng-click="decrementLimit()">Less</button>
+
+            </div>-->
+            <br />
+        </div>
+    </div>
+
+
+    <!-- END panel-->
+</div>

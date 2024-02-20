@@ -1,0 +1,112 @@
+﻿<h3>
+    CREATE DEPLOYMENT
+    <small>To Initiate Deployment Process, add record here.</small>
+</h3>
+<div ng-controller="deploymentAdd">
+    <div class="panel panel-default" style="padding-left:20px;">
+        <div class="panel-heading"><h4>Add Deployment</h4></div>
+        <div class="panel-body">
+            <form name="addDeploymentform" novalidate="" autocomplete="off">
+                <div class="row ">
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Stage:</b></label> <span>*</span>
+                        <select name="stageAdd" ng-model="stageAdd" tabindex="0" ng-change="show(stageAdd)" required class="form-control">
+                            <option value="">Select Stage</option>
+                            <option value="TEST">TEST</option>
+                            <option value="UAT">UAT</option>
+                            <option value="LIVE">LIVE</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Client:</b></label> <span>*</span>
+                        <select choosen="" name="clientAdd" ng-model="clientAdd" ng-options="c.client_name for c in client_list" ng-change="loadModules(clientAdd.client_gid)" tabindex="1" required class="chosen-select form-control">
+                            <option value="">Select Client</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" ng-if="require">
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Priority:</b></label> <span>*</span>
+                        <select name="priorityAdd" ng-model="$parent.priorityAdd" required="require" class="form-control">
+                            <option value="">Select Priority</option>
+                            <option value="Show Stopper">Show Stopper</option>
+                            <option value="Critical">Critical</option>
+                            <option value="Critical Non-Mandatory">Critical Non-Mandatory</option>
+                            <option value="Nice to Have">Nice to Have</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Apporver:</b></label> <span>*</span>
+                        <select name="aprovalsAdd" chosen="" multiple="multiple" ng-options="c.employee_name for c in employee_list" ng-model="$parent.aprovalsAdd" class="chosen-select form-control" required></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Module</b></label><span>*</span>
+                        <select name="modueAdd" chosen="" multiple="multiple" ng-options="m.project_name for m in project_list" ng-model="moduleAdd" class="chosen-select form-control" required>
+                        </select>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label><b>Client Need:</b></label> <span>*</span>
+                        <select name="clientneedAdd" ng-model="clientneedAdd" tabindex="3" required class="form-control">
+                            <option value="">Select Need</option>
+                            <option value="Bug-Fixing">Bug-Fixing</option>
+                            <option value="Development">Development</option>
+                            <option value="Enhancement">Enhancement</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label>Have New Pages?</label><label class="switch">
+
+                            <input type="checkbox" ng-init="checked=true" ng-model="checkPage" class="form-control" />
+                            <span></span>
+                        </label><span>*</span>
+                        <textarea name="pagenameAdd" placeholder="Enter New Page Names here..." ng-if="checkPage" required="checkPage" ng-model="$parent.pagenameAdd" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5 form-group">
+                        <label>Have New Reports?</label><label class="switch" style="margin-right:0px;">
+                            <input type="checkbox" ng-init="checked=true" ng-model="checkRpt" class="form-control" />
+                            <span></span>
+                        </label> <span>*</span>
+                        <textarea name="reportnameAdd" placeholder="Enter New Report Names here..." ng-if="checkRpt" required="checkRpt" ng-model="$parent.reportnameAdd" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-11 col-md-11 col-sm-11 form-group">
+                        <label>Description</label><span>*</span>
+                        <textarea name="descriptionAdd" placeholder="Enter Brief description..." required ng-model="descriptionAdd" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-9 col-md-9 col-sm-9">
+                        <label class="mda-checkbox" ng-if="require">
+                            <input type="checkbox" checked="" ng-model="$parent.mailAdd" />
+                            <em class="bg-purple-500"></em>Send Mail To the Approver
+                        </label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <button type="submit" ng-disabled="addDeploymentform.$invalid" class="btn btn-sm btn-primary" ng-click="add()">Submit</button>
+                        <button type="button" class="btn btn-sm btn-danger" ng-click="back()">Cancel</button>
+                    </div>
+                                          
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

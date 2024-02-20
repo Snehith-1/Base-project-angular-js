@@ -1,0 +1,296 @@
+﻿<h3>
+    Support Team
+</h3>
+
+<div ng-controller="osdMstTeamController">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-md-12">
+            <button title="Add Team" class="btn btn-info btn-sm"
+                    ng-click="addteam()">
+                <em class="fa fa-plus"></em>&nbsp;Add Team
+            </button>
+        </div>
+    </div>
+    <br />
+    <!-- START panel-->
+    <div class="panel">
+
+        <div class="panel-body">
+
+            <div class="row">
+                <form name="pageloadform" ng-submit="form.submitForm1()" novalidate="" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            Show <input ng-model="pagecount" id="pagecount" type="text" name="pagecount" maxlength="5" ng-pattern="/^\d+$/" />
+                            <button class="btn btn-info" id="pagecount" ng-disabled="!pagecount" style="text-align:left;" ng-click="loadMore(pagecount)">Load More</button>
+                            <div ng-messages="pageloadform.pagecount.$dirty && pageloadform.pagecount.$error">
+                                <p class="text-danger" ng-message="pattern">This field required only numbers</p>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="input-group">
+                                <input type="text" ng-model="searchText" placeholder="Search Here .."
+                                       class="form-control input-sm" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th>Business Unit Name</th>
+                            <th>Team Code</th>
+                            <th>Team Name</th>
+                            <th>Team Details</th>
+                            <th>Created On / By</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in teamlist|filter :searchText|limitTo:totalDisplayed">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Department Name'">{{data.department_name}}</td>
+                            <td data-title="'Team Code'">{{data.team_code}}</td>
+                            <td data-title="'Team Name'">{{data.team_name}}</td>
+                            <td style="text-decoration:underline;text-decoration-color:#49afcd;">
+                                <label style="padding-right:25px; font-size: 15px;text-decoration:underline;text-decoration-color:#49afcd;"
+                                       ng-click="showPopover(data.supportteam_gid,data.team_name, data.team_description)">
+                                    <em class="fa fa-question-circle" style="font-size:24px;align-content:center;"></em>
+                                </label>
+                            </td>
+                            <td data-title="'Created On / By'">{{data.created_date}} / {{data.created_by}}</td>
+                            <td data-title="'Action'" class="nowrap">
+                                <button title="Edit Team" class="btn btn-success" ng-click="editteam(data.supportteam_gid)">
+                                    <em class="fa fa-edit"></em>
+                                </button>
+                                <button title="Delete Team" class="btn btn-danger" ng-click="deleteteam(data.supportteam_gid)">
+                                    <em class="fa fa-trash"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END panel-->
+    <!--Add Popup Starts-->
+    <script type="text/ng-template" id="/addTeamModalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-plus"></em>&nbsp;Add Team</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <form novalidate="" name="teamformsubmit" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                <div class="pd-sm-10">
+
+                    <div class="row ">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Code</label>
+                            <br />
+                            <label class="text-info">Auto Generated</label>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row"  style="display:none">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;                          
+                            <p>{{lbldepartmentgid}}</p>
+                        </div>
+                    </div><div class="row" ng-show="single">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+                         <p>{{lbldepartmentname}}</p>
+                          
+                        </div>
+                    </div>
+                    <div class="row" ng-show="multiple">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;<span style="color:red">*</span>
+                            <select name="department" id="department" ng-options="m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdept(cbodepartment)"
+                                    ng-model="cbodepartment" class="chosen-select form-control" style="height:37px;"  size="1">
+                                <option value=""> ----- Select Business Unit  -----</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Name &nbsp;<span style="color:red">*</span></label>
+                            <input ng-model="team_name" required="" maxlength="100" placeholder="Team Name (Maximum 100 characters)"
+                                   ng-keyup="teamname(team_name)" tabindex="1" aria-required="true" aria-invalid="true" class="form-control" style="">
+                            <label style="color:red;">{{message}}</label>
+                        </div>
+                    </div>
+                    <!--<br />-->
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Member <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen="" multiple="multiple" tabindex="2"
+                                    ng-options="m.employee_name for m in employee_list" required=""
+                                    ng-model="cboteam_member" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Description &nbsp;<span style="color:red">*</span></label>
+                            <textarea style="resize:vertical;"  style="resize:vertical;" ng-model="team_description" placeholder="Enter team description" rows="3" maxlength="1000" class="form-control" 
+                                     required="" id="input_13" ng-trim="true" aria-multiline="true" tabindex="3" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+                <div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-md" tabindex="4" ng-disabled="teamformsubmit.$invalid" ng-click="teamSubmit()"><i class="fa fa-arrow-circle-right"></i>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+                        <button ng-click="ok()" tabindex="5" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </script>
+    <!--Add Popup Ends-->
+    <!--Edit Popup Starts-->
+    <script type="text/ng-template" id="/teamModaledit.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Edit Team</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body">
+            <div class="pd-sm-10">
+                <form novalidate="" name="teamform" ng-submit="form.submitForm1()" autocomplete="off" class="form-validate form-horizontal">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Code </label>
+                            <input ng-model="teamcodeedit" name="teamcodeedit" required="" tabindex="0" aria-required="true"
+                                   aria-invalid="true" class="form-control" style="" disabled>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row" ng-show="single" style="display:none">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+
+                            <p>{{lbldepartmentgidedit}}</p>
+                        </div>
+                    </div>
+                    <div class="row" ng-show="single">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;
+                            <p>{{lbldepartmentnameedit}}</p>
+
+                        </div>
+                    </div>
+                    <div class="row" ng-show="multiple">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Business Unit  Name </label>&nbsp;<span style="color:red">*</span>
+                            <select name="cbodepartmentedit" id="cbodepartment_edit" ng-options="m.department_gid as m.department_name for m in deptmasterlist" chosen="" ng-change="onselectdeptedit(cbodepartmentedit)"
+                                    ng-model="cbodepartmentedit" class="chosen-select form-control" style="height:37px;"  size="1">
+                                <option value=""> ----- Select Business Unit  -----</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Name &nbsp;<span style="color:red">*</span></label>
+                            <input ng-model="teamnameedit" id="teamnameedit" name="teamnameedit" required="" maxlength="100" placeholder="Team Name (Maximum 100 characters)"
+                                     tabindex="0" aria-required="true" aria-invalid="true" class="form-control" style="">
+                            <label style="color:red;">Maximum 100 characters Length &nbsp;<span style="color:red"></span></label>
+                           
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Member <span style="color:red">*</span></label>
+                            <select name="approval_authority" chosen="" multiple="multiple" required=""
+                                    ng-options="m.employee_name for m in employee_listedit"
+                                    ng-model="cboteam_member" class="chosen-select form-control"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12 col-md-12">
+                            <label>Team Description &nbsp;<span style="color:red">*</span></label>
+                            <textarea style="resize:vertical;" ng-model="teamdescriptionedit" placeholder="Enter team description" rows="4" maxlength="1000" class="form-control"
+                                     required="" id="input_13" ng-trim="true" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </form>
+            </div>
+            <div>
+                <div class="text-center">
+                    <button type="button" ng-click="teamUpdate(data.supportteam_gid)" class="btn btn-success btn-md" ng-disabled="teamform.$invalid">
+                        <i class="fa fa-arrow-circle-up">&nbsp;&nbsp;</i>Update
+                    </button>&nbsp;&nbsp;
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--Edit Popup Ends-->
+
+    <script type="text/ng-template" id="/showpopupModal.html">
+    
+        <div class="panel-body text-center">
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                     
+                    <thead>
+                        <tr style="text-align: left;height:40px;">
+                            <th style="color:white;background:#7986cb;width:2%;text-align:center;">{{team_name}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          
+                            <td data-title="'Team Description'" style="width:2%; text-align:left"><b>Team Description : </b> <br/>{{team_description}}</td>
+                        </tr>
+                        <tr>
+
+                            <td style="width:2%; text-align:left"><b>Team Member : </b> <br /></td>
+                        </tr>
+                        <tr ng-repeat="data in teammembers_list"
+                            style="text-align: left;height:20px;">
+                            <td data-title="'Member Name'" style="width:2%; text-align:left"> {{data.employee_name}}</td>
+                        </tr>
+                    </tbody>
+                 
+                </table>
+            </div>
+            <div>
+                <div class="text-center">
+                 
+                    <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close">&nbsp;&nbsp;</i>Close</button>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

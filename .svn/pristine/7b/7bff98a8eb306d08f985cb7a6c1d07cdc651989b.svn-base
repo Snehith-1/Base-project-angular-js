@@ -1,0 +1,226 @@
+﻿<h3>
+    View Issue Details
+</h3>
+<div ng-controller="viewIssueDetailscontroller">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            View Issue Details
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Ref no</label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_refno}}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Date </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_date}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Priority </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.priority}}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Severity </label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.priority}}
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Title</label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_title}}
+                            </div>
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Type</label>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-md-4">
+                                {{viewdtl.issue_type}}
+                            </div>
+                        </div>
+                      
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12 ">
+                            <div class="col-lg-2 col-sm-2 col-md-2">
+                                <label style="font-weight:bold">Issue Remarks</label>
+                            </div>
+                            <div class="col-lg-10 col-sm-10 col-md-10">
+                                <p id="test">
+
+                                </p>
+                                <!--{{viewdtl.issue_remarks}}-->
+                            </div>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="col-lg-12 col-sm-12 col-md-12">
+                                <div class="card-header">
+                                    <strong class="textdarkgreen">
+                                        <em class="fa fa-file fa-lg"></em>&emsp;Attached Document
+                                    </strong>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="tab-content">
+                                        <div class="text-center" ng-if="viewdtl.docStatus != 'true'">
+                                            ---No Documents Available---
+                                        </div>
+                                        <div ng-if="viewdtl.docStatus == 'true'" class="row" style="padding: 20px;height:200px;overflow-y: auto;">
+                                            <div class="table-responsive">
+                                                <table class="table" style="width:100%">
+                                                    <thead class="bg-blue text-white">
+                                                        <tr class="text-center">
+                                                            <td scope="col">S.No</td>
+                                                            <td scope="col">Name</td>
+                                                            <td scope="col">Download</td>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr ng-repeat="data in docdtl">
+                                                            <td class="text-center">{{$index +1}}</td>
+                                                            <td style="padding-left:10px;">{{data.document_name}}</td>
+                                                            <td class="text-center"><em class="fa fa-download" ng-click="downloads(data.document_path,data.document_name)"></em></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="panel-info">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="card-header">
+                                        <strong class="textdarkblue">
+                                        <em class="fa fa-dedent fa-lg"></em>&emsp;Issue Status Log</strong>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="tab-content">
+                                            <div class="table-responsive">
+                                                <table class="table" style="width:100%;">
+                                                    <thead class="bg-blue text-white">
+                                                        <tr class="text-center">
+                                                            <th scope="col">S.No</th>
+                                                            <!--<th scope="col">Issue Ref No</th>-->
+                                                            <!--<th scope="col">Issue Date</th>-->
+                                                            <!--<th scope="col">Issue Title</th>-->
+                                                            <th scope="col">Status</th>
+                                                            <th scope="col">Remarks</th>
+                                                            <th scope="col">Reply Comments</th>
+                                                            <th scope="col">Created On </th>
+                                                            <th scope="col">Created by</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <tr ng-repeat="data in issuestatuslog">
+                                                            <td>{{$index+1}}</td>
+                                                            <!--<td>{{data.issue_refno}}</td>-->
+                                                            <!--<td>{{data.issue_date}}</td>-->
+                                                            <!--<td>{{data.issue_title}}</td>-->
+                                                            <td>{{data.issue_status}}</td>
+                                                            <td>{{data.issue_remarks}}</td>
+                                                            <td>{{data.reply_comments}}</td>
+                                                            <td>{{data.created_date}}</td>
+                                                            <td>{{data.created_by}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="panel-info">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="card-header">
+                                        <strong class="textcrimson">
+                                            <em class="fa fa-edit fa-lg"></em>&emsp;Update Issue Status</strong>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="tab-content col-lg-12 col-sm-12 col-md-12">
+                                            <form name="statusform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                                                <div class="panel-body text-left ">
+                                                    <label>Status *</label>
+                                                    <select name="issueStatus" ng-model="issueStatus" class="form-control" size="1" required>
+                                                        <option value="">----- Select Status ----</option>
+                                                        <option value="Issue - Acknowledged">Issue - Acknowledged</option>
+                                                        <option value="DEV - Unable to Re-produce">DEV - Unable to Re-produce</option>
+                                                        <option value="DEV - In-Progress">DEV- In-Progress</option>
+                                                        <option value="Test - WIP">Test- WIP</option>
+                                                        <option value="Test - Approved">Test- Approved </option>
+                                                        <option value="Test - Rejected">Test- Rejected</option>
+                                                        <option value="UAT - Ready to Release"> UAT- Ready to Release</option>
+                                                        <option value="UAT - Released"> UAT- Released </option>
+                                                        <option value="Issue Reverted by Vendor"> Issue Reverted by Vendor </option>
+                                                    </select>
+                                                </div>
+                                                <div class="panel-body text-left ">
+                                                    <label>Remarks *</label>
+                                                    <textarea class="form-control" rows="4" name="StatusRemarks" ng-model="StatusRemarks" required></textarea>
+                                                </div>
+                                                <div class="panel-body text-left ">
+                                                    <label>Done by *</label>
+                                                    <input type="text" ng-model="DoneBy"  name="DoneBy" class="form-control" maxlength="256" required />
+                                                </div>
+                                                <div class="w3-center">
+                                                    <button class="btn btn-success " ng-disabled="statusform.$invalid" ng-click="updateStatus(viewdtl.issuetracker_gid)">Submit</button>
+                                                    <button class="btn btn-warning " ng-click="cancel()">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>

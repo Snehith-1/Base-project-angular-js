@@ -1,0 +1,109 @@
+﻿<div ng-controller="iasnTrnForwardMail">
+    <div class="card" id="action">
+        <div class="dd-handle">
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="text-primary text-bold">Compose Mail</div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <form name="mailform" id="mailform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="input-group form-group">
+                                        <span class="input-group-addon text-sm">From:</span>
+                                        <input type="text" class="form-control" disabled value="backup@vcidex.com" />
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <span class="input-group-addon text-sm">To:</span>
+                                        <input type="text" class="form-control" ng-model="toMail" required />
+                                    </div>
+                                    <div ng-show="lsShowCC" class="input-group form-group">
+                                        <span class="input-group-addon text-sm">CC:</span>
+                                        <input type="text" class="form-control" ng-model="ccMail" />
+                                    </div>
+
+                                    <div ng-show="lsShowBCC" class="input-group form-group">
+                                        <span class="input-group-addon text-sm">BCC:</span>
+                                        <input type="text" class="form-control" ng-model="bcc_mail" />
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <span class="input-group-addon text-sm">Subject:</span>
+                                        <input type="text" class="form-control" disabled ng-model="email_subject" required />
+                                    </div>
+                                    <div class="input-group form-group">
+                                        <span><strong>Attachment :</strong></span> &nbsp;
+                                        <input type="file" id="addupload" ng-model="test_document"
+                                               multiple onchange="angular.element(this).scope().uploadattachment(this.files, angular.element(this).scope().documentupload, this.name)"
+                                               data-classbutton="btn btn-default" data-classinput="form-control" data-button-text="Select" />
+                                    </div>
+                                    <br>
+                                    <div ui-scroll-viewport="" style="height:100px; overflow-y: auto;" class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="panel">
+                                                <div class="panel-body col-lg-3 col-md-3 col-sm-3" style="background-color:#E5E2E2;margin-right:40px;margin-top:10px;" ng-repeat="data in uploaddocument">
+                                                    <a title="Download Attachment" ng-click="downloads(data.document_path,data.document_name)">{{data.document_name}}</a>&nbsp;&nbsp;
+                                                    <span>
+                                                        <button title="Remove" ng-click="UploadDocCancel(data.id)" class="btn pull-right">
+                                                            <i class="fa fa-close"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <div class="mb-editor">
+                                        <div class="btn-group btn-group-sm mb pull-right">
+                                            <button type="button" ng-class="{'active':lsShowCC}" ng-click="lsShowCC=!lsShowCC" href="#" class="btn btn-default btn-sm">CC</button>
+                                            <button type="button" ng-class="{'active':lsShowBCC}" ng-click="lsShowBCC = !lsShowBCC" href="#" class="btn btn-default btn-sm">BCC</button>
+                                        </div>
+                                        <script type="text/ng-template" id="ng-wig/views/ng-wig.html">
+                                            <div class="ng-wig">
+                                                <div class="btn-group btn-group-sm">
+
+                                                    <button type="button" title="Bold" ng-click="execCommand('bold')" class="btn btn-sm btn-default"><em class="fa fa-bold"></em></button>
+                                                    <button type="button" title="Italic" ng-click="execCommand('italic')" class="btn btn-sm btn-default"><em class="fa fa-italic"></em></button>
+
+                                                </div>
+                                                <div class="nw-editor">
+                                                    <textarea ng-show="editMode" ng-model="$parent.pushbackcontent" class="nw-editor__src"> </textarea>
+                                                    <iframe scrolling="{{ autoexpand ? 'yes' : 'yes' }}" frameBorder="0" ng-hide="editMode" ng-model="$parent.pushbackcontent"
+                                                            style="background-color:#F8F9FA;" ng-wig-editable="" class="nw-editor__res"></iframe>
+                                                </div>
+                                            </div>
+                                        </script>
+                                        <textarea ng-wig="$parent.pushbackcontent" ng-model="$parent.pushbackcontent"></textarea>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="text-center">
+
+                        <button ng-click="updateDesicion()" ng-disabled="mailform.$invalid" class="btn btn-info">
+                            <i class="fa fa-send"></i>&nbsp;&nbsp;Send
+                        </button>
+
+                        <button ng-click="back()" class="btn btn-primary"><i class="fa fa-arrow-circle-left fa-1x"></i>&nbsp;&nbsp;Back</button>
+                    </div>
+                </div>
+                </form>
+        </div>
+    </div>
+</div>

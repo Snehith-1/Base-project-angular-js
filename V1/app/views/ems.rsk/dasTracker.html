@@ -1,0 +1,125 @@
+﻿<h3>
+    DAS Tracker
+</h3>
+<div ng-controller="dasTrackercontroller">
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table datatable="ng" class="row-border hover">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <!--<th>URN No.</th>-->
+                            <th>Customer ID</th>
+                            <th>Customer Name</th>
+                            <th>Vertical</th>
+                            <th>Zonal Head</th>
+                            <th>Business Head</th>
+                            <th>Cluster Manager</th>
+                            <th>Relationship Manager</th>
+                            <th>Credit Manager</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in customer_data">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <!--<td data-title="'URN Number'">{{data.customer_urn}}</td>-->
+                            <td data-title="'Customer Id'">{{data.customercode}}</td>
+                            <td data-title="'Customer Name'">{{data.customername}}</td>
+                            <td data-title="'Customer Name'">{{data.vertical_code}}</td>
+                            <td data-title="'Zonal Head'">{{data.zonalGid}}</td>
+                            <td data-title="'Business Head'">{{data.businessHeadGid}}</td>
+                            <td data-title="'Cluster Manager'">{{data.clustermanagerGid}}</td>
+                            <td data-title="'Relationship Manager'">{{data.relationshipMgmtGid}}</td>
+                            <td data-title="'Credit Manager'">{{data.creditmanagerName}}</td>
+                            <td data-title="'Action'" class="nowrap">
+                                <button title="Acknowledged Buyers" ng-click="ackbuyers(data.customer_gid)" class="btn btn-green">
+                                    <em class="icon icon-user-following"></em>
+                                </button>
+                                <button title="Remitter Buyers" ng-click="remitterbuyers(data.customer_gid,data.customername)" class="btn btn-pink">
+                                    <em class="icon icon-user-follow"></em>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/ng-template" id="/AcknowledgedBuyerContent.html">
+        <br />
+        <h4 id="myModalLabel" class="modal-title">
+            <p class="lead bb text-primary text-bold">
+                &emsp;<label><em class="icon icon-user-following"></em></label>&nbsp; Acknowledged Buyers
+            </p>
+        </h4>
+        <div class="modal-body ng-scope">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div class="mda-form-group float-label">
+                        <input ng-model="txtackbuyers" type="text" class="mda-form-control ng-pristine ng-valid ng-touched" required>
+                        <label>Acknowledged Buyers <span style="color:red">*</span></label>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button ng-click="addacknowledgedbuyers()" ng-disabled="!txtackbuyers" class="btn btn-success">
+                        <i class="fa fa-check">
+                        </i>&nbsp;Add
+                    </button>
+                    <button ng-click="ok()" class="btn btn-danger">
+                        <i class="fa fa-close (alias)">
+                        </i>&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+
+                    <div class="table-responsive">
+                        <table class="row-border hover" id="statictable">
+                            <thead>
+                                <tr class="bg-primary-light text-white">
+                                    <th width="3%">S.No</th>
+                                    <th width="25%">Acknowledged Buyers</th>
+                                    <th width="7%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="data in acknowledgedbuyers">
+                                    <td data-title="'S.No'">{{$index+1}}</td>
+                                    <td data-title="Acknowledged buyers">{{data.acknowledged_buyers}}</td>
+                                    <td>
+                                        <!--<button title="Edit" class="btn btn-success btn-sm"
+                                                ng-click="editAcknowledgedbuyer(data.acknowledgedbuyers_gid)">
+                                            <em class="fa fa-edit"></em>
+                                        </button>-->
+                                        <button title="delete" class="btn btn-danger btn-sm" style="padding: 3px 8px"
+                                                ng-click="deleteAcknowledgedbuyer(data.acknowledgedbuyers_gid)">
+                                            <em class="fa fa-trash"></em>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="/RemitterBuyerContent.html">
+        <br />
+        <h4 id="myModalLabel" class="modal-title">
+            <p class="lead bb text-primary text-bold">
+                &emsp;<label><em class="icon icon-user-follow"></em></label>&nbsp; Remitter Buyers
+            </p>
+           
+        </h4>
+        
+    </script>
+</div>

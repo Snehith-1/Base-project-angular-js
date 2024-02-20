@@ -1,0 +1,230 @@
+﻿<h3>
+    Risk Manager Mapping
+</h3>
+<div ng-controller="rmMappingcontroller">
+    <!--<div class="row">
+        <div class="col-lg-2 col-sm-2 col-md-2">
+            <button title="Add RM Mapping" class="btn btn-info btn-sm"
+                    ng-click="addpincodeMapping()">
+                <em class="fa fa-plus"></em>&nbsp;Add RM Mapping
+            </button>
+        </div>
+    </div>-->
+    
+    <div class="panel">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        Showing 1 to {{totalDisplayed}} of {{total}} Entries
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+
+                        Show <input ng-model="pagecount" id="pagecount" type="number" />
+                        <button class="btn" id="loadmore" ng-click="loadMore(pagecount)">Load More</button>
+
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="input-group">
+                            <input type="text" ng-model="searchtxt" placeholder="Search Here .." class="form-control input-sm" />
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default btn-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="table-responsive">
+                <table class="table hover table-striped row-border">
+                    <thead>
+                        <tr class="bg-primary-light text-white">
+                            <th>S.No</th>
+                            <th class="text-nowrap">Zonal</th>
+                            <th class="text-nowrap">State</th>
+                            <th class="text-nowrap">District</th>
+                            <th class="text-nowrap">Zonal Risk Manager</th>
+                            <th class="text-nowrap">Assigned Risk Manger</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="data in mappingdtlList|filter :searchtxt|limitTo:totalDisplayed">
+                            <td data-title="'S.No'">{{$index+1}}</td>
+                            <td data-title="'Zonal'">{{data.zonal_name}}</td>
+                            <td data-title="'State'">{{data.state_name}}</td>
+                            <td data-title="'District'">{{data.district_name}}</td>
+                            <td data-title="'Zonal Risk Manager'">{{data.ZonalRMname}}</td>
+                            <td data-title="'Assigned RM'">{{data.assigned_RM}}</td>
+
+                            <td class="text-nowrap">
+                                <button title="Assign" class="btn btn-success btn-sm"
+                                        ng-click="editmappingdtl(data.RMmapping_gid)">
+                                    <em class="fa fa-user"></em>
+                                </button>
+                                <!--<button title="Delete" class="btn btn-danger btn-sm"
+                            ng-click="deletemappingdtl(data.RMmapping_gid)">
+                        <em class="fa fa-trash"></em>
+                    </button>-->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/ng-template" id="/addMaping.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-edit"></em>&nbsp;Add RM Mapping </h2>
+                <span flex></span>
+              
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingAddform" id="mappingAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>State <span style="color:red">*</span></label>
+                                    <select id="cbostatename" name="cbostatename" ng-model="cbostate_gid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1" ng-change="onselectedchange(cbostate_gid)">
+                                        <option value=""> Select State </option>
+                                        <option data-ng-repeat="data in statedtl" value="{{data.state_gid}}"
+                                                style="width:250px;">{{data.state_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>District <span style="color:red">*</span></label>
+                                    <select id="cbodistrictname" name="cbodistrictname" ng-model="cbodistrict_gid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1" >
+                                        <option value=""> Select District </option>
+                                        <option data-ng-repeat="data in districtdtl" value="{{data.district_gid}}"
+                                                style="width:250px;">{{data.district_name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Risk Manager <span style="color:red">*</span></label>
+                                    <select name="subcategory" ng-model="cboemployeegid" required=""
+                                            class="form-control ng-valid ng-touched ng-valid-parse" size="1">
+                                        <option value=""> Select Risk Manager Name </option>
+                                        <option data-ng-repeat="data in employee_list" value="{{data.employee_id}}"
+                                                style="width:250px;">
+                                            {{data.employee_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="submitmapping()" ng-disabled="mappingAddform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Submit</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="/EditMaping.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-user"></em>&nbsp;Assign Risk Manager</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+            <div class="pd-sm-10">
+
+                <div class="row">
+                    <form name="mappingEditform" id="mappingEditform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>State </label>
+                                    <p>{{state_name}}</p>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-md-6 form-group float-label">
+                                    <label>District </label>
+                                    <p>{{district_name}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <!--<div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Zonal Risk Manager <span style="color:red">*</span></label>
+                                    <select id="zonal_employeegid" name="zonal_employeegid" dropzone="" ng-model="zonal_employeegid" required=""
+                                            ng-options="zonal.employee_id as zonal.employee_name for zonal in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Employee Name </option>
+
+                                    </select>
+
+                                </div>-->
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Zonal Risk Manager</label>
+                                    <p>{{ZonalRMname}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-12 col-sm-12 col-md-12 form-group float-label">
+                                    <label>Risk Manager <span style="color:red">*</span></label>
+                                    <select id="employee_id" name="employee_id" dropzone="" ng-model="employee_id" required=""
+                                            ng-options="data.employee_id as data.employee_name for data in employee_list"
+                                            class="form-control ng-valid ng-touched ng-valid-parse">
+                                        <option value=""> Select Risk Manager </option>
+
+                                    </select>
+                                  
+                                </div>
+                            </div>
+                            <div class="class">
+                                <div class="text-center">
+                                    <button class="btn btn-success" ng-click="updatemapping()" ng-disabled="mappingEditform.$invalid">
+                                        <em class="fa fa-check"></em>
+                                        <span>Update</span>
+                                    </button>
+                                    <a class="btn btn-danger" ng-click="ok()">
+                                        <em class="fa fa-close"></em>
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </script>
+</div>

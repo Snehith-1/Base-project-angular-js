@@ -1,0 +1,267 @@
+﻿<h3>
+    <!-- Buyer / Supplier Approval -->
+    <!--<a href="#/app/AgrMstCustomerApprovalSummary">
+        <button type="button" title="Back to Customer Approval" class="pull-right btn btn-sm btn-default">
+            <em class="fa fa-arrow-circle-left text-info fa-1x"></em>
+        </button>
+    </a>-->
+</h3>
+<div ng-controller="AgrMstOnboardingApplicationInfocontroller">
+    <div id="scrollArea">
+        <div id="panelDemo20" class="panel">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div style="color :#000000 ;font-size:14px;font-weight :bold;">
+                        <div class="col-lg-9 col-md-9 col-sm-9" style="background-color:#191370;color:white;padding-top:10px;padding-bottom:10px;">
+                            <h5>Limit Management</h5>
+                        </div>
+                        <!--<div class="col-lg-3 col-md-3 col-sm-3" ng-show="productcompareshow" style="background-color:#3646b8;color:white;padding-top:18px;padding-bottom:10px;">
+                            {{application_no}}
+
+                            <button ng-click="view()"  class="btn btn-info" style="float: right;" title="Product Comparison View"><i class="fa fa-reorder"></i></button>-->
+
+                            <!--<h5>{{application_no}} &nbsp;&nbsp;</h5> &nbsp;&nbsp;
+        <button type="button" class="btn btn-info btn-md pull-right" style="font-size: 12px;" title="view" ng-click="importexcel()">
+            <i class="fa fa-eye"></i>&nbsp;&nbsp;
+        </button> &nbsp;&nbsp;-->
+                        <!--</div>-->
+                        <div class="col-lg-3 col-md-3 col-sm-3"  ng-hide="productcompareshow" style="background-color:#3646b8;color:white;padding-top:10px;padding-bottom:10px;">
+                            <h5>{{application_no}}</h5></div>
+                        </div>
+                    </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="row" style="margin-bottom:-10px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="padding-right: 6px;">
+                                <div ui-scroll-viewport="" class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="dd-handle ng-scope">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Basic Details </b></p>
+                                                    <hr />
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer name / Customer ID</label>
+                                                        <br />
+                                                        {{customerref_name}} / {{application_no}}
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer status </label>
+                                                        <br />
+                                                        {{lgltag_status}}
+                                                    </div>
+                                                    <div class="col-lg-4 col-sm-4 col-md-4">
+                                                        <label style="font-weight:bold">Customer Overall Limit </label>
+                                                        <br />
+                                                        {{customeroverall_limit}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <div class="dd-handle ng-scope">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                                            <p class="text-primary" style="font-size:14px;"><b>&nbsp;&nbsp; Application - Product Details </b></p>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                    <div>
+                                                                        <div class="table-responsive table-bordered">
+                                                                            <div class="panel-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                                                        <table class="table table-stripped table-bordered">
+                                                                                            <tr style="background-color:#dde6e9;">
+                                                                                                <th class="text-center">ARN</th>
+                                                                                                <th class="text-center">Contract ID</th>
+                                                                                                <th class="text-center">Facility Details</th>
+                                                                                                <th class="text-center">Expired On</th>
+                                                                                                <th class="text-center">Contract Status</th>
+
+                                                                                                <th class="text-center">Action</th>
+                                                                                            </tr>
+
+                                                                                            <tbody ng-repeat="m1 in ProductTypeList">
+                                                                                                <tr style="background-color:#82cf74a6;">
+                                                                                                    <td align="left" colspan="6" style="font-size:14px;"><b>{{m1.producttype_name}} (Overall Limit - {{m1.overalllimit_amount}}) All active</b> </td>
+                                                                                                </tr>
+                                                                                                <tr ng-repeat-start="m2 in m1.SubproductArray">
+                                                                                                    <td align="center" colspan="6"><b>{{m2.productsubtype_name}} ({{m2.overalllimit_subamount}}) - only active {{m2.productsubtype_name}} program</b></td>
+
+                                                                                                <tr ng-repeat="m3 in m2.ApplicationListdtl">
+                                                                                                    <td>
+                                                                                                        <p>{{m3.application_no}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <p>{{m3.contract_id}}</p>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                        <!--<a href="" ng-click="facilitydetailsview(m3.application_gid)">View Facility</a>-->
+                                                                                                        <table class="table table-stripped table-bordered">
+                                                                                                            <tr>
+                                                                                                                <td>Facility</td>
+                                                                                                                <td>Approved Limit</td>
+                                                                                                                <td>Utilised Limit</td>
+                                                                                                                <td>Available Limit</td>
+                                                                                                                <td>Overdue Balance</td>
+                                                                                                                <td>Valid From</td>
+                                                                                                                <td>Valid To</td>
+                                                                                                                <td>Facility Status</td>
+                                                                                                                
+                                                                                                            </tr>
+                                                                                                            <tr ng-repeat="m4 in m3.ApplicationFacilityList">
+                                                                                                                <td title="Facility">{{m4.facility}}</td>
+                                                                                                                <td title="Approved Limit" style="text-align:right">
+                                                                                                                    {{m4.ApprovedLimit}}
+                                                                                                                </td>
+                                                                                                                <td title="Utilised Limit" style="text-align:right">
+                                                                                                                     {{m4.UtilizedLimit}} 
+                                                                                                                </td>
+                                                                                                                <td title="Available Limit" style="text-align:right">
+                                                                                                                     {{m4.AvailableLimit}} 
+                                                                                                                </td>
+                                                                                                                <td title="Overdue Balance" style="text-align:right">
+                                                                                                                    {{m4.overdue_balance}} 
+                                                                                                               </td>
+                                                                                                                <td title="Valid From">{{m4.ValidFrom}}</td>
+                                                                                                                <td title="Valid To">{{m4.ValidTo}}</td>
+                                                                                                                <td title="Facility Status">{{m4.FacilityStatus}}</td>
+                                                                                                                
+                                                                                                            </tr>
+
+                                                                                                        </table>
+                                                                                                    </td>
+
+                                                                                                    <td>
+                                                                                                        <p>{{m3.processupdated_date}}</p>
+                                                                                                    </td>
+ 
+                                                                                                    <td>
+                                                                                                        <p class="text-center">{{m3.contract_status}}</p>
+                                                                                                    </td>
+                                                                                                    <td>
+                                                                                                        <button title="View" ng-click="limit_viewClick(m1.application2loan_gid,m3.application_gid)" class="btn btn-info btn-xs">
+                                                                                                            <em class="fa fa-eye"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Initiate Renewal" ng-click="initiaterenewalClick(m3.application_gid)" class="btn btn-grey btn-xs">
+                                                                                                            <em class="icon-refresh"></em>
+                                                                                                        </button>
+                                                                                                        <button title="Amendments" ng-click="amendmentsClick(m3.application_gid)" class="btn btn-grey btn-xs">
+                                                                                                            <em class="fa fa-edit"></em>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+
+                                                                                                
+                                                                                                <tr  ng-repeat-end></tr> 
+                                                                                            </tbody>
+                                                                                            <tfoot>
+                                                                                               
+                                                                                            </tfoot>
+                                                                                        </table>
+                                                                                        <br />
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <br />
+                    <button ng-click="BackPageClick()" class="btn btn-info"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</button>
+                </div>
+                <br />
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script type="text/ng-template" id="/facilitydetailsviewid.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <em style="font-size:16px" class="fa fa-eye"></em>&nbsp;<label style="font-size:16px">Facility Details</label>
+                <span flex></span>
+                <button ng-click="ok()" class="pull-right btn btn-primary"><i class="fa fa-close"></i></button>
+            </div>
+
+        </md-toolbar>
+        <div class="modal-content">
+            <div class="modal-body ng-scope">
+
+                <form novalidate="" name="userform1" ng-submit="form.submitLoan()" autocomplete="off" class="form-validate mb-lg">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-lg-12 col-sm-12 col-md-12">
+                                        <div class="table-responsive table-bordered">
+                                            <div style="max-height:200px;overflow:auto;">
+                                                <table class="table">
+                                                    <thead class="bg-gray text-white">
+                                                        <tr width="100%">
+                                                            <th scope="col">S.No</th>
+                                                            <th scope="col">Facility</th>
+                                                            <th scope="col">Approved Limit</th>
+                                                            <th scope="col">Valid From</th>
+                                                            <th scope="col">Valid To</th>
+                                                            <th scope="col">Facility Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody ng-repeat="data in MdlFaclilitydtl">
+                                                        <tr>
+                                                            <td title="S.No">{{$index+1}}</td>
+                                                            <td title="Facility">{{data.facility}}</td>
+                                                            <td title="Approved Limit">
+                                                                {{data.ApprovedLimit}}
+                                                            </td>
+                                                            <td title="Valid From">{{data.ValidFrom}}</td>
+                                                            <td title="Valid To">{{data.ValidTo}}</td>
+                                                            <td title="Facility Status">{{data.FacilityStatus}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="text-center">
+                        <button ng-click="ok()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </script>
+</div>

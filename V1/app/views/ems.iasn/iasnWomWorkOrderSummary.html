@@ -1,0 +1,377 @@
+﻿<style>
+  .picColor:hover {
+    background-color: transparent;
+    color: #144A6E;
+    border: 1px solid #A59F9D;  
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    text-decoration: underline;
+    text-decoration-color: #141478;
+    }  
+
+</style>
+<h3>
+    Work Item Management
+</h3>
+<div ng-controller="iasnWomWorkOrderSummary as dp">
+    <div class="row">
+           <div class="col-lg-2 col-sm-2 col-md-2">
+                <div class="list-group-item picColor" style="height:60px;">
+                    <div class="media-box">
+                        <div class="pull-left" style="padding-top:6px;">
+                            <span>
+                                <em class="fa fa-envelope fa-2x" style="color:#AE1151;"></em>
+                            </span>
+                        </div>
+                        <div class="media-box-body clearfix">
+                            <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#AE1151;padding-top:5px;">{{count_composemail}}</div>                               
+                            <div style="font-size:14px;color:#AE1151;text-align:center;" ng-click="ComposeMail()"><b>New Mail</b></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+           <div class="col-lg-2 col-sm-2 col-md-2">
+               <div class="list-group-item picColor" style="height:60px;">
+                   <div class="media-box">
+                       <div class="pull-left" style="padding-top:6px;">
+                           <span>
+                               <em class="fa fa-dropbox fa-2x" style="color:#141478;"></em>
+                           </span>
+                       </div>
+                       <div class="media-box-body clearfix">
+                           <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#141478;padding-top:5px;">{{count_workitempending}}</div>
+                               <div style="font-size:14px;color:#141478;text-align:center;" ng-click="WorkItem()"><b>Work Item</b></div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-2 col-sm-2 col-md-2">
+               <div class="list-group-item picColor" style="height:60px;">
+                   <div class="media-box">
+                       <div class="pull-left" style="padding-top:6px;">
+                           <span>
+                               <em class="fa fa-tasks fa-2x" style="color:#871490;"></em>
+                           </span>
+                       </div>
+                       <div class="media-box-body clearfix">
+                           <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#871490;padding-top:5px;">{{count_workitemassigned}}</div>
+                               <div style="font-size:14px;color:#871490;text-align:center;" ng-click="Alloted()"><b>Allotted</b></div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-2 col-sm-2 col-md-2">
+               <div class="list-group-item picColor" style="height:60px;">
+                   <div class="media-box">
+                       <div class="pull-left" style="padding-top:6px;">
+                           <span>
+                               <em class="fa fa-reply-all fa-2x" style="color:#00796b;"></em>
+                           </span>
+                       </div>
+                       <div class="media-box-body clearfix">
+                           <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#00796b;padding-top:5px;">{{count_pushback}}</div>
+                               <div style="font-size:14px;color:#00796b;text-align:center;" ng-click="Pushback()"><b>Pushback</b></div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-2 col-sm-2 col-md-2">
+               <div class="list-group-item picColor" style="height:60px;">
+                   <div class="media-box">
+                       <div class="pull-left" style="padding-top:6px;">
+                           <span>
+                               <em class="fa fa-share-square-o fa-2x" style="color:#1976d2;"></em>
+                           </span>
+                       </div>
+                       <div class="media-box-body clearfix">
+                           <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#1976d2;padding-top:5px;">{{count_forward}}</div>
+                               <div style="font-size:14px;color:#1976d2;text-align:center;" ng-click="Forward()"><b>Forward</b></div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-2 col-sm-2 col-md-2">
+               <div class="list-group-item picColor" style="height:60px;">
+                   <div class="media-box">
+                       <div class="pull-left" style="padding-top:6px;">
+                           <span>
+                               <em class="fa fa-times-circle text-white fa-2x" style="color:#FF0000;"></em>
+                           </span>
+                       </div>
+                       <div class="media-box-body clearfix">
+                           <div class="media-box-heading" style="padding-top:10px;">
+                               <div class="pull-right label" style="background-color:#FF0000;padding-top:5px;">{{count_close}}</div>
+                               <div style="font-size:14px;color:#FF0000;text-align:center;" ng-click="Close()"><b> Close</b></div>
+                           </div>
+
+                       </div>
+                   </div>
+               </div>
+           </div>
+   </div>
+        
+    <br/>
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                   
+                     <div class="col-lg-9 col-sm-9 col-md-9">
+                       <br/>
+                            <button title="New Mail" class="btn btn-info btn-sm" style="background-color:#AE1151;"
+                                    ng-click="composemaildt()">
+                                <em class="fa fa-plus"></em>&nbsp;&nbsp; New Mail
+                            </button>
+
+                       
+                    </div>
+                    <div class="col-lg-3 col-sm-3 col-md-3">
+                        <br />
+                        <div class="text-center">
+                            <em class="fa fa-file-text fa-2x" style="color:#141478;"></em>
+
+                            &nbsp;&nbsp;  <a href="#/app/iasnConsolidatedWorkItem" title="Go To Consolidated Work Item" style="color:#141478;font-size:13px;"><u><b>Consolidated Work Item List</b></u></a>
+                        </div>
+
+                    </div>
+                    <br />
+
+                </div>
+                <br />
+                
+                <div class="table-responsive">
+                    <table datatable="ng" class="table table-hover table-striped mb-mails">
+                        <thead>
+                            <tr class="text-white" style="background-color:#09385f;">
+                                <th class="text-center">S.No</th>
+                                <th width="15%" class="text-center">Profile</th>
+                                <th class="text-center">Mail Details</th>
+                                <th class="text-center">Zone</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in ComposeMail_List">
+                                <td class="text-center">{{$index+1}}</td>
+                                <td width="15%">
+                                    <ul>
+                                        <div dropdown="" class="dropdown dropdown-list" title="User Profile">
+                                            <!--Employee Profile-->
+                                            <a dropdown-toggle=""
+                                               ng-click="EmployeeProfile(data.employee_gid)"
+                                               class="btn btn-info btn-circle btn-sm">
+                                                <strong>
+                                                    {{data.employee_name}}
+                                                </strong>
+                                            </a>
+                                            <!-- START Dropdown menu-->
+                                            <ul class="dropdown-menu animated flipInX" style="width:300px;">
+                                                <li>
+                                                    <!-- START list group-->
+                                                    <div class="list-group">
+                                                        <!-- list item-->
+                                                        <div class="list-group-item"
+                                                             style="border: 1px solid grey;border-radius: 5px;background-color:#ffffff;">
+                                                            <div class="item user-block">
+                                                                <div class="user-block-picture">
+                                                                    <div class="user-block-status"
+                                                                         ng-switch="user_photo">
+                                                                        <img ng-src="{{user_photo}}"
+                                                                             alt="Avatar"
+                                                                             class="img-thumbnail img-circle"
+                                                                             src="app/img/user/user-avatar.png"
+                                                                             ng-switch-default>
+                                                                        <img ng-src="app/img/user/user-avatar.png"
+                                                                             alt="Avatar"
+                                                                             class="img-thumbnail img-circle"
+                                                                             src="app/img/user/user-avatar.png"
+                                                                             ng-switch-when="N">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="media-box-body clearfix">
+                                                                    <br />
+                                                                    <p>
+                                                                        <b>Name:</b> <span class="user-block-name">
+                                                                            {{user_name}}
+                                                                        </span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <b>User Code :</b> <span class="user-block-name">{{user_code}}</span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <b>Designation :</b> <span class="user-block-role">{{user_designation}}</span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <b>Department : </b><span class="user-block-role">{{user_department}}</span>
+                                                                    </p>
+                                                                    <p>
+                                                                        <b>Contact No : </b><span class="user-block-role">{{user_mobileno}}</span>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- END list group-->
+                                                </li>
+                                            </ul>
+                                            <!-- END Dropdown menu-->
+                                        </div>
+                                    </ul>
+                                </td>
+                                <td ng-click="ComposeMail360(data.composemail_gid)">
+                                    <div class="mb-mail-date pull-right">{{data.created_date}}</div>
+                                    <div>
+                                    <b>{{data.composemail_refno}}</b>
+                                    </div>
+
+                                    <div>{{data.email_to}}</div>
+                                    <div>{{data.email_subject}}</div>
+
+                                </td>
+                                <td class="text-center">{{data.zone_name}}</td>
+                                <td style="text-align:center;" ng-switch="data.status">
+                                    <label class="label label-success" ng-switch-when='Forward' style="font-size:10px;">Forward</label>
+                                    <label ng-switch-when='Pending' style="font-size:10px;">-</label>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn  btn-sm" ng-click="archivalWI(data.composemail_gid)" title="Archival">
+                                        <em class="fa fa-archive"></em>&nbsp;
+                                    </button>
+                                    <button type="button" class="btn  btn-sm" ng-click="forward(data.composemail_gid,data.email_subject,data.email_to,data.cc,data.bcc)" title="Forward">
+                                        <em class="fa fa-share-square-o"></em>&nbsp;
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+  
+    <script type="text/ng-template" id="/archivalContent.html">
+        <md-toolbar>
+            <div class="md-toolbar-tools" style="background-color:rgb(63, 110, 181);">
+                <h2><em class="fa fa-archive"></em>&nbsp;Archival Work Item</h2>
+                <span flex></span>
+
+            </div>
+        </md-toolbar>
+        <div class="modal-body ng-scope">
+
+            <form name="documentAddform" id="documentAddform" novalidate="" class="form-validate mb-lg" autocomplete="off">
+
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label><strong>Archival Type </strong></label>
+                            <div class="radio c-radio">
+                                <label>
+                                    <input type="radio" name="types_of_archival" value="Customer" ng-checked="true" ng-click="onclickcustomer()"
+                                           ng-change="onchangearchival(types_of_archival)"
+                                           ng-model="archival.types_of_archival" />
+                                    &nbsp;&nbsp;<span class="fa fa-circle"></span>Customer
+                                </label>
+                                <label>
+                                    <input type="radio" name="types_of_archival" ng-change="onchangearchival(types_of_archival)"
+                                           value="Specific" ng-model="archival.types_of_archival" ng-click="onclickspecific()" />
+                                    <span class="fa fa-circle"></span>Specific
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label control-label"><strong>Customer <span style="color:red">*</span></strong></label>
+                            <input type="text" name="customer" id="customer" ng-model="customer" required
+                                   ng-keyup="complete(customer)" class="form-control" placeholder="Search Customer Name Here..." />
+
+                            <ul class="list-group panel-scroll" style="height:100%; word-wrap: break-word;">
+                                <li class="list-group-item" ng-repeat="m in customer_list"
+                                    ng-click="fillTextbox(m.customer_gid,m.customername)">{{m.customername}}</li>
+                            </ul>
+
+                            <label style="color:red;">{{message}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="PnlSpecific">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+
+                            <label class="col-form-label control-label">
+                                <strong>
+                                    Sanction Ref No.
+                                    <span style="color:red">*</span>
+                                </strong>
+                            </label>
+
+                            <select id="sanction" name="sanction" chosen=""
+                                    ng-options="m.sanctionrefno for m in sanctiondtl"
+                                    ng-model="cbosanctionrefno" class="form-control">
+                                <option value="">---Select Sanction Ref No.---</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-form-label">Remarks &nbsp;<span style="color:red">*</span></label>
+                            <textarea ng-model="archival.Remarks" required placeholder="Enter the Remarks" rows="3" maxlength="1000" class="form-control"
+                                      id="input_13" ng-trim="false" aria-multiline="true" tabindex="0" aria-invalid="true"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+
+                <div>
+                    <div class="text-center">
+                        <a class="btn btn-success" ng-click="ArchivalSubmit()" ng-disabled="documentAddform.$invalid">
+                            <em class="fa fa-check"></em>
+                            <span>Submit</span>
+                        </a>
+                        <button ng-click="close()" class="btn btn-danger"><i class="fa icon-close"></i>&nbsp;&nbsp;Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    </script>
+
+   
+    <!--Summary Grid Starts-->
+
+
+</div>
